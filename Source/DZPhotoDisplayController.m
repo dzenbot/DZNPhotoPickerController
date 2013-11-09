@@ -386,6 +386,7 @@ static NSString *_instagramMinId = nil;
         
         DZPhotoEditViewController *photoEditViewController = [[DZPhotoEditViewController alloc] initWithCropMode:self.navigationController.editingMode];
         photoEditViewController.photo = [_photos objectAtIndex:indexPath.row];
+        photoEditViewController.cropSize = self.navigationController.customCropSize;
         
         [self.navigationController pushViewController:photoEditViewController animated:YES];
     }

@@ -168,8 +168,6 @@
     CGSize viewSize = self.view.bounds.size;
     CGFloat cropHeight = roundf((cropSize.height*viewSize.width)/cropSize.width);// roundf(cropSize.height/(cropSize.width/viewSize.width));
     _cropSize = CGSizeMake(cropSize.width, cropHeight);
-    
-    NSLog(@"_cropSize : %@", NSStringFromCGSize(_cropSize));
 }
 
 - (CGSize)cropSize
@@ -186,6 +184,7 @@
         case DZPhotoEditViewControllerCropModeCircular:
             return CGSizeMake(viewSize.width-(kInnerEdgeInset*2), viewSize.width-(kInnerEdgeInset*2));
             
+        case DZPhotoEditViewControllerCropModeSquare:
         default:
             return CGSizeMake(viewSize.width, viewSize.width);
     }
@@ -195,6 +194,7 @@
 {
     switch (_cropMode) {
         case DZPhotoEditViewControllerCropModeSquare:
+        case DZPhotoEditViewControllerCropModeCustom:
             return [self squareOverlayMask];
             
         case DZPhotoEditViewControllerCropModeCircular:
@@ -211,9 +211,9 @@
     CGSize size = self.navigationController.view.bounds.size;
     CGFloat width = size.width;
     CGFloat height = size.height;
-    CGFloat margin = (height-width)/2;
+    CGFloat margin = (height-[self cropSize].height)/2;
     CGFloat lineWidth = 1.0;
-
+    
     // Create a UIBezierPath
     UIGraphicsBeginImageContextWithOptions(size, NO, 0);
     
@@ -222,27 +222,28 @@
     UIColor *strokeColor = [UIColor colorWithWhite:1.0 alpha:0.5];
 
     // Bezier Drawing
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(width, margin)];
-    [path addLineToPoint:CGPointMake(0, margin)];
-    [path addLineToPoint:CGPointMake(0, 0)];
-    [path addLineToPoint:CGPointMake(width, 0)];
-    [path addLineToPoint:CGPointMake(width, margin)];
-    [path closePath];
-    [path moveToPoint:CGPointMake(width, height)];
-    [path addLineToPoint:CGPointMake(0, height)];
-    [path addLineToPoint:CGPointMake(0, width+margin)];
-    [path addLineToPoint:CGPointMake(width, width+margin)];
-    [path addLineToPoint:CGPointMake(width, height)];
-    [path closePath];
+    UIBezierPath *marginPath = [UIBezierPath bezierPath];
+    [marginPath moveToPoint:CGPointMake(width, margin)];
+    [marginPath addLineToPoint:CGPointMake(0, margin)];
+    [marginPath addLineToPoint:CGPointMake(0, 0)];
+    [marginPath addLineToPoint:CGPointMake(width, 0)];
+    [marginPath addLineToPoint:CGPointMake(width, margin)];
+    [marginPath closePath];
+    [marginPath moveToPoint:CGPointMake(width, height)];
+    [marginPath addLineToPoint:CGPointMake(0, height)];
+    [marginPath addLineToPoint:CGPointMake(0, [self cropSize].height+margin)];
+    [marginPath addLineToPoint:CGPointMake(width, [self cropSize].height+margin)];
+    [marginPath addLineToPoint:CGPointMake(width, height)];
+    [marginPath closePath];
     [fillColor setFill];
-    [path fill];
+    [marginPath fill];
     
     // Crop square Drawing
-    UIBezierPath *square = [UIBezierPath bezierPathWithRect: CGRectMake(lineWidth/2, margin+lineWidth/2, width-lineWidth, width-lineWidth)];
+    CGRect cropRect = CGRectMake(lineWidth/2, margin+lineWidth/2, width-lineWidth, [self cropSize].height-lineWidth);
+    UIBezierPath *cropPath = [UIBezierPath bezierPathWithRect:cropRect];
     [strokeColor setStroke];
-    square.lineWidth = lineWidth;
-    [square stroke];
+    cropPath.lineWidth = lineWidth;
+    [cropPath stroke];
     
     //Create a UIImage using the current context.
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();

@@ -28,7 +28,7 @@ static NSString *UIImagePickerControllerSourceName = @"UIImagePickerControllerSo
 @interface DZPhotoDisplayController : UICollectionViewController
 
 /* The nearest ancestor in the view controller hierarchy that is a photo picker controller. */
-@property(nonatomic, readonly, retain) DZPhotoPickerController *navigationController;
+@property (nonatomic, readonly) DZPhotoPickerController *navigationController;
 /* The searching string. If setted before presentation, the controller will automatically start searching. */
 @property (nonatomic, strong) NSString *searchTerm;
 /* The count number of columns of thumbs to be displayed. */

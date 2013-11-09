@@ -15,7 +15,7 @@
 #import "DZPhoto.h"
 
 typedef NS_ENUM(NSInteger, DZPhotoEditViewControllerCropMode) {
-    DZPhotoEditViewControllerCropModeSquare,
+    DZPhotoEditViewControllerCropModeSquare = 0,
     DZPhotoEditViewControllerCropModeCircular,
     DZPhotoEditViewControllerCropModeCustom
 };
@@ -28,9 +28,9 @@ typedef NS_ENUM(NSInteger, DZPhotoEditViewControllerCropMode) {
 
 /* The photo data object. */
 @property (nonatomic, weak) DZPhoto *photo;
-/* The crope mode currently being used. */
+/* The crop mode currently being used. */
 @property (nonatomic, readonly) DZPhotoEditViewControllerCropMode cropMode;
-/* */
+/* The crop size proportions. */
 @property (nonatomic) CGSize cropSize;
 
 

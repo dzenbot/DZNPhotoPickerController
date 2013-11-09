@@ -21,7 +21,6 @@
 {
     self = [super init];
     if (self) {
-        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickPhoto:) name:kDZPhotoPickerChooseNotification object:nil];
     }
     return self;
@@ -70,7 +69,7 @@
 
 + (NSArray *)availableMediaTypesForServiceType:(DZPhotoPickerControllerServiceType)serviceType
 {
-    return nil;
+    return @[(NSString*)kUTTypeImage];
 }
 
 
@@ -103,6 +102,12 @@
         default:
             break;
     }
+}
+
+- (void)setCustomCropSize:(CGSize)size
+{
+    _customCropSize = size;
+    _editingMode = DZPhotoEditViewControllerCropModeCustom;
 }
 
 

@@ -92,9 +92,11 @@
 - (void)presentPhotoPicker
 {
     DZPhotoPickerController *photoPickerController = [[DZPhotoPickerController alloc] init];
-    photoPickerController.allowsEditing = YES;
     photoPickerController.serviceType = DZPhotoPickerControllerServiceType500px | DZPhotoPickerControllerServiceTypeFlickr | DZPhotoPickerControllerServiceTypeInstagram;
     photoPickerController.startSearchingTerm = @"Patagonia";
+    photoPickerController.allowsEditing = YES;
+//    photoPickerController.editingMode = DZPhotoEditViewControllerCropModeCircular;
+    photoPickerController.customCropSize = CGSizeMake(320.0, 160.0);
     photoPickerController.delegate = self;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {

@@ -36,8 +36,11 @@ typedef NS_OPTIONS(NSUInteger, DZPhotoPickerControllerServiceType) {
 @property (nonatomic, copy) NSString *startSearchingTerm;
 /* A Boolean value indicating whether the user is allowed to edit a selected image. */
 @property (nonatomic) BOOL allowsEditing;
-/* */
+/* The editing mode (ie: Square, Circular or Custom). Default is Square. */
 @property (nonatomic) DZPhotoEditViewControllerCropMode editingMode;
+/* An optional and custom croping size. */
+@property (nonatomic) CGSize customCropSize;
+
 
 /*
  * Initializes the photo picker only for editing a specified image.
