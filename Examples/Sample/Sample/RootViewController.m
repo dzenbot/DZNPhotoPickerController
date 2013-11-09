@@ -93,7 +93,7 @@
     DZPhotoPickerController *photoPickerController = [[DZPhotoPickerController alloc] init];
     photoPickerController.allowsEditing = YES;
     photoPickerController.serviceType = DZPhotoPickerControllerServiceType500px | DZPhotoPickerControllerServiceTypeFlickr | DZPhotoPickerControllerServiceTypeInstagram;
-//    photoPickerController.startingSearchTerm = @"Discover Patagonia";
+    photoPickerController.startSearchingTerm = @"Patagonia";
     photoPickerController.delegate = self;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {

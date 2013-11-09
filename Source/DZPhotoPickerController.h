@@ -34,7 +34,7 @@ typedef NS_OPTIONS(NSUInteger, DZPhotoPickerControllerServiceType) {
 /* */
 @property (nonatomic) DZPhotoEditViewControllerCropMode editingMode;
 /* */
-@property (nonatomic, copy) NSString *startingSearchTerm;
+@property (nonatomic, copy) NSString *startSearchingTerm;
 
 
 /*

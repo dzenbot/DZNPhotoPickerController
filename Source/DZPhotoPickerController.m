@@ -115,7 +115,7 @@
     }
     
     DZPhotoDisplayController *photoDisplayController = [[DZPhotoDisplayController alloc] init];
-    photoDisplayController.searchTerm = _startingSearchTerm;
+    photoDisplayController.searchTerm = _startSearchingTerm;
     
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelPicker:)];
     [photoDisplayController.navigationItem setRightBarButtonItem:rightButton];
