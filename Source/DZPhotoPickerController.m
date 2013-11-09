@@ -78,12 +78,12 @@
 + (void)registerForServiceType:(DZPhotoPickerControllerServiceType)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret
 {
     switch (serviceType) {
-        case DZPhotoPickerControllerServiceTypeFlickr:
-            [[FlickrKit sharedFlickrKit] initializeWithAPIKey:consumerKey sharedSecret:consumerSecret];
-            break;
-            
         case DZPhotoPickerControllerServiceType500px:
             [PXRequest setConsumerKey:consumerKey consumerSecret:consumerSecret];
+            break;
+            
+        case DZPhotoPickerControllerServiceTypeFlickr:
+            [[FlickrKit sharedFlickrKit] initializeWithAPIKey:consumerKey sharedSecret:consumerSecret];
             break;
             
         case DZPhotoPickerControllerServiceTypeInstagram:
@@ -97,6 +97,9 @@
             break;
             
         case DZPhotoPickerControllerServiceTypeYahooImages:
+            break;
+            
+        case DZPhotoPickerControllerServiceTypePanoramio:
             break;
             
         default:
@@ -124,8 +127,10 @@
     DZPhotoDisplayController *photoDisplayController = [[DZPhotoDisplayController alloc] init];
     photoDisplayController.searchTerm = _startSearchingTerm;
     
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelPicker:)];
-    [photoDisplayController.navigationItem setRightBarButtonItem:rightButton];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPicker:)];
+        [photoDisplayController.navigationItem setRightBarButtonItem:cancel];
+    }
     
     [self setViewControllers:@[photoDisplayController]];
 }

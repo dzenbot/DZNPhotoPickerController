@@ -25,6 +25,10 @@
     [DZPhotoPickerController registerForServiceType:DZPhotoPickerControllerServiceType500px
                                     withConsumerKey:@"9sUVdra51AYawcQwQjFaQA7ueUqpaXLEZQJT7Pzy"
                                   andConsumerSecret:@"CmmZmHfSu1xi9BfVq4cS5RcAAhnR9UylGzPJQjqc"];
+    
+    [DZPhotoPickerController registerForServiceType:DZPhotoPickerControllerServiceTypeInstagram
+                                    withConsumerKey:@"16759bba4b7e4831b80bf3412e7dcb16"
+                                  andConsumerSecret:@"701c5a99144a401c8285b0c9df999509"];
 }
 
 #pragma mark - View lifecycle
@@ -101,6 +105,7 @@
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         popoverController = [[UIPopoverController alloc] initWithContentViewController:photoPickerController];
+//        popoverController.popoverContentSize = CGSizeMake(320.0, 600.0);
         [popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else {
@@ -174,14 +179,22 @@
 {
     [self updateImage:info];
     
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [popoverController dismissPopoverAnimated:YES];
+    }
+    else {
+        [picker dismissViewControllerAnimated:YES completion:NULL];
+    }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    NSLog(@"%s",__FUNCTION__);
-    
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [popoverController dismissPopoverAnimated:YES];
+    }
+    else {
+        [picker dismissViewControllerAnimated:YES completion:NULL];
+    }
 }
 
 
@@ -191,14 +204,22 @@
 {
     [self updateImage:info];
     
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [popoverController dismissPopoverAnimated:YES];
+    }
+    else {
+        [picker dismissViewControllerAnimated:YES completion:NULL];
+    }
 }
 
 - (void)photoPickerControllerDidCancel:(DZPhotoPickerController *)picker
 {
-    NSLog(@"%s",__FUNCTION__);
-    
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [popoverController dismissPopoverAnimated:YES];
+    }
+    else {
+        [picker dismissViewControllerAnimated:YES completion:NULL];
+    }
 }
 
 

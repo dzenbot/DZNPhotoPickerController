@@ -45,16 +45,46 @@ static NSString *_instagramMinId = nil;
     self = [super initWithCollectionViewLayout:[DZPhotoDisplayController flowLayout]];
     if (self) {
         
-        self.title = @"Internet Photos";
+        self.title = NSLocalizedString(@"Internet Photos", nil);
         _selectedService = (1 << 0);
         _previousService = (0 << 0);
         _currentPage = 1;
-        _columnCount = 4;
-        _rowCount = ([[UIScreen mainScreen] bounds].size.height == 568.0f) ? 5 : 4;
-        _resultPerPage = _columnCount*_rowCount;
     }
     return self;
 }
+
+- (NSInteger)rowCount
+{
+    CGFloat viewHeight = self.navigationController.view.frame.size.height;
+    NSLog(@"viewHeight : %f", viewHeight);
+    
+    CGFloat statusHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    viewHeight -= statusHeight;
+    NSLog(@"statusHeight : %f",statusHeight);
+    
+    CGFloat navigationHeight = self.navigationController.navigationBar.frame.size.height;
+    viewHeight -= navigationHeight;
+    NSLog(@"navigationHeight : %f",navigationHeight);
+    
+    CGFloat headerSize = [self headerSize].height;
+    viewHeight -= headerSize;
+    NSLog(@"headerSize : %f",headerSize);
+    
+    CGFloat footerSize = [self footerSize].height;
+    viewHeight -= footerSize;
+    NSLog(@"footerSize : %f",footerSize);
+    
+    NSLog(@"viewHeight : %f", viewHeight);
+    
+    CGFloat cellHeight = [self cellSize].height;
+    NSLog(@"cellHeight : %f",cellHeight);
+    
+    NSInteger count = (int)(viewHeight/cellHeight);
+    NSLog(@"count : %d", count);
+
+    return count;
+}
+
 
 #pragma mark - View lifecycle
 
@@ -72,6 +102,10 @@ static NSString *_instagramMinId = nil;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _columnCount = 4;
+    _rowCount = [self rowCount];
+    _resultPerPage = _columnCount*_rowCount;
     
     [self.collectionView registerClass:[DZPhotoCell class] forCellWithReuseIdentifier:kThumbCellID];
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
@@ -123,6 +157,23 @@ static NSString *_instagramMinId = nil;
     return flowLayout;
 }
 
+- (CGSize)cellSize
+{
+    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
+    CGFloat size = (self.navigationController.view.bounds.size.width/_columnCount) - flowLayout.minimumLineSpacing;
+    return CGSizeMake(size, size);
+}
+
+- (CGSize)headerSize
+{
+    return [_searchBar isFirstResponder] ? CGSizeMake(0, 94.0) : CGSizeMake(0, 50.0);
+}
+
+- (CGSize)footerSize
+{
+    return CGSizeMake(0, (self.navigationController.view.frame.size.height > 480.0) ? 60.0 : 50.0);
+}
+
 - (DZPhotoPickerController *)navigationController
 {
     return (DZPhotoPickerController *)[super navigationController];
@@ -134,7 +185,7 @@ static NSString *_instagramMinId = nil;
     {
         _searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
         _searchBar.barStyle = UIBarStyleDefault;
-        _searchBar.placeholder = @"Search";
+        _searchBar.placeholder = NSLocalizedString(@"Search", nil);
         _searchBar.backgroundColor = [UIColor whiteColor];
         _searchBar.barTintColor = [UIColor colorWithWhite:0.9 alpha:1.0];
         _searchBar.tintColor = self.view.window.tintColor;
@@ -152,16 +203,9 @@ static NSString *_instagramMinId = nil;
     {
         _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         _activityIndicator.hidesWhenStopped = YES;
-        
-        UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
-        [self.navigationItem setLeftBarButtonItem:barButtonItem];
     }
+    _activityIndicator.center = _activityIndicator.superview.center;
     return _activityIndicator;
-}
-
-- (UIBarPosition)positionForBar:(id <UIBarPositioning>)bar
-{
-    return UIBarPositionTopAttached;
 }
 
 - (UIButton *)loadButton
@@ -169,9 +213,12 @@ static NSString *_instagramMinId = nil;
     if (!_loadButton)
     {
         _loadButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [_loadButton setTitle:@"Load More" forState:UIControlStateNormal];
+        [_loadButton setTitle:NSLocalizedString(@"Load More", nil) forState:UIControlStateNormal];
         [_loadButton addTarget:self action:@selector(loadMoreData:) forControlEvents:UIControlEventTouchUpInside];
         [_loadButton.titleLabel setFont:[UIFont systemFontOfSize:17.0]];
+        [_loadButton setBackgroundColor:self.collectionView.backgroundView.backgroundColor];
+        
+        [_loadButton addSubview:self.activityIndicator];
     }
     return _loadButton;
 }
@@ -214,7 +261,11 @@ static NSString *_instagramMinId = nil;
     if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeYahooImages) > 0) {
         [titles addObject:@"Yahoo"];
     }
+    if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypePanoramio) > 0) {
+        [titles addObject:@"Panoramio"];
+    }
     
+//    if (titles.count == 3) return titles;
     return titles;
 }
 
@@ -238,6 +289,9 @@ static NSString *_instagramMinId = nil;
             
         case DZPhotoPickerControllerServiceTypeYahooImages:
             return @"Yahoo Images";
+            
+        case DZPhotoPickerControllerServiceTypePanoramio:
+            return @"Panoramio";
             
         default:
             return nil;
@@ -303,8 +357,6 @@ static NSString *_instagramMinId = nil;
     else if ((_selectedService & DZPhotoPickerControllerServiceTypeFlickr) > 0) {
         for (NSDictionary *object in reponse) {
             
-            NSLog(@"object : %@", object);
-            
             DZPhoto *photo = [DZPhoto newPhotoWithTitle:[object valueForKey:@"title"]
                                              authorName:[object valueForKey:@"owner"]
                                                thumbURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:object]
@@ -363,7 +415,7 @@ static NSString *_instagramMinId = nil;
 {
     [self handleActivityIndicators:NO];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
     [alert show];
 }
 
@@ -374,8 +426,14 @@ static NSString *_instagramMinId = nil;
     }
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = visible;
-    if (visible) [self.activityIndicator startAnimating];
-    else [self.activityIndicator stopAnimating];
+    if (visible) {
+        [self.activityIndicator startAnimating];
+        [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
+    }
+    else {
+        [self.activityIndicator stopAnimating];
+        [_loadButton setTitleColor:self.view.window.tintColor forState:UIControlStateNormal];
+    }
     
     _loading = visible;
 }
@@ -394,9 +452,9 @@ static NSString *_instagramMinId = nil;
         DZPhoto *photo = [_photos objectAtIndex:indexPath.row];
         
         [self handleActivityIndicators:YES];
-        
+
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:photo.fullURL
-                                                              options:SDWebImageDownloaderUseNSURLCache
+                                                              options:SDWebImageCacheMemoryOnly|SDWebImageLowPriority|SDWebImageRetryFailed
                                                              progress:NULL
                                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
                                                                 if (!error) {
@@ -472,8 +530,6 @@ static NSString *_instagramMinId = nil;
 
 - (void)stopAnyRequest
 {
-    NSLog(@"%s",__FUNCTION__);
-    
     [self handleActivityIndicators:NO];
     
     if ((_selectedService & DZPhotoPickerControllerServiceType500px) > 0) {
@@ -632,19 +688,17 @@ static NSString *_instagramMinId = nil;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)collectionViewLayout;
-    CGFloat size = ([UIScreen mainScreen].bounds.size.width/_columnCount) - flowLayout.minimumLineSpacing;
-    return CGSizeMake(size, size);
+    return [self cellSize];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    return [_searchBar isFirstResponder] ? CGSizeMake(0, 94.0) : CGSizeMake(0, 50.0);
+    return [self headerSize];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    return ([self shouldShowFooter]) ? CGSizeMake(0, ([[UIScreen mainScreen] bounds].size.height == 568.0f) ? 60.0 : 50.0) : CGSizeZero;
+    return [self footerSize];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
