@@ -1,18 +1,19 @@
 //
 //  DZPhotoEditViewController.m
-//  Sample
+//  DZPhotoPickerController
+//  https://github.com/dzenbot/DZPhotoPickerController
 //
-//  Created by Ignacio on 10/5/13.
+//  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
+//  Licence: MIT-Licence
 //
 
 #import "DZPhotoEditViewController.h"
 #import "DZPhotoDisplayController.h"
 
-// pi is approximately equal to 3.14159265359.
-#define DEGREES_TO_RADIANS(degrees) ((pi * degrees)/ 180)
+#define kInnerEdgeInset 15.0
 
-@interface DZPhotoEditViewController ()
+@interface DZPhotoEditViewController () <UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIButton *cancelButton;
@@ -21,6 +22,9 @@
 @end
 
 @implementation DZPhotoEditViewController
+@synthesize photo = _photo;
+@synthesize cropMode = _cropMode;
+@synthesize cropSize = _cropSize;
 
 - (instancetype)initWithCropMode:(DZPhotoEditViewControllerCropMode)mode;
 {
@@ -162,9 +166,29 @@
 - (void)setCropSize:(CGSize)cropSize
 {
     CGSize viewSize = self.view.bounds.size;
-    CGFloat cropHeight = roundf(cropSize.height/(cropSize.width/viewSize.width));
-    
+    CGFloat cropHeight = roundf((cropSize.height*viewSize.width)/cropSize.width);// roundf(cropSize.height/(cropSize.width/viewSize.width));
     _cropSize = CGSizeMake(cropSize.width, cropHeight);
+    
+    NSLog(@"_cropSize : %@", NSStringFromCGSize(_cropSize));
+}
+
+- (CGSize)cropSize
+{
+    CGSize viewSize = self.view.bounds.size;
+    
+    switch (_cropMode) {
+        case DZPhotoEditViewControllerCropModeCustom:
+            if (CGSizeEqualToSize(_cropSize, CGSizeZero) ) {
+                return CGSizeMake(viewSize.width, viewSize.width);
+            }
+            else return _cropSize;
+            
+        case DZPhotoEditViewControllerCropModeCircular:
+            return CGSizeMake(viewSize.width-(kInnerEdgeInset*2), viewSize.width-(kInnerEdgeInset*2));
+            
+        default:
+            return CGSizeMake(viewSize.width, viewSize.width);
+    }
 }
 
 - (UIImage *)overlayMask
@@ -188,8 +212,9 @@
     CGFloat width = size.width;
     CGFloat height = size.height;
     CGFloat margin = (height-width)/2;
-    
-    // Create a UIBezierPath for a Triangle
+    CGFloat lineWidth = 1.0;
+
+    // Create a UIBezierPath
     UIGraphicsBeginImageContextWithOptions(size, NO, 0);
     
     // Color Declarations
@@ -214,9 +239,9 @@
     [path fill];
     
     // Crop square Drawing
-    UIBezierPath *square = [UIBezierPath bezierPathWithRect: CGRectMake(0.5, margin+0.5, width-1, width-1)];
+    UIBezierPath *square = [UIBezierPath bezierPathWithRect: CGRectMake(lineWidth/2, margin+lineWidth/2, width-lineWidth, width-lineWidth)];
     [strokeColor setStroke];
-    square.lineWidth = 1;
+    square.lineWidth = lineWidth;
     [square stroke];
     
     //Create a UIImage using the current context.
@@ -233,11 +258,11 @@
     CGFloat width = size.width;
     CGFloat height = size.height;
     
-    CGFloat diameter = 290.0;
+    CGFloat diameter = width-(kInnerEdgeInset*2);
     CGFloat radius = diameter/2;
     CGPoint center = CGPointMake(width/2, height/2);
     
-    // Create a UIBezierPath for a Triangle
+    // Create a UIBezierPath
     UIGraphicsBeginImageContextWithOptions(size, NO, 0);
     
     // Color Declarations
@@ -261,7 +286,7 @@
 {
     UIImage *_image = nil;
     
-    CGFloat margin = (_cropMode == DZPhotoEditViewControllerCropModeCircular) ? 15.0 : 0.0;
+    CGFloat margin = (_cropMode == DZPhotoEditViewControllerCropModeCircular) ? kInnerEdgeInset : 0.0;
     CGFloat width = self.view.bounds.size.width-(margin*2.0);
     CGRect rect = CGRectMake(-_scrollView.contentOffset.x - (margin), -_scrollView.contentOffset.y - 80.0, width, width);
 

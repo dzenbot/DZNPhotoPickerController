@@ -78,6 +78,7 @@
     imagePickerController.allowsEditing = YES;
     imagePickerController.sourceType = sourceType;
     imagePickerController.delegate = self;
+    [UIImagePickerController availableMediaTypesForSourceType:0];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         popoverController = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];

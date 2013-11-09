@@ -1,9 +1,11 @@
 //
 //  DZPhotoDisplayController.m
-//  Sample
+//  DZPhotoPickerController
+//  https://github.com/dzenbot/DZPhotoPickerController
 //
-//  Created by Ignacio on 10/5/13.
+//  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
+//  Licence: MIT-Licence
 //
 
 #import "DZPhotoDisplayController.h"
@@ -20,7 +22,7 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
 static NSString *_instagramMaxId = nil;
 static NSString *_instagramMinId = nil;
 
-@interface DZPhotoDisplayController () <UISearchBarDelegate, UICollectionViewDelegateFlowLayout>
+@interface DZPhotoDisplayController () <UISearchDisplayDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSMutableArray *photos;
 @property (nonatomic, strong) UISearchBar *searchBar;

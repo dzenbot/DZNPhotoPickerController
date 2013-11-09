@@ -1,9 +1,11 @@
 //
 //  DZPhotoEditViewController.h
-//  Sample
+//  DZPhotoPickerController
+//  https://github.com/dzenbot/DZPhotoPickerController
 //
-//  Created by Ignacio on 10/5/13.
+//  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
+//  Licence: MIT-Licence
 //
 
 #import <UIKit/UIKit.h>
@@ -21,7 +23,7 @@ typedef NS_ENUM(NSInteger, DZPhotoEditViewControllerCropMode) {
 /*
  * The controller in charge of displaying the big resolution image with the different cropping modes.
  */
-@interface DZPhotoEditViewController : UIViewController <UIScrollViewDelegate>
+@interface DZPhotoEditViewController : UIViewController
 
 
 /* The photo data object. */

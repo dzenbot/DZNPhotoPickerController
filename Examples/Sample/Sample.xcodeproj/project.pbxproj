@@ -232,17 +232,17 @@
 		4F570179180E5E6D00E12444 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4F570189180E5E7400E12444 /* External */,
-				4F57017A180E5E6D00E12444 /* DZPhoto.h */,
-				4F57017B180E5E6D00E12444 /* DZPhoto.m */,
-				4F57017C180E5E6D00E12444 /* DZPhotoCell.h */,
-				4F57017D180E5E6D00E12444 /* DZPhotoCell.m */,
+				4F570182180E5E6D00E12444 /* DZPhotoPickerController.h */,
+				4F570183180E5E6D00E12444 /* DZPhotoPickerController.m */,
 				4F57017E180E5E6D00E12444 /* DZPhotoDisplayController.h */,
 				4F57017F180E5E6D00E12444 /* DZPhotoDisplayController.m */,
 				4F570180180E5E6D00E12444 /* DZPhotoEditViewController.h */,
 				4F570181180E5E6D00E12444 /* DZPhotoEditViewController.m */,
-				4F570182180E5E6D00E12444 /* DZPhotoPickerController.h */,
-				4F570183180E5E6D00E12444 /* DZPhotoPickerController.m */,
+				4F57017A180E5E6D00E12444 /* DZPhoto.h */,
+				4F57017B180E5E6D00E12444 /* DZPhoto.m */,
+				4F57017C180E5E6D00E12444 /* DZPhotoCell.h */,
+				4F57017D180E5E6D00E12444 /* DZPhotoCell.m */,
+				4F570189180E5E7400E12444 /* External */,
 			);
 			name = Source;
 			path = ../../Source;
