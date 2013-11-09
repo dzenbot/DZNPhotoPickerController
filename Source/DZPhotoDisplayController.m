@@ -25,10 +25,10 @@ static NSString *_instagramMinId = nil;
 @interface DZPhotoDisplayController () <UISearchDisplayDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSMutableArray *photos;
-@property (nonatomic, strong) UISearchBar *searchBar;
-@property (nonatomic, strong) UIButton *loadButton;
-@property (nonatomic, strong) UIView *overlayView;
-@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, readwrite) UISearchBar *searchBar;
+@property (nonatomic, readwrite) UIButton *loadButton;
+@property (nonatomic, readwrite) UIView *overlayView;
+@property (nonatomic, readwrite) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic) DZPhotoPickerControllerServiceType selectedService;
 @property (nonatomic) DZPhotoPickerControllerServiceType previousService;
 @property (nonatomic) int resultPerPage;
@@ -604,6 +604,7 @@ static NSString *_instagramMinId = nil;
     
     DZPhoto *photo = [_photos objectAtIndex:indexPath.row];
     
+    [cell.imageView cancelCurrentImageLoad];
     [cell.imageView setImageWithURL:photo.thumbURL placeholderImage:nil
                               options:SDWebImageProgressiveDownload|SDWebImageRetryFailed completed:NULL];
     
