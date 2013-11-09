@@ -1,0 +1,1 @@
+../../FlickrKit/Classes/Model/Generated/Urls/FKFlickrUrlsGetUserPhotos.h

@@ -1,0 +1,1 @@
+../../FlickrKit/Classes/Model/FKAPIMethods.h

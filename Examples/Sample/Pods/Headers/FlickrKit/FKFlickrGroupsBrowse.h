@@ -1,0 +1,1 @@
+../../FlickrKit/Classes/Model/Generated/Groups/FKFlickrGroupsBrowse.h

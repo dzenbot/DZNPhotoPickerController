@@ -1,0 +1,1 @@
+../../FlickrKit/Classes/Model/Generated/Photos/Transform/FKFlickrPhotosTransformRotate.h

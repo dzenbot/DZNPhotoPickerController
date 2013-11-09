@@ -1,0 +1,1 @@
+../../FlickrKit/Classes/FlickrKit.h

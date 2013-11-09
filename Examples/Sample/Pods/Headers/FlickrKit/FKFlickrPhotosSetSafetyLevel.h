@@ -1,0 +1,1 @@
+../../FlickrKit/Classes/Model/Generated/Photos/FKFlickrPhotosSetSafetyLevel.h
