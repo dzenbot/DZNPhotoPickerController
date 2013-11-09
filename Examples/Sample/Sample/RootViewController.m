@@ -1,20 +1,20 @@
 //
-//  DZViewController.m
+//  RootViewController.m
 //  Sample
 //
 //  Created by Ignacio on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
 //
 
-#import "DZViewController.h"
+#import "RootViewController.h"
 #import "DZPhotoPickerController.h"
 
-@interface ViewController () {
+@interface RootViewController () {
     UIPopoverController *popoverController;
 }
 @end
 
-@implementation ViewController
+@implementation RootViewController
 
 + (void)initialize
 {

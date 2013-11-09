@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  RootViewController.h
 //  Sample
 //
 //  Created by Ignacio on 10/5/13.
@@ -10,9 +10,9 @@
 
 #import "DZPhotoPickerController.h"
 
-@interface ViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate,
-                                            UIImagePickerControllerDelegate, DZPhotoPickerControllerDelegate,
-                                            UIPopoverControllerDelegate>
+@interface RootViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate,
+                                                UIImagePickerControllerDelegate, DZPhotoPickerControllerDelegate,
+                                                UIPopoverControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIButton *button;
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;

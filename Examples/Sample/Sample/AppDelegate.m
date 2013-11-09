@@ -1,14 +1,14 @@
 //
-//  DZAppDelegate.m
+//  AppDelegate.m
 //  Sample
 //
 //  Created by Ignacio on 10/16/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
 //
 
-#import "DZAppDelegate.h"
+#import "AppDelegate.h"
 
-@implementation DZAppDelegate
+@implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

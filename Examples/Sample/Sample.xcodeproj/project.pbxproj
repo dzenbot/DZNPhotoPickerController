@@ -6,6 +6,19 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		4F4ADE92182DD9C9007AC796 /* Documentation */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4F4ADE95182DD9C9007AC796 /* Build configuration list for PBXAggregateTarget "Documentation" */;
+			buildPhases = (
+			);
+			dependencies = (
+			);
+			name = Documentation;
+			productName = Documentation;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		09545463FFA2473F9F223361 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81CB7D6B303A4384A940032C /* libPods.a */; };
 		4F570141180E5D0E00E12444 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570140180E5D0E00E12444 /* Foundation.framework */; };
@@ -13,10 +26,10 @@
 		4F570145180E5D0E00E12444 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570144180E5D0E00E12444 /* UIKit.framework */; };
 		4F57014B180E5D0E00E12444 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F570149180E5D0E00E12444 /* InfoPlist.strings */; };
 		4F57014D180E5D0E00E12444 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57014C180E5D0E00E12444 /* main.m */; };
-		4F570151180E5D0E00E12444 /* DZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570150180E5D0E00E12444 /* DZAppDelegate.m */; };
+		4F570151180E5D0E00E12444 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570150180E5D0E00E12444 /* AppDelegate.m */; };
 		4F570154180E5D0E00E12444 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F570152180E5D0E00E12444 /* Main_iPhone.storyboard */; };
 		4F570157180E5D0E00E12444 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F570155180E5D0E00E12444 /* Main_iPad.storyboard */; };
-		4F57015A180E5D0E00E12444 /* DZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570159180E5D0E00E12444 /* DZViewController.m */; };
+		4F57015A180E5D0E00E12444 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570159180E5D0E00E12444 /* RootViewController.m */; };
 		4F57015C180E5D0E00E12444 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F57015B180E5D0E00E12444 /* Images.xcassets */; };
 		4F570163180E5D0E00E12444 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570162180E5D0E00E12444 /* XCTest.framework */; };
 		4F570164180E5D0E00E12444 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570140180E5D0E00E12444 /* Foundation.framework */; };
@@ -62,12 +75,12 @@
 		4F57014A180E5D0E00E12444 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4F57014C180E5D0E00E12444 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F57014E180E5D0E00E12444 /* Sample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sample-Prefix.pch"; sourceTree = "<group>"; };
-		4F57014F180E5D0E00E12444 /* DZAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZAppDelegate.h; sourceTree = "<group>"; };
-		4F570150180E5D0E00E12444 /* DZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DZAppDelegate.m; sourceTree = "<group>"; };
+		4F57014F180E5D0E00E12444 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4F570150180E5D0E00E12444 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4F570153180E5D0E00E12444 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		4F570156180E5D0E00E12444 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		4F570158180E5D0E00E12444 /* DZViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZViewController.h; sourceTree = "<group>"; };
-		4F570159180E5D0E00E12444 /* DZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DZViewController.m; sourceTree = "<group>"; };
+		4F570158180E5D0E00E12444 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		4F570159180E5D0E00E12444 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		4F57015B180E5D0E00E12444 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4F570161180E5D0E00E12444 /* SampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F570162180E5D0E00E12444 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -174,10 +187,10 @@
 		4F570146180E5D0E00E12444 /* Sample */ = {
 			isa = PBXGroup;
 			children = (
-				4F57014F180E5D0E00E12444 /* DZAppDelegate.h */,
-				4F570150180E5D0E00E12444 /* DZAppDelegate.m */,
-				4F570158180E5D0E00E12444 /* DZViewController.h */,
-				4F570159180E5D0E00E12444 /* DZViewController.m */,
+				4F57014F180E5D0E00E12444 /* AppDelegate.h */,
+				4F570150180E5D0E00E12444 /* AppDelegate.m */,
+				4F570158180E5D0E00E12444 /* RootViewController.h */,
+				4F570159180E5D0E00E12444 /* RootViewController.m */,
 				4F570152180E5D0E00E12444 /* Main_iPhone.storyboard */,
 				4F570155180E5D0E00E12444 /* Main_iPad.storyboard */,
 				4F57015B180E5D0E00E12444 /* Images.xcassets */,
@@ -354,6 +367,7 @@
 			projectRoot = "";
 			targets = (
 				4F57013C180E5D0E00E12444 /* Sample */,
+				4F4ADE92182DD9C9007AC796 /* Documentation */,
 				4F570160180E5D0E00E12444 /* SampleTests */,
 			);
 		};
@@ -430,10 +444,10 @@
 				4F570186180E5E6D00E12444 /* DZPhotoDisplayController.m in Sources */,
 				4F5701B1180E5E8900E12444 /* IGUser.m in Sources */,
 				4F570184180E5E6D00E12444 /* DZPhoto.m in Sources */,
-				4F570151180E5D0E00E12444 /* DZAppDelegate.m in Sources */,
+				4F570151180E5D0E00E12444 /* AppDelegate.m in Sources */,
 				4F5701B2180E5E8900E12444 /* Notification.m in Sources */,
 				4F5701AA180E5E8900E12444 /* IGImage.m in Sources */,
-				4F57015A180E5D0E00E12444 /* DZViewController.m in Sources */,
+				4F57015A180E5D0E00E12444 /* RootViewController.m in Sources */,
 				4F5701A7180E5E8900E12444 /* InstagramEngine.m in Sources */,
 				4F570188180E5E6D00E12444 /* DZPhotoPickerController.m in Sources */,
 				4F57014D180E5D0E00E12444 /* main.m in Sources */,
@@ -497,6 +511,20 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4F4ADE93182DD9C9007AC796 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4F4ADE94182DD9C9007AC796 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		4F570170180E5D0E00E12444 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -644,6 +672,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4F4ADE95182DD9C9007AC796 /* Build configuration list for PBXAggregateTarget "Documentation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F4ADE93182DD9C9007AC796 /* Debug */,
+				4F4ADE94182DD9C9007AC796 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		4F570138180E5D0E00E12444 /* Build configuration list for PBXProject "Sample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
