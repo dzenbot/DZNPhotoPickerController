@@ -31,7 +31,6 @@
     self = [super init];
     if (self) {
         _cropMode = mode;
-//        _cropHeight = self.view.bounds.size.width;
     }
     return self;
 }

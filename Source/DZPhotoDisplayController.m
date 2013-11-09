@@ -53,14 +53,16 @@ static NSString *_instagramMinId = nil;
     return self;
 }
 
-- (NSInteger)rowCount
+- (CGSize)contentSize
 {
     CGFloat viewHeight = self.navigationController.view.frame.size.height;
     NSLog(@"viewHeight : %f", viewHeight);
     
-    CGFloat statusHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    viewHeight -= statusHeight;
-    NSLog(@"statusHeight : %f",statusHeight);
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        CGFloat statusHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+        viewHeight -= statusHeight;
+        NSLog(@"statusHeight : %f",statusHeight);
+    }
     
     CGFloat navigationHeight = self.navigationController.navigationBar.frame.size.height;
     viewHeight -= navigationHeight;
@@ -70,16 +72,23 @@ static NSString *_instagramMinId = nil;
     viewHeight -= headerSize;
     NSLog(@"headerSize : %f",headerSize);
     
+    return CGSizeMake(self.navigationController.view.frame.size.width, viewHeight);
+}
+
+- (NSUInteger)rowCount
+{
+    CGSize contentSize = [self contentSize];
+    
     CGFloat footerSize = [self footerSize].height;
-    viewHeight -= footerSize;
+    contentSize.height -= footerSize;
     NSLog(@"footerSize : %f",footerSize);
     
-    NSLog(@"viewHeight : %f", viewHeight);
+    NSLog(@"contentSize.height : %f", contentSize.height);
     
     CGFloat cellHeight = [self cellSize].height;
     NSLog(@"cellHeight : %f",cellHeight);
     
-    NSInteger count = (int)(viewHeight/cellHeight);
+    NSUInteger count = (int)(contentSize.height/cellHeight);
     NSLog(@"count : %d", count);
 
     return count;
@@ -166,7 +175,7 @@ static NSString *_instagramMinId = nil;
 
 - (CGSize)headerSize
 {
-    return [_searchBar isFirstResponder] ? CGSizeMake(0, 94.0) : CGSizeMake(0, 50.0);
+    return [_searchBar isFirstResponder] ? CGSizeMake(0, 94.0) : CGSizeMake(0, 44.0);
 }
 
 - (CGSize)footerSize
@@ -197,23 +206,13 @@ static NSString *_instagramMinId = nil;
     return _searchBar;
 }
 
-- (UIActivityIndicatorView *)activityIndicator
-{
-    if (!_activityIndicator)
-    {
-        _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        _activityIndicator.hidesWhenStopped = YES;
-    }
-    _activityIndicator.center = _activityIndicator.superview.center;
-    return _activityIndicator;
-}
-
 - (UIButton *)loadButton
 {
     if (!_loadButton)
     {
         _loadButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_loadButton setTitle:NSLocalizedString(@"Load More", nil) forState:UIControlStateNormal];
+        [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
         [_loadButton addTarget:self action:@selector(loadMoreData:) forControlEvents:UIControlEventTouchUpInside];
         [_loadButton.titleLabel setFont:[UIFont systemFontOfSize:17.0]];
         [_loadButton setBackgroundColor:self.collectionView.backgroundView.backgroundColor];
@@ -222,6 +221,18 @@ static NSString *_instagramMinId = nil;
     }
     return _loadButton;
 }
+
+- (UIActivityIndicatorView *)activityIndicator
+{
+    if (!_activityIndicator)
+    {
+        _activityIndicator = [[UIActivityIndicatorView alloc] init];
+        _activityIndicator.hidesWhenStopped = YES;
+    }
+    _activityIndicator.center = _activityIndicator.superview.center;
+    return _activityIndicator;
+}
+
 
 - (UIView *)overlayView
 {
@@ -384,7 +395,7 @@ static NSString *_instagramMinId = nil;
 
 - (BOOL)shouldShowFooter
 {
-    return (_photos.count > 0 && _photos.count%_resultPerPage == 0) ? YES : NO;
+    return (_photos.count%_resultPerPage == 0) ? YES : NO;
 }
 
 
@@ -426,6 +437,7 @@ static NSString *_instagramMinId = nil;
     }
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = visible;
+    
     if (visible) {
         [self.activityIndicator startAnimating];
         [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
@@ -519,11 +531,13 @@ static NSString *_instagramMinId = nil;
         
         [NRGramKit getMediaRecentInTagWithName:term count:_resultPerPage maxTagId:_instagramMaxId minTagId:_instagramMinId
                                   withCallback:^(NSArray *medias, IGPagination *pagination){
-                                      if (medias) [self handleResponse:medias];
-                                      if (pagination) {
-                                          _instagramMaxId = pagination.nextMaxId;
-                                          _instagramMinId = pagination.nextMinId;
-                                      }
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          if (medias) [self handleResponse:medias];
+                                          if (pagination) {
+                                              _instagramMaxId = pagination.nextMaxId;
+                                              _instagramMinId = pagination.nextMinId;
+                                          }
+                                      });
                                   }];
     }
 }
@@ -621,15 +635,23 @@ static NSString *_instagramMinId = nil;
         if ([self shouldShowFooter]) {
             if (footer.subviews.count == 0) {
                 [footer addSubview:self.loadButton];
-                [_loadButton setFrame:footer.bounds];
             }
-            _loadButton.enabled = YES;
+            _loadButton.frame = footer.bounds;
+            
+            if (_photos.count > 0) {
+                _loadButton.enabled = YES;
+                [self.activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+            }
+            else {
+                _loadButton.enabled = NO;
+                [self.activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+                self.activityIndicator.color = [UIColor grayColor];
+            }
         }
         else {
             [_loadButton removeFromSuperview];
             [self setLoadButton:nil];
         }
-        
         return footer;
     }
     
@@ -698,7 +720,15 @@ static NSString *_instagramMinId = nil;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    return [self footerSize];
+    CGSize size = CGSizeZero;
+    if (_photos.count == 0) size = [self contentSize];
+    else size = [self footerSize];
+    
+    NSLog(@"footer size : %@", NSStringFromCGSize(size));
+    return size;
+    
+//    if (_photos.count == 0) return self.view.frame.size;
+//    else return [self footerSize];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath

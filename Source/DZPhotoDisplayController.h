@@ -32,9 +32,9 @@ static NSString *UIImagePickerControllerSourceName = @"UIImagePickerControllerSo
 /* The searching string. If setted before presentation, the controller will automatically start searching. */
 @property (nonatomic, strong) NSString *searchTerm;
 /* The count number of columns of thumbs to be displayed. */
-@property (nonatomic) NSInteger columnCount;
+@property (nonatomic) NSUInteger columnCount;
 /* The count number of rows of thumbs to be diplayed. */
-@property (nonatomic) NSInteger rowCount;
+@property (nonatomic) NSUInteger rowCount;
 /* YES if the controller started a request and loading content. */
 @property (nonatomic, getter = isLoading) BOOL loading;
 
