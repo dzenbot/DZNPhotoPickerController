@@ -109,8 +109,10 @@
 
 - (void)setCustomCropSize:(CGSize)size
 {
-    _customCropSize = size;
-    _editingMode = DZPhotoEditViewControllerCropModeCustom;
+    if (_editingMode != DZPhotoEditViewControllerCropModeCircular) {
+        _customCropSize = size;
+        _editingMode = DZPhotoEditViewControllerCropModeCustom;
+    }
 }
 
 

@@ -129,11 +129,11 @@
     {
         _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height-72.0, self.view.bounds.size.width, 72.0)];
         
-        _cancelButton = [self buttonWithTitle:@"Cancel"];
+        _cancelButton = [self buttonWithTitle:NSLocalizedString(@"Cancel", nil)];
         [_cancelButton addTarget:self action:@selector(cancelEdition:) forControlEvents:UIControlEventTouchUpInside];
         [_bottomView addSubview:_cancelButton];
         
-        _acceptButton = [self buttonWithTitle:@"Choose"];
+        _acceptButton = [self buttonWithTitle:NSLocalizedString(@"Choose", nil)];
         [_acceptButton addTarget:self action:@selector(acceptEdition:) forControlEvents:UIControlEventTouchUpInside];
         [_acceptButton setTitleColor:[UIColor colorWithWhite:1 alpha:0.5] forState:UIControlStateDisabled];
         [_acceptButton setEnabled:NO];
@@ -151,7 +151,7 @@
         if (_cropMode == DZPhotoEditViewControllerCropModeCircular)
         {
             UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-            topLabel.text = @"Move and Scale";
+            topLabel.text = NSLocalizedString(@"Move and Scale", nil);
             topLabel.textColor = [UIColor whiteColor];
             topLabel.font = [UIFont systemFontOfSize:18.0];
             [topLabel sizeToFit];
@@ -187,12 +187,15 @@
             if (CGSizeEqualToSize(_cropSize, CGSizeZero) ) {
                 return CGSizeMake(viewSize.width, viewSize.width);
             }
-            else return _cropSize;
-            
-        case DZPhotoEditViewControllerCropModeCircular:
-            return CGSizeMake(viewSize.width-(kInnerEdgeInset*2), viewSize.width-(kInnerEdgeInset*2));
+            else {
+                if (viewSize.height > 0 && _cropSize.height > viewSize.height) {
+                    _cropSize.height = viewSize.height;
+                }
+                return _cropSize;
+            }
             
         case DZPhotoEditViewControllerCropModeSquare:
+        case DZPhotoEditViewControllerCropModeCircular:
         default:
             return CGSizeMake(viewSize.width, viewSize.width);
     }
@@ -203,9 +206,7 @@
     CGSize viewSize = self.navigationController.view.bounds.size;
     CGSize cropSize = [self cropSize];
     CGFloat verticalMargin = (viewSize.height-cropSize.height)/2;
-    CGFloat horizontalMargin = (_cropMode == DZPhotoEditViewControllerCropModeCircular) ? kInnerEdgeInset : 0.0;
-    
-    return CGRectMake(horizontalMargin, verticalMargin, cropSize.width, cropSize.height);
+    return CGRectMake(0.0, verticalMargin, cropSize.width, cropSize.height);
 }
 
 - (UIImage *)overlayMask
@@ -308,46 +309,49 @@
     // Constant sizes
     CGSize viewSize = self.navigationController.view.bounds.size;
     CGRect cropRect = [self cropRect];
-    
+
     CGFloat width = viewSize.width;
     CGFloat height = viewSize.height;
     CGFloat verticalMargin = (height-cropRect.size.height)/2;
-    CGFloat horizontalMargin = 0.0;
-    
-    CGFloat diameter = width-(kInnerEdgeInset*2);
-    CGFloat radius = diameter/2;
-    CGPoint center = CGPointMake(width/2, height/2);
 
-    cropRect.origin.x = -_scrollView.contentOffset.x - (horizontalMargin);
+    cropRect.origin.x = -_scrollView.contentOffset.x;
     cropRect.origin.y = -_scrollView.contentOffset.y - verticalMargin;
     
-    NSLog(@"crop rect : %@", NSStringFromCGRect(cropRect));
 
-    UIGraphicsBeginImageContextWithOptions(cropRect.size, NO, 0);
+    UIGraphicsBeginImageContextWithOptions(cropRect.size, NO, 0);{
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        
+        CGContextTranslateCTM(context, cropRect.origin.x, cropRect.origin.y);
+        [_scrollView.layer renderInContext:context];
+        
+        _image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
     
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetShouldAntialias(context, YES);
+    
+    if (_cropMode == DZPhotoEditViewControllerCropModeCircular) {
+        
+        CGFloat diameter = width-(kInnerEdgeInset*2);
+        CGRect roundedRect = CGRectMake(0, 0, diameter, diameter);
+        
+        UIGraphicsBeginImageContextWithOptions(roundedRect.size, NO, 0.0);{
+            
+            UIBezierPath *bezierPath = [UIBezierPath bezierPathWithOvalInRect:roundedRect];
+            [bezierPath addClip];
+            
+            // Draw the image
+            [_image drawInRect:CGRectMake(0, -kInnerEdgeInset, 320, 320)];
+            
+            CGContextRef context = UIGraphicsGetCurrentContext();
+            
+            CGPathRef path = [bezierPath CGPath];
+            CGContextAddPath(context, path);
+            
+            _image = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+        }
+    }
 
-    CGContextTranslateCTM(context, cropRect.origin.x, cropRect.origin.y);
-    
-//    if (_cropMode == DZPhotoEditViewControllerCropModeCircular) {
-//        UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.navigationController.view.bounds];
-//        [path addArcWithCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:NO];
-//        [path closePath];
-//        
-////        UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(horizontalMargin, verticalMargin, width, cropHeight) cornerRadius:width/2];
-////        [bezierPath addClip];
-////        
-////        CGContextAddPath(context, bezierPath.CGPath);
-////        CGContextSetLineWidth(context, 0);
-////        CGContextStrokeEllipseInRect(context, rect);
-//    }
-    
-    [_scrollView.layer renderInContext:context];
-    
-    _image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
     return _image;
 }
 
@@ -357,7 +361,7 @@
 - (void)setCropSize:(CGSize)cropSize
 {
     CGSize viewSize = self.view.bounds.size;
-    CGFloat cropHeight = roundf((cropSize.height*viewSize.width)/cropSize.width);// roundf(cropSize.height/(cropSize.width/viewSize.width));
+    CGFloat cropHeight = roundf((cropSize.height * viewSize.width) / cropSize.width);
     _cropSize = CGSizeMake(cropSize.width, cropHeight);
 }
 
@@ -475,7 +479,7 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    return self.imageView;
+    return _imageView;
 }
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view

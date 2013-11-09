@@ -99,8 +99,8 @@
     photoPickerController.serviceType = DZPhotoPickerControllerServiceType500px | DZPhotoPickerControllerServiceTypeFlickr | DZPhotoPickerControllerServiceTypeInstagram;
     photoPickerController.startSearchingTerm = @"Patagonia";
     photoPickerController.allowsEditing = YES;
-//    photoPickerController.editingMode = DZPhotoEditViewControllerCropModeCircular;
-    photoPickerController.customCropSize = CGSizeMake(320.0, 160.0);
+    photoPickerController.editingMode = DZPhotoEditViewControllerCropModeCircular;
+//    photoPickerController.customCropSize = CGSizeMake(320.0, 160.0);
     photoPickerController.delegate = self;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -129,9 +129,9 @@
     NSLog(@"%s %@ size : %@",__FUNCTION__, image, NSStringFromCGSize(image.size));
     
     _imageView.image = image;
-    _imageView.contentMode = UIViewContentModeScaleAspectFit;
+    _imageView.contentMode = UIViewContentModeCenter;
     
-    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+//    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
