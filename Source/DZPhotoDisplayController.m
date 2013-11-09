@@ -175,7 +175,7 @@ static NSString *_instagramMinId = nil;
 
 - (CGSize)headerSize
 {
-    return [_searchBar isFirstResponder] ? CGSizeMake(0, 94.0) : CGSizeMake(0, 44.0);
+    return [_searchBar isFirstResponder] ? CGSizeMake(0, 94.0) : CGSizeMake(0, 50.0);
 }
 
 - (CGSize)footerSize
