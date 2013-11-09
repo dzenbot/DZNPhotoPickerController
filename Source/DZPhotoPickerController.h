@@ -15,12 +15,13 @@
 @protocol DZPhotoPickerControllerDelegate;
 
 typedef NS_OPTIONS(NSUInteger, DZPhotoPickerControllerServiceType) {
-    DZPhotoPickerControllerServiceType500px = (1 << 0),             // 500px (http://500px.com/)
-    DZPhotoPickerControllerServiceTypeFlickr = (1 << 1),            // Flickr (http://www.flickr.com/)
-    DZPhotoPickerControllerServiceTypeInstagram = (1 << 2),         // Instagram (http://instagram.com/)
-    DZPhotoPickerControllerServiceTypeGoogleImages = (1 << 3),      // Google Images (http://www.google.com/imghp)
-    DZPhotoPickerControllerServiceTypeBingImages = (1 << 4),        // Bing Images (http://www.bing.com/images/‎)
-    DZPhotoPickerControllerServiceTypeYahooImages = (1 << 5)        // Yahoo Images (http://images.search.yahoo.com/)
+    DZPhotoPickerControllerServiceType500px = (1 << 0),             // 500px            http://developers.500px.com/
+    DZPhotoPickerControllerServiceTypeFlickr = (1 << 1),            // Flickr           http://www.flickr.com/services/api/
+    DZPhotoPickerControllerServiceTypeInstagram = (1 << 2),         // Instagram        http://instagram.com/developer/
+    DZPhotoPickerControllerServiceTypeGoogleImages = (1 << 3),      // Google Images    https://developers.google.com/image-search/
+    DZPhotoPickerControllerServiceTypeBingImages = (1 << 4),        // Bing Images      http://datamarket.azure.com/dataset/bing/search
+    DZPhotoPickerControllerServiceTypeYahooImages = (1 << 5),       // Yahoo Images     http://developer.yahoo.com/boss/search/
+    DZPhotoPickerControllerServiceTypePanoramio = (1 << 6)          // Panoramio        http://www.panoramio.com/api/
 };
 
 /* A simple photo picker for iOS, using common services like 500px, Flickr and many others.

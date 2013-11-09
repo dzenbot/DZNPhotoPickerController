@@ -119,19 +119,12 @@
     NSLog(@"UIImagePickerControllerSourceName : %@",[userInfo objectForKey:UIImagePickerControllerSourceName]);
 
     UIImage *image = [userInfo objectForKey:UIImagePickerControllerEditedImage];
-    if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];
+//    if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];
     
     NSLog(@"%s %@ size : %@",__FUNCTION__, image, NSStringFromCGSize(image.size));
     
     _imageView.image = image;
-    _imageView.contentMode = UIViewContentModeCenter;
-    _imageView.clipsToBounds = NO;
-    
-    CGRect rect = _imageView.frame;
-    rect.size = image.size;
-    _imageView.frame = rect;
-    
-    _imageView.center = self.view.center;
+    _imageView.contentMode = UIViewContentModeScaleAspectFit;
     
     UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 }

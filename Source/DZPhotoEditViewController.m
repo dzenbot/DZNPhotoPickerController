@@ -47,6 +47,8 @@
     
     [self.view addSubview:self.scrollView];
     [self.view addSubview:self.bottomView];
+    
+    self.view.backgroundColor = [UIColor blackColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -105,7 +107,7 @@
     if (!_scrollView)
     {
         _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-        _scrollView.backgroundColor = [UIColor blackColor];
+        _scrollView.backgroundColor = [UIColor clearColor];
         _scrollView.minimumZoomScale = 1.002;
         _scrollView.maximumZoomScale = 4.0;
         _scrollView.showsHorizontalScrollIndicator = NO;
@@ -163,12 +165,18 @@
     return _bottomView;
 }
 
-- (void)setCropSize:(CGSize)cropSize
+- (UIButton *)buttonWithTitle:(NSString *)title
 {
-    CGSize viewSize = self.view.bounds.size;
-    CGFloat cropHeight = roundf((cropSize.height*viewSize.width)/cropSize.width);// roundf(cropSize.height/(cropSize.width/viewSize.width));
-    _cropSize = CGSizeMake(cropSize.width, cropHeight);
+    UIButton *button = [[UIButton alloc] init];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(-1, 0, 0, 0)];
+    [button.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
+    [button sizeToFit];
+    return button;
 }
+
 
 - (CGSize)cropSize
 {
@@ -188,6 +196,16 @@
         default:
             return CGSizeMake(viewSize.width, viewSize.width);
     }
+}
+
+- (CGRect)cropRect
+{
+    CGSize viewSize = self.navigationController.view.bounds.size;
+    CGSize cropSize = [self cropSize];
+    CGFloat verticalMargin = (viewSize.height-cropSize.height)/2;
+    CGFloat horizontalMargin = (_cropMode == DZPhotoEditViewControllerCropModeCircular) ? kInnerEdgeInset : 0.0;
+    
+    return CGRectMake(horizontalMargin, verticalMargin, cropSize.width, cropSize.height);
 }
 
 - (UIImage *)overlayMask
@@ -222,21 +240,21 @@
     UIColor *strokeColor = [UIColor colorWithWhite:1.0 alpha:0.5];
 
     // Bezier Drawing
-    UIBezierPath *marginPath = [UIBezierPath bezierPath];
-    [marginPath moveToPoint:CGPointMake(width, margin)];
-    [marginPath addLineToPoint:CGPointMake(0, margin)];
-    [marginPath addLineToPoint:CGPointMake(0, 0)];
-    [marginPath addLineToPoint:CGPointMake(width, 0)];
-    [marginPath addLineToPoint:CGPointMake(width, margin)];
-    [marginPath closePath];
-    [marginPath moveToPoint:CGPointMake(width, height)];
-    [marginPath addLineToPoint:CGPointMake(0, height)];
-    [marginPath addLineToPoint:CGPointMake(0, [self cropSize].height+margin)];
-    [marginPath addLineToPoint:CGPointMake(width, [self cropSize].height+margin)];
-    [marginPath addLineToPoint:CGPointMake(width, height)];
-    [marginPath closePath];
+    UIBezierPath *maskPath = [UIBezierPath bezierPath];
+    [maskPath moveToPoint:CGPointMake(width, margin)];
+    [maskPath addLineToPoint:CGPointMake(0, margin)];
+    [maskPath addLineToPoint:CGPointMake(0, 0)];
+    [maskPath addLineToPoint:CGPointMake(width, 0)];
+    [maskPath addLineToPoint:CGPointMake(width, margin)];
+    [maskPath closePath];
+    [maskPath moveToPoint:CGPointMake(width, height)];
+    [maskPath addLineToPoint:CGPointMake(0, height)];
+    [maskPath addLineToPoint:CGPointMake(0, [self cropSize].height+margin)];
+    [maskPath addLineToPoint:CGPointMake(width, [self cropSize].height+margin)];
+    [maskPath addLineToPoint:CGPointMake(width, height)];
+    [maskPath closePath];
     [fillColor setFill];
-    [marginPath fill];
+    [maskPath fill];
     
     // Crop square Drawing
     CGRect cropRect = CGRectMake(lineWidth/2, margin+lineWidth/2, width-lineWidth, [self cropSize].height-lineWidth);
@@ -270,11 +288,11 @@
     UIColor *fillColor = [UIColor colorWithWhite:0 alpha:0.5];
 
     // Arc Bezier Drawing
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.navigationController.view.bounds];
-    [path addArcWithCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:NO];
-    [path closePath];
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRect:self.navigationController.view.bounds];
+    [maskPath addArcWithCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:NO];
+    [maskPath closePath];
     [fillColor setFill];
-    [path fill];
+    [maskPath fill];
     
     //Create a UIImage using the current context.
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -287,25 +305,43 @@
 {
     UIImage *_image = nil;
     
-    CGFloat margin = (_cropMode == DZPhotoEditViewControllerCropModeCircular) ? kInnerEdgeInset : 0.0;
-    CGFloat width = self.view.bounds.size.width-(margin*2.0);
-    CGRect rect = CGRectMake(-_scrollView.contentOffset.x - (margin), -_scrollView.contentOffset.y - 80.0, width, width);
+    // Constant sizes
+    CGSize viewSize = self.navigationController.view.bounds.size;
+    CGRect cropRect = [self cropRect];
+    
+    CGFloat width = viewSize.width;
+    CGFloat height = viewSize.height;
+    CGFloat verticalMargin = (height-cropRect.size.height)/2;
+    CGFloat horizontalMargin = 0.0;
+    
+    CGFloat diameter = width-(kInnerEdgeInset*2);
+    CGFloat radius = diameter/2;
+    CGPoint center = CGPointMake(width/2, height/2);
 
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(width,width), NO, 0);
+    cropRect.origin.x = -_scrollView.contentOffset.x - (horizontalMargin);
+    cropRect.origin.y = -_scrollView.contentOffset.y - verticalMargin;
+    
+    NSLog(@"crop rect : %@", NSStringFromCGRect(cropRect));
+
+    UIGraphicsBeginImageContextWithOptions(cropRect.size, NO, 0);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetShouldAntialias(context, YES);
 
-    CGContextTranslateCTM(context, rect.origin.x, rect.origin.y);
+    CGContextTranslateCTM(context, cropRect.origin.x, cropRect.origin.y);
     
-    if (_cropMode == DZPhotoEditViewControllerCropModeCircular) {
-        UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(margin, 80.0, width, width) cornerRadius:width/2];
-        [bezierPath addClip];
-        
-        CGContextAddPath(context, bezierPath.CGPath);
-        CGContextSetLineWidth(context, 0);
-        CGContextStrokeEllipseInRect(context, rect);
-    }
+//    if (_cropMode == DZPhotoEditViewControllerCropModeCircular) {
+//        UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.navigationController.view.bounds];
+//        [path addArcWithCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:NO];
+//        [path closePath];
+//        
+////        UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(horizontalMargin, verticalMargin, width, cropHeight) cornerRadius:width/2];
+////        [bezierPath addClip];
+////        
+////        CGContextAddPath(context, bezierPath.CGPath);
+////        CGContextSetLineWidth(context, 0);
+////        CGContextStrokeEllipseInRect(context, rect);
+//    }
     
     [_scrollView.layer renderInContext:context];
     
@@ -315,21 +351,15 @@
     return _image;
 }
 
-- (UIButton *)buttonWithTitle:(NSString *)title
-{
-    UIButton *button = [[UIButton alloc] init];
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(-1, 0, 0, 0)];
-    [button.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
-    [button sizeToFit];
-    return button;
-}
-
 
 #pragma mark - Setter methods
 
+- (void)setCropSize:(CGSize)cropSize
+{
+    CGSize viewSize = self.view.bounds.size;
+    CGFloat cropHeight = roundf((cropSize.height*viewSize.width)/cropSize.width);// roundf(cropSize.height/(cropSize.width/viewSize.width));
+    _cropSize = CGSizeMake(cropSize.width, cropHeight);
+}
 
 
 #pragma mark - DZPhotoEditViewController methods
@@ -384,7 +414,7 @@
 - (void)acceptEdition:(id)sender
 {
     [DZPhotoEditViewController didFinishPickingEditedImage:[self editedPhoto]
-                                              withCropRect:_imageView.bounds
+                                              withCropRect:[self cropRect]
                                          fromOriginalImage:_imageView.image
                                               referenceURL:_photo.fullURL
                                                 authorName:_photo.authorName
