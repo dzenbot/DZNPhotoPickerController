@@ -444,7 +444,6 @@ static NSString *_instagramMinId = nil;
     }
     else {
         [self.activityIndicator stopAnimating];
-        [_loadButton setTitleColor:self.view.window.tintColor forState:UIControlStateNormal];
     }
     
     _loading = visible;
@@ -641,10 +640,14 @@ static NSString *_instagramMinId = nil;
             
             if (_photos.count > 0) {
                 _loadButton.enabled = YES;
+                [_loadButton setTitleColor:self.view.window.tintColor forState:UIControlStateNormal];
+
                 [self.activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
             }
             else {
                 _loadButton.enabled = NO;
+                [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
+
                 [self.activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
                 self.activityIndicator.color = [UIColor grayColor];
             }
@@ -655,7 +658,6 @@ static NSString *_instagramMinId = nil;
         }
         return footer;
     }
-    
     return nil;
 }
 

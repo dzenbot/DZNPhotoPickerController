@@ -38,16 +38,20 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
+- (void)loadView
 {
-    [super viewDidLoad];
+    [super loadView];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.view.backgroundColor = [UIColor blackColor];
     
     [self.view addSubview:self.scrollView];
     [self.view addSubview:self.bottomView];
-    
-    self.view.backgroundColor = [UIColor blackColor];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -58,12 +62,11 @@
     
     UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     activityIndicatorView.center = CGPointMake(roundf(_bottomView.frame.size.width/2), roundf(_bottomView.frame.size.height/2));
-    activityIndicatorView.hidesWhenStopped = YES;
     [activityIndicatorView startAnimating];
     [_bottomView addSubview:activityIndicatorView];
     
-    __block UIButton *_weakButton = _acceptButton;
-//    __block DZPhotoEditViewController *_weakSelf = self;
+    __weak UIButton *_button = _acceptButton;
+    __weak DZPhotoEditViewController *_self = self;
     
     UIImageView *maskImageView = [[UIImageView alloc] initWithImage:[self overlayMask]];
     [self.view insertSubview:maskImageView aboveSubview:_scrollView];
@@ -71,12 +74,32 @@
     [_imageView setImageWithURL:_photo.fullURL placeholderImage:nil
                         options:SDWebImageProgressiveDownload|SDWebImageRetryFailed|SDWebImageCacheMemoryOnly
                       completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-                          if (!error) [_weakButton setEnabled:YES];
-                          [activityIndicatorView stopAnimating];
-
-//                          [_weakSelf fitContentSize];
+                          if (!error) [_button setEnabled:YES];
+                          [activityIndicatorView removeFromSuperview];
+                          
+                          [_self updateScrollViewContentInset];
                       }];
 }
+
+- (void)updateScrollViewContentInset
+{
+    CGFloat maskHeight = 0;
+    if (_cropMode == DZPhotoEditViewControllerCropModeCircular) maskHeight = [self circularDiameter];
+    else maskHeight = [self cropSize].height;
+    
+    CGSize imageSize = [self imageSize];
+    
+    CGFloat hInset = (_cropMode == DZPhotoEditViewControllerCropModeCircular) ? kInnerEdgeInset : 0.0;
+    CGFloat vInset = (maskHeight-imageSize.height)/2;
+    
+    NSLog(@"hInset : %f", hInset);
+    NSLog(@"vInset : %f", vInset);
+    NSLog(@"imageSize : %@", NSStringFromCGSize(imageSize));
+    
+    _scrollView.contentInset =  UIEdgeInsetsMake(vInset, hInset, vInset, hInset);
+}
+
+
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -146,9 +169,7 @@
         rect.origin = CGPointMake(roundf(_bottomView.frame.size.width-_acceptButton.frame.size.width-13.0), roundf(_bottomView.frame.size.height/2-_acceptButton.frame.size.height/2));
         [_acceptButton setFrame:rect];
         
-        
-        if (_cropMode == DZPhotoEditViewControllerCropModeCircular)
-        {
+        if (_cropMode == DZPhotoEditViewControllerCropModeCircular) {
             UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectZero];
             topLabel.text = NSLocalizedString(@"Move and Scale", nil);
             topLabel.textColor = [UIColor whiteColor];
@@ -175,7 +196,6 @@
     [button sizeToFit];
     return button;
 }
-
 
 - (CGSize)cropSize
 {
@@ -206,6 +226,33 @@
     CGSize cropSize = [self cropSize];
     CGFloat verticalMargin = (viewSize.height-cropSize.height)/2;
     return CGRectMake(0.0, verticalMargin, cropSize.width, cropSize.height);
+}
+
+- (CGFloat)circularDiameter
+{
+    CGSize viewSize = self.navigationController.view.bounds.size;
+    return viewSize.width-(kInnerEdgeInset*2);
+}
+
+- (CGSize)imageSize
+{
+    return CGSizeAspectFit(_imageView.image.size,_imageView.frame.size);
+}
+
+CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
+{
+    NSLog(@"aspectRatio : %@", NSStringFromCGSize(aspectRatio));
+    NSLog(@"boundingSize : %@", NSStringFromCGSize(boundingSize));
+    
+    float hRatio = boundingSize.width / aspectRatio.width;
+    float vRation = boundingSize.height / aspectRatio.height;
+    if (hRatio < vRation) {
+        boundingSize.height = boundingSize.width / aspectRatio.width * aspectRatio.height;
+    }
+    else if (vRation < hRatio) {
+        boundingSize.width = boundingSize.height / aspectRatio.height * aspectRatio.width;
+    }
+    return boundingSize;
 }
 
 - (UIImage *)overlayMask
@@ -309,13 +356,10 @@
     CGSize viewSize = self.navigationController.view.bounds.size;
     CGRect cropRect = [self cropRect];
 
-    CGFloat width = viewSize.width;
-    CGFloat height = viewSize.height;
-    CGFloat verticalMargin = (height-cropRect.size.height)/2;
+    CGFloat verticalMargin = (viewSize.height-cropRect.size.height)/2;
 
     cropRect.origin.x = -_scrollView.contentOffset.x;
     cropRect.origin.y = -_scrollView.contentOffset.y - verticalMargin;
-    
 
     UIGraphicsBeginImageContextWithOptions(cropRect.size, NO, 0);{
         CGContextRef context = UIGraphicsGetCurrentContext();
@@ -330,7 +374,7 @@
     
     if (_cropMode == DZPhotoEditViewControllerCropModeCircular) {
         
-        CGFloat diameter = width-(kInnerEdgeInset*2);
+        CGFloat diameter = [self circularDiameter];
         CGRect roundedRect = CGRectMake(0, 0, diameter, diameter);
         
         UIGraphicsBeginImageContextWithOptions(roundedRect.size, NO, 0.0);{
@@ -366,32 +410,6 @@
 
 
 #pragma mark - DZPhotoEditViewController methods
-
-- (void)fitContentSize
-{
-    CGFloat factor = roundf(_imageView.image.size.width/_scrollView.frame.size.width);
-    NSLog(@"factor : %f",factor);
-    
-    CGFloat height = roundf(_imageView.image.size.height/factor);
-    NSLog(@"height : %f",height);
-    
-    CGFloat difference = _scrollView.contentSize.height-height;
-    NSLog(@"difference : %f",difference);
-    
-    CGSize contentSize = _scrollView.contentSize;
-    contentSize.height += difference;
-    [_scrollView setContentSize:contentSize];
-    
-    CGRect frame = _imageView.frame;
-    frame.origin.y += difference/2;
-    _scrollView.frame = frame;
-    
-    NSLog(@"image.size : %@", NSStringFromCGSize(_imageView.image.size));
-    NSLog(@"_weakImageView.frame.size : %@", NSStringFromCGSize(_imageView.frame.size));
-    
-    NSLog(@"_weakScrollView.contentSize : %@", NSStringFromCGSize(_scrollView.contentSize));
-    NSLog(@"_weakScrollView.contentOffset : %@", NSStringFromCGPoint(_scrollView.contentOffset));
-}
 
 + (void)didFinishPickingEditedImage:(UIImage *)editedImage
                        withCropRect:(CGRect)cropRect
@@ -488,7 +506,7 @@
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
 {
-    
+    [self updateScrollViewContentInset];
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
@@ -514,6 +532,13 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+}
+
+- (void)dealloc
+{
+    _imageView.image = nil;
+    _imageView = nil;
+    _scrollView = nil;
 }
 
 

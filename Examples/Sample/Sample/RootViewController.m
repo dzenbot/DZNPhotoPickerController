@@ -99,7 +99,7 @@
     photoPickerController.serviceType = DZPhotoPickerControllerServiceType500px | DZPhotoPickerControllerServiceTypeFlickr | DZPhotoPickerControllerServiceTypeInstagram;
     photoPickerController.startSearchingTerm = @"Patagonia";
     photoPickerController.allowsEditing = YES;
-    photoPickerController.editingMode = DZPhotoEditViewControllerCropModeCircular;
+//    photoPickerController.editingMode = DZPhotoEditViewControllerCropModeCircular;
 //    photoPickerController.customCropSize = CGSizeMake(320.0, 160.0);
     photoPickerController.delegate = self;
     
