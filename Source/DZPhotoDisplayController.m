@@ -19,9 +19,6 @@ static NSString *kThumbCellID = @"DZPhotoCell";
 static NSString *kThumbHeaderID = @"DZPhotoHeader";
 static NSString *kThumbFooterID = @"DZPhotoFooter";
 
-static NSString *_instagramMaxId = nil;
-static NSString *_instagramMinId = nil;
-
 @interface DZPhotoDisplayController () <UISearchDisplayDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSMutableArray *photos;
@@ -260,9 +257,6 @@ static NSString *_instagramMinId = nil;
     if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeFlickr) > 0) {
         [titles addObject:@"Flickr"];
     }
-    if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeInstagram) > 0) {
-        [titles addObject:@"Instagram"];
-    }
     if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeGoogleImages) > 0) {
         [titles addObject:@"Google"];
     }
@@ -288,9 +282,6 @@ static NSString *_instagramMinId = nil;
             
         case DZPhotoPickerControllerServiceTypeFlickr:
             return @"Flickr";
-            
-        case DZPhotoPickerControllerServiceTypeInstagram:
-            return @"Instagram";
             
         case DZPhotoPickerControllerServiceTypeGoogleImages:
             return @"Google Images";
@@ -332,9 +323,6 @@ static NSString *_instagramMinId = nil;
             }
         }
             
-        case DZPhotoPickerControllerServiceTypeInstagram:
-            return nil;
-            
         case DZPhotoPickerControllerServiceTypeGoogleImages:
             return nil;
             
@@ -372,18 +360,6 @@ static NSString *_instagramMinId = nil;
                                              authorName:[object valueForKey:@"owner"]
                                                thumbURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:object]
                                                 fullURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLarge1024 fromPhotoDictionary:object]
-                                             sourceName:[self selectedServiceName]];
-            
-            [result addObject:photo];
-        }
-    }
-    else if ((_selectedService & DZPhotoPickerControllerServiceTypeInstagram) > 0) {
-        for (IGMedia *media in reponse) {
-            
-            DZPhoto *photo = [DZPhoto newPhotoWithTitle:media.caption.text
-                                             authorName:media.user.username
-                                               thumbURL:[NSURL URLWithString:media.image.thumbnail]
-                                                fullURL:[NSURL URLWithString:media.image.standard_resolution]
                                              sourceName:[self selectedServiceName]];
             
             [result addObject:photo];
@@ -524,21 +500,6 @@ static NSString *_instagramMinId = nil;
             });
         }];
     }
-    else if ((_selectedService & DZPhotoPickerControllerServiceTypeInstagram) > 0) {
-        
-        NSString *term = [_searchTerm stringByReplacingOccurrencesOfString:@" " withString:@","];
-        
-        [NRGramKit getMediaRecentInTagWithName:term count:_resultPerPage maxTagId:_instagramMaxId minTagId:_instagramMinId
-                                  withCallback:^(NSArray *medias, IGPagination *pagination){
-                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                          if (medias) [self handleResponse:medias];
-                                          if (pagination) {
-                                              _instagramMaxId = pagination.nextMaxId;
-                                              _instagramMinId = pagination.nextMinId;
-                                          }
-                                      });
-                                  }];
-    }
 }
 
 - (void)stopAnyRequest
@@ -555,10 +516,6 @@ static NSString *_instagramMinId = nil;
     else if ((_selectedService & DZPhotoPickerControllerServiceTypeFlickr) > 0) {
         
 //        [FlickrKit sharedFlickrKit]
-    }
-    else if ((_selectedService & DZPhotoPickerControllerServiceTypeInstagram) > 0) {
-        
-//        NRGramKit
     }
     
     for (DZPhotoCell *cell in [self.collectionView visibleCells]) {
@@ -853,7 +810,7 @@ static NSString *_instagramMinId = nil;
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
 - (BOOL)shouldAutorotate

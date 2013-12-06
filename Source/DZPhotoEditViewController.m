@@ -546,7 +546,7 @@ CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
 - (BOOL)shouldAutorotate

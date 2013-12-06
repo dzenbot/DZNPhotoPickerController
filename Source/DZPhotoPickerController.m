@@ -86,10 +86,6 @@
             [[FlickrKit sharedFlickrKit] initializeWithAPIKey:consumerKey sharedSecret:consumerSecret];
             break;
             
-        case DZPhotoPickerControllerServiceTypeInstagram:
-            [NRGramKit setClientId:consumerKey clientSecret:consumerSecret andClientCallbackURL:nil];
-            break;
-            
         case DZPhotoPickerControllerServiceTypeGoogleImages:
             break;
             
@@ -174,7 +170,7 @@
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
 - (BOOL)shouldAutorotate
