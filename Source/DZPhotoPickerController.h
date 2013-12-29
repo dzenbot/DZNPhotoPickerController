@@ -46,7 +46,7 @@ typedef NS_OPTIONS(NSUInteger, DZPhotoPickerControllerServiceType) {
  * Initializes the photo picker only for editing a specified image.
  *
  * @param image The image to be edited.
- * @return The new instance of DZPhotoPickerController.
+ * @return A new instance of the photo picker controller.
  */
 - (instancetype)initWithImageForEditing:(UIImage *)image;
 

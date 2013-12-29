@@ -35,7 +35,10 @@ typedef NS_ENUM(NSInteger, DZPhotoEditViewControllerCropMode) {
 
 
 /*
+ * Initializes a photo editor with a specified cropping mode (square, circular or custom)
  *
+ * @param mode The crop mode.
+ * @return A new instance of the editor controller.
  */
 - (instancetype)initWithCropMode:(DZPhotoEditViewControllerCropMode)mode;
 

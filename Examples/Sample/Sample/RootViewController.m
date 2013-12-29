@@ -9,6 +9,12 @@
 #import "RootViewController.h"
 #import "DZPhotoPickerController.h"
 
+#define k500pxConsumerKey       @"9sUVdra51AYawcQwQjFaQA7ueUqpaXLEZQJT7Pzy"
+#define k500pxConsumerSecret    @"CmmZmHfSu1xi9BfVq4cS5RcAAhnR9UylGzPJQjqc"
+
+#define kFlickrConsumerKey      @"7f8cf8f237f79fef1fff97f253ec341a"
+#define kFlickrConsumerSecret   @"c8a8ce8e92912bf9"
+
 @interface RootViewController () {
     UIPopoverController *popoverController;
 }
@@ -18,17 +24,13 @@
 
 + (void)initialize
 {
-    [DZPhotoPickerController registerForServiceType:DZPhotoPickerControllerServiceTypeFlickr
-                                    withConsumerKey:@"7f8cf8f237f79fef1fff97f253ec341a"
-                                  andConsumerSecret:@"c8a8ce8e92912bf9"];
-    
     [DZPhotoPickerController registerForServiceType:DZPhotoPickerControllerServiceType500px
-                                    withConsumerKey:@"9sUVdra51AYawcQwQjFaQA7ueUqpaXLEZQJT7Pzy"
-                                  andConsumerSecret:@"CmmZmHfSu1xi9BfVq4cS5RcAAhnR9UylGzPJQjqc"];
+                                    withConsumerKey:k500pxConsumerKey
+                                  andConsumerSecret:k500pxConsumerSecret];
     
-    [DZPhotoPickerController registerForServiceType:DZPhotoPickerControllerServiceTypeInstagram
-                                    withConsumerKey:@"16759bba4b7e4831b80bf3412e7dcb16"
-                                  andConsumerSecret:@"701c5a99144a401c8285b0c9df999509"];
+    [DZPhotoPickerController registerForServiceType:DZPhotoPickerControllerServiceTypeFlickr
+                                    withConsumerKey:kFlickrConsumerKey
+                                  andConsumerSecret:kFlickrConsumerSecret];
 }
 
 #pragma mark - View lifecycle
