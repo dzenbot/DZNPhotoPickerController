@@ -98,7 +98,7 @@
 - (void)presentPhotoPicker
 {
     DZPhotoPickerController *photoPickerController = [[DZPhotoPickerController alloc] init];
-    photoPickerController.serviceType = DZPhotoPickerControllerServiceType500px | DZPhotoPickerControllerServiceTypeFlickr | DZPhotoPickerControllerServiceTypeInstagram;
+    photoPickerController.serviceType = DZPhotoPickerControllerServiceType500px | DZPhotoPickerControllerServiceTypeFlickr;
     photoPickerController.startSearchingTerm = @"Patagonia";
     photoPickerController.allowsEditing = YES;
 //    photoPickerController.editingMode = DZPhotoEditViewControllerCropModeCircular;

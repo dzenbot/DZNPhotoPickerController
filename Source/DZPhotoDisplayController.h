@@ -9,8 +9,6 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import <SDWebImage/SDWebImageDownloader.h>
-#import "SDWebImageDownloader.h"
 #import <FlickrKit/FlickrKit.h>
 #import <PXAPI.h>
 

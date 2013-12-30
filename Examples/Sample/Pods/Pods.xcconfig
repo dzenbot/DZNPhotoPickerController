@@ -1,5 +1,5 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/500px-iOS-api" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/AsyncImageView" "${PODS_ROOT}/Headers/FlickrKit" "${PODS_ROOT}/Headers/SDWebImage"
-OTHER_CFLAGS = $(inherited) "-isystem${PODS_ROOT}/Headers" "-isystem${PODS_ROOT}/Headers/500px-iOS-api" "-isystem${PODS_ROOT}/Headers/AFNetworking" "-isystem${PODS_ROOT}/Headers/AsyncImageView" "-isystem${PODS_ROOT}/Headers/FlickrKit" "-isystem${PODS_ROOT}/Headers/SDWebImage"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/500px-iOS-api" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/FlickrKit" "${PODS_ROOT}/Headers/SDWebImage"
+OTHER_CFLAGS = $(inherited) "-isystem${PODS_ROOT}/Headers" "-isystem${PODS_ROOT}/Headers/500px-iOS-api" "-isystem${PODS_ROOT}/Headers/AFNetworking" "-isystem${PODS_ROOT}/Headers/FlickrKit" "-isystem${PODS_ROOT}/Headers/SDWebImage"
 OTHER_LDFLAGS = -ObjC -framework CoreGraphics -framework ImageIO -framework MobileCoreServices -framework Security -framework SystemConfiguration
 PODS_ROOT = ${SRCROOT}/Pods

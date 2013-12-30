@@ -18,12 +18,6 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking 3
 #define COCOAPODS_VERSION_PATCH_AFNetworking 3
 
-// AsyncImageView
-#define COCOAPODS_POD_AVAILABLE_AsyncImageView
-#define COCOAPODS_VERSION_MAJOR_AsyncImageView 1
-#define COCOAPODS_VERSION_MINOR_AsyncImageView 4
-#define COCOAPODS_VERSION_PATCH_AsyncImageView 0
-
 // FlickrKit
 #define COCOAPODS_POD_AVAILABLE_FlickrKit
 #define COCOAPODS_VERSION_MAJOR_FlickrKit 1

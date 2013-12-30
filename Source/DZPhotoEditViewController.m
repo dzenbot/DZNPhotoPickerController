@@ -72,7 +72,7 @@
     [self.view insertSubview:maskImageView aboveSubview:_scrollView];
 
     [_imageView setImageWithURL:_photo.fullURL placeholderImage:nil
-                        options:SDWebImageProgressiveDownload|SDWebImageRetryFailed|SDWebImageCacheMemoryOnly
+                        options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
                       completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
                           if (!error) [_button setEnabled:YES];
                           [activityIndicatorView removeFromSuperview];

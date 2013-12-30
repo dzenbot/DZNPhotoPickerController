@@ -78,16 +78,10 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
     
     CGFloat footerSize = [self footerSize].height;
     contentSize.height -= footerSize;
-    NSLog(@"footerSize : %f",footerSize);
-    
-    NSLog(@"contentSize.height : %f", contentSize.height);
     
     CGFloat cellHeight = [self cellSize].height;
-    NSLog(@"cellHeight : %f",cellHeight);
     
     NSUInteger count = (int)(contentSize.height/cellHeight);
-    NSLog(@"count : %d", count);
-
     return count;
 }
 
@@ -555,14 +549,13 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DZPhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kThumbCellID forIndexPath:indexPath];
-    cell.photoDisplayController = self;
     cell.tag = indexPath.row;
     
     DZPhoto *photo = [_photos objectAtIndex:indexPath.row];
     
     [cell.imageView cancelCurrentImageLoad];
     [cell.imageView setImageWithURL:photo.thumbURL placeholderImage:nil
-                              options:SDWebImageProgressiveDownload|SDWebImageRetryFailed completed:NULL];
+                              options:SDWebImageCacheMemoryOnly|SDWebImageRetryFailed completed:NULL];
     
     return cell;
 }
@@ -623,11 +616,16 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 {
+//    if ([[UIMenuController sharedMenuController] isMenuVisible]) {
+//        return NO;
+//    }
     return YES;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    [collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
+
     if ([_searchBar isFirstResponder]) {
         [_searchBar resignFirstResponder];
         [self performSelector:@selector(handleSelectionAtIndexPath:) withObject:indexPath afterDelay:0.3];
@@ -637,14 +635,14 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%s",__FUNCTION__);
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if ([[UIMenuController sharedMenuController] isMenuVisible]) {
-//        return NO;
-//    }
+    if ([[UIMenuController sharedMenuController] isMenuVisible]) {
+        return NO;
+    }
     return YES;
 }
 
@@ -655,7 +653,7 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
@@ -684,16 +682,16 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
     if (_photos.count == 0) size = [self contentSize];
     else size = [self footerSize];
     
-    NSLog(@"footer size : %@", NSStringFromCGSize(size));
     return size;
-    
-//    if (_photos.count == 0) return self.view.frame.size;
-//    else return [self footerSize];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return YES;
+    DZPhotoCell *cell = (DZPhotoCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    if (cell.imageView.image) {
+        return YES;
+    }
+    return NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender

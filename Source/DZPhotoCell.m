@@ -37,12 +37,28 @@
     {
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        _imageView.clipsToBounds = YES;
+        _imageView.userInteractionEnabled = NO;
     }
     return _imageView;
 }
 
 
 #pragma mark - UIView methods
+
+- (void)setSelected:(BOOL)selected
+{
+    if (_imageView.image) {
+        [super setSelected:selected];
+    }
+}
+
+- (void)setHighlighted:(BOOL)highlighted
+{
+    if (_imageView.image) {
+        [super setHighlighted:highlighted];
+    }
+}
 
 - (void)prepareForReuse
 {

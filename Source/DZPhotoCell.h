@@ -9,13 +9,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIImageView+WebCache.h"
-
-#import "DZPhotoDisplayController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface DZPhotoCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, weak) DZPhotoDisplayController *photoDisplayController;
 
 @end
