@@ -86,9 +86,7 @@
 }
 
 - (void)updateScrollViewContentInset
-{
-    return;
-    
+{    
     CGFloat maskHeight = 0;
     if (_cropMode == UIPhotoEditViewControllerCropModeCircular) maskHeight = [self circularDiameter];
     else maskHeight = [self cropSize].height;
@@ -435,7 +433,7 @@ CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
     if (authorName != nil) [userInfo setObject:authorName forKey:UIPhotoPickerControllerAuthorCredits];
     if (sourceName != nil) [userInfo setObject:sourceName forKey:UIPhotoPickerControllerSourceName];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUIPhotoPickerDidChooseNotification object:nil userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUIPhotoPickerDidFinishPickingNotification object:nil userInfo:userInfo];
 }
 
 - (void)acceptEdition:(id)sender

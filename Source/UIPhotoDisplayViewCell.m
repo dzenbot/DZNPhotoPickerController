@@ -11,6 +11,7 @@
 #import "UIPhotoDisplayViewCell.h"
 
 @implementation UIPhotoDisplayViewCell
+@synthesize imageView = _imageView;
 
 - (id)initWithFrame:(CGRect)frame
 {

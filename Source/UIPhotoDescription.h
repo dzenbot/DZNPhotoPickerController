@@ -10,14 +10,31 @@
 
 #import <Foundation/Foundation.h>
 
+/*
+ * A custom data model to encapsulate meta data about a photo, provided by the photo search services.
+ */
 @interface UIPhotoDescription : NSObject
 
+/* The title assigned by the author. */
 @property (nonatomic, copy) NSString *title;
+/* The name of the author. */
 @property (nonatomic, copy) NSString *authorName;
+/* The url of the thumb version. */
 @property (nonatomic, copy) NSURL *thumbURL;
+/* The url of the full size version. */
 @property (nonatomic, copy) NSURL *fullURL;
+/* The name of the photo search service. */
 @property (nonatomic, copy) NSString *sourceName;
 
+/*
+ * Allocates a new instance of the UIPhotoDescription class, sends it an init message, and returns the initialized object with property values.
+ *
+ * @param title The title assigned by the author.
+ * @param authorName The name of the author.
+ * @param thumbURL The url of the thumb version.
+ * @param fullURL The url of the full size version.
+ * @param sourceName The name of the photo search service.
+ */
 + (instancetype)photoDescriptionWithTitle:(NSString *)title
                                authorName:(NSString *)authorName
                                  thumbURL:(NSURL *)thumbURL

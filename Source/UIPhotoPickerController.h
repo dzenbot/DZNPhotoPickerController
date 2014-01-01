@@ -22,25 +22,27 @@ typedef NS_OPTIONS(NSUInteger, UIPhotoPickerControllerServiceType) {
     UIPhotoPickerControllerServiceTypeDribbble = (1 << 8)           // Dribbble         http://dribbble.com/api/
 };
 
-static NSString *kUIPhotoPickerDidChooseNotification = @"kUIPhotoPickerDidChooseNotification";
+static NSString *kUIPhotoPickerDidFinishPickingNotification = @"kUIPhotoPickerDidFinishPickingNotification";
 static NSString *UIPhotoPickerControllerAuthorCredits = @"UIPhotoPickerControllerAuthorCredits";
 static NSString *UIPhotoPickerControllerSourceName = @"UIPhotoPickerControllerAuthorCredits";
 
 @protocol UIPhotoPickerControllerDelegate;
 
 
-/* A simple photo picker for iOS, using common services like 500px, Flickr and many others.
- * This framework tries to mimic as much as possible the native UIImagePickerController API, in terms of features, appearance and behavior.
+/* 
+ * A photo picker for iOS 7 using popular photo search services like 500px, Flickr and many others.
+ * This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behavior.
+ *
+ * @discussion Due to Terms of use from some image service providers, the images cannot be cached when showing thumbnails results and full screen images.
  */
 @interface UIPhotoPickerController : UINavigationController
 
-/* The photo picker’s delegate object. */
+/* The photo picker's delegate object. */
 @property (nonatomic, assign) id <UINavigationControllerDelegate, UIPhotoPickerControllerDelegate> delegate;
-/* The multi-type of image providers to be supported by the controller. Default value are ServiceType500px & ServiceTypeFlickr. */
+/* The multi-type of image providers to be supported by the controller. Default ServiceType500px & ServiceTypeFlickr. */
 @property (nonatomic) UIPhotoPickerControllerServiceType serviceType;
 /* A Boolean value indicating whether the user is allowed to edit a selected image. */
 @property (nonatomic) BOOL allowsEditing;
-
 /* An optional string term for auto-starting the photo search, as soon as the picker is presented. */
 @property (nonatomic, copy) NSString *initialSearchTerm;
 /* The editing mode (ie: Square, Circular or Custom). Default is Square. */

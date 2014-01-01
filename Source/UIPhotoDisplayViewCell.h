@@ -11,8 +11,12 @@
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
 
+/*
+ * The custom collection view cell to be displayed on search results.
+ */
 @interface UIPhotoDisplayViewCell : UICollectionViewCell
 
-@property (nonatomic, strong) UIImageView *imageView;
+/* The image view of the table cell. (read-only). */
+@property(nonatomic, readonly, retain) UIImageView *imageView;
 
 @end
