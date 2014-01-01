@@ -33,33 +33,6 @@
                                   andConsumerSecret:kFlickrConsumerSecret];
 }
 
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
-}
-
 
 #pragma mark - ViewController methods
 
@@ -106,10 +79,10 @@
     
     [self presentViewController:_controller animated:YES completion:NO];
     
-    _controller.startSearchingTerm = @"Surf";
-
+    _controller.initialSearchTerm = @"Surf";
+    _controller.editingMode = UIPhotoEditViewControllerCropModeCircular;
     
-//    photoPickerController.editingMode = UIPhotoEditViewControllerCropModeCircular;
+//
 //    photoPickerController.customCropSize = CGSizeMake(320.0, 160.0);
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -164,21 +137,6 @@
     else if ([buttonTitle isEqualToString:@"Search Photos"]) {
         [self presentPhotoPicker];
     }
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    
-}
-
-- (void)actionSheetCancel:(UIActionSheet *)actionSheet
-{
-    
 }
 
 
@@ -256,7 +214,6 @@
 {
     return YES;
 }
-
 
 
 @end

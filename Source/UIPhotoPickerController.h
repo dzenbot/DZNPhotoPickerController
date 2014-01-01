@@ -38,10 +38,11 @@ NSString *const UIPhotoPickerControllerSourceName;
 @property (nonatomic, assign) id <UINavigationControllerDelegate, UIPhotoPickerControllerDelegate> delegate;
 /* The multi-type of image providers to be supported by the controller. Default value are ServiceType500px & ServiceTypeFlickr. */
 @property (nonatomic) UIPhotoPickerControllerServiceType serviceType;
-/* An optional string term for auto-starting the photo search, as soon as the picker is presented. */
-@property (nonatomic, copy) NSString *startSearchingTerm;
 /* A Boolean value indicating whether the user is allowed to edit a selected image. */
 @property (nonatomic) BOOL allowsEditing;
+
+/* An optional string term for auto-starting the photo search, as soon as the picker is presented. */
+@property (nonatomic, copy) NSString *initialSearchTerm;
 /* The editing mode (ie: Square, Circular or Custom). Default is Square. */
 @property (nonatomic) UIPhotoEditViewControllerCropMode editingMode;
 /* An optional and custom croping size. */
