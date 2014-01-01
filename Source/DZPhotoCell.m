@@ -22,8 +22,6 @@
         
         self.selectedBackgroundView = [UIView new];
         self.selectedBackgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-        
-        self.exclusiveTouch = YES;
     }
     return self;
 }

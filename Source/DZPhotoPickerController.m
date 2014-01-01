@@ -98,6 +98,9 @@
         case DZPhotoPickerControllerServiceTypePanoramio:
             break;
             
+        case DZPhotoPickerControllerServiceTypeInstagram:
+            break;
+            
         default:
             break;
     }

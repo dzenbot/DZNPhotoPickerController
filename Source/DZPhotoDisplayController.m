@@ -26,6 +26,7 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
 @property (nonatomic, readwrite) UIButton *loadButton;
 @property (nonatomic, readwrite) UIView *overlayView;
 @property (nonatomic, readwrite) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong) NSArray *controlTitles;
 @property (nonatomic) DZPhotoPickerControllerServiceType selectedService;
 @property (nonatomic) DZPhotoPickerControllerServiceType previousService;
 @property (nonatomic) int resultPerPage;
@@ -94,9 +95,9 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
     
     self.collectionView.backgroundView = [UIView new];
     self.collectionView.backgroundView.backgroundColor = [UIColor whiteColor];
-    self.collectionView.exclusiveTouch = YES;
+    
     self.edgesForExtendedLayout = UIRectEdgeTop;
-    self.extendedLayoutIncludesOpaqueBars = YES;
+    self.extendedLayoutIncludesOpaqueBars = NO;
 }
 
 - (void)viewDidLoad
@@ -184,8 +185,9 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
     if (!_searchBar)
     {
         _searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
-        _searchBar.barStyle = UIBarStyleDefault;
         _searchBar.placeholder = NSLocalizedString(@"Search", nil);
+        _searchBar.barStyle = UIBarStyleDefault;
+        _searchBar.searchBarStyle = UISearchBarStyleProminent;
         _searchBar.backgroundColor = [UIColor whiteColor];
         _searchBar.barTintColor = [UIColor colorWithWhite:0.9 alpha:1.0];
         _searchBar.tintColor = self.view.window.tintColor;
@@ -204,7 +206,7 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
         _loadButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_loadButton setTitle:NSLocalizedString(@"Load More", nil) forState:UIControlStateNormal];
         [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
-        [_loadButton addTarget:self action:@selector(loadMoreData:) forControlEvents:UIControlEventTouchUpInside];
+        [_loadButton addTarget:self action:@selector(downloadData) forControlEvents:UIControlEventTouchUpInside];
         [_loadButton.titleLabel setFont:[UIFont systemFontOfSize:17.0]];
         [_loadButton setBackgroundColor:self.collectionView.backgroundView.backgroundColor];
         
@@ -241,36 +243,43 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
     return _overlayView;
 }
 
-- (NSArray *)segmentedControlTitles
+- (NSArray *)controlTitles
 {
-    NSMutableArray *titles = [NSMutableArray array];
-    
-    if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceType500px) > 0) {
-        [titles addObject:@"500px"];
+    if (!_controlTitles)
+    {
+        NSMutableArray *titles = [NSMutableArray array];
+        
+        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceType500px) > 0) {
+            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceType500px)];
+        }
+        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeFlickr) > 0) {
+            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceTypeFlickr)];
+        }
+        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeGoogleImages) > 0) {
+            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceTypeGoogleImages)];
+        }
+        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeBingImages) > 0) {
+            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceTypeBingImages)];
+        }
+        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeYahooImages) > 0) {
+            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceTypeYahooImages)];
+        }
+        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypePanoramio) > 0) {
+            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceTypePanoramio)];
+        }
+        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeInstagram) > 0) {
+            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceTypeInstagram)];
+        }
+        
+        _controlTitles = [NSArray arrayWithArray:titles];
     }
-    if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeFlickr) > 0) {
-        [titles addObject:@"Flickr"];
-    }
-    if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeGoogleImages) > 0) {
-        [titles addObject:@"Google"];
-    }
-    if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeBingImages) > 0) {
-        [titles addObject:@"Bing"];
-    }
-    if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeYahooImages) > 0) {
-        [titles addObject:@"Yahoo"];
-    }
-    if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypePanoramio) > 0) {
-        [titles addObject:@"Panoramio"];
-    }
-    
-//    if (titles.count == 3) return titles;
-    return titles;
+    return _controlTitles;
 }
 
-- (NSString *)selectedServiceName
+NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
 {
-    switch (_selectedService) {
+    
+    switch (service) {
         case DZPhotoPickerControllerServiceType500px:
             return @"500px";
             
@@ -289,9 +298,17 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
         case DZPhotoPickerControllerServiceTypePanoramio:
             return @"Panoramio";
             
+        case DZPhotoPickerControllerServiceTypeInstagram:
+            return @"Instagram";
+            
         default:
             return nil;
     }
+}
+
+- (NSString *)selectedServiceName
+{
+    return NSStringFromServiceType(_selectedService);
 }
 
 - (NSString *)sourceUrlForImageUrl:(NSString *)url
@@ -386,7 +403,7 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
 
 - (void)handleResponse:(NSArray *)response
 {
-    [self handleActivityIndicators:NO];
+    [self showActivityIndicators:NO];
     
     [_photos addObjectsFromArray:[self photosForResponse:response]];
     [self.collectionView reloadData];
@@ -394,13 +411,13 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
 
 - (void)handleError:(NSError *)error
 {
-    [self handleActivityIndicators:NO];
+    [self showActivityIndicators:NO];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
     [alert show];
 }
 
-- (void)handleActivityIndicators:(BOOL)visible
+- (void)showActivityIndicators:(BOOL)visible
 {
     if ([UIApplication sharedApplication].networkActivityIndicatorVisible == visible) {
         return;
@@ -432,10 +449,10 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
     else {
         DZPhoto *photo = [_photos objectAtIndex:indexPath.row];
         
-        [self handleActivityIndicators:YES];
+        [self showActivityIndicators:YES];
 
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:photo.fullURL
-                                                              options:SDWebImageCacheMemoryOnly|SDWebImageLowPriority|SDWebImageRetryFailed
+                                                              options:SDWebImageCacheMemoryOnly|SDWebImageLowPriority
                                                              progress:NULL
                                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
                                                                 if (!error) {
@@ -450,7 +467,7 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
                                                                     [self handleError:error];
                                                                 }
                                                                 
-                                                                [self handleActivityIndicators:NO];
+                                                                [self showActivityIndicators:NO];
                                                             }];
     }
     
@@ -459,7 +476,7 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
 
 - (void)searchPhotosWithKeyword:(NSString *)keyword
 {
-    [self handleActivityIndicators:YES];
+    [self showActivityIndicators:YES];
     _searchTerm = keyword;
     
     if ((_selectedService & DZPhotoPickerControllerServiceType500px) > 0) {
@@ -498,7 +515,7 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
 
 - (void)stopAnyRequest
 {
-    [self handleActivityIndicators:NO];
+    [self showActivityIndicators:NO];
     
     if ((_selectedService & DZPhotoPickerControllerServiceType500px) > 0) {
         
@@ -517,10 +534,9 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
     }
 }
 
-- (void)loadMoreData:(id)sender
+- (void)downloadData
 {
-    UIButton *button = (UIButton *)sender;
-    button.enabled = NO;
+    _loadButton.enabled = NO;
     
     _currentPage++;
     [self searchPhotosWithKeyword:_searchTerm];
@@ -572,7 +588,7 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
             
             [header addSubview:self.searchBar];
             _searchBar.frame = rect;
-            _searchBar.scopeButtonTitles = [self segmentedControlTitles];
+            _searchBar.scopeButtonTitles = self.controlTitles;
             _searchBar.selectedScopeButtonIndex = _selectedService-1;
         }
         
@@ -616,9 +632,9 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-//    if ([[UIMenuController sharedMenuController] isMenuVisible]) {
-//        return NO;
-//    }
+    if ([[UIMenuController sharedMenuController] isMenuVisible]) {
+        return NO;
+    }
     return YES;
 }
 
@@ -735,13 +751,15 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
     [searchBar setShowsCancelButton:YES animated:YES];
     
     _overlayView.hidden = NO;
-    
+
     [UIView animateWithDuration:0.4 animations:^{
+        
+        _overlayView.alpha = 1.0;
+        
         [searchBar setShowsScopeBar:YES];
         [searchBar sizeToFit];
-        
         [self.collectionViewLayout invalidateLayout];
-        _overlayView.alpha = 1.0;
+        
     }];
 }
 
@@ -751,11 +769,12 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
     [searchBar setShowsCancelButton:NO animated:YES];
     
     [UIView animateWithDuration:0.4 animations:^{
+        
+        _overlayView.alpha = 0;
+
         [searchBar setShowsScopeBar:NO];
         [searchBar sizeToFit];
         [self.collectionViewLayout invalidateLayout];
-
-        _overlayView.alpha = 0;
         
     } completion:^(BOOL finished){
         _overlayView.hidden = YES;

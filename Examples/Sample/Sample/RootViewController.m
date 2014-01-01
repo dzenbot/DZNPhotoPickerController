@@ -99,7 +99,7 @@
 {
     DZPhotoPickerController *photoPickerController = [[DZPhotoPickerController alloc] init];
     photoPickerController.serviceType = DZPhotoPickerControllerServiceType500px | DZPhotoPickerControllerServiceTypeFlickr;
-    photoPickerController.startSearchingTerm = @"Patagonia";
+    photoPickerController.startSearchingTerm = @"Surf";
     photoPickerController.allowsEditing = YES;
 //    photoPickerController.editingMode = DZPhotoEditViewControllerCropModeCircular;
 //    photoPickerController.customCropSize = CGSizeMake(320.0, 160.0);
