@@ -18,7 +18,8 @@ typedef NS_OPTIONS(NSUInteger, UIPhotoPickerControllerServiceType) {
     UIPhotoPickerControllerServiceTypeBingImages = (1 << 4),        // Bing Images      http://datamarket.azure.com/dataset/bing/search/
     UIPhotoPickerControllerServiceTypeYahooImages = (1 << 5),       // Yahoo Images     http://developer.yahoo.com/boss/search/
     UIPhotoPickerControllerServiceTypePanoramio = (1 << 6),         // Panoramio        http://www.panoramio.com/api/
-    UIPhotoPickerControllerServiceTypeInstagram = (1 << 7)          // Instagram        http://instagram.com/developer/
+    UIPhotoPickerControllerServiceTypeInstagram = (1 << 7),         // Instagram        http://instagram.com/developer/
+    UIPhotoPickerControllerServiceTypeDribbble = (1 << 8)           // Dribbble         http://dribbble.com/api/
 };
 
 NSString *const kUIPhotoPickerDidChooseNotification;

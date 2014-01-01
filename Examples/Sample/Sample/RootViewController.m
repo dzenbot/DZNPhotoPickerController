@@ -80,38 +80,45 @@
 
 - (void)presentImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
 {
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.allowsEditing = YES;
-    imagePickerController.sourceType = sourceType;
-    imagePickerController.delegate = self;
+    UIImagePickerController *_controller = [[UIImagePickerController alloc] init];
+    _controller.allowsEditing = YES;
+    _controller.sourceType = sourceType;
+    _controller.delegate = self;
     [UIImagePickerController availableMediaTypesForSourceType:0];
     
+    [self presentViewController:_controller animated:YES completion:NO];
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        popoverController = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];
+        popoverController = [[UIPopoverController alloc] initWithContentViewController:_controller];
         [popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else {
-        [self presentViewController:imagePickerController animated:YES completion:NO];
+        [self presentViewController:_controller animated:YES completion:NO];
     }
 }
 
 - (void)presentPhotoPicker
 {
-    UIPhotoPickerController *photoPickerController = [[UIPhotoPickerController alloc] init];
-    photoPickerController.serviceType = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
-    photoPickerController.startSearchingTerm = @"Surf";
-    photoPickerController.allowsEditing = YES;
+    UIPhotoPickerController *_controller = [[UIPhotoPickerController alloc] init];
+    _controller.allowsEditing = YES;
+    _controller.serviceType = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
+    _controller.delegate = self;
+    
+    [self presentViewController:_controller animated:YES completion:NO];
+    
+    _controller.startSearchingTerm = @"Surf";
+
+    
 //    photoPickerController.editingMode = UIPhotoEditViewControllerCropModeCircular;
 //    photoPickerController.customCropSize = CGSizeMake(320.0, 160.0);
-    photoPickerController.delegate = self;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        popoverController = [[UIPopoverController alloc] initWithContentViewController:photoPickerController];
+        popoverController = [[UIPopoverController alloc] initWithContentViewController:_controller];
 //        popoverController.popoverContentSize = CGSizeMake(320.0, 600.0);
         [popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else {
-        [self presentViewController:photoPickerController animated:YES completion:NO];
+        [self presentViewController:_controller animated:YES completion:NO];
     }
 }
 
