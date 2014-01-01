@@ -21,10 +21,9 @@ typedef NS_OPTIONS(NSUInteger, UIPhotoPickerControllerServiceType) {
     UIPhotoPickerControllerServiceTypeInstagram = (1 << 7)          // Instagram        http://instagram.com/developer/
 };
 
-#define kUIPhotoPickerChooseNotification @"UIPhotoPickerChooseNotification"
-
-static NSString *UIImagePickerControllerAuthorCredits = @"UIImagePickerControllerAuthorCredits";
-static NSString *UIImagePickerControllerSourceName = @"UIImagePickerControllerSourceName";
+NSString *const kUIPhotoPickerDidChooseNotification;
+NSString *const UIPhotoPickerControllerAuthorCredits;
+NSString *const UIPhotoPickerControllerSourceName;
 
 @protocol UIPhotoPickerControllerDelegate;
 

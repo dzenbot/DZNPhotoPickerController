@@ -430,10 +430,10 @@ CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
     if (editedImage != nil) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
     if (originalImage != nil) [userInfo setObject:originalImage forKey:UIImagePickerControllerOriginalImage];
     if (referenceURL != nil) [userInfo setObject:referenceURL.absoluteString forKey:UIImagePickerControllerReferenceURL];
-    if (authorName != nil) [userInfo setObject:authorName forKey:UIImagePickerControllerAuthorCredits];
-    if (sourceName != nil) [userInfo setObject:sourceName forKey:UIImagePickerControllerSourceName];
+    if (authorName != nil) [userInfo setObject:authorName forKey:UIPhotoPickerControllerAuthorCredits];
+    if (sourceName != nil) [userInfo setObject:sourceName forKey:UIPhotoPickerControllerSourceName];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUIPhotoPickerChooseNotification object:nil userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUIPhotoPickerDidChooseNotification object:nil userInfo:userInfo];
 }
 
 - (void)acceptEdition:(id)sender

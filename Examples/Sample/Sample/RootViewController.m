@@ -122,8 +122,8 @@
     NSLog(@"UIImagePickerControllerOriginalImage : %@",[userInfo objectForKey:UIImagePickerControllerOriginalImage]);
     NSLog(@"UIImagePickerControllerMediaType : %@",[userInfo objectForKey:UIImagePickerControllerMediaType]);
     NSLog(@"UIImagePickerControllerReferenceURL : %@",[userInfo objectForKey:UIImagePickerControllerReferenceURL]);
-    NSLog(@"UIImagePickerControllerAuthorCredits : %@",[userInfo objectForKey:UIImagePickerControllerAuthorCredits]);
-    NSLog(@"UIImagePickerControllerSourceName : %@",[userInfo objectForKey:UIImagePickerControllerSourceName]);
+    NSLog(@"UIPhotoPickerControllerAuthorCredits : %@",[userInfo objectForKey:UIPhotoPickerControllerAuthorCredits]);
+    NSLog(@"UIPhotoPickerControllerSourceName : %@",[userInfo objectForKey:UIPhotoPickerControllerSourceName]);
 
     UIImage *image = [userInfo objectForKey:UIImagePickerControllerEditedImage];
 //    if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];
