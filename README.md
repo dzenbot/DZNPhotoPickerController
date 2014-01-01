@@ -56,7 +56,7 @@ _controller.delegate = self;
 [self presentViewController:_controller animated:YES completion:NO];
 ````
 
-You can additionally also set other properties:
+You can additionally set more properties:
 ```
 _controller.initialSearchTerm = @"Surf";
 _controller.editingMode = UIPhotoEditViewControllerCropModeCircular;
