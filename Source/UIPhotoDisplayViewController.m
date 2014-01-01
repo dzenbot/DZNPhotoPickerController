@@ -1,25 +1,25 @@
 //
-//  DZPhotoDisplayController.m
-//  DZPhotoPickerController
-//  https://github.com/dzenbot/DZPhotoPickerController
+//  UIPhotoDisplayController.m
+//  UIPhotoPickerController
+//  https://github.com/dzenbot/UIPhotoPickerController
 //
 //  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
 //  Licence: MIT-Licence
 //
 
-#import "DZPhotoDisplayController.h"
-#import "DZPhotoPickerController.h"
-#import "DZPhotoEditViewController.h"
+#import "UIPhotoDisplayViewController.h"
+#import "UIPhotoPickerController.h"
+#import "UIPhotoEditViewController.h"
 
-#import "DZPhotoCell.h"
-#import "DZPhoto.h"
+#import "UIPhotoDisplayViewCell.h"
+#import "UIPhotoDescription.h"
 
-static NSString *kThumbCellID = @"DZPhotoCell";
-static NSString *kThumbHeaderID = @"DZPhotoHeader";
-static NSString *kThumbFooterID = @"DZPhotoFooter";
+static NSString *kThumbCellID = @"UIPhotoCell";
+static NSString *kThumbHeaderID = @"UIPhotoHeader";
+static NSString *kThumbFooterID = @"UIPhotoFooter";
 
-@interface DZPhotoDisplayController () <UISearchDisplayDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout>
+@interface UIPhotoDisplayViewController () <UISearchDisplayDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSMutableArray *photos;
 @property (nonatomic, readwrite) UISearchBar *searchBar;
@@ -27,8 +27,8 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
 @property (nonatomic, readwrite) UIView *overlayView;
 @property (nonatomic, readwrite) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) NSArray *controlTitles;
-@property (nonatomic) DZPhotoPickerControllerServiceType selectedService;
-@property (nonatomic) DZPhotoPickerControllerServiceType previousService;
+@property (nonatomic) UIPhotoPickerControllerServiceType selectedService;
+@property (nonatomic) UIPhotoPickerControllerServiceType previousService;
 @property (nonatomic) int resultPerPage;
 @property (nonatomic) int currentPage;
 
@@ -36,11 +36,11 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
 
 @end
 
-@implementation DZPhotoDisplayController
+@implementation UIPhotoDisplayViewController
 
 - (id)init
 {
-    self = [super initWithCollectionViewLayout:[DZPhotoDisplayController flowLayout]];
+    self = [super initWithCollectionViewLayout:[UIPhotoDisplayViewController flowLayout]];
     if (self) {
         
         self.title = NSLocalizedString(@"Internet Photos", nil);
@@ -108,7 +108,7 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
     _rowCount = [self rowCount];
     _resultPerPage = _columnCount*_rowCount;
     
-    [self.collectionView registerClass:[DZPhotoCell class] forCellWithReuseIdentifier:kThumbCellID];
+    [self.collectionView registerClass:[UIPhotoDisplayViewCell class] forCellWithReuseIdentifier:kThumbCellID];
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                    withReuseIdentifier:kThumbHeaderID];
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
@@ -175,9 +175,9 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
     return CGSizeMake(0, (self.navigationController.view.frame.size.height > 480.0) ? 60.0 : 50.0);
 }
 
-- (DZPhotoPickerController *)navigationController
+- (UIPhotoPickerController *)navigationController
 {
-    return (DZPhotoPickerController *)[super navigationController];
+    return (UIPhotoPickerController *)[super navigationController];
 }
 
 - (UISearchBar *)searchBar
@@ -249,26 +249,26 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
     {
         NSMutableArray *titles = [NSMutableArray array];
         
-        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceType500px) > 0) {
-            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceType500px)];
+        if ((self.navigationController.serviceType & UIPhotoPickerControllerServiceType500px) > 0) {
+            [titles addObject:NSStringFromServiceType(UIPhotoPickerControllerServiceType500px)];
         }
-        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeFlickr) > 0) {
-            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceTypeFlickr)];
+        if ((self.navigationController.serviceType & UIPhotoPickerControllerServiceTypeFlickr) > 0) {
+            [titles addObject:NSStringFromServiceType(UIPhotoPickerControllerServiceTypeFlickr)];
         }
-        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeGoogleImages) > 0) {
-            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceTypeGoogleImages)];
+        if ((self.navigationController.serviceType & UIPhotoPickerControllerServiceTypeGoogleImages) > 0) {
+            [titles addObject:NSStringFromServiceType(UIPhotoPickerControllerServiceTypeGoogleImages)];
         }
-        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeBingImages) > 0) {
-            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceTypeBingImages)];
+        if ((self.navigationController.serviceType & UIPhotoPickerControllerServiceTypeBingImages) > 0) {
+            [titles addObject:NSStringFromServiceType(UIPhotoPickerControllerServiceTypeBingImages)];
         }
-        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeYahooImages) > 0) {
-            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceTypeYahooImages)];
+        if ((self.navigationController.serviceType & UIPhotoPickerControllerServiceTypeYahooImages) > 0) {
+            [titles addObject:NSStringFromServiceType(UIPhotoPickerControllerServiceTypeYahooImages)];
         }
-        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypePanoramio) > 0) {
-            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceTypePanoramio)];
+        if ((self.navigationController.serviceType & UIPhotoPickerControllerServiceTypePanoramio) > 0) {
+            [titles addObject:NSStringFromServiceType(UIPhotoPickerControllerServiceTypePanoramio)];
         }
-        if ((self.navigationController.serviceType & DZPhotoPickerControllerServiceTypeInstagram) > 0) {
-            [titles addObject:NSStringFromServiceType(DZPhotoPickerControllerServiceTypeInstagram)];
+        if ((self.navigationController.serviceType & UIPhotoPickerControllerServiceTypeInstagram) > 0) {
+            [titles addObject:NSStringFromServiceType(UIPhotoPickerControllerServiceTypeInstagram)];
         }
         
         _controlTitles = [NSArray arrayWithArray:titles];
@@ -276,29 +276,28 @@ static NSString *kThumbFooterID = @"DZPhotoFooter";
     return _controlTitles;
 }
 
-NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
+NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 {
-    
     switch (service) {
-        case DZPhotoPickerControllerServiceType500px:
+        case UIPhotoPickerControllerServiceType500px:
             return @"500px";
             
-        case DZPhotoPickerControllerServiceTypeFlickr:
+        case UIPhotoPickerControllerServiceTypeFlickr:
             return @"Flickr";
             
-        case DZPhotoPickerControllerServiceTypeGoogleImages:
+        case UIPhotoPickerControllerServiceTypeGoogleImages:
             return @"Google Images";
             
-        case DZPhotoPickerControllerServiceTypeBingImages:
+        case UIPhotoPickerControllerServiceTypeBingImages:
             return @"Bing Images";
             
-        case DZPhotoPickerControllerServiceTypeYahooImages:
+        case UIPhotoPickerControllerServiceTypeYahooImages:
             return @"Yahoo Images";
             
-        case DZPhotoPickerControllerServiceTypePanoramio:
+        case UIPhotoPickerControllerServiceTypePanoramio:
             return @"Panoramio";
             
-        case DZPhotoPickerControllerServiceTypeInstagram:
+        case UIPhotoPickerControllerServiceTypeInstagram:
             return @"Instagram";
             
         default:
@@ -314,10 +313,10 @@ NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
 - (NSString *)sourceUrlForImageUrl:(NSString *)url
 {
     switch (_selectedService) {
-        case DZPhotoPickerControllerServiceType500px:
+        case UIPhotoPickerControllerServiceType500px:
             return nil;
             
-        case DZPhotoPickerControllerServiceTypeFlickr:
+        case UIPhotoPickerControllerServiceTypeFlickr:
         {
             NSArray *components = [url componentsSeparatedByString:@"/"];
             NSString *lastComponent = [components lastObject];
@@ -334,13 +333,13 @@ NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
             }
         }
             
-        case DZPhotoPickerControllerServiceTypeGoogleImages:
+        case UIPhotoPickerControllerServiceTypeGoogleImages:
             return nil;
             
-        case DZPhotoPickerControllerServiceTypeBingImages:
+        case UIPhotoPickerControllerServiceTypeBingImages:
             return nil;
             
-        case DZPhotoPickerControllerServiceTypeYahooImages:
+        case UIPhotoPickerControllerServiceTypeYahooImages:
             return nil;
             
         default:
@@ -352,10 +351,10 @@ NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
 {
     NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:reponse.count];
     
-    if ((_selectedService & DZPhotoPickerControllerServiceType500px) > 0) {
+    if ((_selectedService & UIPhotoPickerControllerServiceType500px) > 0) {
         for (NSDictionary *object in reponse) {
 
-            DZPhoto *photo = [DZPhoto newPhotoWithTitle:[object valueForKey:@"username"]
+            UIPhotoDescription *photo = [UIPhotoDescription photoDescriptionWithTitle:[object valueForKey:@"username"]
                                              authorName:[NSString stringWithFormat:@"%@ %@",[object valueForKeyPath:@"user.firstname"],[object valueForKeyPath:@"user.lastname"]]
                                                thumbURL:[NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:0] valueForKey:@"url"]]
                                                 fullURL:[NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:1] valueForKey:@"url"]]
@@ -364,10 +363,10 @@ NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
             [result addObject:photo];
         }
     }
-    else if ((_selectedService & DZPhotoPickerControllerServiceTypeFlickr) > 0) {
+    else if ((_selectedService & UIPhotoPickerControllerServiceTypeFlickr) > 0) {
         for (NSDictionary *object in reponse) {
             
-            DZPhoto *photo = [DZPhoto newPhotoWithTitle:[object valueForKey:@"title"]
+            UIPhotoDescription *photo = [UIPhotoDescription photoDescriptionWithTitle:[object valueForKey:@"title"]
                                              authorName:[object valueForKey:@"owner"]
                                                thumbURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:object]
                                                 fullURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLarge1024 fromPhotoDictionary:object]
@@ -399,7 +398,7 @@ NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
 }
 
 
-#pragma mark - DZPhotoDisplayController methods
+#pragma mark - UIPhotoDisplayController methods
 
 - (void)handleResponse:(NSArray *)response
 {
@@ -440,14 +439,14 @@ NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
 {
     if (self.navigationController.allowsEditing) {
         
-        DZPhotoEditViewController *photoEditViewController = [[DZPhotoEditViewController alloc] initWithCropMode:self.navigationController.editingMode];
+        UIPhotoEditViewController *photoEditViewController = [[UIPhotoEditViewController alloc] initWithCropMode:self.navigationController.editingMode];
         photoEditViewController.photo = [_photos objectAtIndex:indexPath.row];
         photoEditViewController.cropSize = self.navigationController.customCropSize;
         
         [self.navigationController pushViewController:photoEditViewController animated:YES];
     }
     else {
-        DZPhoto *photo = [_photos objectAtIndex:indexPath.row];
+        UIPhotoDescription *photo = [_photos objectAtIndex:indexPath.row];
         
         [self showActivityIndicators:YES];
 
@@ -456,7 +455,7 @@ NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
                                                              progress:NULL
                                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
                                                                 if (!error) {
-                                                                    [DZPhotoEditViewController didFinishPickingEditedImage:nil
+                                                                    [UIPhotoEditViewController didFinishPickingEditedImage:nil
                                                                                                               withCropRect:CGRectZero
                                                                                                          fromOriginalImage:image
                                                                                                               referenceURL:photo.fullURL
@@ -479,7 +478,7 @@ NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
     [self showActivityIndicators:YES];
     _searchTerm = keyword;
     
-    if ((_selectedService & DZPhotoPickerControllerServiceType500px) > 0) {
+    if ((_selectedService & UIPhotoPickerControllerServiceType500px) > 0) {
         
         NSString *term = [_searchTerm stringByReplacingOccurrencesOfString:@" " withString:@"+"];
         
@@ -493,7 +492,7 @@ NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
             });
         }];
     }
-    else if ((_selectedService & DZPhotoPickerControllerServiceTypeFlickr) > 0) {
+    else if ((_selectedService & UIPhotoPickerControllerServiceTypeFlickr) > 0) {
         
         FKFlickrPhotosSearch *search = [[FKFlickrPhotosSearch alloc] init];
         search.text = _searchTerm; //[keyword stringByReplacingOccurrencesOfString:@" " withString:@" OR "];
@@ -517,19 +516,19 @@ NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
 {
     [self showActivityIndicators:NO];
     
-    if ((_selectedService & DZPhotoPickerControllerServiceType500px) > 0) {
+    if ((_selectedService & UIPhotoPickerControllerServiceType500px) > 0) {
         
         if (_PXRequest) {
             [_PXRequest cancel];
             _PXRequest = nil;
         }
     }
-    else if ((_selectedService & DZPhotoPickerControllerServiceTypeFlickr) > 0) {
+    else if ((_selectedService & UIPhotoPickerControllerServiceTypeFlickr) > 0) {
         
 //        [FlickrKit sharedFlickrKit]
     }
     
-    for (DZPhotoCell *cell in [self.collectionView visibleCells]) {
+    for (UIPhotoDisplayViewCell *cell in [self.collectionView visibleCells]) {
         [cell.imageView cancelCurrentImageLoad];
     }
 }
@@ -564,10 +563,10 @@ NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    DZPhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kThumbCellID forIndexPath:indexPath];
+    UIPhotoDisplayViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kThumbCellID forIndexPath:indexPath];
     cell.tag = indexPath.row;
     
-    DZPhoto *photo = [_photos objectAtIndex:indexPath.row];
+    UIPhotoDescription *photo = [_photos objectAtIndex:indexPath.row];
     
     [cell.imageView cancelCurrentImageLoad];
     [cell.imageView setImageWithURL:photo.thumbURL placeholderImage:nil
@@ -703,7 +702,7 @@ NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    DZPhotoCell *cell = (DZPhotoCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    UIPhotoDisplayViewCell *cell = (UIPhotoDisplayViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     if (cell.imageView.image) {
         return YES;
     }
@@ -722,7 +721,7 @@ NSString *NSStringFromServiceType(DZPhotoPickerControllerServiceType service)
 {
     if ([NSStringFromSelector(action) isEqualToString:@"copy:"])
     {
-        DZPhotoCell *cell = (DZPhotoCell *)[collectionView cellForItemAtIndexPath:indexPath];
+        UIPhotoDisplayViewCell *cell = (UIPhotoDisplayViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
 
         UIImage *image = cell.imageView.image;
         if (image) [[UIPasteboard generalPasteboard] setImage:image];

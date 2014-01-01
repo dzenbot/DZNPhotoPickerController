@@ -1,19 +1,23 @@
 //
-//  DZPhotoEditViewController.m
-//  DZPhotoPickerController
-//  https://github.com/dzenbot/DZPhotoPickerController
+//  UIPhotoEditViewController.m
+//  UIPhotoPickerController
+//  https://github.com/dzenbot/UIPhotoPickerController
 //
 //  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
 //  Licence: MIT-Licence
 //
 
-#import "DZPhotoEditViewController.h"
-#import "DZPhotoDisplayController.h"
+#import "UIPhotoEditViewController.h"
+#import "UIPhotoPickerController.h"
+#import "UIPhotoDisplayViewController.h"
+#import "UIPhotoDescription.h"
+
+#import "UIImageView+WebCache.h"
 
 #define kInnerEdgeInset 15.0
 
-@interface DZPhotoEditViewController () <UIScrollViewDelegate>
+@interface UIPhotoEditViewController () <UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIButton *cancelButton;
@@ -21,12 +25,12 @@
 @property (nonatomic, strong) UIView *bottomView;
 @end
 
-@implementation DZPhotoEditViewController
+@implementation UIPhotoEditViewController
 @synthesize photo = _photo;
 @synthesize cropMode = _cropMode;
 @synthesize cropSize = _cropSize;
 
-- (instancetype)initWithCropMode:(DZPhotoEditViewControllerCropMode)mode;
+- (instancetype)initWithCropMode:(UIPhotoEditViewControllerCropMode)mode;
 {
     self = [super init];
     if (self) {
@@ -66,7 +70,7 @@
     [_bottomView addSubview:activityIndicatorView];
     
     __weak UIButton *_button = _acceptButton;
-    __weak DZPhotoEditViewController *_self = self;
+    __weak UIPhotoEditViewController *_self = self;
     
     UIImageView *maskImageView = [[UIImageView alloc] initWithImage:[self overlayMask]];
     [self.view insertSubview:maskImageView aboveSubview:_scrollView];
@@ -84,12 +88,12 @@
 - (void)updateScrollViewContentInset
 {
     CGFloat maskHeight = 0;
-    if (_cropMode == DZPhotoEditViewControllerCropModeCircular) maskHeight = [self circularDiameter];
+    if (_cropMode == UIPhotoEditViewControllerCropModeCircular) maskHeight = [self circularDiameter];
     else maskHeight = [self cropSize].height;
     
     CGSize imageSize = [self imageSize];
     
-    CGFloat hInset = (_cropMode == DZPhotoEditViewControllerCropModeCircular) ? kInnerEdgeInset : 0.0;
+    CGFloat hInset = (_cropMode == UIPhotoEditViewControllerCropModeCircular) ? kInnerEdgeInset : 0.0;
     CGFloat vInset = (maskHeight-imageSize.height)/2;
     
     NSLog(@"hInset : %f", hInset);
@@ -169,7 +173,7 @@
         rect.origin = CGPointMake(roundf(_bottomView.frame.size.width-_acceptButton.frame.size.width-13.0), roundf(_bottomView.frame.size.height/2-_acceptButton.frame.size.height/2));
         [_acceptButton setFrame:rect];
         
-        if (_cropMode == DZPhotoEditViewControllerCropModeCircular) {
+        if (_cropMode == UIPhotoEditViewControllerCropModeCircular) {
             UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectZero];
             topLabel.text = NSLocalizedString(@"Move and Scale", nil);
             topLabel.textColor = [UIColor whiteColor];
@@ -202,7 +206,7 @@
     CGSize viewSize = self.view.bounds.size;
     
     switch (_cropMode) {
-        case DZPhotoEditViewControllerCropModeCustom:
+        case UIPhotoEditViewControllerCropModeCustom:
             if (CGSizeEqualToSize(_cropSize, CGSizeZero) ) {
                 return CGSizeMake(viewSize.width, viewSize.width);
             }
@@ -213,8 +217,8 @@
                 return _cropSize;
             }
             
-        case DZPhotoEditViewControllerCropModeSquare:
-        case DZPhotoEditViewControllerCropModeCircular:
+        case UIPhotoEditViewControllerCropModeSquare:
+        case UIPhotoEditViewControllerCropModeCircular:
         default:
             return CGSizeMake(viewSize.width, viewSize.width);
     }
@@ -258,11 +262,11 @@ CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
 - (UIImage *)overlayMask
 {
     switch (_cropMode) {
-        case DZPhotoEditViewControllerCropModeSquare:
-        case DZPhotoEditViewControllerCropModeCustom:
+        case UIPhotoEditViewControllerCropModeSquare:
+        case UIPhotoEditViewControllerCropModeCustom:
             return [self squareOverlayMask];
             
-        case DZPhotoEditViewControllerCropModeCircular:
+        case UIPhotoEditViewControllerCropModeCircular:
             return [self circularOverlayMask];
             
         default:
@@ -372,7 +376,7 @@ CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
     }
     
     
-    if (_cropMode == DZPhotoEditViewControllerCropModeCircular) {
+    if (_cropMode == UIPhotoEditViewControllerCropModeCircular) {
         
         CGFloat diameter = [self circularDiameter];
         CGRect roundedRect = CGRectMake(0, 0, diameter, diameter);
@@ -409,7 +413,7 @@ CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
 }
 
 
-#pragma mark - DZPhotoEditViewController methods
+#pragma mark - UIPhotoEditViewController methods
 
 + (void)didFinishPickingEditedImage:(UIImage *)editedImage
                        withCropRect:(CGRect)cropRect
@@ -429,12 +433,12 @@ CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
     if (authorName != nil) [userInfo setObject:authorName forKey:UIImagePickerControllerAuthorCredits];
     if (sourceName != nil) [userInfo setObject:sourceName forKey:UIImagePickerControllerSourceName];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDZPhotoPickerChooseNotification object:nil userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUIPhotoPickerChooseNotification object:nil userInfo:userInfo];
 }
 
 - (void)acceptEdition:(id)sender
 {
-    [DZPhotoEditViewController didFinishPickingEditedImage:[self editedPhoto]
+    [UIPhotoEditViewController didFinishPickingEditedImage:[self editedPhoto]
                                               withCropRect:[self cropRect]
                                          fromOriginalImage:_imageView.image
                                               referenceURL:_photo.fullURL

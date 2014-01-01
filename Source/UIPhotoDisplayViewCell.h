@@ -1,7 +1,7 @@
 //
-//  DZPhotoCell.h
-//  DZPhotoPickerController
-//  https://github.com/dzenbot/DZPhotoPickerController
+//  UIPhotoDisplayViewCell.h
+//  UIPhotoPickerController
+//  https://github.com/dzenbot/UIPhotoPickerController
 //
 //  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
@@ -11,7 +11,7 @@
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
 
-@interface DZPhotoCell : UICollectionViewCell
+@interface UIPhotoDisplayViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *imageView;
 

@@ -1,7 +1,7 @@
 //
-//  DZPhotoDisplayController.h
-//  DZPhotoPickerController
-//  https://github.com/dzenbot/DZPhotoPickerController
+//  UIPhotoDisplayController.h
+//  UIPhotoPickerController
+//  https://github.com/dzenbot/UIPhotoPickerController
 //
 //  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
@@ -12,20 +12,15 @@
 #import <FlickrKit/FlickrKit.h>
 #import <PXAPI.h>
 
-#define kDZPhotoPickerChooseNotification @"DZPhotoPickerChooseNotification"
-
-static NSString *UIImagePickerControllerAuthorCredits = @"UIImagePickerControllerAuthorCredits";
-static NSString *UIImagePickerControllerSourceName = @"UIImagePickerControllerSourceName";
-
-@class DZPhotoPickerController, DZPhotoEditViewController;
+@class UIPhotoPickerController, UIPhotoEditViewController;
 
 /*
  * The controller in charge of searching and displaying thumb images from different image providers.
  */
-@interface DZPhotoDisplayController : UICollectionViewController
+@interface UIPhotoDisplayViewController : UICollectionViewController
 
 /* The nearest ancestor in the view controller hierarchy that is a photo picker controller. */
-@property (nonatomic, readonly) DZPhotoPickerController *navigationController;
+@property (nonatomic, readonly) UIPhotoPickerController *navigationController;
 /* The searching string. If setted before presentation, the controller will automatically start searching. */
 @property (nonatomic, strong) NSString *searchTerm;
 /* The count number of columns of thumbs to be displayed. */

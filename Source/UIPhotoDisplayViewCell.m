@@ -1,16 +1,16 @@
 //
-//  DZPhotoCell.m
-//  DZPhotoPickerController
-//  https://github.com/dzenbot/DZPhotoPickerController
+//  UIPhotoDisplayViewCell.m
+//  UIPhotoPickerController
+//  https://github.com/dzenbot/UIPhotoPickerController
 //
 //  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
 //  Licence: MIT-Licence
 //
 
-#import "DZPhotoCell.h"
+#import "UIPhotoDisplayViewCell.h"
 
-@implementation DZPhotoCell
+@implementation UIPhotoDisplayViewCell
 
 - (id)initWithFrame:(CGRect)frame
 {

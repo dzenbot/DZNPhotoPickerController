@@ -7,7 +7,7 @@
 //
 
 #import "RootViewController.h"
-#import "DZPhotoPickerController.h"
+#import "UIPhotoPickerController.h"
 
 #define k500pxConsumerKey       @"9sUVdra51AYawcQwQjFaQA7ueUqpaXLEZQJT7Pzy"
 #define k500pxConsumerSecret    @"CmmZmHfSu1xi9BfVq4cS5RcAAhnR9UylGzPJQjqc"
@@ -24,11 +24,11 @@
 
 + (void)initialize
 {
-    [DZPhotoPickerController registerForServiceType:DZPhotoPickerControllerServiceType500px
+    [UIPhotoPickerController registerForServiceType:UIPhotoPickerControllerServiceType500px
                                     withConsumerKey:k500pxConsumerKey
                                   andConsumerSecret:k500pxConsumerSecret];
     
-    [DZPhotoPickerController registerForServiceType:DZPhotoPickerControllerServiceTypeFlickr
+    [UIPhotoPickerController registerForServiceType:UIPhotoPickerControllerServiceTypeFlickr
                                     withConsumerKey:kFlickrConsumerKey
                                   andConsumerSecret:kFlickrConsumerSecret];
 }
@@ -97,11 +97,11 @@
 
 - (void)presentPhotoPicker
 {
-    DZPhotoPickerController *photoPickerController = [[DZPhotoPickerController alloc] init];
-    photoPickerController.serviceType = DZPhotoPickerControllerServiceType500px | DZPhotoPickerControllerServiceTypeFlickr;
+    UIPhotoPickerController *photoPickerController = [[UIPhotoPickerController alloc] init];
+    photoPickerController.serviceType = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
     photoPickerController.startSearchingTerm = @"Surf";
     photoPickerController.allowsEditing = YES;
-//    photoPickerController.editingMode = DZPhotoEditViewControllerCropModeCircular;
+//    photoPickerController.editingMode = UIPhotoEditViewControllerCropModeCircular;
 //    photoPickerController.customCropSize = CGSizeMake(320.0, 160.0);
     photoPickerController.delegate = self;
     
@@ -200,9 +200,9 @@
 }
 
 
-#pragma mark - DZPhotoPickerControllerDelegate methods
+#pragma mark - UIPhotoPickerControllerDelegate methods
 
-- (void)photoPickerController:(DZPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)info
+- (void)photoPickerController:(UIPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)info
 {
     [self updateImage:info];
     
@@ -214,7 +214,7 @@
     }
 }
 
-- (void)photoPickerControllerDidCancel:(DZPhotoPickerController *)picker
+- (void)photoPickerControllerDidCancel:(UIPhotoPickerController *)picker
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [popoverController dismissPopoverAnimated:YES];

@@ -1,7 +1,7 @@
 //
-//  DZPhotoEditViewController.h
-//  DZPhotoPickerController
-//  https://github.com/dzenbot/DZPhotoPickerController
+//  UIPhotoEditViewController.h
+//  UIPhotoPickerController
+//  https://github.com/dzenbot/UIPhotoPickerController
 //
 //  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
@@ -9,27 +9,25 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import <SDWebImage/UIImageView+WebCache.h>
-#import "UIImageView+WebCache.h"
 
-#import "DZPhoto.h"
+@class UIPhotoDescription;
 
-typedef NS_ENUM(NSInteger, DZPhotoEditViewControllerCropMode) {
-    DZPhotoEditViewControllerCropModeSquare = 0,
-    DZPhotoEditViewControllerCropModeCircular,
-    DZPhotoEditViewControllerCropModeCustom
+typedef NS_ENUM(NSInteger, UIPhotoEditViewControllerCropMode) {
+    UIPhotoEditViewControllerCropModeSquare = 0,
+    UIPhotoEditViewControllerCropModeCircular,
+    UIPhotoEditViewControllerCropModeCustom
 };
 
 /*
  * The controller in charge of displaying the big resolution image with the different cropping modes.
  */
-@interface DZPhotoEditViewController : UIViewController
+@interface UIPhotoEditViewController : UIViewController
 
 
 /* The photo data object. */
-@property (nonatomic, weak) DZPhoto *photo;
+@property (nonatomic, weak) UIPhotoDescription *photo;
 /* The crop mode currently being used. */
-@property (nonatomic, readonly) DZPhotoEditViewControllerCropMode cropMode;
+@property (nonatomic, readonly) UIPhotoEditViewControllerCropMode cropMode;
 /* The crop size proportions. */
 @property (nonatomic) CGSize cropSize;
 
@@ -40,7 +38,7 @@ typedef NS_ENUM(NSInteger, DZPhotoEditViewControllerCropMode) {
  * @param mode The crop mode.
  * @return A new instance of the editor controller.
  */
-- (instancetype)initWithCropMode:(DZPhotoEditViewControllerCropMode)mode;
+- (instancetype)initWithCropMode:(UIPhotoEditViewControllerCropMode)mode;
 
 /*
  *
