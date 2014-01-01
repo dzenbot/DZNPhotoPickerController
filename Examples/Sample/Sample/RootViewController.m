@@ -73,17 +73,13 @@
 - (void)presentPhotoPicker
 {
     UIPhotoPickerController *_controller = [[UIPhotoPickerController alloc] init];
-    _controller.allowsEditing = YES;
     _controller.serviceType = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
+    _controller.allowsEditing = YES;
     _controller.delegate = self;
     
-    [self presentViewController:_controller animated:YES completion:NO];
-    
-    _controller.initialSearchTerm = @"Surf";
+    _controller.initialSearchTerm = @"Daft Punk";
     _controller.editingMode = UIPhotoEditViewControllerCropModeCircular;
-    
-//
-//    photoPickerController.customCropSize = CGSizeMake(320.0, 160.0);
+//    _controller.customCropSize = CGSizeMake(320.0, 160.0);
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         popoverController = [[UIPopoverController alloc] initWithContentViewController:_controller];
@@ -144,6 +140,8 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    NSLog(@"%s",__FUNCTION__);
+    
     [self updateImage:info];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -169,6 +167,8 @@
 
 - (void)photoPickerController:(UIPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)info
 {
+    NSLog(@"%s",__FUNCTION__);
+
     [self updateImage:info];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {

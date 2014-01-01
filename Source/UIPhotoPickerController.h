@@ -22,9 +22,9 @@ typedef NS_OPTIONS(NSUInteger, UIPhotoPickerControllerServiceType) {
     UIPhotoPickerControllerServiceTypeDribbble = (1 << 8)           // Dribbble         http://dribbble.com/api/
 };
 
-NSString *const kUIPhotoPickerDidChooseNotification;
-NSString *const UIPhotoPickerControllerAuthorCredits;
-NSString *const UIPhotoPickerControllerSourceName;
+static NSString *kUIPhotoPickerDidChooseNotification = @"kUIPhotoPickerDidChooseNotification";
+static NSString *UIPhotoPickerControllerAuthorCredits = @"UIPhotoPickerControllerAuthorCredits";
+static NSString *UIPhotoPickerControllerSourceName = @"UIPhotoPickerControllerAuthorCredits";
 
 @protocol UIPhotoPickerControllerDelegate;
 

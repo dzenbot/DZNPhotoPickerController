@@ -87,6 +87,8 @@
 
 - (void)updateScrollViewContentInset
 {
+    return;
+    
     CGFloat maskHeight = 0;
     if (_cropMode == UIPhotoEditViewControllerCropModeCircular) maskHeight = [self circularDiameter];
     else maskHeight = [self cropSize].height;
