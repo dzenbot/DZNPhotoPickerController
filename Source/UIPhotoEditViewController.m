@@ -85,38 +85,18 @@
                       }];
 }
 
-- (void)updateScrollViewContentInset
-{    
-    CGFloat maskHeight = 0;
-    if (_cropMode == UIPhotoEditViewControllerCropModeCircular) maskHeight = [self circularDiameter];
-    else maskHeight = [self cropSize].height;
-    
-    CGSize imageSize = [self imageSize];
-    
-    CGFloat hInset = (_cropMode == UIPhotoEditViewControllerCropModeCircular) ? kInnerEdgeInset : 0.0;
-    CGFloat vInset = (maskHeight-imageSize.height)/2;
-    
-    NSLog(@"hInset : %f", hInset);
-    NSLog(@"vInset : %f", vInset);
-    NSLog(@"imageSize : %@", NSStringFromCGSize(imageSize));
-    
-    _scrollView.contentInset =  UIEdgeInsetsMake(vInset, hInset, vInset, hInset);
-}
-
-
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide]; //UIStatusBarAnimationFade
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
@@ -415,25 +395,22 @@ CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
 
 #pragma mark - UIPhotoEditViewController methods
 
-+ (void)didFinishPickingEditedImage:(UIImage *)editedImage
-                       withCropRect:(CGRect)cropRect
-                  fromOriginalImage:(UIImage *)originalImage
-                       referenceURL:(NSURL *)referenceURL
-                         authorName:(NSString *)authorName
-                         sourceName:(NSString *)sourceName
+- (void)updateScrollViewContentInset
 {
-    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                     [NSValue valueWithCGRect:cropRect],UIImagePickerControllerCropRect,
-                                     @"public.image",UIImagePickerControllerMediaType,
-                                     nil];
-
-    if (editedImage != nil) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
-    if (originalImage != nil) [userInfo setObject:originalImage forKey:UIImagePickerControllerOriginalImage];
-    if (referenceURL != nil) [userInfo setObject:referenceURL.absoluteString forKey:UIImagePickerControllerReferenceURL];
-    if (authorName != nil) [userInfo setObject:authorName forKey:UIPhotoPickerControllerAuthorCredits];
-    if (sourceName != nil) [userInfo setObject:sourceName forKey:UIPhotoPickerControllerSourceName];
+    CGFloat maskHeight = 0;
+    if (_cropMode == UIPhotoEditViewControllerCropModeCircular) maskHeight = [self circularDiameter];
+    else maskHeight = [self cropSize].height;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUIPhotoPickerDidFinishPickingNotification object:nil userInfo:userInfo];
+    CGSize imageSize = [self imageSize];
+    
+    CGFloat hInset = (_cropMode == UIPhotoEditViewControllerCropModeCircular) ? kInnerEdgeInset : 0.0;
+    CGFloat vInset = (maskHeight-imageSize.height)/2;
+    
+    NSLog(@"hInset : %f", hInset);
+    NSLog(@"vInset : %f", vInset);
+    NSLog(@"imageSize : %@", NSStringFromCGSize(imageSize));
+    
+    _scrollView.contentInset =  UIEdgeInsetsMake(vInset, hInset, vInset, hInset);
 }
 
 - (void)acceptEdition:(id)sender
@@ -451,6 +428,26 @@ CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
     [self.navigationController popViewControllerAnimated:YES];
 }
 
++ (void)didFinishPickingEditedImage:(UIImage *)editedImage
+                       withCropRect:(CGRect)cropRect
+                  fromOriginalImage:(UIImage *)originalImage
+                       referenceURL:(NSURL *)referenceURL
+                         authorName:(NSString *)authorName
+                         sourceName:(NSString *)sourceName
+{
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                     [NSValue valueWithCGRect:cropRect],UIImagePickerControllerCropRect,
+                                     @"public.image",UIImagePickerControllerMediaType,
+                                     nil];
+    
+    if (editedImage != nil) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
+    if (originalImage != nil) [userInfo setObject:originalImage forKey:UIImagePickerControllerOriginalImage];
+    if (referenceURL != nil) [userInfo setObject:referenceURL.absoluteString forKey:UIImagePickerControllerReferenceURL];
+    if (authorName != nil) [userInfo setObject:authorName forKey:UIPhotoPickerControllerAuthorCredits];
+    if (sourceName != nil) [userInfo setObject:sourceName forKey:UIPhotoPickerControllerSourceName];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUIPhotoPickerDidFinishPickingNotification object:nil userInfo:userInfo];
+}
 
 
 #pragma mark - UIScrollViewDelegate
@@ -547,6 +544,11 @@ CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
 
 
 #pragma mark - View Auto-Rotation
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
 
 - (NSUInteger)supportedInterfaceOrientations
 {
