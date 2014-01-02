@@ -10,11 +10,7 @@
 #import "UIPhotoPickerController.h"
 #import "UIImagePickerController+Edit.h"
 
-#define k500pxConsumerKey       @"9sUVdra51AYawcQwQjFaQA7ueUqpaXLEZQJT7Pzy"
-#define k500pxConsumerSecret    @"CmmZmHfSu1xi9BfVq4cS5RcAAhnR9UylGzPJQjqc"
-
-#define kFlickrConsumerKey      @"7f8cf8f237f79fef1fff97f253ec341a"
-#define kFlickrConsumerSecret   @"c8a8ce8e92912bf9"
+#import "Private.h"
 
 @interface RootViewController () {
     UIPopoverController *popoverController;

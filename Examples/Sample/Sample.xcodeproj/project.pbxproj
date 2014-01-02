@@ -126,6 +126,7 @@
 		4F5701A3180E5E8900E12444 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
 		4F5701A5180E5E8900E12444 /* NRGramKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRGramKit.h; sourceTree = "<group>"; };
 		4F5701A6180E5E8900E12444 /* NRGramKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRGramKit.m; sourceTree = "<group>"; };
+		4FD61C0618759E0D0048DC0C /* Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
 		81CB7D6B303A4384A940032C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		880742B9C52B4EC59B669AE3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -192,6 +193,7 @@
 			children = (
 				4F57014F180E5D0E00E12444 /* AppDelegate.h */,
 				4F570150180E5D0E00E12444 /* AppDelegate.m */,
+				4FD61C0618759E0D0048DC0C /* Private.h */,
 				4F570158180E5D0E00E12444 /* RootViewController.h */,
 				4F570159180E5D0E00E12444 /* RootViewController.m */,
 				4F570152180E5D0E00E12444 /* Main_iPhone.storyboard */,
