@@ -65,6 +65,8 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor blackColor];
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     [self.view addSubview:self.scrollView];
     [self.view addSubview:self.bottomView];
 }
@@ -79,6 +81,7 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 
     UIImageView *maskImageView = [[UIImageView alloc] initWithImage:[self overlayMask]];
     [self.view insertSubview:maskImageView aboveSubview:_scrollView];
@@ -110,15 +113,14 @@
 {
     [super viewDidAppear:animated];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide]; //UIStatusBarAnimationFade
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -425,7 +427,7 @@ CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
     CGSize imageSize = [self imageSize];
     
     CGFloat hInset = (_cropMode == UIPhotoEditViewControllerCropModeCircular) ? kInnerEdgeInset : 0.0;
-    CGFloat vInset = (maskHeight-imageSize.height)/2;
+    CGFloat vInset = fabs((maskHeight-imageSize.height)/2);
     
     NSLog(@"hInset : %f", hInset);
     NSLog(@"vInset : %f", vInset);

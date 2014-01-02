@@ -74,7 +74,7 @@
     picker.delegate = self;
     
     picker.initialSearchTerm = @"Daft Punk";
-    picker.editingMode = UIPhotoEditViewControllerCropModeCircular;
+    picker.editingMode = UIPhotoEditViewControllerCropModeSquare;
 //    _controller.customCropSize = CGSizeMake(320.0, 160.0);
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
