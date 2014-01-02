@@ -13,6 +13,7 @@
 @class UIPhotoDescription;
 
 typedef NS_ENUM(NSInteger, UIPhotoEditViewControllerCropMode) {
+    UIPhotoEditViewControllerCropNone = -1,
     UIPhotoEditViewControllerCropModeSquare = 0,
     UIPhotoEditViewControllerCropModeCircular,
     UIPhotoEditViewControllerCropModeCustom
@@ -23,8 +24,6 @@ typedef NS_ENUM(NSInteger, UIPhotoEditViewControllerCropMode) {
  */
 @interface UIPhotoEditViewController : UIViewController
 
-/* The photo data object. */
-@property (nonatomic, weak) UIPhotoDescription *photo;
 /* The crop mode currently being used. */
 @property (nonatomic, readonly) UIPhotoEditViewControllerCropMode cropMode;
 /* The crop size proportions. */
@@ -37,7 +36,9 @@ typedef NS_ENUM(NSInteger, UIPhotoEditViewControllerCropMode) {
  * @param mode The crop mode.
  * @return A new instance of the editor controller.
  */
-- (instancetype)initWithCropMode:(UIPhotoEditViewControllerCropMode)mode;
+- (instancetype)initWithPhotoDescription:(UIPhotoDescription *)description cropMode:(UIPhotoEditViewControllerCropMode)mode;
+
+- (instancetype)initWithImage:(UIImage *)image cropMode:(UIPhotoEditViewControllerCropMode)mode;
 
 /*
  * Proxy class method to be called whenever the user picks a photo, with or without editing the image.

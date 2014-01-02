@@ -21,6 +21,7 @@
 
 /* Begin PBXBuildFile section */
 		09545463FFA2473F9F223361 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81CB7D6B303A4384A940032C /* libPods.a */; };
+		4F29052C18759967005E9F39 /* UIImagePickerController+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */; };
 		4F570141180E5D0E00E12444 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570140180E5D0E00E12444 /* Foundation.framework */; };
 		4F570143180E5D0E00E12444 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570142180E5D0E00E12444 /* CoreGraphics.framework */; };
 		4F570145180E5D0E00E12444 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570144180E5D0E00E12444 /* UIKit.framework */; };
@@ -67,6 +68,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F29052A18759967005E9F39 /* UIImagePickerController+Edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+Edit.h"; sourceTree = "<group>"; };
+		4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+Edit.m"; sourceTree = "<group>"; };
 		4F57013D180E5D0E00E12444 /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F570140180E5D0E00E12444 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4F570142180E5D0E00E12444 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -242,6 +245,8 @@
 				4F57017D180E5E6D00E12444 /* UIPhotoDisplayViewCell.m */,
 				4F57017A180E5E6D00E12444 /* UIPhotoDescription.h */,
 				4F57017B180E5E6D00E12444 /* UIPhotoDescription.m */,
+				4F29052A18759967005E9F39 /* UIImagePickerController+Edit.h */,
+				4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */,
 				4F570189180E5E7400E12444 /* External */,
 			);
 			name = Source;
@@ -452,6 +457,7 @@
 				4F570188180E5E6D00E12444 /* UIPhotoPickerController.m in Sources */,
 				4F57014D180E5D0E00E12444 /* main.m in Sources */,
 				4F5701AC180E5E8900E12444 /* IGMedia.m in Sources */,
+				4F29052C18759967005E9F39 /* UIImagePickerController+Edit.m in Sources */,
 				4F5701B3180E5E8900E12444 /* NRGramKit.m in Sources */,
 				4F5701AB180E5E8900E12444 /* IGLocation.m in Sources */,
 			);

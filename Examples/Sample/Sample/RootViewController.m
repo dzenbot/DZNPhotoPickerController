@@ -8,6 +8,7 @@
 
 #import "RootViewController.h"
 #import "UIPhotoPickerController.h"
+#import "UIImagePickerController+Edit.h"
 
 #define k500pxConsumerKey       @"9sUVdra51AYawcQwQjFaQA7ueUqpaXLEZQJT7Pzy"
 #define k500pxConsumerSecret    @"CmmZmHfSu1xi9BfVq4cS5RcAAhnR9UylGzPJQjqc"
@@ -53,41 +54,39 @@
 
 - (void)presentImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
 {
-    UIImagePickerController *_controller = [[UIImagePickerController alloc] init];
-    _controller.allowsEditing = YES;
-    _controller.sourceType = sourceType;
-    _controller.delegate = self;
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.editingMode = UIPhotoEditViewControllerCropModeCircular;
+    picker.sourceType = sourceType;
+    picker.delegate = self;
     [UIImagePickerController availableMediaTypesForSourceType:0];
     
-    [self presentViewController:_controller animated:YES completion:NO];
-    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        popoverController = [[UIPopoverController alloc] initWithContentViewController:_controller];
+        popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
         [popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else {
-        [self presentViewController:_controller animated:YES completion:NO];
+        [self presentViewController:picker animated:YES completion:NO];
     }
 }
 
 - (void)presentPhotoPicker
 {
-    UIPhotoPickerController *_controller = [[UIPhotoPickerController alloc] init];
-    _controller.serviceType = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
-    _controller.allowsEditing = YES;
-    _controller.delegate = self;
+    UIPhotoPickerController *picker = [[UIPhotoPickerController alloc] init];
+    picker.serviceType = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
+    picker.allowsEditing = YES;
+    picker.delegate = self;
     
-    _controller.initialSearchTerm = @"Daft Punk";
-    _controller.editingMode = UIPhotoEditViewControllerCropModeCircular;
+    picker.initialSearchTerm = @"Daft Punk";
+    picker.editingMode = UIPhotoEditViewControllerCropModeCircular;
 //    _controller.customCropSize = CGSizeMake(320.0, 160.0);
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        popoverController = [[UIPopoverController alloc] initWithContentViewController:_controller];
+        popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
 //        popoverController.popoverContentSize = CGSizeMake(320.0, 600.0);
         [popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else {
-        [self presentViewController:_controller animated:YES completion:NO];
+        [self presentViewController:picker animated:YES completion:NO];
     }
 }
 
@@ -140,15 +139,21 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    NSLog(@"%s",__FUNCTION__);
-    
-    [self updateImage:info];
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [popoverController dismissPopoverAnimated:YES];
+    if (picker.editingMode == UIPhotoEditViewControllerCropModeCircular) {
+        
+        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        UIPhotoEditViewController *photoEditViewController = [[UIPhotoEditViewController alloc] initWithImage:image cropMode:UIPhotoEditViewControllerCropModeCircular];
+        [picker pushViewController:photoEditViewController animated:YES];
     }
     else {
-        [picker dismissViewControllerAnimated:YES completion:NULL];
+        [self updateImage:info];
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            [popoverController dismissPopoverAnimated:YES];
+        }
+        else {
+            [picker dismissViewControllerAnimated:YES completion:NULL];
+        }
     }
 }
 

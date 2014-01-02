@@ -21,7 +21,7 @@ static NSString *kThumbFooterID = @"UIPhotoFooter";
 
 @interface UIPhotoDisplayViewController () <UISearchDisplayDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong) NSMutableArray *photos;
+@property (nonatomic, strong) NSMutableArray *photoDescriptions;
 @property (nonatomic, readwrite) UISearchBar *searchBar;
 @property (nonatomic, readwrite) UIButton *loadButton;
 @property (nonatomic, readwrite) UIView *overlayView;
@@ -119,8 +119,8 @@ static NSString *kThumbFooterID = @"UIPhotoFooter";
 {
     [super viewWillAppear:animated];
     
-    if (!_photos) {
-        _photos = [NSMutableArray new];
+    if (!_photoDescriptions) {
+        _photoDescriptions = [NSMutableArray new];
 
         if (_searchTerm.length > 0) {
             self.searchBar.text = _searchTerm;
@@ -347,32 +347,32 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     }
 }
 
-- (NSArray *)photosForResponse:(NSArray *)reponse
+- (NSArray *)photoDescriptionsFromResponse:(NSArray *)reponse
 {
     NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:reponse.count];
     
     if ((_selectedService & UIPhotoPickerControllerServiceType500px) > 0) {
         for (NSDictionary *object in reponse) {
 
-            UIPhotoDescription *photo = [UIPhotoDescription photoDescriptionWithTitle:[object valueForKey:@"username"]
+            UIPhotoDescription *description = [UIPhotoDescription photoDescriptionWithTitle:[object valueForKey:@"username"]
                                              authorName:[NSString stringWithFormat:@"%@ %@",[object valueForKeyPath:@"user.firstname"],[object valueForKeyPath:@"user.lastname"]]
                                                thumbURL:[NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:0] valueForKey:@"url"]]
                                                 fullURL:[NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:1] valueForKey:@"url"]]
                                              sourceName:[self selectedServiceName]];
             
-            [result addObject:photo];
+            [result addObject:description];
         }
     }
     else if ((_selectedService & UIPhotoPickerControllerServiceTypeFlickr) > 0) {
         for (NSDictionary *object in reponse) {
             
-            UIPhotoDescription *photo = [UIPhotoDescription photoDescriptionWithTitle:[object valueForKey:@"title"]
+            UIPhotoDescription *description = [UIPhotoDescription photoDescriptionWithTitle:[object valueForKey:@"title"]
                                              authorName:[object valueForKey:@"owner"]
                                                thumbURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:object]
                                                 fullURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLarge1024 fromPhotoDictionary:object]
                                              sourceName:[self selectedServiceName]];
             
-            [result addObject:photo];
+            [result addObject:description];
         }
     }
     
@@ -381,7 +381,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 - (BOOL)shouldShowFooter
 {
-    return (_photos.count%_resultPerPage == 0) ? YES : NO;
+    return (_photoDescriptions.count%_resultPerPage == 0) ? YES : NO;
 }
 
 
@@ -389,8 +389,8 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 - (void)resetPhotos
 {
-    [self setPhotos:nil];
-    _photos = [NSMutableArray new];
+    [self setPhotoDescriptions:nil];
+    _photoDescriptions = [NSMutableArray new];
     
     _currentPage = 1;
     
@@ -404,7 +404,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 {
     [self showActivityIndicators:NO];
     
-    [_photos addObjectsFromArray:[self photosForResponse:response]];
+    [_photoDescriptions addObjectsFromArray:[self photoDescriptionsFromResponse:response]];
     [self.collectionView reloadData];
 }
 
@@ -437,20 +437,20 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 - (void)handleSelectionAtIndexPath:(NSIndexPath *)indexPath
 {
+    UIPhotoDescription *description = [_photoDescriptions objectAtIndex:indexPath.row];
+    
     if (self.navigationController.allowsEditing) {
         
-        UIPhotoEditViewController *photoEditViewController = [[UIPhotoEditViewController alloc] initWithCropMode:self.navigationController.editingMode];
-        photoEditViewController.photo = [_photos objectAtIndex:indexPath.row];
+        UIPhotoEditViewController *photoEditViewController = [[UIPhotoEditViewController alloc] initWithPhotoDescription:description cropMode:self.navigationController.editingMode];
         photoEditViewController.cropSize = self.navigationController.customCropSize;
         
         [self.navigationController pushViewController:photoEditViewController animated:YES];
     }
     else {
-        UIPhotoDescription *photo = [_photos objectAtIndex:indexPath.row];
         
         [self showActivityIndicators:YES];
 
-        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:photo.fullURL
+        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:description.fullURL
                                                               options:SDWebImageCacheMemoryOnly|SDWebImageLowPriority
                                                              progress:NULL
                                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
@@ -458,9 +458,9 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
                                                                     [UIPhotoEditViewController didFinishPickingEditedImage:nil
                                                                                                               withCropRect:CGRectZero
                                                                                                          fromOriginalImage:image
-                                                                                                              referenceURL:photo.fullURL
-                                                                                                                authorName:photo.authorName
-                                                                                                                sourceName:photo.sourceName];
+                                                                                                              referenceURL:description.fullURL
+                                                                                                                authorName:description.authorName
+                                                                                                                sourceName:description.sourceName];
                                                                 }
                                                                 else {
                                                                     [self handleError:error];
@@ -558,7 +558,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _photos.count;
+    return _photoDescriptions.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -566,10 +566,10 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     UIPhotoDisplayViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kThumbCellID forIndexPath:indexPath];
     cell.tag = indexPath.row;
     
-    UIPhotoDescription *photo = [_photos objectAtIndex:indexPath.row];
+    UIPhotoDescription *description = [_photoDescriptions objectAtIndex:indexPath.row];
     
     [cell.imageView cancelCurrentImageLoad];
-    [cell.imageView setImageWithURL:photo.thumbURL placeholderImage:nil
+    [cell.imageView setImageWithURL:description.thumbURL placeholderImage:nil
                               options:SDWebImageCacheMemoryOnly|SDWebImageRetryFailed completed:NULL];
     
     return cell;
@@ -603,7 +603,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
             }
             _loadButton.frame = footer.bounds;
             
-            if (_photos.count > 0) {
+            if (_photoDescriptions.count > 0) {
                 _loadButton.enabled = YES;
                 [_loadButton setTitleColor:self.view.window.tintColor forState:UIControlStateNormal];
 
@@ -694,7 +694,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
     CGSize size = CGSizeZero;
-    if (_photos.count == 0) size = [self contentSize];
+    if (_photoDescriptions.count == 0) size = [self contentSize];
     else size = [self footerSize];
     
     return size;

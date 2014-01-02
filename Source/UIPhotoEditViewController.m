@@ -18,6 +18,11 @@
 #define kInnerEdgeInset 15.0
 
 @interface UIPhotoEditViewController () <UIScrollViewDelegate>
+
+/* The photo description data object. */
+@property (nonatomic, weak) UIPhotoDescription *photoDescription;
+@property (nonatomic, strong) UIImage *editingImage;
+
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIButton *cancelButton;
@@ -26,14 +31,25 @@
 @end
 
 @implementation UIPhotoEditViewController
-@synthesize photo = _photo;
+@synthesize photoDescription = _photoDescription;
 @synthesize cropMode = _cropMode;
 @synthesize cropSize = _cropSize;
 
-- (instancetype)initWithCropMode:(UIPhotoEditViewControllerCropMode)mode;
+- (instancetype)initWithPhotoDescription:(UIPhotoDescription *)description cropMode:(UIPhotoEditViewControllerCropMode)mode;
 {
     self = [super init];
     if (self) {
+        _photoDescription = description;
+        _cropMode = mode;
+    }
+    return self;
+}
+
+- (instancetype)initWithImage:(UIImage *)image cropMode:(UIPhotoEditViewControllerCropMode)mode
+{
+    self = [super init];
+    if (self) {
+        _editingImage = [image copy];
         _cropMode = mode;
     }
     return self;
@@ -63,26 +79,31 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    
-    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    activityIndicatorView.center = CGPointMake(roundf(_bottomView.frame.size.width/2), roundf(_bottomView.frame.size.height/2));
-    [activityIndicatorView startAnimating];
-    [_bottomView addSubview:activityIndicatorView];
-    
-    __weak UIButton *_button = _acceptButton;
-    __weak UIPhotoEditViewController *_self = self;
-    
+
     UIImageView *maskImageView = [[UIImageView alloc] initWithImage:[self overlayMask]];
     [self.view insertSubview:maskImageView aboveSubview:_scrollView];
-
-    [_imageView setImageWithURL:_photo.fullURL placeholderImage:nil
-                        options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
-                      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-                          if (!error) [_button setEnabled:YES];
-                          [activityIndicatorView removeFromSuperview];
-                          
-                          [_self updateScrollViewContentInset];
-                      }];
+    
+    if (!_imageView.image) {
+        
+        __weak UIButton *_button = _acceptButton;
+        _button.enabled = NO;
+        
+        __weak UIPhotoEditViewController *_self = self;
+        
+        UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        activityIndicatorView.center = CGPointMake(roundf(_bottomView.frame.size.width/2), roundf(_bottomView.frame.size.height/2));
+        [activityIndicatorView startAnimating];
+        [_bottomView addSubview:activityIndicatorView];
+        
+        [_imageView setImageWithURL:_photoDescription.fullURL placeholderImage:nil
+                            options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
+                          completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
+                              if (!error) _button.enabled = YES;
+                              [activityIndicatorView removeFromSuperview];
+                              
+                              [_self updateScrollViewContentInset];
+                          }];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -122,6 +143,7 @@
         
         _imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        _imageView.image = _editingImage;
         
         [_scrollView addSubview:_imageView];
         [_scrollView setZoomScale:_scrollView.minimumZoomScale];
@@ -142,7 +164,6 @@
         _acceptButton = [self buttonWithTitle:NSLocalizedString(@"Choose", nil)];
         [_acceptButton addTarget:self action:@selector(acceptEdition:) forControlEvents:UIControlEventTouchUpInside];
         [_acceptButton setTitleColor:[UIColor colorWithWhite:1 alpha:0.5] forState:UIControlStateDisabled];
-        [_acceptButton setEnabled:NO];
         [_bottomView addSubview:_acceptButton];
         
         CGRect rect = _cancelButton.frame;
@@ -418,9 +439,9 @@ CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
     [UIPhotoEditViewController didFinishPickingEditedImage:[self editedPhoto]
                                               withCropRect:[self cropRect]
                                          fromOriginalImage:_imageView.image
-                                              referenceURL:_photo.fullURL
-                                                authorName:_photo.authorName
-                                                sourceName:_photo.sourceName];
+                                              referenceURL:_photoDescription.fullURL
+                                                authorName:_photoDescription.authorName
+                                                sourceName:_photoDescription.sourceName];
 }
 
 - (void)cancelEdition:(id)sender
