@@ -10,6 +10,7 @@ This framework tries to mimic as close as possible the native UIImagePickerContr
 * Exact same UI layouts and behavious than UIImagePickerController.
 * Edit photo selections with manual cropping.
 * Circular crop (like Contacts app) and custom crop size support.
+* Support for custom edition mode while using UIImagePickerController.
 
 ![UIPhotoPickerController](https://dl.dropboxusercontent.com/u/2452151/Permalink/UIPhotoPickerController.png)
 
