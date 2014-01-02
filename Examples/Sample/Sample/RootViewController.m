@@ -13,7 +13,7 @@
 #import "Private.h"
 
 @interface RootViewController () {
-    UIPopoverController *popoverController;
+    UIPopoverController *_popoverController;
 }
 @end
 
@@ -37,16 +37,17 @@
 {
     UIActionSheet *actionSheet = [UIActionSheet new];
     
-    if ([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) [actionSheet addButtonWithTitle:@"Take Photo"];
-    [actionSheet addButtonWithTitle:@"Choose Photo"];
-    [actionSheet addButtonWithTitle:@"Search Photos"];
-    [actionSheet setCancelButtonIndex:[actionSheet addButtonWithTitle:@"Cancel"]];
+    if ([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) {
+        [actionSheet addButtonWithTitle:NSLocalizedString(@"Take Photo", nil)];
+    }
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"Choose Photos", nil)];
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"Search Photos", nil)];
+    [actionSheet setCancelButtonIndex:[actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)]];
     
     [actionSheet setDelegate:self];
     
     [actionSheet showFromRect:_button.frame inView:self.view animated:YES];
 }
-
 
 - (void)presentImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
 {
@@ -57,8 +58,8 @@
     [UIImagePickerController availableMediaTypesForSourceType:0];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
-        [popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        _popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
+        [_popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else {
         [self presentViewController:picker animated:YES completion:NO];
@@ -77,9 +78,9 @@
 //    _controller.customCropSize = CGSizeMake(320.0, 160.0);
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
-//        popoverController.popoverContentSize = CGSizeMake(320.0, 600.0);
-        [popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        _popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
+        _popoverController.popoverContentSize = CGSizeMake(320.0, 600.0);
+        [_popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else {
         [self presentViewController:picker animated:YES completion:NO];
@@ -97,7 +98,7 @@
     NSLog(@"UIPhotoPickerControllerSourceName : %@",[userInfo objectForKey:UIPhotoPickerControllerSourceName]);
 
     UIImage *image = [userInfo objectForKey:UIImagePickerControllerEditedImage];
-//    if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];
+    if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];
     
     NSLog(@"%s %@ size : %@",__FUNCTION__, image, NSStringFromCGSize(image.size));
     
@@ -109,7 +110,8 @@
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    NSLog(@"%s",__FUNCTION__);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 
@@ -145,7 +147,7 @@
         [self updateImage:info];
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            [popoverController dismissPopoverAnimated:YES];
+            [_popoverController dismissPopoverAnimated:YES];
         }
         else {
             [picker dismissViewControllerAnimated:YES completion:NULL];
@@ -156,7 +158,7 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [popoverController dismissPopoverAnimated:YES];
+        [_popoverController dismissPopoverAnimated:YES];
     }
     else {
         [picker dismissViewControllerAnimated:YES completion:NULL];
@@ -173,7 +175,7 @@
     [self updateImage:info];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [popoverController dismissPopoverAnimated:YES];
+        [_popoverController dismissPopoverAnimated:YES];
     }
     else {
         [picker dismissViewControllerAnimated:YES completion:NULL];
@@ -183,7 +185,7 @@
 - (void)photoPickerControllerDidCancel:(UIPhotoPickerController *)picker
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [popoverController dismissPopoverAnimated:YES];
+        [_popoverController dismissPopoverAnimated:YES];
     }
     else {
         [picker dismissViewControllerAnimated:YES completion:NULL];
