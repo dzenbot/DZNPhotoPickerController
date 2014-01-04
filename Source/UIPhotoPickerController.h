@@ -34,7 +34,7 @@ static NSString *UIPhotoPickerControllerSourceName = @"UIPhotoPickerControllerAu
  * A photo picker for iOS 7 using popular photo search services like 500px, Flickr and many others.
  * This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behavior.
  *
- * @discussion Due to Terms of use from some image service providers, the images cannot be cached when showing thumbnails results and full screen images.
+ * @discussion Due to Terms of Use from some image service providers, the images cannot be cached when showing thumbnails results and full screen images.
  */
 @interface UIPhotoPickerController : UINavigationController
 

@@ -12,7 +12,7 @@
 #import "UIImageView+WebCache.h"
 
 /*
- * The custom collection view cell to be displayed on search results.
+ * The collection view cell to be displayed on search results, with photo thumbnail.
  */
 @interface UIPhotoDisplayViewCell : UICollectionViewCell
 

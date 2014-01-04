@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 
 /*
- * A custom data model to encapsulate meta data about a photo, provided by the photo search services.
+ * The data model to encapsulate meta data about a photo, provided by the photo search services.
  */
 @interface UIPhotoDescription : NSObject
 
