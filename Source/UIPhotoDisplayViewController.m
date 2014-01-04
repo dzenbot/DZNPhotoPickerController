@@ -70,6 +70,8 @@ static NSString *kThumbFooterID = @"kThumbFooterID";
     _searchController.delegate = self;
     _searchController.searchResultsDataSource = nil;
     _searchController.searchResultsDelegate = nil;
+    _searchController.searchResultsTableView.tableHeaderView = [UIView new];
+    _searchController.searchResultsTableView.tableFooterView = [UIView new];
 }
 
 - (void)viewDidLoad
