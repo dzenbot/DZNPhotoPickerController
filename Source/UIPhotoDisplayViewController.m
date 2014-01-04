@@ -15,24 +15,28 @@
 #import "UIPhotoDisplayViewCell.h"
 #import "UIPhotoDescription.h"
 
+#define kMinimumBarHeight 44.0
+
 static NSString *kThumbCellID = @"kThumbCellID";
-static NSString *kThumbHeaderID = @"kThumbHeaderID";
 static NSString *kThumbFooterID = @"kThumbFooterID";
 
-@interface UIPhotoDisplayViewController () <UISearchDisplayDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout>
+@interface UIPhotoDisplayViewController () <UISearchDisplayDelegate, UISearchBarDelegate,
+                                            UICollectionViewDelegateFlowLayout, UICollectionViewDataSource,
+                                            UICollectionViewDelegate>
+
+@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) UISearchDisplayController *searchController;
+@property (nonatomic, readwrite) UIButton *loadButton;
+@property (nonatomic, readwrite) UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic, strong) NSMutableArray *photoDescriptions;
-@property (nonatomic, readwrite) UISearchBar *searchBar;
-@property (nonatomic, readwrite) UIButton *loadButton;
-@property (nonatomic, readwrite) UIView *overlayView;
-@property (nonatomic, readwrite) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) NSArray *controlTitles;
 @property (nonatomic) UIPhotoPickerControllerServiceType selectedService;
 @property (nonatomic) UIPhotoPickerControllerServiceType previousService;
+@property (nonatomic, strong) PXRequest *PXRequest;
 @property (nonatomic) int resultPerPage;
 @property (nonatomic) int currentPage;
-
-@property (nonatomic, strong) PXRequest *PXRequest;
 
 @end
 
@@ -40,13 +44,11 @@ static NSString *kThumbFooterID = @"kThumbFooterID";
 
 - (id)init
 {
-    self = [super initWithCollectionViewLayout:[UIPhotoDisplayViewController flowLayout]];
+    self = [super init];
     if (self) {
         
         self.title = NSLocalizedString(@"Internet Photos", nil);
-        _selectedService = UIPhotoPickerControllerServiceType500px;
-        _previousService = UIPhotoPickerControllerServiceTypeNone;
-        _currentPage = 1;
+        _selectedService = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
     }
     return self;
 }
@@ -58,26 +60,26 @@ static NSString *kThumbFooterID = @"kThumbFooterID";
 {
     [super loadView];
     
-    self.collectionView.backgroundView = [UIView new];
-    self.collectionView.backgroundView.backgroundColor = [UIColor whiteColor];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     self.edgesForExtendedLayout = UIRectEdgeTop;
     self.extendedLayoutIncludesOpaqueBars = NO;
+    
+    [self.view addSubview:self.collectionView];
+    
+    _searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+    _searchController.delegate = self;
+    _searchController.searchResultsDataSource = nil;
+    _searchController.searchResultsDelegate = nil;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    _currentPage = 1;
     _columnCount = 4;
     _rowCount = [self rowCount];
     _resultPerPage = _columnCount*_rowCount;
-    
-    [self.collectionView registerClass:[UIPhotoDisplayViewCell class] forCellWithReuseIdentifier:kThumbCellID];
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                   withReuseIdentifier:kThumbHeaderID];
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
-                   withReuseIdentifier:kThumbFooterID];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -87,13 +89,11 @@ static NSString *kThumbFooterID = @"kThumbFooterID";
     if (!_photoDescriptions) {
         _photoDescriptions = [NSMutableArray new];
 
-        if (_searchTerm.length > 0) {
-            self.searchBar.text = _searchTerm;
-            [self searchPhotosWithKeyword:_searchTerm];
+        if (_searchTerm.length == 0) {
+            [self.searchDisplayController setActive:YES];
+            [_searchBar becomeFirstResponder];
         }
-        else {
-            [self.searchBar becomeFirstResponder];
-        }
+        else [self searchPhotosWithKeyword:_searchTerm];
     }
 }
 
@@ -123,43 +123,52 @@ static NSString *kThumbFooterID = @"kThumbFooterID";
     return flowLayout;
 }
 
-- (CGSize)cellSize
-{
-    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
-    CGFloat size = (self.navigationController.view.bounds.size.width/_columnCount) - flowLayout.minimumLineSpacing;
-    return CGSizeMake(size, size);
-}
-
-- (CGSize)headerSize
-{
-    return [_searchBar isFirstResponder] ? CGSizeMake(0, 94.0) : CGSizeMake(0, 50.0);
-}
-
-- (CGSize)footerSize
-{
-    return CGSizeMake(0, (self.navigationController.view.frame.size.height > 480.0) ? 60.0 : 50.0);
-}
-
 - (UIPhotoPickerController *)navigationController
 {
     return (UIPhotoPickerController *)[super navigationController];
+}
+
+- (UICollectionView *)collectionView
+{
+    if (!_collectionView)
+    {
+        CGRect frame = CGRectZero;
+        frame.origin.y = [self topBarsSize].height;
+        frame.size = [self contentSize];
+        
+        _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:[UIPhotoDisplayViewController flowLayout]];
+        _collectionView.backgroundView = [UIView new];
+        _collectionView.backgroundView.backgroundColor = [UIColor whiteColor];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        
+        [self.collectionView registerClass:[UIPhotoDisplayViewCell class] forCellWithReuseIdentifier:kThumbCellID];
+        [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kThumbFooterID];
+        
+        [self.view addSubview:_collectionView];
+    }
+    return _collectionView;
 }
 
 - (UISearchBar *)searchBar
 {
     if (!_searchBar)
     {
-        _searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
+        _searchBar = [[UISearchBar alloc] initWithFrame:[self searchBarFrame]];
         _searchBar.placeholder = NSLocalizedString(@"Search", nil);
         _searchBar.barStyle = UIBarStyleDefault;
         _searchBar.searchBarStyle = UISearchBarStyleProminent;
         _searchBar.backgroundColor = [UIColor whiteColor];
-        _searchBar.barTintColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+        _searchBar.barTintColor = [UIColor colorWithRed:202.0/255.0 green:202.0/255.0 blue:207.0/255.0 alpha:1.0];
         _searchBar.tintColor = self.view.window.tintColor;
         _searchBar.keyboardType = UIKeyboardAppearanceDark;
+        _searchBar.text = _searchTerm;
         _searchBar.delegate = self;
         
-        [self.view addSubview:self.overlayView];
+        _searchBar.scopeButtonTitles = [self controlTitles];
+        _searchBar.selectedScopeButtonIndex = _selectedService-1;
+        
+        [self.view addSubview:_searchBar];
     }
     return _searchBar;
 }
@@ -191,24 +200,42 @@ static NSString *kThumbFooterID = @"kThumbFooterID";
     return _activityIndicator;
 }
 
-/*
- * The overlay to be used when the search bar is first responder.
- * This mimics the same behavior than the UISearchDisplayController when dimming the content view with a dark overlay.
- */
-- (UIView *)overlayView
+- (CGSize)cellSize
 {
-    if (!_overlayView)
-    {
-        CGFloat barHeight = self.navigationController.navigationBar.frame.size.height*2;
-        _overlayView = [[UIView alloc] initWithFrame:CGRectMake(0, barHeight+[UIApplication sharedApplication].statusBarFrame.size.height, self.view.bounds.size.width, self.view.bounds.size.height-barHeight)];
-        _overlayView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
-        _overlayView.alpha = 0;
-        _overlayView.hidden = YES;
-        
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-        [_overlayView addGestureRecognizer:tapGesture];
+    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
+    CGFloat size = (self.navigationController.view.bounds.size.width/_columnCount) - flowLayout.minimumLineSpacing;
+    return CGSizeMake(size, size);
+}
+
+- (CGSize)headerSize
+{
+    return [_searchBar isFirstResponder] ? CGSizeMake(0, 94.0) : CGSizeMake(0, 50.0);
+}
+
+- (CGSize)footerSize
+{
+    return CGSizeMake(0, (self.navigationController.view.frame.size.height > 480.0) ? 60.0 : 50.0);
+}
+
+/*
+ * The collectionView's content size calculation.
+ */
+- (CGSize)topBarsSize
+{
+    CGFloat topBarsHeight = self.navigationController.view.frame.size.height;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        CGFloat statusHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+        topBarsHeight += statusHeight;
     }
-    return _overlayView;
+    
+    CGFloat navigationHeight = self.navigationController.navigationBar.frame.size.height;
+    topBarsHeight += navigationHeight;
+    
+    CGFloat headerSize = [self headerSize].height;
+    topBarsHeight += headerSize;
+    
+    return CGSizeMake(self.navigationController.view.frame.size.width, headerSize);
 }
 
 /*
@@ -217,19 +244,24 @@ static NSString *kThumbFooterID = @"kThumbFooterID";
 - (CGSize)contentSize
 {
     CGFloat viewHeight = self.navigationController.view.frame.size.height;
+    CGFloat topBarsHeight = [self topBarsSize].height;
+    return CGSizeMake(self.navigationController.view.frame.size.width, viewHeight-topBarsHeight);
+}
+
+/*
+ * The search bar appropriate rectangle.
+ */
+- (CGRect)searchBarFrame
+{
+    BOOL shouldShift = _searchBar.showsScopeBar;
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        CGFloat statusHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-        viewHeight -= statusHeight;
-    }
+    CGFloat statusHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? [UIApplication sharedApplication].statusBarFrame.size.height : 0.0;
     
-    CGFloat navigationHeight = self.navigationController.navigationBar.frame.size.height;
-    viewHeight -= navigationHeight;
+    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, kMinimumBarHeight);
+    frame.origin.y = shouldShift ? statusHeight : statusHeight+kMinimumBarHeight;
+    frame.size.height = shouldShift ? kMinimumBarHeight*2 : kMinimumBarHeight;
     
-    CGFloat headerSize = [self headerSize].height;
-    viewHeight -= headerSize;
-    
-    return CGSizeMake(self.navigationController.view.frame.size.width, viewHeight);
+    return frame;
 }
 
 /*
@@ -280,6 +312,9 @@ static NSString *kThumbFooterID = @"kThumbFooterID";
         if ((self.navigationController.serviceType & UIPhotoPickerControllerServiceTypeInstagram) > 0) {
             [titles addObject:NSStringFromServiceType(UIPhotoPickerControllerServiceTypeInstagram)];
         }
+        if ((self.navigationController.serviceType & UIPhotoPickerControllerServiceTypeDribbble) > 0) {
+            [titles addObject:NSStringFromServiceType(UIPhotoPickerControllerServiceTypeDribbble)];
+        }
         
         _controlTitles = [NSArray arrayWithArray:titles];
     }
@@ -312,6 +347,9 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
             
         case UIPhotoPickerControllerServiceTypeInstagram:
             return @"Instagram";
+          
+        case UIPhotoPickerControllerServiceTypeDribbble:
+            return @"Dribbble";
             
         default:
             return nil;
@@ -414,11 +452,20 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 #pragma mark - Setter methods
 
+/* Sets the search bar text, specially when the UISearchDisplayController when dimissing removes the bar's text by default.
+ */
+- (void)setSearchBarText:(NSString *)text
+{
+    [self.searchController setActive:NO animated:YES];
+    self.searchController.searchBar.text = text;
+}
+
+/*
+ * Removes all photo description from the array and cleans the collection view from photo thumbnails.
+ */
 - (void)resetPhotos
 {
-    [self setPhotoDescriptions:nil];
-    _photoDescriptions = [NSMutableArray new];
-    
+    [_photoDescriptions removeAllObjects];
     _currentPage = 1;
     
     [self.collectionView reloadData];
@@ -427,6 +474,9 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 #pragma mark - UIPhotoDisplayController methods
 
+/*
+ * Handles the request responses and refreshs the UI.
+ */
 - (void)handleResponse:(NSArray *)response
 {
     [self showActivityIndicators:NO];
@@ -435,6 +485,9 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     [self.collectionView reloadData];
 }
 
+/*
+ * Handles the request errors with an alert view.
+ */
 - (void)handleError:(NSError *)error
 {
     [self showActivityIndicators:NO];
@@ -443,6 +496,9 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     [alert show];
 }
 
+/*
+ * Toggles the status bar & footer activity indicators.
+ */
 - (void)showActivityIndicators:(BOOL)visible
 {
     if ([UIApplication sharedApplication].networkActivityIndicatorVisible == visible) {
@@ -462,13 +518,15 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     _loading = visible;
 }
 
+/*
+ * Handles a thumbnail selection.
+ * It either downloads the image directly or shows the edit controller.
+ */
 - (void)handleSelectionAtIndexPath:(NSIndexPath *)indexPath
 {
     UIPhotoDescription *description = [_photoDescriptions objectAtIndex:indexPath.row];
     
     if (self.navigationController.allowsEditing) {
-        
-        NSLog(@"self.navigationController.editingMode : %d", self.navigationController.editingMode);
         
         UIPhotoEditViewController *photoEditViewController = [[UIPhotoEditViewController alloc] initWithPhotoDescription:description cropMode:self.navigationController.editingMode];
         photoEditViewController.cropSize = self.navigationController.customCropSize;
@@ -502,6 +560,10 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     [self.collectionView deselectItemAtIndexPath:indexPath animated:YES];
 }
 
+/*
+ * Triggers a photo search of the selected photo service.
+ * Each photo search service API requieres different params.
+ */
 - (void)searchPhotosWithKeyword:(NSString *)keyword
 {
     [self showActivityIndicators:YES];
@@ -512,13 +574,15 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
         NSString *term = [_searchTerm stringByReplacingOccurrencesOfString:@" " withString:@"+"];
         
         _PXRequest = [PXRequest requestForSearchTerm:term page:_currentPage resultsPerPage:_resultPerPage
-                             photoSizes:PXPhotoModelSizeSmallThumbnail | PXPhotoModelSizeExtraLarge
+                             photoSizes:PXPhotoModelSizeSmallThumbnail|PXPhotoModelSizeExtraLarge
                                  except:PXPhotoModelCategoryUncategorized
                              completion:^(NSDictionary *response, NSError *error) {
+                                 
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (response) [self handleResponse:[response valueForKey:@"photos"]];
                 else [self handleError:error];
             });
+                                 
         }];
     }
     else if ((_selectedService & UIPhotoPickerControllerServiceTypeFlickr) > 0) {
@@ -533,16 +597,25 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
         search.page = [NSString stringWithFormat:@"%d",_currentPage];
 
         [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (response) [self handleResponse:[response valueForKeyPath:@"photos.photo"]];
                 else [self handleError:error];
             });
+            
         }];
     }
 }
 
-- (void)stopAnyRequest
+/*
+ * Stops the loading search request of the selected photo service.
+ */
+- (void)stopLoadingRequest
 {
+    if (!self.loading) {
+        return;
+    }
+    
     [self showActivityIndicators:NO];
     
     if ((_selectedService & UIPhotoPickerControllerServiceType500px) > 0) {
@@ -562,19 +635,15 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     }
 }
 
+/*
+ * Triggers a photo search for the same search terms but different page.
+ */
 - (void)downloadData
 {
     _loadButton.enabled = NO;
     
     _currentPage++;
     [self searchPhotosWithKeyword:_searchTerm];
-}
-
-- (void)handleTap:(UITapGestureRecognizer *)gesture
-{
-    if ([_searchBar isFirstResponder]) {
-        [_searchBar resignFirstResponder];
-    }
 }
 
 
@@ -606,23 +675,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        
-        UICollectionReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kThumbHeaderID forIndexPath:indexPath];
-        
-        if (header.subviews.count == 0) {
-            CGRect rect = header.frame;
-            rect.size.height = 44.0;
-            
-            [header addSubview:self.searchBar];
-            _searchBar.frame = rect;
-            _searchBar.scopeButtonTitles = self.controlTitles;
-            _searchBar.selectedScopeButtonIndex = _selectedService-1;
-        }
-        
-        return header;
-    }
-    else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
         
         UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kThumbFooterID forIndexPath:indexPath];
         
@@ -700,24 +753,9 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingSupplementaryView:(UICollectionReusableView *)view forElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return [self cellSize];
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
-{
-    return [self headerSize];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
@@ -758,83 +796,94 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 }
 
 
-#pragma mark - UISearchBarDelegate methods
+#pragma mark - UISearchDelegate methods
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
     if (_loading) {
-        [self stopAnyRequest];
+        [self stopLoadingRequest];
     }
+
+    [self searchBarShouldShift:YES];
+    
     return YES;
 }
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
 {
+    [self searchBarShouldShift:NO];
     return YES;
 }
 
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+- (void)searchBarShouldShift:(BOOL)shift
 {
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [searchBar setShowsCancelButton:YES animated:YES];
+    _searchBar.showsScopeBar = shift;
     
-    _overlayView.hidden = NO;
-
-    [UIView animateWithDuration:0.4 animations:^{
-        
-        _overlayView.alpha = 1.0;
-        
-        [searchBar setShowsScopeBar:YES];
-        [searchBar sizeToFit];
-        [self.collectionViewLayout invalidateLayout];
-        
-    }];
-}
-
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [searchBar setShowsCancelButton:NO animated:YES];
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        
-        _overlayView.alpha = 0;
-
-        [searchBar setShowsScopeBar:NO];
-        [searchBar sizeToFit];
-        [self.collectionViewLayout invalidateLayout];
-        
-    } completion:^(BOOL finished){
-        _overlayView.hidden = YES;
-    }];
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-    [searchBar resignFirstResponder];
-    [searchBar setText:nil];
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         [self.searchController setActive:shift];
+                         [self.navigationController setNavigationBarHidden:shift];
+                         self.searchBar.frame = [self searchBarFrame];
+                     }
+                     completion:NULL];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [searchBar resignFirstResponder];
+    NSString *str = searchBar.text;
     
-    if (_previousService != _selectedService || _searchTerm != searchBar.text) {
+    if ((_previousService != _selectedService || _searchTerm != str) && str.length > 1) {
+        
         _previousService = _selectedService;
         [self resetPhotos];
-
-        [self searchPhotosWithKeyword:searchBar.text];
+        
+        [self searchPhotosWithKeyword:str];
     }
+    
+    [self setSearchBarText:str];
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    
+    [self setSearchBarText:searchBar.text];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
 {
     _selectedService = (1 << selectedScope);
+}
+
+
+#pragma mark - UISearchDisplayDelegate methods
+
+- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
+{
+
+}
+
+- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
+{
+
+}
+
+- (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
+{
+
+}
+
+- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
+{
+
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    return NO;
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+{
+    return NO;
 }
 
 

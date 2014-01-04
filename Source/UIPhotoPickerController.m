@@ -22,20 +22,15 @@
 {
     self = [super init];
     if (self) {
+        
+        _allowsEditing = NO;
+        _serviceType = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickPhoto:) name:kUIPhotoPickerDidFinishPickingNotification object:nil];
     }
     return self;
 }
 
-- (instancetype)initWithImageForEditing:(UIImage *)image
-{
-    self = [[UIPhotoPickerController alloc] init];
-    if (self) {
-        _editingMode = UIPhotoEditViewControllerCropNone;
-        _allowsEditing = NO;
-    }
-    return self;
-}
 
 #pragma mark - View lifecycle
 
@@ -116,17 +111,19 @@
     }
 }
 
+//- (void)setServiceType:(UIPhotoPickerControllerServiceType)serviceType
+//{
+//    _serviceType = serviceType;
+//    
+//}
+
 
 #pragma mark - UIPhotoPickerController methods
 
 - (void)showPhotoDisplayController
 {
     [self setViewControllers:nil];
-    
-    if (_serviceType == 0) {
-        _serviceType = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
-    }
-    
+
     UIPhotoDisplayViewController *photoDisplayController = [[UIPhotoDisplayViewController alloc] init];
     photoDisplayController.searchTerm = _initialSearchTerm;
     

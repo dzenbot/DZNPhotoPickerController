@@ -12,7 +12,6 @@
 #import "UIPhotoEditViewController.h"
 
 typedef NS_OPTIONS(NSUInteger, UIPhotoPickerControllerServiceType) {
-    UIPhotoPickerControllerServiceTypeNone = (0 << 0),
     UIPhotoPickerControllerServiceType500px = (1 << 0),             // 500px            http://500px.com/developers/
     UIPhotoPickerControllerServiceTypeFlickr = (1 << 1),            // Flickr           http://www.flickr.com/services/api/
     UIPhotoPickerControllerServiceTypeGoogleImages = (1 << 3),      // Google Images    https://developers.google.com/image-search/
@@ -23,12 +22,11 @@ typedef NS_OPTIONS(NSUInteger, UIPhotoPickerControllerServiceType) {
     UIPhotoPickerControllerServiceTypeDribbble = (1 << 8)           // Dribbble         http://dribbble.com/api/
 };
 
-static NSString *kUIPhotoPickerDidFinishPickingNotification = @"kUIPhotoPickerDidFinishPickingNotification";
 static NSString *UIPhotoPickerControllerAuthorCredits = @"UIPhotoPickerControllerAuthorCredits";
 static NSString *UIPhotoPickerControllerSourceName = @"UIPhotoPickerControllerAuthorCredits";
+static NSString *kUIPhotoPickerDidFinishPickingNotification = @"kUIPhotoPickerDidFinishPickingNotification";
 
 @protocol UIPhotoPickerControllerDelegate;
-
 
 /* 
  * A photo picker for iOS 7 using popular photo search services like 500px, Flickr and many others.
@@ -40,9 +38,9 @@ static NSString *UIPhotoPickerControllerSourceName = @"UIPhotoPickerControllerAu
 
 /* The photo picker's delegate object. */
 @property (nonatomic, assign) id <UINavigationControllerDelegate, UIPhotoPickerControllerDelegate> delegate;
-/* The multi-type of image providers to be supported by the controller. Default ServiceType500px & ServiceTypeFlickr. */
+/* The multi-type of image providers to be supported by the controller. Default values are 500px & Flickr. */
 @property (nonatomic) UIPhotoPickerControllerServiceType serviceType;
-/* A Boolean value indicating whether the user is allowed to edit a selected image. */
+/* A Boolean value indicating whether the user is allowed to edit a selected image. Default value is NO. */
 @property (nonatomic) BOOL allowsEditing;
 /* An optional string term for auto-starting the photo search, as soon as the picker is presented. */
 @property (nonatomic, copy) NSString *initialSearchTerm;
@@ -50,15 +48,6 @@ static NSString *UIPhotoPickerControllerSourceName = @"UIPhotoPickerControllerAu
 @property (nonatomic) UIPhotoEditViewControllerCropMode editingMode;
 /* An optional and custom croping size. */
 @property (nonatomic) CGSize customCropSize;
-
-
-/*
- * Initializes the photo picker only for editing a specified image.
- *
- * @param image The image to be edited.
- * @return A new instance of the photo picker controller.
- */
-- (instancetype)initWithImageForEditing:(UIImage *)image;
 
 /*
  * Returns an array of the available media types for the specified service type.
@@ -84,7 +73,6 @@ static NSString *UIPhotoPickerControllerSourceName = @"UIPhotoPickerControllerAu
  * Instagram: http://instagram.com/developer/
  */
 + (void)registerForServiceType:(UIPhotoPickerControllerServiceType)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret;
-
 
 @end
 

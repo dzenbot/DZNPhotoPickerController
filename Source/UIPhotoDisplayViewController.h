@@ -17,7 +17,7 @@
 /*
  * The controller in charge of searching and displaying thumb images from different image providers.
  */
-@interface UIPhotoDisplayViewController : UICollectionViewController
+@interface UIPhotoDisplayViewController : UIViewController
 
 /* The nearest ancestor in the view controller hierarchy that is a photo picker controller. */
 @property (nonatomic, readonly) UIPhotoPickerController *navigationController;

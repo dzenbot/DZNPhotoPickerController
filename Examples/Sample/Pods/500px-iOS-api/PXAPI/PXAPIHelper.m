@@ -953,8 +953,6 @@
             [urlString appendFormat:@"&image_size[]=%@", imageSizeString];
         }
         
-        NSLog(@"urlString : %@",urlString);
-        
         mutableRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     }
     else if (self.authMode == PXAPIHelperModeOAuth)

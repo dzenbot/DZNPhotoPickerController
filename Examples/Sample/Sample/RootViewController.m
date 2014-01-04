@@ -53,6 +53,7 @@
 {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.editingMode = UIPhotoEditViewControllerCropModeCircular;
+    picker.allowsEditing = NO;
     picker.sourceType = sourceType;
     picker.delegate = self;
     [UIImagePickerController availableMediaTypesForSourceType:0];
@@ -69,13 +70,12 @@
 - (void)presentPhotoPicker
 {
     UIPhotoPickerController *picker = [[UIPhotoPickerController alloc] init];
-    picker.serviceType = UIPhotoPickerControllerServiceTypeFlickr | UIPhotoPickerControllerServiceType500px;
+    picker.serviceType = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
     picker.allowsEditing = YES;
     picker.delegate = self;
     
     picker.initialSearchTerm = @"Daft Punk";
     picker.editingMode = UIPhotoEditViewControllerCropModeSquare;
-//    _controller.customCropSize = CGSizeMake(320.0, 160.0);
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         _popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
