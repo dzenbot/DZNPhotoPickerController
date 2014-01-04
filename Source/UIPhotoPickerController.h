@@ -59,7 +59,7 @@ static NSString *kUIPhotoPickerDidFinishPickingNotification = @"kUIPhotoPickerDi
 + (NSArray *)availableMediaTypesForServiceType:(UIPhotoPickerControllerServiceType)serviceType;
 
 /*
- * Registers for a specified service type, and enables API transactions.
+ * Registers for a specified photo search service and enables API transactions.
  * NOTE: Run this on startup with your consumer key and secret, for every service type you will need.
  *
  * @param serviceType The image service provider, such as 500px, Flickr, Google Images, etc.
@@ -67,10 +67,6 @@ static NSString *kUIPhotoPickerDidFinishPickingNotification = @"kUIPhotoPickerDi
  * @param consumerSecret The API consumer secret token.
  *
  * @discussion You must create an app for every image provider, and get the key and secret form them.
- * Here are the developer websites where you can create these apps:
- * Flickr: http://www.flickr.com/services/developer/
- * 500px: http://developers.500px.com/
- * Instagram: http://instagram.com/developer/
  */
 + (void)registerForServiceType:(UIPhotoPickerControllerServiceType)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret;
 

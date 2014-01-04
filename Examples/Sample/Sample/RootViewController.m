@@ -56,7 +56,6 @@
     picker.allowsEditing = NO;
     picker.sourceType = sourceType;
     picker.delegate = self;
-    [UIImagePickerController availableMediaTypesForSourceType:0];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         _popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];

@@ -64,6 +64,9 @@
 
 #pragma mark - Getter methods
 
+/*
+ * Returns an array of the available media types for the specified service type.
+ */
 + (NSArray *)availableMediaTypesForServiceType:(UIPhotoPickerControllerServiceType)serviceType
 {
     return @[(NSString*)kUTTypeImage];
@@ -72,6 +75,9 @@
 
 #pragma mark - Setter methods
 
+/*
+ * Registers for a specified photo search service and enables API transactions.
+ */
 + (void)registerForServiceType:(UIPhotoPickerControllerServiceType)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret
 {
     switch (serviceType) {
@@ -103,6 +109,9 @@
     }
 }
 
+/*
+ * Sets the custom crop size if not circular crop mode.
+ */
 - (void)setCustomCropSize:(CGSize)size
 {
     if (_editingMode != UIPhotoEditViewControllerCropModeCircular) {
@@ -111,15 +120,12 @@
     }
 }
 
-//- (void)setServiceType:(UIPhotoPickerControllerServiceType)serviceType
-//{
-//    _serviceType = serviceType;
-//    
-//}
-
 
 #pragma mark - UIPhotoPickerController methods
 
+/*
+ * Shows the photo display controller.
+ */
 - (void)showPhotoDisplayController
 {
     [self setViewControllers:nil];
@@ -135,6 +141,9 @@
     [self setViewControllers:@[photoDisplayController]];
 }
 
+/*
+ * Called by a notification whenever the user picks a photo.
+ */
 - (void)didPickPhoto:(NSNotification *)notification
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerController:didFinishPickingPhotoWithInfo:)]){
@@ -142,6 +151,9 @@
     }
 }
 
+/*
+ * Called whenever the user cancels the picker.
+ */
 - (void)cancelPicker:(id)sender
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerControllerDidCancel:)]) {
