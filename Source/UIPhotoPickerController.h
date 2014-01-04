@@ -12,6 +12,7 @@
 #import "UIPhotoEditViewController.h"
 
 typedef NS_OPTIONS(NSUInteger, UIPhotoPickerControllerServiceType) {
+    UIPhotoPickerControllerServiceTypeNone = (0 << 0),
     UIPhotoPickerControllerServiceType500px = (1 << 0),             // 500px            http://500px.com/developers/
     UIPhotoPickerControllerServiceTypeFlickr = (1 << 1),            // Flickr           http://www.flickr.com/services/api/
     UIPhotoPickerControllerServiceTypeGoogleImages = (1 << 3),      // Google Images    https://developers.google.com/image-search/
@@ -61,7 +62,7 @@ static NSString *UIPhotoPickerControllerSourceName = @"UIPhotoPickerControllerAu
 
 /*
  * Returns an array of the available media types for the specified service type.
- * NOTE: For now, this will only return kUTTypeImage, until video and audio is supported.
+ * NOTE: For now, this will only return kUTTypeImage. Maybe on a future, this library could include video and audio search support.
  * 
  * @param serviceType The specified service type.
  * @return An array whose elements identify the available media types for the specified source type.

@@ -15,9 +15,9 @@
 #import "UIPhotoDisplayViewCell.h"
 #import "UIPhotoDescription.h"
 
-static NSString *kThumbCellID = @"UIPhotoCell";
-static NSString *kThumbHeaderID = @"UIPhotoHeader";
-static NSString *kThumbFooterID = @"UIPhotoFooter";
+static NSString *kThumbCellID = @"kThumbCellID";
+static NSString *kThumbHeaderID = @"kThumbHeaderID";
+static NSString *kThumbFooterID = @"kThumbFooterID";
 
 @interface UIPhotoDisplayViewController () <UISearchDisplayDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -44,46 +44,11 @@ static NSString *kThumbFooterID = @"UIPhotoFooter";
     if (self) {
         
         self.title = NSLocalizedString(@"Internet Photos", nil);
-        _selectedService = (1 << 0);
-        _previousService = (0 << 0);
+        _selectedService = UIPhotoPickerControllerServiceType500px;
+        _previousService = UIPhotoPickerControllerServiceTypeNone;
         _currentPage = 1;
     }
     return self;
-}
-
-- (CGSize)contentSize
-{
-    CGFloat viewHeight = self.navigationController.view.frame.size.height;
-    NSLog(@"viewHeight : %f", viewHeight);
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        CGFloat statusHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-        viewHeight -= statusHeight;
-        NSLog(@"statusHeight : %f",statusHeight);
-    }
-    
-    CGFloat navigationHeight = self.navigationController.navigationBar.frame.size.height;
-    viewHeight -= navigationHeight;
-    NSLog(@"navigationHeight : %f",navigationHeight);
-    
-    CGFloat headerSize = [self headerSize].height;
-    viewHeight -= headerSize;
-    NSLog(@"headerSize : %f",headerSize);
-    
-    return CGSizeMake(self.navigationController.view.frame.size.width, viewHeight);
-}
-
-- (NSUInteger)rowCount
-{
-    CGSize contentSize = [self contentSize];
-    
-    CGFloat footerSize = [self footerSize].height;
-    contentSize.height -= footerSize;
-    
-    CGFloat cellHeight = [self cellSize].height;
-    
-    NSUInteger count = (int)(contentSize.height/cellHeight);
-    return count;
 }
 
 
@@ -226,7 +191,10 @@ static NSString *kThumbFooterID = @"UIPhotoFooter";
     return _activityIndicator;
 }
 
-
+/*
+ * The overlay to be used when the search bar is first responder.
+ * This mimics the same behavior than the UISearchDisplayController when dimming the content view with a dark overlay.
+ */
 - (UIView *)overlayView
 {
     if (!_overlayView)
@@ -243,6 +211,48 @@ static NSString *kThumbFooterID = @"UIPhotoFooter";
     return _overlayView;
 }
 
+/*
+ * The collectionView's content size calculation.
+ */
+- (CGSize)contentSize
+{
+    CGFloat viewHeight = self.navigationController.view.frame.size.height;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        CGFloat statusHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+        viewHeight -= statusHeight;
+    }
+    
+    CGFloat navigationHeight = self.navigationController.navigationBar.frame.size.height;
+    viewHeight -= navigationHeight;
+    
+    CGFloat headerSize = [self headerSize].height;
+    viewHeight -= headerSize;
+    
+    return CGSizeMake(self.navigationController.view.frame.size.width, viewHeight);
+}
+
+/*
+ * Dinamically calculate the available row count based on the collectionView's content size and the cell height.
+ * This allows to easily modify the collectionView layout, for displaying the image thumbs.
+ */
+- (NSUInteger)rowCount
+{
+    CGSize contentSize = [self contentSize];
+    
+    CGFloat footerSize = [self footerSize].height;
+    contentSize.height -= footerSize;
+    
+    CGFloat cellHeight = [self cellSize].height;
+    
+    NSUInteger count = (int)(contentSize.height/cellHeight);
+    return count;
+}
+
+/*
+ * Returns the segmented control titles, based on the service types to support.
+ * Default returns "500px" & "Flickr".
+ */
 - (NSArray *)controlTitles
 {
     if (!_controlTitles)
@@ -276,6 +286,9 @@ static NSString *kThumbFooterID = @"UIPhotoFooter";
     return _controlTitles;
 }
 
+/*
+ * Returns the service name string based on the service enum type.
+ */
 NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 {
     switch (service) {
@@ -305,11 +318,18 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     }
 }
 
+/*
+ * Returns the selected service name.
+ */
 - (NSString *)selectedServiceName
 {
     return NSStringFromServiceType(_selectedService);
 }
 
+/*
+ * Returns the a complete & valide source url of a specific service url.
+ * This applies only for some photo search services, that do not expose the source url on their API.
+ */
 - (NSString *)sourceUrlForImageUrl:(NSString *)url
 {
     switch (_selectedService) {
@@ -347,6 +367,10 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     }
 }
 
+/*
+ * Returns a list of photo descriptions from a request response.
+ * This is the simple parser to created custom data model objects.
+ */
 - (NSArray *)photoDescriptionsFromResponse:(NSArray *)reponse
 {
     NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:reponse.count];
@@ -379,6 +403,9 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     return result;
 }
 
+/*
+ * Checks if an additional footer for loading more content should be displayed.
+ */
 - (BOOL)shouldShowFooter
 {
     return (_photoDescriptions.count%_resultPerPage == 0) ? YES : NO;
@@ -440,6 +467,8 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     UIPhotoDescription *description = [_photoDescriptions objectAtIndex:indexPath.row];
     
     if (self.navigationController.allowsEditing) {
+        
+        NSLog(@"self.navigationController.editingMode : %d", self.navigationController.editingMode);
         
         UIPhotoEditViewController *photoEditViewController = [[UIPhotoEditViewController alloc] initWithPhotoDescription:description cropMode:self.navigationController.editingMode];
         photoEditViewController.cropSize = self.navigationController.customCropSize;

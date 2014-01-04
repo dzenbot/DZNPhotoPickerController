@@ -31,7 +31,8 @@
 {
     self = [[UIPhotoPickerController alloc] init];
     if (self) {
-        
+        _editingMode = UIPhotoEditViewControllerCropNone;
+        _allowsEditing = NO;
     }
     return self;
 }
@@ -110,8 +111,8 @@
 - (void)setCustomCropSize:(CGSize)size
 {
     if (_editingMode != UIPhotoEditViewControllerCropModeCircular) {
-        _customCropSize = size;
         _editingMode = UIPhotoEditViewControllerCropModeCustom;
+        _customCropSize = size;
     }
 }
 

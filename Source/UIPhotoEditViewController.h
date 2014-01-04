@@ -38,6 +38,14 @@ typedef NS_ENUM(NSInteger, UIPhotoEditViewControllerCropMode) {
  */
 - (instancetype)initWithPhotoDescription:(UIPhotoDescription *)description cropMode:(UIPhotoEditViewControllerCropMode)mode;
 
+/*
+ * Initializes a photo editor initialized with the specified image and cropping mode (square, circular or custom).
+ * Use this initializer to push a UIPhotoEditViewController after picking an image with UIImagePickerController, and use a custom crop mode. This will give users the ability to crop an avatar image, with a circular crop like the Contacts app.
+ *
+ * @param image The image to display in the photo editor.
+ * @param mode The crop mode.
+ * @return A new instance of the editor controller.
+ */
 - (instancetype)initWithImage:(UIImage *)image cropMode:(UIPhotoEditViewControllerCropMode)mode;
 
 /*

@@ -40,8 +40,8 @@
     if ([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) {
         [actionSheet addButtonWithTitle:NSLocalizedString(@"Take Photo", nil)];
     }
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Choose Photos", nil)];
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Search Photos", nil)];
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"Choose Photo", nil)];
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"Search Photo", nil)];
     [actionSheet setCancelButtonIndex:[actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)]];
     
     [actionSheet setDelegate:self];
@@ -69,7 +69,7 @@
 - (void)presentPhotoPicker
 {
     UIPhotoPickerController *picker = [[UIPhotoPickerController alloc] init];
-    picker.serviceType = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
+    picker.serviceType = UIPhotoPickerControllerServiceTypeFlickr | UIPhotoPickerControllerServiceType500px;
     picker.allowsEditing = YES;
     picker.delegate = self;
     
@@ -104,14 +104,23 @@
     
     _imageView.image = image;
     _imageView.contentMode = UIViewContentModeCenter;
+}
+
+- (void)saveImage:(NSDictionary *)userInfo
+{
+    UIImage *image = [userInfo objectForKey:UIImagePickerControllerEditedImage];
+    if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];
     
-//    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
+    if (error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil
+                                              cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 
@@ -121,17 +130,16 @@
 {
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
     
-    if ([buttonTitle isEqualToString:@"Take Photo"]) {
+    if ([buttonTitle isEqualToString:NSLocalizedString(@"Take Photo", nil)]) {
         [self presentImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
     }
-    else if ([buttonTitle isEqualToString:@"Choose Photo"]) {
+    else if ([buttonTitle isEqualToString:NSLocalizedString(@"Choose Photo", nil)]) {
         [self presentImagePickerForSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
     }
-    else if ([buttonTitle isEqualToString:@"Search Photos"]) {
+    else if ([buttonTitle isEqualToString:NSLocalizedString(@"Search Photo",nil)]) {
         [self presentPhotoPicker];
     }
 }
-
 
 #pragma mark - UIImagePickerControllerDelegate methods
 
@@ -170,9 +178,8 @@
 
 - (void)photoPickerController:(UIPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)info
 {
-    NSLog(@"%s",__FUNCTION__);
-
     [self updateImage:info];
+    [self saveImage:info];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [_popoverController dismissPopoverAnimated:YES];

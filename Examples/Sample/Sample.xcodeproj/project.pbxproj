@@ -196,9 +196,6 @@
 				4FD61C0618759E0D0048DC0C /* Private.h */,
 				4F570158180E5D0E00E12444 /* RootViewController.h */,
 				4F570159180E5D0E00E12444 /* RootViewController.m */,
-				4F570152180E5D0E00E12444 /* Main_iPhone.storyboard */,
-				4F570155180E5D0E00E12444 /* Main_iPad.storyboard */,
-				4F57015B180E5D0E00E12444 /* Images.xcassets */,
 				4F570147180E5D0E00E12444 /* Supporting Files */,
 			);
 			path = Sample;
@@ -207,6 +204,9 @@
 		4F570147180E5D0E00E12444 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4F57015B180E5D0E00E12444 /* Images.xcassets */,
+				4F570152180E5D0E00E12444 /* Main_iPhone.storyboard */,
+				4F570155180E5D0E00E12444 /* Main_iPad.storyboard */,
 				4F570148180E5D0E00E12444 /* Sample-Info.plist */,
 				4F570149180E5D0E00E12444 /* InfoPlist.strings */,
 				4F57014C180E5D0E00E12444 /* main.m */,
