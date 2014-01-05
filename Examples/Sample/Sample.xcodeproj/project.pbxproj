@@ -42,19 +42,6 @@
 		4F570186180E5E6D00E12444 /* UIPhotoDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57017F180E5E6D00E12444 /* UIPhotoDisplayViewController.m */; };
 		4F570187180E5E6D00E12444 /* UIPhotoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570181180E5E6D00E12444 /* UIPhotoEditViewController.m */; };
 		4F570188180E5E6D00E12444 /* UIPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570183180E5E6D00E12444 /* UIPhotoPickerController.m */; };
-		4F5701A7180E5E8900E12444 /* InstagramEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57018C180E5E8900E12444 /* InstagramEngine.m */; };
-		4F5701A8180E5E8900E12444 /* InstagramLoginDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57018E180E5E8900E12444 /* InstagramLoginDelegate.m */; };
-		4F5701A9180E5E8900E12444 /* IGComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570191180E5E8900E12444 /* IGComment.m */; };
-		4F5701AA180E5E8900E12444 /* IGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570193180E5E8900E12444 /* IGImage.m */; };
-		4F5701AB180E5E8900E12444 /* IGLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570195180E5E8900E12444 /* IGLocation.m */; };
-		4F5701AC180E5E8900E12444 /* IGMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570197180E5E8900E12444 /* IGMedia.m */; };
-		4F5701AD180E5E8900E12444 /* IGMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570199180E5E8900E12444 /* IGMetadata.m */; };
-		4F5701AE180E5E8900E12444 /* IGPagination.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57019B180E5E8900E12444 /* IGPagination.m */; };
-		4F5701AF180E5E8900E12444 /* IGSubscription.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57019D180E5E8900E12444 /* IGSubscription.m */; };
-		4F5701B0180E5E8900E12444 /* IGTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57019F180E5E8900E12444 /* IGTag.m */; };
-		4F5701B1180E5E8900E12444 /* IGUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5701A1180E5E8900E12444 /* IGUser.m */; };
-		4F5701B2180E5E8900E12444 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5701A3180E5E8900E12444 /* Notification.m */; };
-		4F5701B3180E5E8900E12444 /* NRGramKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5701A6180E5E8900E12444 /* NRGramKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,32 +87,6 @@
 		4F570181180E5E6D00E12444 /* UIPhotoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPhotoEditViewController.m; sourceTree = "<group>"; };
 		4F570182180E5E6D00E12444 /* UIPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPhotoPickerController.h; sourceTree = "<group>"; };
 		4F570183180E5E6D00E12444 /* UIPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPhotoPickerController.m; sourceTree = "<group>"; };
-		4F57018B180E5E8900E12444 /* InstagramEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstagramEngine.h; sourceTree = "<group>"; };
-		4F57018C180E5E8900E12444 /* InstagramEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstagramEngine.m; sourceTree = "<group>"; };
-		4F57018D180E5E8900E12444 /* InstagramLoginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstagramLoginDelegate.h; sourceTree = "<group>"; };
-		4F57018E180E5E8900E12444 /* InstagramLoginDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstagramLoginDelegate.m; sourceTree = "<group>"; };
-		4F570190180E5E8900E12444 /* IGComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGComment.h; sourceTree = "<group>"; };
-		4F570191180E5E8900E12444 /* IGComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGComment.m; sourceTree = "<group>"; };
-		4F570192180E5E8900E12444 /* IGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGImage.h; sourceTree = "<group>"; };
-		4F570193180E5E8900E12444 /* IGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGImage.m; sourceTree = "<group>"; };
-		4F570194180E5E8900E12444 /* IGLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGLocation.h; sourceTree = "<group>"; };
-		4F570195180E5E8900E12444 /* IGLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGLocation.m; sourceTree = "<group>"; };
-		4F570196180E5E8900E12444 /* IGMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGMedia.h; sourceTree = "<group>"; };
-		4F570197180E5E8900E12444 /* IGMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGMedia.m; sourceTree = "<group>"; };
-		4F570198180E5E8900E12444 /* IGMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGMetadata.h; sourceTree = "<group>"; };
-		4F570199180E5E8900E12444 /* IGMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGMetadata.m; sourceTree = "<group>"; };
-		4F57019A180E5E8900E12444 /* IGPagination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGPagination.h; sourceTree = "<group>"; };
-		4F57019B180E5E8900E12444 /* IGPagination.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGPagination.m; sourceTree = "<group>"; };
-		4F57019C180E5E8900E12444 /* IGSubscription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSubscription.h; sourceTree = "<group>"; };
-		4F57019D180E5E8900E12444 /* IGSubscription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSubscription.m; sourceTree = "<group>"; };
-		4F57019E180E5E8900E12444 /* IGTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGTag.h; sourceTree = "<group>"; };
-		4F57019F180E5E8900E12444 /* IGTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGTag.m; sourceTree = "<group>"; };
-		4F5701A0180E5E8900E12444 /* IGUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGUser.h; sourceTree = "<group>"; };
-		4F5701A1180E5E8900E12444 /* IGUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGUser.m; sourceTree = "<group>"; };
-		4F5701A2180E5E8900E12444 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
-		4F5701A3180E5E8900E12444 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
-		4F5701A5180E5E8900E12444 /* NRGramKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRGramKit.h; sourceTree = "<group>"; };
-		4F5701A6180E5E8900E12444 /* NRGramKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRGramKit.m; sourceTree = "<group>"; };
 		4FD61C0618759E0D0048DC0C /* Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
 		81CB7D6B303A4384A940032C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		880742B9C52B4EC59B669AE3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -249,60 +210,9 @@
 				4F57017B180E5E6D00E12444 /* UIPhotoDescription.m */,
 				4F29052A18759967005E9F39 /* UIImagePickerController+Edit.h */,
 				4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */,
-				4F570189180E5E7400E12444 /* External */,
 			);
 			name = Source;
 			path = ../../Source;
-			sourceTree = "<group>";
-		};
-		4F570189180E5E7400E12444 /* External */ = {
-			isa = PBXGroup;
-			children = (
-				4F57018A180E5E8900E12444 /* NRGramKit */,
-			);
-			name = External;
-			sourceTree = "<group>";
-		};
-		4F57018A180E5E8900E12444 /* NRGramKit */ = {
-			isa = PBXGroup;
-			children = (
-				4F5701A5180E5E8900E12444 /* NRGramKit.h */,
-				4F5701A6180E5E8900E12444 /* NRGramKit.m */,
-				4F57018B180E5E8900E12444 /* InstagramEngine.h */,
-				4F57018C180E5E8900E12444 /* InstagramEngine.m */,
-				4F57018D180E5E8900E12444 /* InstagramLoginDelegate.h */,
-				4F57018E180E5E8900E12444 /* InstagramLoginDelegate.m */,
-				4F57018F180E5E8900E12444 /* Model */,
-			);
-			name = NRGramKit;
-			path = ../../_Forks/NRGramKit/NRGramKit;
-			sourceTree = "<group>";
-		};
-		4F57018F180E5E8900E12444 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				4F570190180E5E8900E12444 /* IGComment.h */,
-				4F570191180E5E8900E12444 /* IGComment.m */,
-				4F570192180E5E8900E12444 /* IGImage.h */,
-				4F570193180E5E8900E12444 /* IGImage.m */,
-				4F570194180E5E8900E12444 /* IGLocation.h */,
-				4F570195180E5E8900E12444 /* IGLocation.m */,
-				4F570196180E5E8900E12444 /* IGMedia.h */,
-				4F570197180E5E8900E12444 /* IGMedia.m */,
-				4F570198180E5E8900E12444 /* IGMetadata.h */,
-				4F570199180E5E8900E12444 /* IGMetadata.m */,
-				4F57019A180E5E8900E12444 /* IGPagination.h */,
-				4F57019B180E5E8900E12444 /* IGPagination.m */,
-				4F57019C180E5E8900E12444 /* IGSubscription.h */,
-				4F57019D180E5E8900E12444 /* IGSubscription.m */,
-				4F57019E180E5E8900E12444 /* IGTag.h */,
-				4F57019F180E5E8900E12444 /* IGTag.m */,
-				4F5701A0180E5E8900E12444 /* IGUser.h */,
-				4F5701A1180E5E8900E12444 /* IGUser.m */,
-				4F5701A2180E5E8900E12444 /* Notification.h */,
-				4F5701A3180E5E8900E12444 /* Notification.m */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -440,28 +350,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F5701AD180E5E8900E12444 /* IGMetadata.m in Sources */,
-				4F5701AF180E5E8900E12444 /* IGSubscription.m in Sources */,
 				4F570187180E5E6D00E12444 /* UIPhotoEditViewController.m in Sources */,
-				4F5701A8180E5E8900E12444 /* InstagramLoginDelegate.m in Sources */,
-				4F5701AE180E5E8900E12444 /* IGPagination.m in Sources */,
-				4F5701A9180E5E8900E12444 /* IGComment.m in Sources */,
-				4F5701B0180E5E8900E12444 /* IGTag.m in Sources */,
 				4F570185180E5E6D00E12444 /* UIPhotoDisplayViewCell.m in Sources */,
 				4F570186180E5E6D00E12444 /* UIPhotoDisplayViewController.m in Sources */,
-				4F5701B1180E5E8900E12444 /* IGUser.m in Sources */,
 				4F570184180E5E6D00E12444 /* UIPhotoDescription.m in Sources */,
 				4F570151180E5D0E00E12444 /* AppDelegate.m in Sources */,
-				4F5701B2180E5E8900E12444 /* Notification.m in Sources */,
-				4F5701AA180E5E8900E12444 /* IGImage.m in Sources */,
 				4F57015A180E5D0E00E12444 /* RootViewController.m in Sources */,
-				4F5701A7180E5E8900E12444 /* InstagramEngine.m in Sources */,
 				4F570188180E5E6D00E12444 /* UIPhotoPickerController.m in Sources */,
 				4F57014D180E5D0E00E12444 /* main.m in Sources */,
-				4F5701AC180E5E8900E12444 /* IGMedia.m in Sources */,
 				4F29052C18759967005E9F39 /* UIImagePickerController+Edit.m in Sources */,
-				4F5701B3180E5E8900E12444 /* NRGramKit.m in Sources */,
-				4F5701AB180E5E8900E12444 /* IGLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

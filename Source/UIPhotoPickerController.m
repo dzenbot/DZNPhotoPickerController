@@ -13,6 +13,8 @@
 #import "UIPhotoEditViewController.h"
 #import "UIPhotoDescription.h"
 
+#import <MobileCoreServices/UTCoreTypes.h>
+
 @interface UIPhotoPickerController ()
 @end
 
