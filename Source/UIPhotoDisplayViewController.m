@@ -19,10 +19,11 @@
 
 static NSString *kThumbCellID = @"kThumbCellID";
 static NSString *kThumbFooterID = @"kThumbFooterID";
+static NSString *kTagCellID = @"kTagCellID";
 
 @interface UIPhotoDisplayViewController () <UISearchDisplayDelegate, UISearchBarDelegate,
                                             UICollectionViewDelegateFlowLayout, UICollectionViewDataSource,
-                                            UICollectionViewDelegate>
+                                            UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -31,6 +32,7 @@ static NSString *kThumbFooterID = @"kThumbFooterID";
 @property (nonatomic, readwrite) UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic, strong) NSMutableArray *photoDescriptions;
+@property (nonatomic, strong) NSMutableArray *searchTags;
 @property (nonatomic, strong) NSArray *controlTitles;
 @property (nonatomic) UIPhotoPickerControllerServiceType selectedService;
 @property (nonatomic) UIPhotoPickerControllerServiceType previousService;
@@ -61,17 +63,20 @@ static NSString *kThumbFooterID = @"kThumbFooterID";
     [super loadView];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.edgesForExtendedLayout = UIRectEdgeTop;
-    self.extendedLayoutIncludesOpaqueBars = NO;
+//    self.edgesForExtendedLayout = UIRectEdgeTop;
+//    self.extendedLayoutIncludesOpaqueBars = NO;
     
     [self.view addSubview:self.collectionView];
     
     _searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
     _searchController.delegate = self;
-    _searchController.searchResultsDataSource = nil;
-    _searchController.searchResultsDelegate = nil;
+    _searchController.searchResultsDataSource = self;
+    _searchController.searchResultsDelegate = self;
     _searchController.searchResultsTableView.tableHeaderView = [UIView new];
     _searchController.searchResultsTableView.tableFooterView = [UIView new];
+    _searchController.searchResultsTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
+    _searchController.searchResultsTableView.bounces = YES;
+    [_searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kTagCellID];
 }
 
 - (void)viewDidLoad
@@ -477,14 +482,42 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 #pragma mark - UIPhotoDisplayController methods
 
 /*
- * Handles the request responses and refreshs the UI.
+ * Handles the current photo search response and refreshs the collection view.
  */
-- (void)handleResponse:(NSArray *)response
+- (void)handlePhotoSearchResponse:(NSArray *)response
 {
     [self showActivityIndicators:NO];
     
     [_photoDescriptions addObjectsFromArray:[self photoDescriptionsFromResponse:response]];
     [self.collectionView reloadData];
+}
+
+/*
+ * Handles a tag search response and refreshs the results tableview from the UISearchDisplayController.
+ */
+- (void)handleTagSearchResponse:(NSArray *)response
+{
+    [self showActivityIndicators:NO];
+    
+    if (!_searchTags) _searchTags = [NSMutableArray new];
+    else [_searchTags removeAllObjects];
+    
+    for (NSDictionary *tag in response) {
+        [_searchTags addObject:[tag objectForKey:@"_content"]];
+    }
+    
+    [_searchTags insertObject:_searchBar.text atIndex:0];
+    
+    _searchController.searchResultsTableView.userInteractionEnabled = YES;
+    _searchController.searchResultsTableView.exclusiveTouch = YES;
+    _searchController.searchResultsTableView.canCancelContentTouches = NO;
+
+    [_searchController.searchResultsTableView reloadData];
+    [_searchController.searchResultsTableView flashScrollIndicators];
+    
+    NSLog(@"_searchController.searchResultsTableView : %@", _searchController.searchResultsTableView);
+    NSLog(@"_searchController.searchResultsTableView.contentSize : %@", NSStringFromCGSize(_searchController.searchResultsTableView.contentSize));
+    NSLog(@"_searchController.searchResultsTableView.contentInset : %@", NSStringFromUIEdgeInsets(_searchController.searchResultsTableView.contentInset));
 }
 
 /*
@@ -563,6 +596,58 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 }
 
 /*
+ * Checks if the search string is long enough to perfom a tag search.
+ */
+- (BOOL)canSearchTag:(NSString *)searchString
+{
+    if (_searchController.active && searchString.length > 2) {
+        [self searchTagsWithKeyword:searchString];
+        return YES;
+    }
+    else {
+        [_searchTags removeAllObjects];
+        [_searchController.searchResultsTableView reloadData];
+        return NO;
+    }
+}
+
+/*
+ * Triggers a tag search when typing more than 2 characters in the search bar.
+ * This allows auto-completion and related tags to what the user wants to search.
+ */
+- (void)searchTagsWithKeyword:(NSString *)keyword
+{
+    [self showActivityIndicators:YES];
+
+    FKFlickrTagsGetRelated *search = [[FKFlickrTagsGetRelated alloc] init];
+    search.tag = keyword;
+    
+    [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+                if (error) [self handleError:error];
+                else [self handleTagSearchResponse:[response valueForKeyPath:@"tags.tag"]];
+            });
+    }];
+}
+
+/*
+ * Checks if the search string is valid and conditions are ok, for performing a photo search.
+ */
+- (void)shouldSearchPhotos:(NSString *)keyword
+{
+    if ((_previousService != _selectedService || _searchTerm != keyword) && keyword.length > 1) {
+        
+        _previousService = _selectedService;
+        [self resetPhotos];
+        
+        [self searchPhotosWithKeyword:keyword];
+    }
+    
+    [self setSearchBarText:keyword];
+}
+
+/*
  * Triggers a photo search of the selected photo service.
  * Each photo search service API requieres different params.
  */
@@ -581,8 +666,8 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
                              completion:^(NSDictionary *response, NSError *error) {
                                  
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (response) [self handleResponse:[response valueForKey:@"photos"]];
-                else [self handleError:error];
+                if (error) [self handleError:error];
+                else [self handlePhotoSearchResponse:[response valueForKey:@"photos"]];
             });
                                  
         }];
@@ -601,8 +686,8 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
         [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (response) [self handleResponse:[response valueForKeyPath:@"photos.photo"]];
-                else [self handleError:error];
+                if (error) [self handleError:error];
+                else [self handlePhotoSearchResponse:[response valueForKeyPath:@"photos.photo"]];
             });
             
         }];
@@ -798,13 +883,59 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 }
 
 
+#pragma mark - UITableViewDataSource methods
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _searchTags.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTagCellID];
+    
+    NSString *tagString = [_searchTags objectAtIndex:indexPath.row];
+    cell.textLabel.text = tagString;
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return kMinimumBarHeight;
+}
+
+
+#pragma mark - UITableViewDelegate methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *tagString = [_searchTags objectAtIndex:indexPath.row];
+    [self shouldSearchPhotos:tagString];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - UIScrollViewDelegate methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+//    NSLog(@"%s",__FUNCTION__);
+}
+
+
 #pragma mark - UISearchDelegate methods
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    if (_loading) {
-        [self stopLoadingRequest];
-    }
+//    if (_loading) {
+//        [self stopLoadingRequest];
+//    }
 
     [self searchBarShouldShift:YES];
     
@@ -823,26 +954,21 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     
     [UIView animateWithDuration:0.25
                      animations:^{
+                         [self.searchBar setFrame:[self searchBarFrame]];
                          [self.searchController setActive:shift];
-                         [self.navigationController setNavigationBarHidden:shift];
-                         self.searchBar.frame = [self searchBarFrame];
                      }
                      completion:NULL];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     NSString *str = searchBar.text;
-    
-    if ((_previousService != _selectedService || _searchTerm != str) && str.length > 1) {
-        
-        _previousService = _selectedService;
-        [self resetPhotos];
-        
-        [self searchPhotosWithKeyword:str];
-    }
-    
-    [self setSearchBarText:str];
+    [self shouldSearchPhotos:str];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -857,6 +983,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 
 #pragma mark - UISearchDisplayDelegate methods
+#pragma mark Search State Change
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
 {
@@ -865,27 +992,57 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 - (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
 {
-
+    
 }
 
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
 {
-
+    [_searchTags removeAllObjects];
+    [controller.searchResultsTableView reloadData];
 }
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
 {
+    
+}
 
+#pragma mark Loading and Unloading the Table View
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
+{
+    
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView
+{
+    
+}
+
+#pragma mark Showing and Hiding the Table View
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView
+{
+    
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView
+{
+    
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView
+{
+    
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView
+{
+    
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-    return NO;
-}
-
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
-{
-    return NO;
+    return [self canSearchTag:searchString];
 }
 
 
