@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.framework  = 'MobileCoreServices'
   s.dependency 'AFNetworking', '~> 1.3.3'
-  s.dependency '500px-iOS-api', '~> 1.0.4'
-  s.dependency 'FlickrKit', '~> 1.0.2'
+  s.dependency '500px-iOS-api', '~> 1.0.4', :inhibit_warnings => true
+  s.dependency 'FlickrKit', '~> 1.0.2', :inhibit_warnings => true
   s.dependency 'SDWebImage', '~> 3.4'
 end

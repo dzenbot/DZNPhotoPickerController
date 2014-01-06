@@ -63,19 +63,24 @@ static NSString *kTagCellID = @"kTagCellID";
     [super loadView];
     
     self.view.backgroundColor = [UIColor whiteColor];
-//    self.edgesForExtendedLayout = UIRectEdgeTop;
+    
+    self.edgesForExtendedLayout = UIRectEdgeTop;
+    
 //    self.extendedLayoutIncludesOpaqueBars = NO;
+//    self.automaticallyAdjustsScrollViewInsets = YES;
     
     [self.view addSubview:self.collectionView];
     
     _searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-    _searchController.delegate = self;
-    _searchController.searchResultsDataSource = self;
-    _searchController.searchResultsDelegate = self;
+    _searchController.searchResultsTableView.backgroundColor = [UIColor whiteColor];
     _searchController.searchResultsTableView.tableHeaderView = [UIView new];
     _searchController.searchResultsTableView.tableFooterView = [UIView new];
     _searchController.searchResultsTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
     _searchController.searchResultsTableView.bounces = YES;
+    _searchController.searchResultsDataSource = self;
+    _searchController.searchResultsDelegate = self;
+    _searchController.delegate = self;
+    
     [_searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kTagCellID];
 }
 
@@ -146,11 +151,13 @@ static NSString *kTagCellID = @"kTagCellID";
         _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:[UIPhotoDisplayViewController flowLayout]];
         _collectionView.backgroundView = [UIView new];
         _collectionView.backgroundView.backgroundColor = [UIColor whiteColor];
+        _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        _collectionView.clipsToBounds = YES;
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         
-        [self.collectionView registerClass:[UIPhotoDisplayViewCell class] forCellWithReuseIdentifier:kThumbCellID];
-        [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kThumbFooterID];
+        [_collectionView registerClass:[UIPhotoDisplayViewCell class] forCellWithReuseIdentifier:kThumbCellID];
+        [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kThumbFooterID];
         
         [self.view addSubview:_collectionView];
     }
@@ -189,7 +196,7 @@ static NSString *kTagCellID = @"kTagCellID";
         [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
         [_loadButton addTarget:self action:@selector(downloadData) forControlEvents:UIControlEventTouchUpInside];
         [_loadButton.titleLabel setFont:[UIFont systemFontOfSize:17.0]];
-        [_loadButton setBackgroundColor:self.collectionView.backgroundView.backgroundColor];
+        [_loadButton setBackgroundColor:_collectionView.backgroundView.backgroundColor];
         
         [_loadButton addSubview:self.activityIndicator];
     }
@@ -209,7 +216,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (CGSize)cellSize
 {
-    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
+    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)_collectionView.collectionViewLayout;
     CGFloat size = (self.navigationController.view.bounds.size.width/_columnCount) - flowLayout.minimumLineSpacing;
     return CGSizeMake(size, size);
 }
@@ -265,8 +272,8 @@ static NSString *kTagCellID = @"kTagCellID";
     CGFloat statusHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? [UIApplication sharedApplication].statusBarFrame.size.height : 0.0;
     
     CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, kMinimumBarHeight);
-    frame.origin.y = shouldShift ? statusHeight : statusHeight+kMinimumBarHeight;
     frame.size.height = shouldShift ? kMinimumBarHeight*2 : kMinimumBarHeight;
+    frame.origin.y = shouldShift ? statusHeight : ([self nestedInOtherModal] ? 0.0 : statusHeight+kMinimumBarHeight);
     
     return frame;
 }
@@ -449,6 +456,14 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 }
 
 /*
+ * Checks if the current controller is already nested in antoher modal presentation.
+ */
+- (BOOL)nestedInOtherModal
+{
+    return (self.presentingViewController.presentingViewController) ? YES : NO;
+}
+
+/*
  * Checks if an additional footer for loading more content should be displayed.
  */
 - (BOOL)shouldShowFooter
@@ -468,34 +483,27 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 }
 
 /*
- * Removes all photo description from the array and cleans the collection view from photo thumbnails.
+ * Sets the current photo search response and refreshs the collection view.
  */
-- (void)resetPhotos
-{
-    [_photoDescriptions removeAllObjects];
-    _currentPage = 1;
-    
-    [self.collectionView reloadData];
-}
-
-
-#pragma mark - UIPhotoDisplayController methods
-
-/*
- * Handles the current photo search response and refreshs the collection view.
- */
-- (void)handlePhotoSearchResponse:(NSArray *)response
+- (void)setPhotoSearchResponse:(NSArray *)response
 {
     [self showActivityIndicators:NO];
     
     [_photoDescriptions addObjectsFromArray:[self photoDescriptionsFromResponse:response]];
-    [self.collectionView reloadData];
+    [_collectionView reloadData];
+    
+    NSLog(@"_collectionView.contentSize : %@", NSStringFromCGSize(_collectionView.contentSize));
+
+    CGSize contentSize = _collectionView.contentSize;
+    _collectionView.contentSize = CGSizeMake(contentSize.width, contentSize.height+[self footerSize].height);
+    
+    NSLog(@"_collectionView.contentSize : %@", NSStringFromCGSize(_collectionView.contentSize));
 }
 
 /*
- * Handles a tag search response and refreshs the results tableview from the UISearchDisplayController.
+ * Sets a tag search response and refreshs the results tableview from the UISearchDisplayController.
  */
-- (void)handleTagSearchResponse:(NSArray *)response
+- (void)setTagSearchResponse:(NSArray *)response
 {
     [self showActivityIndicators:NO];
     
@@ -511,25 +519,24 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     _searchController.searchResultsTableView.userInteractionEnabled = YES;
     _searchController.searchResultsTableView.exclusiveTouch = YES;
     _searchController.searchResultsTableView.canCancelContentTouches = NO;
-
+    
     [_searchController.searchResultsTableView reloadData];
     [_searchController.searchResultsTableView flashScrollIndicators];
-    
-    NSLog(@"_searchController.searchResultsTableView : %@", _searchController.searchResultsTableView);
-    NSLog(@"_searchController.searchResultsTableView.contentSize : %@", NSStringFromCGSize(_searchController.searchResultsTableView.contentSize));
-    NSLog(@"_searchController.searchResultsTableView.contentInset : %@", NSStringFromUIEdgeInsets(_searchController.searchResultsTableView.contentInset));
 }
 
 /*
- * Handles the request errors with an alert view.
+ * Sets the request errors with an alert view.
  */
-- (void)handleError:(NSError *)error
+- (void)setSearchError:(NSError *)error
 {
     [self showActivityIndicators:NO];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
     [alert show];
 }
+
+
+#pragma mark - UIPhotoDisplayController methods
 
 /*
  * Toggles the status bar & footer activity indicators.
@@ -585,14 +592,14 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
                                                                                                                 sourceName:description.sourceName];
                                                                 }
                                                                 else {
-                                                                    [self handleError:error];
+                                                                    [self setSearchError:error];
                                                                 }
                                                                 
                                                                 [self showActivityIndicators:NO];
                                                             }];
     }
     
-    [self.collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    [_collectionView deselectItemAtIndexPath:indexPath animated:YES];
 }
 
 /*
@@ -625,8 +632,8 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
         
         dispatch_async(dispatch_get_main_queue(), ^{
-                if (error) [self handleError:error];
-                else [self handleTagSearchResponse:[response valueForKeyPath:@"tags.tag"]];
+                if (error) [self setSearchError:error];
+                else [self setTagSearchResponse:[response valueForKeyPath:@"tags.tag"]];
             });
     }];
 }
@@ -666,8 +673,8 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
                              completion:^(NSDictionary *response, NSError *error) {
                                  
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (error) [self handleError:error];
-                else [self handlePhotoSearchResponse:[response valueForKey:@"photos"]];
+                if (error) [self setSearchError:error];
+                else [self setPhotoSearchResponse:[response valueForKey:@"photos"]];
             });
                                  
         }];
@@ -686,8 +693,8 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
         [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (error) [self handleError:error];
-                else [self handlePhotoSearchResponse:[response valueForKeyPath:@"photos.photo"]];
+                if (error) [self setSearchError:error];
+                else [self setPhotoSearchResponse:[response valueForKeyPath:@"photos.photo"]];
             });
             
         }];
@@ -717,7 +724,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 //        [FlickrKit sharedFlickrKit]
     }
     
-    for (UIPhotoDisplayViewCell *cell in [self.collectionView visibleCells]) {
+    for (UIPhotoDisplayViewCell *cell in [_collectionView visibleCells]) {
         [cell.imageView cancelCurrentImageLoad];
     }
 }
@@ -731,6 +738,17 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     
     _currentPage++;
     [self searchPhotosWithKeyword:_searchTerm];
+}
+
+/*
+ * Removes all photo description from the array and cleans the collection view from photo thumbnails.
+ */
+- (void)resetPhotos
+{
+    [_photoDescriptions removeAllObjects];
+    _currentPage = 1;
+    
+    [_collectionView reloadData];
 }
 
 

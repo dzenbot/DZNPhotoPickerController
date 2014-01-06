@@ -73,7 +73,7 @@
     picker.allowsEditing = YES;
     picker.delegate = self;
     
-    picker.initialSearchTerm = @"Daft Punk";
+    //picker.initialSearchTerm = @"Daft Punk";
     picker.editingMode = UIPhotoEditViewControllerCropModeSquare;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {

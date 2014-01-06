@@ -36,6 +36,14 @@
 
 #pragma mark - View lifecycle
 
+- (void)loadView
+{
+    [super loadView];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.edgesForExtendedLayout = UIRectEdgeTop;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -51,6 +59,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    NSLog(@"self.view.frame : %@", NSStringFromCGRect(self.view.frame));
 }
 
 - (void)viewWillDisappear:(BOOL)animated
