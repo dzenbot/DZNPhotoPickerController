@@ -152,7 +152,6 @@ static NSString *kTagCellID = @"kTagCellID";
         _collectionView.backgroundView = [UIView new];
         _collectionView.backgroundView.backgroundColor = [UIColor whiteColor];
         _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        _collectionView.clipsToBounds = YES;
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         
