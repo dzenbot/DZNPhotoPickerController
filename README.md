@@ -23,12 +23,11 @@ pod 'UIPhotoPickerController', '~> 1.0'
 ```
 
 ## How to use
-[Online documentation and API reference](http://cocoadocs.org/docsets/UIPhotoPickerController/1.0/)
 
 ### Step 1
 
 ```
-Import "UIPhotoPickerController.h" to your Application Delegate class.
+Import "<UIPhotoPickerController/UIPhotoPickerController.h>" on your view controller.
 ```
 
 ### Step 2
@@ -70,7 +69,7 @@ Take a look into the sample project. Everything is there.<br>
 ## License
 (The MIT License)
 
-Copyright (c) 2012 Ignacio Romero Zurbuchen <iromero@dzen.cl>
+Copyright (c) 2013 Ignacio Romero Zurbuchen <iromero@dzen.cl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
