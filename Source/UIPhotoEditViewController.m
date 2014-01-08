@@ -299,10 +299,13 @@ UIPhotoAspect photoAspectFromSize(CGSize aspectRatio)
         case UIPhotoEditViewControllerCropModeSquare:
         case UIPhotoEditViewControllerCropModeCustom:
             return [self squareOverlayMask];
-            
         case UIPhotoEditViewControllerCropModeCircular:
-            return [self circularOverlayMask];
+        {
+            UIImage *circular = [self circularOverlayMask];
+            NSLog(@"circular.size : %@", NSStringFromCGSize(circular.size));
             
+            return circular;
+        }
         default:
             return nil;
     }
@@ -313,21 +316,19 @@ UIPhotoAspect photoAspectFromSize(CGSize aspectRatio)
  */
 - (UIImage *)squareOverlayMask
 {
-    // Constant sizes
+    // Constants
     CGSize size = self.navigationController.view.bounds.size;
     CGFloat width = size.width;
     CGFloat height = size.height;
     CGFloat margin = (height-[self cropSize].height)/2;
     CGFloat lineWidth = 1.0;
-    
-    // Create a UIBezierPath
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
-    
-    // Color Declarations
     UIColor *fillColor = [UIColor colorWithWhite:0 alpha:0.5];
     UIColor *strokeColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+    
+    // Create the image context
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
 
-    // Bezier Drawing
+    // Create the bezier path & drawing
     UIBezierPath *maskPath = [UIBezierPath bezierPath];
     [maskPath moveToPoint:CGPointMake(width, margin)];
     [maskPath addLineToPoint:CGPointMake(0, margin)];
@@ -344,52 +345,52 @@ UIPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     [fillColor setFill];
     [maskPath fill];
     
-    // Crop square Drawing
+    // Add the square crop
     CGRect cropRect = CGRectMake(lineWidth/2, margin+lineWidth/2, width-lineWidth, [self cropSize].height-lineWidth);
     UIBezierPath *cropPath = [UIBezierPath bezierPathWithRect:cropRect];
     [strokeColor setStroke];
     cropPath.lineWidth = lineWidth;
     [cropPath stroke];
     
-    //Create a UIImage using the current context.
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    //Create the image using the current context.
+    UIImage *_maskedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    return image;
+    return _maskedImage;
 }
 
 /*
  * Created with PaintCode.
+ * Base PaintCode file available inside of Resource folder.
  */
 - (UIImage *)circularOverlayMask
 {
-    // Constant sizes
-    CGSize size = self.navigationController.view.bounds.size;
-    CGFloat width = size.width;
-    CGFloat height = size.height;
+    // Constants
+    CGRect rect = self.navigationController.view.bounds;
+    CGFloat width = rect.size.width;
+    CGFloat height = rect.size.height;
     
     CGFloat diameter = width-(kInnerEdgeInset*2);
     CGFloat radius = diameter/2;
     CGPoint center = CGPointMake(width/2, height/2);
-    
-    // Create a UIBezierPath
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
-    
-    // Color Declarations
     UIColor *fillColor = [UIColor colorWithWhite:0 alpha:0.5];
-
-    // Arc Bezier Drawing
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRect:self.navigationController.view.bounds];
+    
+    // Create the image context
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
+    
+    // Create the bezier path
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRect:rect];
+    
+    // Add the circular crop
     [maskPath addArcWithCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:NO];
-    [maskPath closePath];
+    [maskPath addClip];
     [fillColor setFill];
     [maskPath fill];
-    
-    //Create a UIImage using the current context.
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+
+    UIImage *_maskedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
-    return image;
+
+    return _maskedImage;
 }
 
 /*
