@@ -59,8 +59,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    NSLog(@"self.view.frame : %@", NSStringFromCGRect(self.view.frame));
 }
 
 - (void)viewWillDisappear:(BOOL)animated

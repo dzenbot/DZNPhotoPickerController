@@ -65,9 +65,8 @@ static NSString *kTagCellID = @"kTagCellID";
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.edgesForExtendedLayout = UIRectEdgeTop;
-    
-//    self.extendedLayoutIncludesOpaqueBars = NO;
-//    self.automaticallyAdjustsScrollViewInsets = YES;
+    self.extendedLayoutIncludesOpaqueBars = NO;
+    self.automaticallyAdjustsScrollViewInsets = YES;
     
     [self.view addSubview:self.collectionView];
     
@@ -75,8 +74,9 @@ static NSString *kTagCellID = @"kTagCellID";
     _searchController.searchResultsTableView.backgroundColor = [UIColor whiteColor];
     _searchController.searchResultsTableView.tableHeaderView = [UIView new];
     _searchController.searchResultsTableView.tableFooterView = [UIView new];
+    _searchController.searchResultsTableView.backgroundView = [UIView new];
+    _searchController.searchResultsTableView.backgroundView.backgroundColor = [UIColor whiteColor];
     _searchController.searchResultsTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
-    _searchController.searchResultsTableView.bounces = YES;
     _searchController.searchResultsDataSource = self;
     _searchController.searchResultsDelegate = self;
     _searchController.delegate = self;
@@ -477,7 +477,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
  */
 - (void)setSearchBarText:(NSString *)text
 {
-    [self.searchController setActive:NO animated:YES];
+    //[self.searchController setActive:NO animated:YES];
     self.searchController.searchBar.text = text;
 }
 
@@ -491,12 +491,8 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     [_photoDescriptions addObjectsFromArray:[self photoDescriptionsFromResponse:response]];
     [_collectionView reloadData];
     
-    NSLog(@"_collectionView.contentSize : %@", NSStringFromCGSize(_collectionView.contentSize));
-
     CGSize contentSize = _collectionView.contentSize;
     _collectionView.contentSize = CGSizeMake(contentSize.width, contentSize.height+[self footerSize].height);
-    
-    NSLog(@"_collectionView.contentSize : %@", NSStringFromCGSize(_collectionView.contentSize));
 }
 
 /*
@@ -515,12 +511,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     
     [_searchTags insertObject:_searchBar.text atIndex:0];
     
-    _searchController.searchResultsTableView.userInteractionEnabled = YES;
-    _searchController.searchResultsTableView.exclusiveTouch = YES;
-    _searchController.searchResultsTableView.canCancelContentTouches = NO;
-    
     [_searchController.searchResultsTableView reloadData];
-    [_searchController.searchResultsTableView flashScrollIndicators];
 }
 
 /*
@@ -606,7 +597,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
  */
 - (BOOL)canSearchTag:(NSString *)searchString
 {
-    if (_searchController.active && searchString.length > 2) {
+    if ([_searchController.searchBar isFirstResponder] && searchString.length > 2) {
         [self searchTagsWithKeyword:searchString];
         return YES;
     }
@@ -720,7 +711,6 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     }
     else if ((_selectedService & UIPhotoPickerControllerServiceTypeFlickr) > 0) {
         
-//        [FlickrKit sharedFlickrKit]
     }
     
     for (UIPhotoDisplayViewCell *cell in [_collectionView visibleCells]) {
@@ -916,8 +906,14 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTagCellID];
     
-    NSString *tagString = [_searchTags objectAtIndex:indexPath.row];
-    cell.textLabel.text = tagString;
+    if (indexPath.row <= _searchTags.count-1) {
+        
+        NSString *tagString = [_searchTags objectAtIndex:indexPath.row];
+        cell.textLabel.text = tagString;
+    }
+    else {
+        cell.textLabel.text = @"Empty";
+    }
     
     return cell;
 }
@@ -935,14 +931,9 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
     NSString *tagString = [_searchTags objectAtIndex:indexPath.row];
     [self shouldSearchPhotos:tagString];
     
+    [self.searchDisplayController setActive:NO animated:YES];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - UIScrollViewDelegate methods
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-//    NSLog(@"%s",__FUNCTION__);
 }
 
 
@@ -953,15 +944,12 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 //    if (_loading) {
 //        [self stopLoadingRequest];
 //    }
-
-    [self searchBarShouldShift:YES];
     
     return YES;
 }
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
 {
-    [self searchBarShouldShift:NO];
     return YES;
 }
 
@@ -990,7 +978,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    [self setSearchBarText:searchBar.text];
+    
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
@@ -1004,7 +992,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
 {
-
+    [self searchBarShouldShift:YES];
 }
 
 - (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
@@ -1014,6 +1002,8 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
 {
+    [self searchBarShouldShift:NO];
+    
     [_searchTags removeAllObjects];
     [controller.searchResultsTableView reloadData];
 }
@@ -1039,7 +1029,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView
 {
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView
@@ -1054,12 +1044,19 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView
 {
-
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
     return [self canSearchTag:searchString];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    UITableView *tableView = [[self searchDisplayController] searchResultsTableView];
+    [tableView setContentInset:UIEdgeInsetsZero];
+    [tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
 }
 
 
