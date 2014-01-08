@@ -504,7 +504,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
  */
 - (void)setTagSearchResponse:(NSArray *)response
 {
-    [self showActivityIndicators:NO];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
     if (!_searchTags) _searchTags = [NSMutableArray new];
     else [_searchTags removeAllObjects];
@@ -623,7 +623,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
  */
 - (void)searchTagsWithKeyword:(NSString *)keyword
 {
-    [self showActivityIndicators:YES];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     FKFlickrTagsGetRelated *search = [[FKFlickrTagsGetRelated alloc] init];
     search.tag = keyword;
@@ -784,7 +784,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
         UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kThumbFooterID forIndexPath:indexPath];
         
         if ([self shouldShowFooter]) {
-            if (footer.subviews.count == 0) {
+            if (!_loadButton && footer.subviews.count == 0) {
                 [footer addSubview:self.loadButton];
             }
             _loadButton.frame = footer.bounds;
@@ -1054,7 +1054,7 @@ NSString *NSStringFromServiceType(UIPhotoPickerControllerServiceType service)
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView
 {
-    
+
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
