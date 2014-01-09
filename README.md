@@ -19,7 +19,7 @@ This framework tries to mimic as close as possible the native UIImagePickerContr
 
 Available in [Cocoa Pods](http://cocoapods.org/?q=UIPhotoPickerController)
 ```
-pod 'UIPhotoPickerController', '~> 1.0'
+pod 'UIPhotoPickerController', '~> 1.0.1'
 ```
 
 ## How to use
