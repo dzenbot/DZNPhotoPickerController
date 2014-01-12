@@ -1,4 +1,4 @@
-UIPhotoPickerController
+DZNPhotoPickerController
 ========================
 
 A photo search/picker using popular providers like 500px, Flickr and many others..
@@ -46,7 +46,7 @@ Before even creating a new instance of DZNPhotoPickerController, it is recommend
 ```
 
 ### Step 3
-Calling a UIPhotoPickerController is very similar to calling UIImagePickerController:
+Instantiating a DZNPhotoPickerController is very similar to instantiate a UIImagePickerController object:
 ```
 DZNPhotoPickerController *_controller = [[DZNPhotoPickerController alloc] init];
 _controller.allowsEditing = YES;
