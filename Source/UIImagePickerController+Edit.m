@@ -7,35 +7,35 @@
 //
 
 #import "UIImagePickerController+Edit.h"
-#import "UIPhotoPickerController.h"
+#import "DZNPhotoPickerController.h"
 
-static UIPhotoEditViewControllerCropMode _editingMode;
+static DZNPhotoEditViewControllerCropMode _editingMode;
 
 @implementation UIImagePickerController (Edit)
 
-- (void)setEditingMode:(UIPhotoEditViewControllerCropMode)mode
+- (void)setEditingMode:(DZNPhotoEditViewControllerCropMode)mode
 {
     _editingMode = mode;
     
     switch (mode) {
-        case UIPhotoEditViewControllerCropModeSquare:
+        case DZNPhotoEditViewControllerCropModeSquare:
             self.allowsEditing = YES;
             break;
             
-        case UIPhotoEditViewControllerCropModeCircular:
-        case UIPhotoEditViewControllerCropModeCustom:
+        case DZNPhotoEditViewControllerCropModeCircular:
+        case DZNPhotoEditViewControllerCropModeCustom:
             self.allowsEditing = NO;
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickImage:) name:kUIPhotoPickerDidFinishPickingNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickImage:) name:kDZNPhotoPickerDidFinishPickingNotification object:nil];
             break;
             
         default:
             self.allowsEditing = NO;
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:kUIPhotoPickerDidFinishPickingNotification object:nil];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:kDZNPhotoPickerDidFinishPickingNotification object:nil];
             break;
     }
 }
 
-- (UIPhotoEditViewControllerCropMode)editingMode
+- (DZNPhotoEditViewControllerCropMode)editingMode
 {
     return _editingMode;
 }
@@ -43,7 +43,7 @@ static UIPhotoEditViewControllerCropMode _editingMode;
 - (void)didPickImage:(NSNotification *)notification
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]){
-        self.editingMode = UIPhotoEditViewControllerCropNone;
+        self.editingMode = DZNPhotoEditViewControllerCropNone;
         [self.delegate imagePickerController:self didFinishPickingMediaWithInfo:notification.userInfo];
     }
 }

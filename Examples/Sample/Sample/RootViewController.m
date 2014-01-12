@@ -7,7 +7,7 @@
 //
 
 #import "RootViewController.h"
-#import "UIPhotoPickerController.h"
+#import "DZNPhotoPickerController.h"
 #import "UIImagePickerController+Edit.h"
 
 #import "Private.h"
@@ -21,11 +21,11 @@
 
 + (void)initialize
 {
-    [UIPhotoPickerController registerForServiceType:UIPhotoPickerControllerServiceType500px
+    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerServiceType500px
                                     withConsumerKey:k500pxConsumerKey
                                   andConsumerSecret:k500pxConsumerSecret];
     
-    [UIPhotoPickerController registerForServiceType:UIPhotoPickerControllerServiceTypeFlickr
+    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerServiceTypeFlickr
                                     withConsumerKey:kFlickrConsumerKey
                                   andConsumerSecret:kFlickrConsumerSecret];
 }
@@ -52,13 +52,14 @@
 - (void)presentImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
 {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.editingMode = UIPhotoEditViewControllerCropModeCircular;
-    picker.allowsEditing = NO;
+    picker.allowsEditing = YES;
+    picker.editingMode = DZNPhotoEditViewControllerCropModeCircular;
     picker.sourceType = sourceType;
     picker.delegate = self;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         _popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
+        _popoverController.popoverContentSize = CGSizeMake(320.0, 548.0);
         [_popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else {
@@ -68,17 +69,17 @@
 
 - (void)presentPhotoPicker
 {
-    UIPhotoPickerController *picker = [[UIPhotoPickerController alloc] init];
-    picker.serviceType = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
+    DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];
+    picker.serviceType = DZNPhotoPickerControllerServiceType500px | DZNPhotoPickerControllerServiceTypeFlickr;
     picker.allowsEditing = YES;
     picker.delegate = self;
     
-    picker.initialSearchTerm = @"Daft Punk";
-    picker.editingMode = UIPhotoEditViewControllerCropModeSquare;
+//    picker.initialSearchTerm = @"Daft Punk";
+//    picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         _popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
-        _popoverController.popoverContentSize = CGSizeMake(320.0, 600.0);
+        _popoverController.popoverContentSize = CGSizeMake(320.0, 548.0);
         [_popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else {
@@ -93,8 +94,8 @@
     NSLog(@"UIImagePickerControllerOriginalImage : %@",[userInfo objectForKey:UIImagePickerControllerOriginalImage]);
     NSLog(@"UIImagePickerControllerMediaType : %@",[userInfo objectForKey:UIImagePickerControllerMediaType]);
     NSLog(@"UIImagePickerControllerReferenceURL : %@",[userInfo objectForKey:UIImagePickerControllerReferenceURL]);
-    NSLog(@"UIPhotoPickerControllerAuthorCredits : %@",[userInfo objectForKey:UIPhotoPickerControllerAuthorCredits]);
-    NSLog(@"UIPhotoPickerControllerSourceName : %@",[userInfo objectForKey:UIPhotoPickerControllerSourceName]);
+    NSLog(@"DZNPhotoPickerControllerAuthorCredits : %@",[userInfo objectForKey:DZNPhotoPickerControllerAuthorCredits]);
+    NSLog(@"DZNPhotoPickerControllerSourceName : %@",[userInfo objectForKey:DZNPhotoPickerControllerSourceName]);
 
     UIImage *image = [userInfo objectForKey:UIImagePickerControllerEditedImage];
     if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];
@@ -144,10 +145,10 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    if (picker.editingMode == UIPhotoEditViewControllerCropModeCircular) {
+    if (picker.editingMode == DZNPhotoEditViewControllerCropModeCircular) {
         
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-        UIPhotoEditViewController *photoEditViewController = [[UIPhotoEditViewController alloc] initWithImage:image cropMode:UIPhotoEditViewControllerCropModeCircular];
+        DZNPhotoEditViewController *photoEditViewController = [[DZNPhotoEditViewController alloc] initWithImage:image cropMode:DZNPhotoEditViewControllerCropModeCircular];
         [picker pushViewController:photoEditViewController animated:YES];
     }
     else {
@@ -173,9 +174,9 @@
 }
 
 
-#pragma mark - UIPhotoPickerControllerDelegate methods
+#pragma mark - DZNPhotoPickerControllerDelegate methods
 
-- (void)photoPickerController:(UIPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)info
+- (void)photoPickerController:(DZNPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)info
 {
     [self updateImage:info];
     [self saveImage:info];
@@ -188,7 +189,7 @@
     }
 }
 
-- (void)photoPickerControllerDidCancel:(UIPhotoPickerController *)picker
+- (void)photoPickerControllerDidCancel:(DZNPhotoPickerController *)picker
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [_popoverController dismissPopoverAnimated:YES];

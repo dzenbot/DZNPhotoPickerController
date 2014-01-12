@@ -1,7 +1,7 @@
 //
-//  UIPhotoDescription.h
-//  UIPhotoPickerController
-//  https://github.com/dzenbot/UIPhotoPickerController
+//  DZNPhotoDescription.h
+//  DZNPhotoPickerController
+//  https://github.com/dzenbot/DZNPhotoPickerController
 //
 //  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
@@ -13,7 +13,7 @@
 /*
  * The data model to encapsulate meta data about a photo, provided by the photo search services.
  */
-@interface UIPhotoDescription : NSObject
+@interface DZNPhotoDescription : NSObject
 
 /* The title assigned by the author. */
 @property (nonatomic, copy) NSString *title;
@@ -27,7 +27,7 @@
 @property (nonatomic, copy) NSString *sourceName;
 
 /*
- * Allocates a new instance of the UIPhotoDescription class, sends it an init message, and returns the initialized object with property values.
+ * Allocates a new instance of the DZNPhotoDescription class, sends it an init message, and returns the initialized object with property values.
  *
  * @param title The title assigned by the author.
  * @param authorName The name of the author.

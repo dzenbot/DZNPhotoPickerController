@@ -7,8 +7,8 @@
 //
 
 /*
- * IMPORTANT: These tokens are here for example purpose only. If you intend to use UIPhotoPickerController on one of your projects, please generate new key and secret tokens on every photo search services that you will use.
- * For more information about where to generate this token, please refere to UIPhotoPickerController header documentation.
+ * IMPORTANT: These tokens are here for example purpose only. If you intend to use DZNPhotoPickerController on one of your projects, please generate new key and secret tokens on every photo search services that you will use.
+ * For more information about where to generate this token, please refere to DZNPhotoPickerController header documentation.
  */
 
 #define k500pxConsumerKey       @"9sUVdra51AYawcQwQjFaQA7ueUqpaXLEZQJT7Pzy"

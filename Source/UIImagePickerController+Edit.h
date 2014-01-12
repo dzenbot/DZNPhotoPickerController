@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIPhotoEditViewController.h"
+#import "DZNPhotoEditViewController.h"
 
 /* 
  * An unformal protocol for allowing custom edition modes on UIImagePickerController,
@@ -16,6 +16,6 @@
 @interface UIImagePickerController (Edit)
 
 /* The editing mode to be used after selecting an image. */
-@property (nonatomic) UIPhotoEditViewControllerCropMode editingMode;
+@property (nonatomic) DZNPhotoEditViewControllerCropMode editingMode;
 
 @end

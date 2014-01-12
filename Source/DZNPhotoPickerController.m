@@ -1,24 +1,24 @@
 //
-//  UIPhotoPickerController.m
-//  UIPhotoPickerController
-//  https://github.com/dzenbot/UIPhotoPickerController
+//  DZNPhotoPickerController.m
+//  DZNPhotoPickerController
+//  https://github.com/dzenbot/DZNPhotoPickerController
 //
 //  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
 //  Licence: MIT-Licence
 //
 
-#import "UIPhotoPickerController.h"
-#import "UIPhotoDisplayViewController.h"
-#import "UIPhotoEditViewController.h"
-#import "UIPhotoDescription.h"
+#import "DZNPhotoPickerController.h"
+#import "DZNPhotoDisplayViewController.h"
+#import "DZNPhotoEditViewController.h"
+#import "DZNPhotoDescription.h"
 
 #import <MobileCoreServices/UTCoreTypes.h>
 
-@interface UIPhotoPickerController ()
+@interface DZNPhotoPickerController ()
 @end
 
-@implementation UIPhotoPickerController
+@implementation DZNPhotoPickerController
 
 - (id)init
 {
@@ -26,9 +26,9 @@
     if (self) {
         
         _allowsEditing = NO;
-        _serviceType = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
+        _serviceType = DZNPhotoPickerControllerServiceType500px | DZNPhotoPickerControllerServiceTypeFlickr;
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickPhoto:) name:kUIPhotoPickerDidFinishPickingNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickPhoto:) name:kDZNPhotoPickerDidFinishPickingNotification object:nil];
     }
     return self;
 }
@@ -77,7 +77,7 @@
 /*
  * Returns an array of the available media types for the specified service type.
  */
-+ (NSArray *)availableMediaTypesForServiceType:(UIPhotoPickerControllerServiceType)serviceType
++ (NSArray *)availableMediaTypesForServiceType:(DZNPhotoPickerControllerServiceType)serviceType
 {
     return @[(NSString*)kUTTypeImage];
 }
@@ -88,30 +88,30 @@
 /*
  * Registers for a specified photo search service and enables API transactions.
  */
-+ (void)registerForServiceType:(UIPhotoPickerControllerServiceType)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret
++ (void)registerForServiceType:(DZNPhotoPickerControllerServiceType)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret
 {
     switch (serviceType) {
-        case UIPhotoPickerControllerServiceType500px:
+        case DZNPhotoPickerControllerServiceType500px:
             [PXRequest setConsumerKey:consumerKey consumerSecret:consumerSecret];
             break;
             
-        case UIPhotoPickerControllerServiceTypeFlickr:
+        case DZNPhotoPickerControllerServiceTypeFlickr:
             [[FlickrKit sharedFlickrKit] initializeWithAPIKey:consumerKey sharedSecret:consumerSecret];
             break;
             
-        case UIPhotoPickerControllerServiceTypeGoogleImages:
+        case DZNPhotoPickerControllerServiceTypeGoogleImages:
             break;
             
-        case UIPhotoPickerControllerServiceTypeBingImages:
+        case DZNPhotoPickerControllerServiceTypeBingImages:
             break;
             
-        case UIPhotoPickerControllerServiceTypeYahooImages:
+        case DZNPhotoPickerControllerServiceTypeYahooImages:
             break;
             
-        case UIPhotoPickerControllerServiceTypePanoramio:
+        case DZNPhotoPickerControllerServiceTypePanoramio:
             break;
             
-        case UIPhotoPickerControllerServiceTypeInstagram:
+        case DZNPhotoPickerControllerServiceTypeInstagram:
             break;
             
         default:
@@ -124,14 +124,14 @@
  */
 - (void)setCustomCropSize:(CGSize)size
 {
-    if (_editingMode != UIPhotoEditViewControllerCropModeCircular) {
-        _editingMode = UIPhotoEditViewControllerCropModeCustom;
+    if (_editingMode != DZNPhotoEditViewControllerCropModeCircular) {
+        _editingMode = DZNPhotoEditViewControllerCropModeCustom;
         _customCropSize = size;
     }
 }
 
 
-#pragma mark - UIPhotoPickerController methods
+#pragma mark - DZNPhotoPickerController methods
 
 /*
  * Shows the photo display controller.
@@ -140,7 +140,7 @@
 {
     [self setViewControllers:nil];
 
-    UIPhotoDisplayViewController *photoDisplayController = [[UIPhotoDisplayViewController alloc] init];
+    DZNPhotoDisplayViewController *photoDisplayController = [[DZNPhotoDisplayViewController alloc] init];
     photoDisplayController.searchTerm = _initialSearchTerm;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {

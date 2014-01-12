@@ -1,7 +1,7 @@
 //
-//  UIPhotoPickerController.h
-//  UIPhotoPickerController
-//  https://github.com/dzenbot/UIPhotoPickerController
+//  DZNPhotoPickerController.h
+//  DZNPhotoPickerController
+//  https://github.com/dzenbot/DZNPhotoPickerController
 //
 //  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
@@ -9,24 +9,24 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIPhotoEditViewController.h"
+#import "DZNPhotoEditViewController.h"
 
-typedef NS_OPTIONS(NSUInteger, UIPhotoPickerControllerServiceType) {
-    UIPhotoPickerControllerServiceType500px = (1 << 0),             // 500px            http://500px.com/developers/
-    UIPhotoPickerControllerServiceTypeFlickr = (1 << 1),            // Flickr           http://www.flickr.com/services/api/
-    UIPhotoPickerControllerServiceTypeGoogleImages = (1 << 3),      // Google Images    https://developers.google.com/image-search/
-    UIPhotoPickerControllerServiceTypeBingImages = (1 << 4),        // Bing Images      http://datamarket.azure.com/dataset/bing/search/
-    UIPhotoPickerControllerServiceTypeYahooImages = (1 << 5),       // Yahoo Images     http://developer.yahoo.com/boss/search/
-    UIPhotoPickerControllerServiceTypePanoramio = (1 << 6),         // Panoramio        http://www.panoramio.com/api/
-    UIPhotoPickerControllerServiceTypeInstagram = (1 << 7),         // Instagram        http://instagram.com/developer/
-    UIPhotoPickerControllerServiceTypeDribbble = (1 << 8)           // Dribbble         http://dribbble.com/api/
+typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerServiceType) {
+    DZNPhotoPickerControllerServiceType500px = (1 << 0),             // 500px            http://500px.com/developers/
+    DZNPhotoPickerControllerServiceTypeFlickr = (1 << 1),            // Flickr           http://www.flickr.com/services/api/
+    DZNPhotoPickerControllerServiceTypeGoogleImages = (1 << 3),      // Google Images    https://developers.google.com/image-search/
+    DZNPhotoPickerControllerServiceTypeBingImages = (1 << 4),        // Bing Images      http://datamarket.azure.com/dataset/bing/search/
+    DZNPhotoPickerControllerServiceTypeYahooImages = (1 << 5),       // Yahoo Images     http://developer.yahoo.com/boss/search/
+    DZNPhotoPickerControllerServiceTypePanoramio = (1 << 6),         // Panoramio        http://www.panoramio.com/api/
+    DZNPhotoPickerControllerServiceTypeInstagram = (1 << 7),         // Instagram        http://instagram.com/developer/
+    DZNPhotoPickerControllerServiceTypeDribbble = (1 << 8)           // Dribbble         http://dribbble.com/api/
 };
 
-static NSString *UIPhotoPickerControllerAuthorCredits = @"UIPhotoPickerControllerAuthorCredits";
-static NSString *UIPhotoPickerControllerSourceName = @"UIPhotoPickerControllerAuthorCredits";
-static NSString *kUIPhotoPickerDidFinishPickingNotification = @"kUIPhotoPickerDidFinishPickingNotification";
+static NSString *DZNPhotoPickerControllerAuthorCredits = @"DZNPhotoPickerControllerAuthorCredits";
+static NSString *DZNPhotoPickerControllerSourceName = @"DZNPhotoPickerControllerAuthorCredits";
+static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPickerDidFinishPickingNotification";
 
-@protocol UIPhotoPickerControllerDelegate;
+@protocol DZNPhotoPickerControllerDelegate;
 
 /* 
  * A photo picker for iOS 7 using popular photo search services like 500px, Flickr and many others.
@@ -34,18 +34,18 @@ static NSString *kUIPhotoPickerDidFinishPickingNotification = @"kUIPhotoPickerDi
  *
  * @discussion Due to Terms of Use from some image service providers, the images cannot be cached when showing thumbnails results and full screen images.
  */
-@interface UIPhotoPickerController : UINavigationController
+@interface DZNPhotoPickerController : UINavigationController
 
 /* The photo picker's delegate object. */
-@property (nonatomic, assign) id <UINavigationControllerDelegate, UIPhotoPickerControllerDelegate> delegate;
+@property (nonatomic, assign) id <UINavigationControllerDelegate, DZNPhotoPickerControllerDelegate> delegate;
 /* The multi-type of image providers to be supported by the controller. Default values are 500px & Flickr. */
-@property (nonatomic) UIPhotoPickerControllerServiceType serviceType;
+@property (nonatomic) DZNPhotoPickerControllerServiceType serviceType;
 /* A Boolean value indicating whether the user is allowed to edit a selected image. Default value is NO. */
 @property (nonatomic) BOOL allowsEditing;
 /* An optional string term for auto-starting the photo search, as soon as the picker is presented. */
 @property (nonatomic, copy) NSString *initialSearchTerm;
 /* The editing mode (ie: Square, Circular or Custom). Default is Square. */
-@property (nonatomic) UIPhotoEditViewControllerCropMode editingMode;
+@property (nonatomic) DZNPhotoEditViewControllerCropMode editingMode;
 /* An optional and custom croping size. */
 @property (nonatomic) CGSize customCropSize;
 
@@ -56,7 +56,7 @@ static NSString *kUIPhotoPickerDidFinishPickingNotification = @"kUIPhotoPickerDi
  * @param serviceType The specified service type.
  * @return An array whose elements identify the available media types for the specified source type.
  */
-+ (NSArray *)availableMediaTypesForServiceType:(UIPhotoPickerControllerServiceType)serviceType;
++ (NSArray *)availableMediaTypesForServiceType:(DZNPhotoPickerControllerServiceType)serviceType;
 
 /*
  * Registers for a specified photo search service and enables API transactions.
@@ -68,12 +68,12 @@ static NSString *kUIPhotoPickerDidFinishPickingNotification = @"kUIPhotoPickerDi
  *
  * @discussion You must create an app for every image provider, and get the key and secret form them.
  */
-+ (void)registerForServiceType:(UIPhotoPickerControllerServiceType)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret;
++ (void)registerForServiceType:(DZNPhotoPickerControllerServiceType)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret;
 
 @end
 
 
-@protocol UIPhotoPickerControllerDelegate <NSObject>
+@protocol DZNPhotoPickerControllerDelegate <NSObject>
 @required
 
 /*
@@ -84,7 +84,7 @@ static NSString *kUIPhotoPickerDidFinishPickingNotification = @"kUIPhotoPickerDi
  * @param picker The controller object managing the photo search picker interface.
  * @param userInfo A dictionary containing the original image and the edited image. The dictionary also contains any relevant editing information. The keys for this dictionary are listed in “Editing Information Keys”.
  */
-- (void)photoPickerController:(UIPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)userInfo;
+- (void)photoPickerController:(DZNPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)userInfo;
 
 /*
  * Tells the delegate that the user cancelled the pick operation.
@@ -95,6 +95,6 @@ static NSString *kUIPhotoPickerDidFinishPickingNotification = @"kUIPhotoPickerDi
  *
  * @param picker The controller object managing the image picker interfac
  */
-- (void)photoPickerControllerDidCancel:(UIPhotoPickerController *)picker;
+- (void)photoPickerControllerDidCancel:(DZNPhotoPickerController *)picker;
 
 @end

@@ -1,7 +1,7 @@
 //
-//  UIPhotoDisplayViewCell.h
-//  UIPhotoPickerController
-//  https://github.com/dzenbot/UIPhotoPickerController
+//  DZNPhotoDisplayViewCell.h
+//  DZNPhotoPickerController
+//  https://github.com/dzenbot/DZNPhotoPickerController
 //
 //  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
@@ -14,7 +14,7 @@
 /*
  * The collection view cell to be displayed on search results, with photo thumbnail.
  */
-@interface UIPhotoDisplayViewCell : UICollectionViewCell
+@interface DZNPhotoDisplayViewCell : UICollectionViewCell
 
 /* The image view of the table cell. (read-only). */
 @property(nonatomic, readonly, retain) UIImageView *imageView;
