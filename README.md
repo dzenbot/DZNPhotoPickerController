@@ -1,7 +1,7 @@
 UIPhotoPickerController
 ========================
 
-A photo picker for iOS 7 using popular photo services like 500px, Flickr and many others.
+A photo search/picker using popular providers like 500px, Flickr and many others..
 This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behavior.
 
 ### Features
@@ -12,14 +12,14 @@ This framework tries to mimic as close as possible the native UIImagePickerContr
 * Circular crop (like Contacts app) and custom crop size support.
 * Support for custom edition mode while using UIImagePickerController.
 
-![UIPhotoPickerController](https://dl.dropboxusercontent.com/u/2452151/Permalink/UIPhotoPickerController.png)
+![UIPhotoPickerController](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController.png)
 
 
 ## Installation
 
-Available in [Cocoa Pods](http://cocoapods.org/?q=UIPhotoPickerController)
+Available in [Cocoa Pods](http://cocoapods.org/?q=DZNPhotoPickerController)
 ```
-pod 'UIPhotoPickerController', '~> 1.0.1'
+pod 'DZNPhotoPickerController', '~> 1.0.2'
 ```
 
 ## How to use
@@ -27,19 +27,19 @@ pod 'UIPhotoPickerController', '~> 1.0.1'
 ### Step 1
 
 ```
-Import "<UIPhotoPickerController/UIPhotoPickerController.h>" on your view controller.
+Import "<DZNPhotoPickerController/DZNPhotoPickerController.h>" on your view controller.
 ```
 
 ### Step 2
-Before even creating a new instance of UIPhotoPickerController, it is recommended that you register to the photo services APIs on the +[NSObject initialize] method, like so:
+Before even creating a new instance of DZNPhotoPickerController, it is recommended that you register to the photo services APIs on the +[NSObject initialize] method, like so:
 ```
 + (void)initialize
 {
-    [UIPhotoPickerController registerForServiceType:UIPhotoPickerControllerServiceType500px
+    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerServiceType500px
                                     withConsumerKey:YOUR_500px_KEY
                                   andConsumerSecret:YOUR_500px_SECRET];
     
-    [UIPhotoPickerController registerForServiceType:UIPhotoPickerControllerServiceTypeFlickr
+    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerServiceTypeFlickr
                                     withConsumerKey:YOUR_Flickr_KEY
                                   andConsumerSecret:YOUR_Flickr_SECRET];
 }
@@ -48,9 +48,9 @@ Before even creating a new instance of UIPhotoPickerController, it is recommende
 ### Step 3
 Calling a UIPhotoPickerController is very similar to calling UIImagePickerController:
 ```
-UIPhotoPickerController *_controller = [[UIPhotoPickerController alloc] init];
+DZNPhotoPickerController *_controller = [[DZNPhotoPickerController alloc] init];
 _controller.allowsEditing = YES;
-_controller.serviceType = UIPhotoPickerControllerServiceType500px | UIPhotoPickerControllerServiceTypeFlickr;
+_controller.serviceType = DZNPhotoPickerControllerServiceType500px | DZNPhotoPickerControllerServiceTypeFlickr;
 _controller.delegate = self;
     
 [self presentViewController:_controller animated:YES completion:NO];
@@ -59,7 +59,7 @@ _controller.delegate = self;
 You can additionally set more properties:
 ```
 _controller.initialSearchTerm = @"Surf";
-_controller.editingMode = UIPhotoEditViewControllerCropModeCircular;
+_controller.editingMode = DZNPhotoEditViewControllerCropModeCircular;
 ````
 
 ### Sample project
