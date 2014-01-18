@@ -82,8 +82,6 @@ static NSString *kTagCellID = @"kTagCellID";
     _searchController.delegate = self;
     
     [_searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kTagCellID];
-    
-    NSLog(@"_searchBar : %@", _searchBar);
 }
 
 - (void)viewDidLoad
@@ -797,6 +795,7 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
                 [_loadButton setTitleColor:self.view.window.tintColor forState:UIControlStateNormal];
 
                 [self.activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+                [_activityIndicator stopAnimating];
             }
             else {
                 _loadButton.enabled = NO;
