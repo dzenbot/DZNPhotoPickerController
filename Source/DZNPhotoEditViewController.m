@@ -189,7 +189,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         rect.origin = CGPointMake(roundf(_bottomView.frame.size.width-_acceptButton.frame.size.width-13.0), roundf(_bottomView.frame.size.height/2-_acceptButton.frame.size.height/2));
         [_acceptButton setFrame:rect];
         
-        
         if (_cropMode == DZNPhotoEditViewControllerCropModeCircular) {
             
             UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectZero];

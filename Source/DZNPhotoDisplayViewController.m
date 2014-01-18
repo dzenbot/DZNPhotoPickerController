@@ -489,7 +489,6 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
  */
 - (void)setSearchBarText:(NSString *)text
 {
-    //[self.searchController setActive:NO animated:YES];
     self.searchController.searchBar.text = text;
 }
 
@@ -664,6 +663,8 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
 {
     [self showActivityIndicators:YES];
     _searchTerm = keyword;
+    
+    NSLog(@"Searching %@ in %@", keyword, NSStringFromServiceType(_selectedService));
     
     if ((_selectedService & DZNPhotoPickerControllerServiceType500px) > 0) {
         
@@ -988,6 +989,8 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
 {
     NSString *str = searchBar.text;
     [self shouldSearchPhotos:str];
+    
+    [self searchBarShouldShift:NO];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
