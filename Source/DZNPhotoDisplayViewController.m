@@ -50,7 +50,7 @@ static NSString *kTagCellID = @"kTagCellID";
     if (self) {
         
         self.title = NSLocalizedString(@"Internet Photos", nil);
-        _selectedService = DZNPhotoPickerControllerServiceType500px | DZNPhotoPickerControllerServiceTypeFlickr;
+        _selectedService = DZNPhotoPickerControllerServiceType500px;
     }
     return self;
 }
