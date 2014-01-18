@@ -379,14 +379,17 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
     
     // Create the bezier path
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRect:rect];
     
-    // Add the circular crop
-    [maskPath addArcWithCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:NO];
-    [maskPath addClip];
+    UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:rect];
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(center.x-radius, center.y-radius, diameter, diameter)];
+    
+    [clipPath appendPath:maskPath];
+    clipPath.usesEvenOddFillRule = YES;
+    
+    [clipPath addClip];
     [fillColor setFill];
-    [maskPath fill];
-
+    [clipPath fill];
+    
     UIImage *_maskedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
