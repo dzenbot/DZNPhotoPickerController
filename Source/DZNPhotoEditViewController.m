@@ -311,7 +311,8 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 }
 
 /*
- * Created with PaintCode.
+ * The square overlay mask image to be displayed on top of the photo as cropping guideline.
+ * Created with PaintCode. The source file is available inside of Resource folder.
  */
 - (UIImage *)squareOverlayMask
 {
@@ -328,28 +329,28 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     UIGraphicsBeginImageContextWithOptions(size, NO, 0);
 
     // Create the bezier path & drawing
-    UIBezierPath *maskPath = [UIBezierPath bezierPath];
-    [maskPath moveToPoint:CGPointMake(width, margin)];
-    [maskPath addLineToPoint:CGPointMake(0, margin)];
-    [maskPath addLineToPoint:CGPointMake(0, 0)];
-    [maskPath addLineToPoint:CGPointMake(width, 0)];
-    [maskPath addLineToPoint:CGPointMake(width, margin)];
-    [maskPath closePath];
-    [maskPath moveToPoint:CGPointMake(width, height)];
-    [maskPath addLineToPoint:CGPointMake(0, height)];
-    [maskPath addLineToPoint:CGPointMake(0, [self cropSize].height+margin)];
-    [maskPath addLineToPoint:CGPointMake(width, [self cropSize].height+margin)];
-    [maskPath addLineToPoint:CGPointMake(width, height)];
-    [maskPath closePath];
+    UIBezierPath *clipPath = [UIBezierPath bezierPath];
+    [clipPath moveToPoint:CGPointMake(width, margin)];
+    [clipPath addLineToPoint:CGPointMake(0, margin)];
+    [clipPath addLineToPoint:CGPointMake(0, 0)];
+    [clipPath addLineToPoint:CGPointMake(width, 0)];
+    [clipPath addLineToPoint:CGPointMake(width, margin)];
+    [clipPath closePath];
+    [clipPath moveToPoint:CGPointMake(width, height)];
+    [clipPath addLineToPoint:CGPointMake(0, height)];
+    [clipPath addLineToPoint:CGPointMake(0, [self cropSize].height+margin)];
+    [clipPath addLineToPoint:CGPointMake(width, [self cropSize].height+margin)];
+    [clipPath addLineToPoint:CGPointMake(width, height)];
+    [clipPath closePath];
     [fillColor setFill];
-    [maskPath fill];
+    [clipPath fill];
     
     // Add the square crop
-    CGRect cropRect = CGRectMake(lineWidth/2, margin+lineWidth/2, width-lineWidth, [self cropSize].height-lineWidth);
-    UIBezierPath *cropPath = [UIBezierPath bezierPathWithRect:cropRect];
+    CGRect rect = CGRectMake(lineWidth/2, margin+lineWidth/2, width-lineWidth, [self cropSize].height-lineWidth);
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRect:rect];
     [strokeColor setStroke];
-    cropPath.lineWidth = lineWidth;
-    [cropPath stroke];
+    maskPath.lineWidth = lineWidth;
+    [maskPath stroke];
     
     //Create the image using the current context.
     UIImage *_maskedImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -359,8 +360,8 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 }
 
 /*
- * Created with PaintCode.
- * Base PaintCode file available inside of Resource folder.
+ * The circular overlay mask image to be displayed on top of the photo as cropping guideline.
+ * Created with PaintCode. The source file is available inside of Resource folder.
  */
 - (UIImage *)circularOverlayMask
 {
@@ -377,8 +378,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     // Create the image context
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
     
-    // Create the bezier path
-    
+    // Create the bezier paths
     UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:rect];
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(center.x-radius, center.y-radius, diameter, diameter)];
     
