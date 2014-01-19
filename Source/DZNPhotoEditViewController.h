@@ -13,10 +13,9 @@
 @class DZNPhotoDescription;
 
 typedef NS_ENUM(NSInteger, DZNPhotoEditViewControllerCropMode) {
-    DZNPhotoEditViewControllerCropNone = -1,
+    DZNPhotoEditViewControllerCropModeNone = -1,
     DZNPhotoEditViewControllerCropModeSquare = 0,
-    DZNPhotoEditViewControllerCropModeCircular,
-    DZNPhotoEditViewControllerCropModeCustom
+    DZNPhotoEditViewControllerCropModeCircular
 };
 
 /*

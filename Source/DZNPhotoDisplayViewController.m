@@ -570,8 +570,6 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
     if (self.navigationController.allowsEditing) {
         
         DZNPhotoEditViewController *photoEditViewController = [[DZNPhotoEditViewController alloc] initWithPhotoDescription:description cropMode:self.navigationController.editingMode];
-        photoEditViewController.cropSize = self.navigationController.customCropSize;
-        
         [self.navigationController pushViewController:photoEditViewController animated:YES];
     }
     else {

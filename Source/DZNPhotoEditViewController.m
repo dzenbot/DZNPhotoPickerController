@@ -223,17 +223,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     CGSize viewSize = self.view.bounds.size;
     
     switch (_cropMode) {
-        case DZNPhotoEditViewControllerCropModeCustom:
-            if (CGSizeEqualToSize(_cropSize, CGSizeZero) ) {
-                return CGSizeMake(viewSize.width, viewSize.width);
-            }
-            else {
-                if (viewSize.height > 0 && _cropSize.height > viewSize.height) {
-                    _cropSize.height = viewSize.height;
-                }
-                return _cropSize;
-            }
-            
         case DZNPhotoEditViewControllerCropModeSquare:
         case DZNPhotoEditViewControllerCropModeCircular:
         default:
@@ -296,7 +285,6 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 {
     switch (_cropMode) {
         case DZNPhotoEditViewControllerCropModeSquare:
-        case DZNPhotoEditViewControllerCropModeCustom:
             return [self squareOverlayMask];
         case DZNPhotoEditViewControllerCropModeCircular:
         {

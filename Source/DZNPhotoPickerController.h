@@ -46,8 +46,6 @@ static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPicker
 @property (nonatomic, copy) NSString *initialSearchTerm;
 /* The editing mode (ie: Square, Circular or Custom). Default is Square. */
 @property (nonatomic) DZNPhotoEditViewControllerCropMode editingMode;
-/* An optional and custom croping size. */
-@property (nonatomic) CGSize customCropSize;
 
 /*
  * Returns an array of the available media types for the specified service type.

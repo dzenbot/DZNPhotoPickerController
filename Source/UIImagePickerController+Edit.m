@@ -23,12 +23,11 @@ static DZNPhotoEditViewControllerCropMode _editingMode;
             break;
             
         case DZNPhotoEditViewControllerCropModeCircular:
-        case DZNPhotoEditViewControllerCropModeCustom:
             self.allowsEditing = NO;
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickImage:) name:kDZNPhotoPickerDidFinishPickingNotification object:nil];
             break;
             
-        default:
+        case DZNPhotoEditViewControllerCropModeNone:
             self.allowsEditing = NO;
             [[NSNotificationCenter defaultCenter] removeObserver:self name:kDZNPhotoPickerDidFinishPickingNotification object:nil];
             break;
@@ -43,7 +42,7 @@ static DZNPhotoEditViewControllerCropMode _editingMode;
 - (void)didPickImage:(NSNotification *)notification
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]){
-        self.editingMode = DZNPhotoEditViewControllerCropNone;
+        self.editingMode = DZNPhotoEditViewControllerCropModeNone;
         [self.delegate imagePickerController:self didFinishPickingMediaWithInfo:notification.userInfo];
     }
 }

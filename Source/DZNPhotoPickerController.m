@@ -119,17 +119,6 @@
     }
 }
 
-/*
- * Sets the custom crop size if not circular crop mode.
- */
-- (void)setCustomCropSize:(CGSize)size
-{
-    if (_editingMode != DZNPhotoEditViewControllerCropModeCircular) {
-        _editingMode = DZNPhotoEditViewControllerCropModeCustom;
-        _customCropSize = size;
-    }
-}
-
 
 #pragma mark - DZNPhotoPickerController methods
 
