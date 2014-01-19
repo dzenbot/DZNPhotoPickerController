@@ -56,7 +56,7 @@ static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPicker
 /* The photo picker's delegate object. */
 @property (nonatomic, assign) id <UINavigationControllerDelegate, DZNPhotoPickerControllerDelegate> delegate;
 /* The photo services to be supported by the controller. Default values are 500px & Flickr. */
-@property (nonatomic) DZNPhotoPickerControllerService serviceType;
+@property (nonatomic) DZNPhotoPickerControllerService supportedServices;
 /* A Boolean value indicating whether the user is allowed to edit a selected image. Default value is NO. */
 @property (nonatomic) BOOL allowsEditing;
 /* An optional string term for auto-starting the photo search, as soon as the picker is presented. */
@@ -68,24 +68,32 @@ static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPicker
 
 /*
  * Returns an array of the available media types for the specified service type.
- * NOTE: For now, this will only return kUTTypeImage. Maybe on a future, this library could include video and audio search support.
+ * NOTE: For now, this will only return kUTTypeImage. Maybe on a future, this library could have video and audio search support.
  * 
  * @param serviceType The specified service type.
- * @return An array whose elements identify the available media types for the specified source type.
+ * @return An array whose elements identify the available media types for the supported services.
  */
-+ (NSArray *)availableMediaTypesForServiceType:(DZNPhotoPickerControllerService)serviceType;
++ (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerService)supportedServices;
+
+/*
+ * Returns the photo service name string.
+ *
+ * @param service The specified service type.
+ * @return The photo service name.
+ */
+NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service);
 
 /*
  * Registers for a specified photo service and enables API transactions.
  * NOTE: Run this on startup with your consumer key and secret, for every service type you will need.
  *
- * @param serviceType The photo service, such as 500px, Flickr, Google Images, etc.
+ * @param service The photo service to register, such as 500px, Flickr, Google Images, etc.
  * @param consumerKey The API consumer key.
  * @param consumerSecret The API consumer secret token.
  *
  * @discussion You must create an app for every photo service you'd like to use, and generate a consumer key and secret from their sites.
  */
-+ (void)registerForServiceType:(DZNPhotoPickerControllerService)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret;
++ (void)registerForServiceType:(DZNPhotoPickerControllerService)service withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret;
 
 @end
 

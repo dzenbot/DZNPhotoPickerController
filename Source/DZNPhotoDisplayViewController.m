@@ -33,7 +33,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 @property (nonatomic, strong) NSMutableArray *photoDescriptions;
 @property (nonatomic, strong) NSMutableArray *searchTags;
-@property (nonatomic, strong) NSArray *controlTitles;
+@property (nonatomic, strong) NSArray *segmentedControlTitles;
 @property (nonatomic) DZNPhotoPickerControllerService selectedService;
 @property (nonatomic) DZNPhotoPickerControllerService previousService;
 @property (nonatomic, strong) PXRequest *PXRequest;
@@ -182,7 +182,7 @@ static NSString *kTagCellID = @"kTagCellID";
         _searchBar.text = _searchTerm;
         _searchBar.delegate = self;
         
-        _searchBar.scopeButtonTitles = [self controlTitles];
+        _searchBar.scopeButtonTitles = [self segmentedControlTitles];
         _searchBar.selectedScopeButtonIndex = _selectedService-1;
         
         [self.view addSubview:_searchBar];
@@ -305,78 +305,43 @@ static NSString *kTagCellID = @"kTagCellID";
 }
 
 /*
- * Returns the segmented control titles, based on the service types to support.
+ * Returns the segmented control titles, based on the supported services.
  * Default returns "500px" & "Flickr".
  */
-- (NSArray *)controlTitles
+- (NSArray *)segmentedControlTitles
 {
-    if (!_controlTitles)
+    if (!_segmentedControlTitles)
     {
         NSMutableArray *titles = [NSMutableArray array];
         
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerService500px) > 0) {
+        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerService500px) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerService500px)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceFlickr) > 0) {
+        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceFlickr) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceFlickr)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
+        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceGoogleImages)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceBingImages) > 0) {
+        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceBingImages) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceBingImages)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceYahooImages) > 0) {
+        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceYahooImages) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceYahooImages)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServicePanoramio) > 0) {
+        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServicePanoramio) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServicePanoramio)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceInstagram) > 0) {
+        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceInstagram) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceInstagram)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceDribbble) > 0) {
+        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceDribbble) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceDribbble)];
         }
         
-        _controlTitles = [NSArray arrayWithArray:titles];
+        _segmentedControlTitles = [NSArray arrayWithArray:titles];
     }
-    return _controlTitles;
-}
-
-/*
- * Returns the service name string based on the service enum type.
- */
-NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service)
-{
-    switch (service) {
-        case DZNPhotoPickerControllerService500px:
-            return @"500px";
-            
-        case DZNPhotoPickerControllerServiceFlickr:
-            return @"Flickr";
-            
-        case DZNPhotoPickerControllerServiceGoogleImages:
-            return @"Google Images";
-            
-        case DZNPhotoPickerControllerServiceBingImages:
-            return @"Bing Images";
-            
-        case DZNPhotoPickerControllerServiceYahooImages:
-            return @"Yahoo Images";
-            
-        case DZNPhotoPickerControllerServicePanoramio:
-            return @"Panoramio";
-            
-        case DZNPhotoPickerControllerServiceInstagram:
-            return @"Instagram";
-          
-        case DZNPhotoPickerControllerServiceDribbble:
-            return @"Dribbble";
-            
-        default:
-            return nil;
-    }
+    return _segmentedControlTitles;
 }
 
 /*

@@ -26,7 +26,7 @@
     if (self) {
         
         _allowsEditing = NO;
-        _serviceType = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
+        _supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
         _supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickPhoto:) name:kDZNPhotoPickerDidFinishPickingNotification object:nil];
@@ -76,11 +76,29 @@
 #pragma mark - Getter methods
 
 /*
- * Returns an array of the available media types for the specified service type.
+ * Returns an array whose elements identify the available media types for the supported services.
  */
-+ (NSArray *)availableMediaTypesForServiceType:(DZNPhotoPickerControllerService)serviceType
++ (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerService)supportedServices
 {
     return @[(NSString*)kUTTypeImage];
+}
+
+/*
+ * Returns the photo service name string.
+ */
+NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service)
+{
+    switch (service) {
+        case DZNPhotoPickerControllerService500px:          return @"500px";
+        case DZNPhotoPickerControllerServiceFlickr:         return @"Flickr";
+        case DZNPhotoPickerControllerServiceGoogleImages:   return @"Google Images";
+        case DZNPhotoPickerControllerServiceBingImages:     return @"Bing Images";
+        case DZNPhotoPickerControllerServiceYahooImages:    return @"Yahoo Images";
+        case DZNPhotoPickerControllerServicePanoramio:      return @"Panoramio";
+        case DZNPhotoPickerControllerServiceInstagram:      return @"Instagram";
+        case DZNPhotoPickerControllerServiceDribbble:       return @"Dribbble";
+        default:                                            return nil;
+    }
 }
 
 
@@ -89,9 +107,9 @@
 /*
  * Registers for a specified photo service and enables API transactions.
  */
-+ (void)registerForServiceType:(DZNPhotoPickerControllerService)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret
++ (void)registerForServiceType:(DZNPhotoPickerControllerService)service withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret;
 {
-    switch (serviceType) {
+    switch (service) {
         case DZNPhotoPickerControllerService500px:
             [PXRequest setConsumerKey:consumerKey consumerSecret:consumerSecret];
             break;
