@@ -52,9 +52,9 @@
 - (void)presentImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
 {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.sourceType = sourceType;
     picker.allowsEditing = YES;
     picker.editingMode = DZNPhotoEditViewControllerCropModeCircular;
-    picker.sourceType = sourceType;
     picker.delegate = self;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -72,10 +72,10 @@
     DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];
     picker.serviceType = DZNPhotoPickerControllerServiceType500px | DZNPhotoPickerControllerServiceTypeFlickr;
     picker.allowsEditing = YES;
+    picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     picker.delegate = self;
     
 //    picker.initialSearchTerm = @"Daft Punk";
-//    picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         _popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];

@@ -29,7 +29,9 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerServiceType) {
  * A set of Creative Commons licences defined in http://creativecommons.org/licenses/
  */
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerCCLicense) {
-    DZNPhotoPickerControllerCCLicenseBY = (1 << 0),                 // Attribution                              http://creativecommons.org/licenses/by/4.0
+    DZNPhotoPickerControllerCCLicenseBY_ZERO = -1,                  // No Rights Reserved                       http://creativecommons.org/about/cc0
+    DZNPhotoPickerControllerCCLicenseBY_ALL = 0,                    // All Rights CC Reserved Attribution
+    DZNPhotoPickerControllerCCLicenseBY = (1 << 0),                 // All Rights Reserved Attribution          http://creativecommons.org/licenses/by/4.0
     DZNPhotoPickerControllerCCLicenseBY_SA = (1 << 1),              // Attribution-ShareAlike                   http://creativecommons.org/licenses/by-sa/4.0
     DZNPhotoPickerControllerCCLicenseBY_ND = (1 << 2),              // Attribution-NoDerivs                     http://creativecommons.org/licenses/by-nd/4.0
     DZNPhotoPickerControllerCCLicenseBY_NC = (1 << 3),              // Attribution-NonCommercial                http://creativecommons.org/licenses/by-nc/4.0
@@ -62,6 +64,8 @@ static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPicker
 @property (nonatomic, copy) NSString *initialSearchTerm;
 /* The editing mode (ie: Square, Circular or Custom). Default is Square. */
 @property (nonatomic) DZNPhotoEditViewControllerCropMode editingMode;
+/* The supported licenses of photos to search. Pending implementation. */
+@property (nonatomic) DZNPhotoPickerControllerCCLicense supportedLicenses;
 
 /*
  * Returns an array of the available media types for the specified service type.
