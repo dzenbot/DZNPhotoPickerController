@@ -55,7 +55,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoEditViewControllerCropMode) {
  * @param originalImage The original image before edition.
  * @param referenceURL The source url of the original image.
  * @param authorName The name of the author of the photo.
- * @param sourceName The name of the servicer provider where the photo was fetched.
+ * @param sourceName The name of the photo service from where the photo was fetched.
  */
 + (void)didFinishPickingEditedImage:(UIImage *)editedImage
                        withCropRect:(CGRect)cropRect

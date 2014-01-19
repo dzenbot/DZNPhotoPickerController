@@ -389,7 +389,7 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
 
 /*
  * Returns the a complete & valide source url of a specific service url.
- * This applies only for some photo search services, that do not expose the source url on their API.
+ * This applies only for some photo services, that do not expose the source url on their API.
  */
 - (NSString *)sourceUrlForImageUrl:(NSString *)url
 {
@@ -653,7 +653,7 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
 
 /*
  * Triggers a photo search of the selected photo service.
- * Each photo search service API requieres different params.
+ * Each photo service API requieres different params.
  */
 - (void)searchPhotosWithKeyword:(NSString *)keyword
 {
@@ -728,7 +728,7 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
 }
 
 /*
- * Triggers a photo search for the same search terms but different page.
+ * Triggers a photo search for the next page.
  */
 - (void)downloadData
 {

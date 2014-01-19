@@ -86,7 +86,7 @@
 #pragma mark - Setter methods
 
 /*
- * Registers for a specified photo search service and enables API transactions.
+ * Registers for a specified photo service and enables API transactions.
  */
 + (void)registerForServiceType:(DZNPhotoPickerControllerServiceType)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret
 {

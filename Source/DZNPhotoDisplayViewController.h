@@ -15,7 +15,7 @@
 @class DZNPhotoPickerController, DZNPhotoEditViewController;
 
 /*
- * The controller in charge of searching and displaying thumb images from different image providers.
+ * The controller in charge of searching and displaying thumb images from different photo services.
  */
 @interface DZNPhotoDisplayViewController : UIViewController
 

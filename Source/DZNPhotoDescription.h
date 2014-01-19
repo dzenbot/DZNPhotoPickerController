@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 
 /*
- * The data model to encapsulate meta data about a photo, provided by the photo search services.
+ * The data model to encapsulate meta data about a photo, provided by the photo service.
  */
 @interface DZNPhotoDescription : NSObject
 
@@ -23,7 +23,7 @@
 @property (nonatomic, copy) NSURL *thumbURL;
 /* The url of the full size version. */
 @property (nonatomic, copy) NSURL *fullURL;
-/* The name of the photo search service. */
+/* The name of the photo service. */
 @property (nonatomic, copy) NSString *sourceName;
 
 /*
@@ -33,7 +33,7 @@
  * @param authorName The name of the author.
  * @param thumbURL The url of the thumb version.
  * @param fullURL The url of the full size version.
- * @param sourceName The name of the photo search service.
+ * @param sourceName The name of the photo service.
  */
 + (instancetype)photoDescriptionWithTitle:(NSString *)title
                                authorName:(NSString *)authorName
