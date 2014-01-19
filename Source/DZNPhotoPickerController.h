@@ -11,6 +11,9 @@
 #import <UIKit/UIKit.h>
 #import "DZNPhotoEditViewController.h"
 
+/*
+ * A set of supported image provider services
+ */
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerServiceType) {
     DZNPhotoPickerControllerServiceType500px = (1 << 0),             // 500px            http://500px.com/developers/
     DZNPhotoPickerControllerServiceTypeFlickr = (1 << 1),            // Flickr           http://www.flickr.com/services/api/
@@ -20,6 +23,18 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerServiceType) {
     DZNPhotoPickerControllerServiceTypePanoramio = (1 << 6),         // Panoramio        http://www.panoramio.com/api/
     DZNPhotoPickerControllerServiceTypeInstagram = (1 << 7),         // Instagram        http://instagram.com/developer/
     DZNPhotoPickerControllerServiceTypeDribbble = (1 << 8)           // Dribbble         http://dribbble.com/api/
+};
+
+/*
+ * A set of Creative Commons licences defined in http://creativecommons.org/licenses/
+ */
+typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerCCLicense) {
+    DZNPhotoPickerControllerCCLicenseBY = (1 << 0),                 // Attribution                              http://creativecommons.org/licenses/by/4.0
+    DZNPhotoPickerControllerCCLicenseBY_SA = (1 << 1),              // Attribution-ShareAlike                   http://creativecommons.org/licenses/by-sa/4.0
+    DZNPhotoPickerControllerCCLicenseBY_ND = (1 << 2),              // Attribution-NoDerivs                     http://creativecommons.org/licenses/by-nd/4.0
+    DZNPhotoPickerControllerCCLicenseBY_NC = (1 << 3),              // Attribution-NonCommercial                http://creativecommons.org/licenses/by-nc/4.0
+    DZNPhotoPickerControllerCCLicenseBY_NC_SA = (1 << 4),           // Attribution-NonCommercial-ShareAlike     http://creativecommons.org/licenses/by-nc-sa/4.0
+    DZNPhotoPickerControllerCCLicenseBY_NC_ND = (1 << 5)            // Attribution-NonCommercial-NoDerivs       http://creativecommons.org/licenses/by-nc-nd/4.0
 };
 
 static NSString *DZNPhotoPickerControllerAuthorCredits = @"DZNPhotoPickerControllerAuthorCredits";
@@ -38,7 +53,7 @@ static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPicker
 
 /* The photo picker's delegate object. */
 @property (nonatomic, assign) id <UINavigationControllerDelegate, DZNPhotoPickerControllerDelegate> delegate;
-/* The multi-type of image providers to be supported by the controller. Default values are 500px & Flickr. */
+/* The image providers multi-type to be supported by the controller. Default values are 500px & Flickr. */
 @property (nonatomic) DZNPhotoPickerControllerServiceType serviceType;
 /* A Boolean value indicating whether the user is allowed to edit a selected image. Default value is NO. */
 @property (nonatomic) BOOL allowsEditing;
