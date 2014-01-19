@@ -794,15 +794,15 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
                 _loadButton.enabled = YES;
                 [_loadButton setTitleColor:self.view.window.tintColor forState:UIControlStateNormal];
 
-                [self.activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+                _activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
                 [_activityIndicator stopAnimating];
             }
             else {
                 _loadButton.enabled = NO;
                 [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
 
-                [self.activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-                self.activityIndicator.color = [UIColor grayColor];
+                _activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+                _activityIndicator.color = [UIColor grayColor];
             }
         }
         else {
