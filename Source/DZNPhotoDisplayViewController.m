@@ -37,8 +37,8 @@ static NSString *kTagCellID = @"kTagCellID";
 @property (nonatomic) DZNPhotoPickerControllerServiceType selectedService;
 @property (nonatomic) DZNPhotoPickerControllerServiceType previousService;
 @property (nonatomic, strong) PXRequest *PXRequest;
-@property (nonatomic) int resultPerPage;
-@property (nonatomic) int currentPage;
+@property (nonatomic) NSInteger resultPerPage;
+@property (nonatomic) NSInteger currentPage;
 
 @end
 
@@ -688,8 +688,8 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
         search.safe_search = @"1";
         search.media = @"photos";
         search.in_gallery = @"true";
-        search.per_page = [NSString stringWithFormat:@"%d",_resultPerPage];
-        search.page = [NSString stringWithFormat:@"%d",_currentPage];
+        search.per_page = [NSString stringWithFormat:@"%ld",(long)_resultPerPage];
+        search.page = [NSString stringWithFormat:@"%ld",(long)_currentPage];
 
         [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
             
