@@ -14,29 +14,29 @@
 /*
  * A set of supported photo services
  */
-typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerServiceType) {
-    DZNPhotoPickerControllerServiceType500px = (1 << 0),             // 500px            http://500px.com/developers/
-    DZNPhotoPickerControllerServiceTypeFlickr = (1 << 1),            // Flickr           http://www.flickr.com/services/api/
-    DZNPhotoPickerControllerServiceTypeGoogleImages = (1 << 3),      // Google Images    https://developers.google.com/image-search/
-    DZNPhotoPickerControllerServiceTypeBingImages = (1 << 4),        // Bing Images      http://datamarket.azure.com/dataset/bing/search/
-    DZNPhotoPickerControllerServiceTypeYahooImages = (1 << 5),       // Yahoo Images     http://developer.yahoo.com/boss/search/
-    DZNPhotoPickerControllerServiceTypePanoramio = (1 << 6),         // Panoramio        http://www.panoramio.com/api/
-    DZNPhotoPickerControllerServiceTypeInstagram = (1 << 7),         // Instagram        http://instagram.com/developer/
-    DZNPhotoPickerControllerServiceTypeDribbble = (1 << 8)           // Dribbble         http://dribbble.com/api/
+typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerService) {
+    DZNPhotoPickerControllerService500px = (1 << 0),            // 500px            http://500px.com/developers/
+    DZNPhotoPickerControllerServiceFlickr = (1 << 1),           // Flickr           http://www.flickr.com/services/api/
+    DZNPhotoPickerControllerServiceGoogleImages = (1 << 3),     // Google Images    https://developers.google.com/image-search/
+    DZNPhotoPickerControllerServiceBingImages = (1 << 4),       // Bing Images      http://datamarket.azure.com/dataset/bing/search/
+    DZNPhotoPickerControllerServiceYahooImages = (1 << 5),      // Yahoo Images     http://developer.yahoo.com/boss/search/
+    DZNPhotoPickerControllerServicePanoramio = (1 << 6),        // Panoramio        http://www.panoramio.com/api/
+    DZNPhotoPickerControllerServiceInstagram = (1 << 7),        // Instagram        http://instagram.com/developer/
+    DZNPhotoPickerControllerServiceDribbble = (1 << 8)          // Dribbble         http://dribbble.com/api/
 };
 
 /*
  * A set of Creative Commons licences defined in http://creativecommons.org/licenses/
  */
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerCCLicense) {
-    DZNPhotoPickerControllerCCLicenseBY_ZERO = -1,                  // No Rights Reserved                       http://creativecommons.org/about/cc0
-    DZNPhotoPickerControllerCCLicenseBY_ALL = 0,                    // All Rights CC Reserved Attribution
-    DZNPhotoPickerControllerCCLicenseBY = (1 << 0),                 // All Rights Reserved Attribution          http://creativecommons.org/licenses/by/4.0
-    DZNPhotoPickerControllerCCLicenseBY_SA = (1 << 1),              // Attribution-ShareAlike                   http://creativecommons.org/licenses/by-sa/4.0
-    DZNPhotoPickerControllerCCLicenseBY_ND = (1 << 2),              // Attribution-NoDerivs                     http://creativecommons.org/licenses/by-nd/4.0
-    DZNPhotoPickerControllerCCLicenseBY_NC = (1 << 3),              // Attribution-NonCommercial                http://creativecommons.org/licenses/by-nc/4.0
-    DZNPhotoPickerControllerCCLicenseBY_NC_SA = (1 << 4),           // Attribution-NonCommercial-ShareAlike     http://creativecommons.org/licenses/by-nc-sa/4.0
-    DZNPhotoPickerControllerCCLicenseBY_NC_ND = (1 << 5)            // Attribution-NonCommercial-NoDerivs       http://creativecommons.org/licenses/by-nc-nd/4.0
+    DZNPhotoPickerControllerCCLicenseBY_ZERO = -1,              // No Rights Reserved                       http://creativecommons.org/about/cc0
+    DZNPhotoPickerControllerCCLicenseBY_ALL = 0,                // All CC Reserved Attributions
+    DZNPhotoPickerControllerCCLicenseBY = (1 << 0),             // All Rights Reserved Attribution          http://creativecommons.org/licenses/by/4.0
+    DZNPhotoPickerControllerCCLicenseBY_SA = (1 << 1),          // Attribution-ShareAlike                   http://creativecommons.org/licenses/by-sa/4.0
+    DZNPhotoPickerControllerCCLicenseBY_ND = (1 << 2),          // Attribution-NoDerivs                     http://creativecommons.org/licenses/by-nd/4.0
+    DZNPhotoPickerControllerCCLicenseBY_NC = (1 << 3),          // Attribution-NonCommercial                http://creativecommons.org/licenses/by-nc/4.0
+    DZNPhotoPickerControllerCCLicenseBY_NC_SA = (1 << 4),       // Attribution-NonCommercial-ShareAlike     http://creativecommons.org/licenses/by-nc-sa/4.0
+    DZNPhotoPickerControllerCCLicenseBY_NC_ND = (1 << 5)        // Attribution-NonCommercial-NoDerivs       http://creativecommons.org/licenses/by-nc-nd/4.0
 };
 
 static NSString *DZNPhotoPickerControllerAuthorCredits = @"DZNPhotoPickerControllerAuthorCredits";
@@ -44,7 +44,6 @@ static NSString *DZNPhotoPickerControllerSourceName = @"DZNPhotoPickerController
 static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPickerDidFinishPickingNotification";
 
 @protocol DZNPhotoPickerControllerDelegate;
-
 
 /* 
  * A photo picker for iOS 7 using popular photo services like 500px, Flickr and many others.
@@ -57,14 +56,14 @@ static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPicker
 /* The photo picker's delegate object. */
 @property (nonatomic, assign) id <UINavigationControllerDelegate, DZNPhotoPickerControllerDelegate> delegate;
 /* The photo services to be supported by the controller. Default values are 500px & Flickr. */
-@property (nonatomic) DZNPhotoPickerControllerServiceType serviceType;
+@property (nonatomic) DZNPhotoPickerControllerService serviceType;
 /* A Boolean value indicating whether the user is allowed to edit a selected image. Default value is NO. */
 @property (nonatomic) BOOL allowsEditing;
 /* An optional string term for auto-starting the photo search, as soon as the picker is presented. */
 @property (nonatomic, copy) NSString *initialSearchTerm;
 /* The editing mode (ie: Square, Circular or Custom). Default is Square. */
 @property (nonatomic) DZNPhotoEditViewControllerCropMode editingMode;
-/* The supported licenses of photos to search. Pending implementation. */
+/* The supported licenses of photos to search. Default value is "All CC Reserved Attributions". Pending implementation. */
 @property (nonatomic) DZNPhotoPickerControllerCCLicense supportedLicenses;
 
 /*
@@ -74,7 +73,7 @@ static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPicker
  * @param serviceType The specified service type.
  * @return An array whose elements identify the available media types for the specified source type.
  */
-+ (NSArray *)availableMediaTypesForServiceType:(DZNPhotoPickerControllerServiceType)serviceType;
++ (NSArray *)availableMediaTypesForServiceType:(DZNPhotoPickerControllerService)serviceType;
 
 /*
  * Registers for a specified photo service and enables API transactions.
@@ -86,7 +85,7 @@ static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPicker
  *
  * @discussion You must create an app for every photo service you'd like to use, and generate a consumer key and secret from their sites.
  */
-+ (void)registerForServiceType:(DZNPhotoPickerControllerServiceType)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret;
++ (void)registerForServiceType:(DZNPhotoPickerControllerService)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret;
 
 @end
 

@@ -26,7 +26,8 @@
     if (self) {
         
         _allowsEditing = NO;
-        _serviceType = DZNPhotoPickerControllerServiceType500px | DZNPhotoPickerControllerServiceTypeFlickr;
+        _serviceType = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
+        _supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickPhoto:) name:kDZNPhotoPickerDidFinishPickingNotification object:nil];
     }
@@ -77,7 +78,7 @@
 /*
  * Returns an array of the available media types for the specified service type.
  */
-+ (NSArray *)availableMediaTypesForServiceType:(DZNPhotoPickerControllerServiceType)serviceType
++ (NSArray *)availableMediaTypesForServiceType:(DZNPhotoPickerControllerService)serviceType
 {
     return @[(NSString*)kUTTypeImage];
 }
@@ -88,30 +89,30 @@
 /*
  * Registers for a specified photo service and enables API transactions.
  */
-+ (void)registerForServiceType:(DZNPhotoPickerControllerServiceType)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret
++ (void)registerForServiceType:(DZNPhotoPickerControllerService)serviceType withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret
 {
     switch (serviceType) {
-        case DZNPhotoPickerControllerServiceType500px:
+        case DZNPhotoPickerControllerService500px:
             [PXRequest setConsumerKey:consumerKey consumerSecret:consumerSecret];
             break;
             
-        case DZNPhotoPickerControllerServiceTypeFlickr:
+        case DZNPhotoPickerControllerServiceFlickr:
             [[FlickrKit sharedFlickrKit] initializeWithAPIKey:consumerKey sharedSecret:consumerSecret];
             break;
             
-        case DZNPhotoPickerControllerServiceTypeGoogleImages:
+        case DZNPhotoPickerControllerServiceGoogleImages:
             break;
             
-        case DZNPhotoPickerControllerServiceTypeBingImages:
+        case DZNPhotoPickerControllerServiceBingImages:
             break;
             
-        case DZNPhotoPickerControllerServiceTypeYahooImages:
+        case DZNPhotoPickerControllerServiceYahooImages:
             break;
             
-        case DZNPhotoPickerControllerServiceTypePanoramio:
+        case DZNPhotoPickerControllerServicePanoramio:
             break;
             
-        case DZNPhotoPickerControllerServiceTypeInstagram:
+        case DZNPhotoPickerControllerServiceInstagram:
             break;
             
         default:

@@ -21,11 +21,11 @@
 
 + (void)initialize
 {
-    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerServiceType500px
+    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerService500px
                                     withConsumerKey:k500pxConsumerKey
                                   andConsumerSecret:k500pxConsumerSecret];
     
-    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerServiceTypeFlickr
+    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerServiceFlickr
                                     withConsumerKey:kFlickrConsumerKey
                                   andConsumerSecret:kFlickrConsumerSecret];
 }
@@ -70,7 +70,7 @@
 - (void)presentPhotoPicker
 {
     DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];
-    picker.serviceType = DZNPhotoPickerControllerServiceType500px | DZNPhotoPickerControllerServiceTypeFlickr;
+    picker.serviceType = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
     picker.allowsEditing = YES;
     picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     picker.delegate = self;

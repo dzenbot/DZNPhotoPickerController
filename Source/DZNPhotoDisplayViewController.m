@@ -34,8 +34,8 @@ static NSString *kTagCellID = @"kTagCellID";
 @property (nonatomic, strong) NSMutableArray *photoDescriptions;
 @property (nonatomic, strong) NSMutableArray *searchTags;
 @property (nonatomic, strong) NSArray *controlTitles;
-@property (nonatomic) DZNPhotoPickerControllerServiceType selectedService;
-@property (nonatomic) DZNPhotoPickerControllerServiceType previousService;
+@property (nonatomic) DZNPhotoPickerControllerService selectedService;
+@property (nonatomic) DZNPhotoPickerControllerService previousService;
 @property (nonatomic, strong) PXRequest *PXRequest;
 @property (nonatomic) NSInteger resultPerPage;
 @property (nonatomic) NSInteger currentPage;
@@ -50,7 +50,7 @@ static NSString *kTagCellID = @"kTagCellID";
     if (self) {
         
         self.title = NSLocalizedString(@"Internet Photos", nil);
-        _selectedService = DZNPhotoPickerControllerServiceType500px;
+        _selectedService = DZNPhotoPickerControllerService500px;
     }
     return self;
 }
@@ -314,29 +314,29 @@ static NSString *kTagCellID = @"kTagCellID";
     {
         NSMutableArray *titles = [NSMutableArray array];
         
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceType500px) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceType500px)];
+        if ((self.navigationController.serviceType & DZNPhotoPickerControllerService500px) > 0) {
+            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerService500px)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceTypeFlickr) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceTypeFlickr)];
+        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceFlickr) > 0) {
+            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceFlickr)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceTypeGoogleImages) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceTypeGoogleImages)];
+        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
+            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceGoogleImages)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceTypeBingImages) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceTypeBingImages)];
+        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceBingImages) > 0) {
+            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceBingImages)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceTypeYahooImages) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceTypeYahooImages)];
+        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceYahooImages) > 0) {
+            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceYahooImages)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceTypePanoramio) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceTypePanoramio)];
+        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServicePanoramio) > 0) {
+            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServicePanoramio)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceTypeInstagram) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceTypeInstagram)];
+        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceInstagram) > 0) {
+            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceInstagram)];
         }
-        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceTypeDribbble) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceTypeDribbble)];
+        if ((self.navigationController.serviceType & DZNPhotoPickerControllerServiceDribbble) > 0) {
+            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceDribbble)];
         }
         
         _controlTitles = [NSArray arrayWithArray:titles];
@@ -347,31 +347,31 @@ static NSString *kTagCellID = @"kTagCellID";
 /*
  * Returns the service name string based on the service enum type.
  */
-NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
+NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service)
 {
     switch (service) {
-        case DZNPhotoPickerControllerServiceType500px:
+        case DZNPhotoPickerControllerService500px:
             return @"500px";
             
-        case DZNPhotoPickerControllerServiceTypeFlickr:
+        case DZNPhotoPickerControllerServiceFlickr:
             return @"Flickr";
             
-        case DZNPhotoPickerControllerServiceTypeGoogleImages:
+        case DZNPhotoPickerControllerServiceGoogleImages:
             return @"Google Images";
             
-        case DZNPhotoPickerControllerServiceTypeBingImages:
+        case DZNPhotoPickerControllerServiceBingImages:
             return @"Bing Images";
             
-        case DZNPhotoPickerControllerServiceTypeYahooImages:
+        case DZNPhotoPickerControllerServiceYahooImages:
             return @"Yahoo Images";
             
-        case DZNPhotoPickerControllerServiceTypePanoramio:
+        case DZNPhotoPickerControllerServicePanoramio:
             return @"Panoramio";
             
-        case DZNPhotoPickerControllerServiceTypeInstagram:
+        case DZNPhotoPickerControllerServiceInstagram:
             return @"Instagram";
           
-        case DZNPhotoPickerControllerServiceTypeDribbble:
+        case DZNPhotoPickerControllerServiceDribbble:
             return @"Dribbble";
             
         default:
@@ -394,10 +394,10 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
 - (NSString *)sourceUrlForImageUrl:(NSString *)url
 {
     switch (_selectedService) {
-        case DZNPhotoPickerControllerServiceType500px:
+        case DZNPhotoPickerControllerService500px:
             return nil;
             
-        case DZNPhotoPickerControllerServiceTypeFlickr:
+        case DZNPhotoPickerControllerServiceFlickr:
         {
             NSArray *components = [url componentsSeparatedByString:@"/"];
             NSString *lastComponent = [components lastObject];
@@ -414,13 +414,13 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
             }
         }
             
-        case DZNPhotoPickerControllerServiceTypeGoogleImages:
+        case DZNPhotoPickerControllerServiceGoogleImages:
             return nil;
             
-        case DZNPhotoPickerControllerServiceTypeBingImages:
+        case DZNPhotoPickerControllerServiceBingImages:
             return nil;
             
-        case DZNPhotoPickerControllerServiceTypeYahooImages:
+        case DZNPhotoPickerControllerServiceYahooImages:
             return nil;
             
         default:
@@ -436,7 +436,7 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
 {
     NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:reponse.count];
     
-    if ((_selectedService & DZNPhotoPickerControllerServiceType500px) > 0) {
+    if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
         for (NSDictionary *object in reponse) {
 
             DZNPhotoDescription *description = [DZNPhotoDescription photoDescriptionWithTitle:[object valueForKey:@"username"]
@@ -448,7 +448,7 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
             [result addObject:description];
         }
     }
-    else if ((_selectedService & DZNPhotoPickerControllerServiceTypeFlickr) > 0) {
+    else if ((_selectedService & DZNPhotoPickerControllerServiceFlickr) > 0) {
         for (NSDictionary *object in reponse) {
             
             DZNPhotoDescription *description = [DZNPhotoDescription photoDescriptionWithTitle:[object valueForKey:@"title"]
@@ -662,7 +662,7 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
     
     NSLog(@"Searching %@ in %@", keyword, NSStringFromServiceType(_selectedService));
     
-    if ((_selectedService & DZNPhotoPickerControllerServiceType500px) > 0) {
+    if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
         
         NSString *term = [_searchTerm stringByReplacingOccurrencesOfString:@" " withString:@"+"];
         
@@ -678,7 +678,7 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
                                  
         }];
     }
-    else if ((_selectedService & DZNPhotoPickerControllerServiceTypeFlickr) > 0) {
+    else if ((_selectedService & DZNPhotoPickerControllerServiceFlickr) > 0) {
         
         FKFlickrPhotosSearch *search = [[FKFlickrPhotosSearch alloc] init];
         search.text = _searchTerm; //[keyword stringByReplacingOccurrencesOfString:@" " withString:@" OR "];
@@ -711,14 +711,14 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerServiceType service)
     
     [self showActivityIndicators:NO];
     
-    if ((_selectedService & DZNPhotoPickerControllerServiceType500px) > 0) {
+    if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
         
         if (_PXRequest) {
             [_PXRequest cancel];
             _PXRequest = nil;
         }
     }
-    else if ((_selectedService & DZNPhotoPickerControllerServiceTypeFlickr) > 0) {
+    else if ((_selectedService & DZNPhotoPickerControllerServiceFlickr) > 0) {
         
     }
     
