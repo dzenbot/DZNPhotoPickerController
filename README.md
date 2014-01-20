@@ -18,7 +18,7 @@ This framework tries to mimic as close as possible the native UIImagePickerContr
 
 Available in [Cocoa Pods](http://cocoapods.org/?q=DZNPhotoPickerController)
 ```
-pod 'DZNPhotoPickerController', '~> 1.0.2'
+pod 'DZNPhotoPickerController', '~> 1.0.3'
 ```
 
 ## How to use
