@@ -406,8 +406,8 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
         
         UIGraphicsBeginImageContextWithOptions(circulatRect.size, NO, 0.0);{
             
-            UIBezierPath *maskPath = [UIBezierPath bezierPathWithOvalInRect:circulatRect];
-            [maskPath addClip];
+//            UIBezierPath *maskPath = [UIBezierPath bezierPathWithOvalInRect:circulatRect];
+//            [maskPath addClip];
             
             CGContextRef context = UIGraphicsGetCurrentContext();
             CGContextTranslateCTM(context, -kInnerEdgeInset, -kInnerEdgeInset);
@@ -416,8 +416,8 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
             // Draw the image
             [_image drawInRect:circulatRect];
             
-            CGPathRef path = [maskPath CGPath];
-            CGContextAddPath(context, path);
+//            CGPathRef path = [maskPath CGPath];
+//            CGContextAddPath(context, path);
             
             _image = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();

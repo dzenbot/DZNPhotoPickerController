@@ -43,8 +43,19 @@ static DZNPhotoEditViewControllerCropMode _editingMode;
 
 - (void)didPickImage:(NSNotification *)notification
 {
+    NSLog(@"%s",__FUNCTION__);
+    NSLog(@"self.delegate : %@", self.delegate);
+    NSLog(@"respondsToSelector didFinishPickingMediaWithInfo : %@", [self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)] ? @"Y" : @"NO");
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]){
-        self.editingMode = DZNPhotoEditViewControllerCropModeNone;
+        
+        if ([[notification.userInfo  allKeys] containsObject:UIImagePickerControllerEditedImage]) {
+            self.editingMode = DZNPhotoEditViewControllerCropModeNone;
+        }
+        else {
+            NSLog(@"No edited photo found!");
+        }
+        
         [self.delegate imagePickerController:self didFinishPickingMediaWithInfo:notification.userInfo];
     }
 }

@@ -28,7 +28,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoEditViewControllerCropMode) {
 /* The crop size proportions. */
 @property (nonatomic) CGSize cropSize;
 
-
 /*
  * Initializes a photo editor with a specified cropping mode (square, circular or custom)
  *
