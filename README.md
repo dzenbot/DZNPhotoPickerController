@@ -9,7 +9,7 @@ This framework tries to mimic as close as possible the native UIImagePickerContr
 ### Features
 * Search photos on mutiple service providers (Only 500px and Flickr for now)
 * Present the photo picker with a pre-defined search term to automatically start searching.
-* Exact same UI layouts and behavious than UIImagePickerController.
+* Exact same UI layouts and behaviour than UIImagePickerController.
 * Edit photo selections with manual cropping.
 * Circular crop (like Contacts app) and custom crop size support.
 * Support for custom edition mode while using UIImagePickerController.
