@@ -30,6 +30,15 @@
                                   andConsumerSecret:kFlickrConsumerSecret];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+    }
+}
+
 
 #pragma mark - ViewController methods
 
@@ -64,6 +73,7 @@
     }
     else {
         [self presentViewController:picker animated:YES completion:NO];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
 }
 
@@ -84,6 +94,7 @@
     }
     else {
         [self presentViewController:picker animated:YES completion:NO];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
 }
 
@@ -134,7 +145,7 @@
         [self presentImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"Choose Photo", nil)]) {
-        [self presentImagePickerForSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
+        [self presentImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"Search Photo",nil)]) {
         [self presentPhotoPicker];

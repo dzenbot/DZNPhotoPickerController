@@ -133,7 +133,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 	[super viewWillDisappear:animated];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
