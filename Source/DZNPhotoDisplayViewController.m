@@ -547,11 +547,11 @@ static NSString *kTagCellID = @"kTagCellID";
                                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
                                                                 if (!error) {
                                                                     [DZNPhotoEditViewController didFinishPickingEditedImage:nil
-                                                                                                              withCropRect:CGRectZero
-                                                                                                         fromOriginalImage:image
-                                                                                                              referenceURL:description.fullURL
-                                                                                                                authorName:description.authorName
-                                                                                                                sourceName:description.sourceName];
+                                                                                                               withCropRect:CGRectZero
+                                                                                                          fromOriginalImage:image
+                                                                                                               referenceURL:description.fullURL
+                                                                                                                 authorName:description.authorName
+                                                                                                                 sourceName:description.sourceName];
                                                                 }
                                                                 else {
                                                                     [self setSearchError:error];

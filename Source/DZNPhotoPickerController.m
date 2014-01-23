@@ -16,6 +16,8 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 
 @interface DZNPhotoPickerController ()
+@property (nonatomic, getter = isEditing) BOOL editing;
+@property (nonatomic, assign) UIImage *editingImage;
 @end
 
 @implementation DZNPhotoPickerController
@@ -28,8 +30,17 @@
         _allowsEditing = NO;
         _supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
         _supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
+    }
+    return self;
+}
+
+- (instancetype)initWithEditableImage:(UIImage *)image
+{
+    self = [super init];
+    if (self) {
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickPhoto:) name:kDZNPhotoPickerDidFinishPickingNotification object:nil];
+        _editingImage = image;
+        _editing = YES;
     }
     return self;
 }
@@ -48,13 +59,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickPhoto:) name:kDZNPhotoPickerDidFinishPickingNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
-    [self showPhotoDisplayController];
+    if (self.isEditing) [self showPhotoEditorController];
+    else [self showPhotoDisplayController];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -147,7 +161,7 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service)
 - (void)showPhotoDisplayController
 {
     [self setViewControllers:nil];
-
+    
     DZNPhotoDisplayViewController *photoDisplayController = [[DZNPhotoDisplayViewController alloc] init];
     photoDisplayController.searchTerm = _initialSearchTerm;
     
@@ -157,6 +171,17 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service)
     }
     
     [self setViewControllers:@[photoDisplayController]];
+}
+
+/*
+ * Shows the photo editor controller.
+ */
+- (void)showPhotoEditorController
+{
+    [self setViewControllers:nil];
+    DZNPhotoEditViewController *photoEditorController = [[DZNPhotoEditViewController alloc] initWithImage:_editingImage cropMode:self.editingMode];
+    
+    [self setViewControllers:@[photoEditorController]];
 }
 
 /*

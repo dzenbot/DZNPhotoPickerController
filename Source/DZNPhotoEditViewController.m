@@ -133,7 +133,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 	[super viewWillDisappear:animated];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -143,6 +143,11 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 
 
 #pragma mark - Getter methods
+
+- (DZNPhotoPickerController *)navigationController
+{
+    return (DZNPhotoPickerController *)[super navigationController];
+}
 
 - (UIScrollView *)scrollView
 {
@@ -480,7 +485,12 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 - (void)cancelEdition:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.navigationController.viewControllers.count > 1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else {
+        [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+    }
 }
 
 + (void)didFinishPickingEditedImage:(UIImage *)editedImage

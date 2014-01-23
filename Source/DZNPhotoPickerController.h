@@ -12,7 +12,7 @@
 #import "DZNPhotoEditViewController.h"
 
 /*
- * A set of supported photo services
+ * Types of supported photo services
  */
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerService) {
     DZNPhotoPickerControllerService500px = (1 << 0),            // 500px            http://500px.com/developers/
@@ -26,7 +26,8 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerService) {
 };
 
 /*
- * A set of Creative Commons licences defined in http://creativecommons.org/licenses/
+ * Types of Creative Commons licences.
+ * Defined in http://creativecommons.org/licenses/
  */
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerCCLicense) {
     DZNPhotoPickerControllerCCLicenseBY_ZERO = -1,              // No Rights Reserved                       http://creativecommons.org/about/cc0
@@ -65,6 +66,11 @@ static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPicker
 @property (nonatomic) DZNPhotoEditViewControllerCropMode editingMode;
 /* The supported licenses of photos to search. Default value is "All CC Reserved Attributions". Pending implementation. */
 @property (nonatomic) DZNPhotoPickerControllerCCLicense supportedLicenses;
+
+/*
+ * 
+ */
+- (instancetype)initWithEditableImage:(UIImage *)image;
 
 /*
  * Returns an array of the available media types for the specified service type.
