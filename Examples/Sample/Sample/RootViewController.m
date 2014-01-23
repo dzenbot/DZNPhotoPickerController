@@ -14,7 +14,7 @@
 
 @interface RootViewController () {
     UIPopoverController *_popoverController;
-    NSDictionary *_imagePayload;
+    NSDictionary *_photoPayload;
 }
 @end
 
@@ -43,11 +43,6 @@
     UIGraphicsEndImageContext();
     
     self.button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
 }
 
 
@@ -106,8 +101,7 @@
     picker.allowsEditing = YES;
     picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     picker.delegate = self;
-    
-//    picker.initialSearchTerm = @"Daft Punk";
+    picker.initialSearchTerm = @"Daft Punk";
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         _popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
@@ -121,10 +115,10 @@
 
 - (void)presentPhotoEditor
 {
-    UIImage *image = [_imagePayload objectForKey:UIImagePickerControllerOriginalImage];
+    UIImage *image = [_photoPayload objectForKey:UIImagePickerControllerOriginalImage];
     
     DZNPhotoPickerController *editor = [[DZNPhotoPickerController alloc] initWithEditableImage:image];
-    editor.editingMode = [[_imagePayload objectForKey:DZNPhotoPickerControllerCropMode] integerValue];
+    editor.editingMode = [[_photoPayload objectForKey:DZNPhotoPickerControllerCropMode] integerValue];
     editor.delegate = self;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -139,20 +133,19 @@
 
 - (void)updateImage:(NSDictionary *)userInfo
 {
-    _imagePayload = userInfo;
+    _photoPayload = userInfo;
     
-    NSLog(@"UIImagePickerControllerEditedImage : %@",[userInfo objectForKey:UIImagePickerControllerEditedImage]);
-    NSLog(@"UIImagePickerControllerCropRect : %@", NSStringFromCGRect([[userInfo objectForKey:UIImagePickerControllerCropRect] CGRectValue]));
-    NSLog(@"UIImagePickerControllerOriginalImage : %@",[userInfo objectForKey:UIImagePickerControllerOriginalImage]);
-    NSLog(@"UIImagePickerControllerMediaType : %@",[userInfo objectForKey:UIImagePickerControllerMediaType]);
-    NSLog(@"UIImagePickerControllerReferenceURL : %@",[userInfo objectForKey:UIImagePickerControllerReferenceURL]);
-    NSLog(@"DZNPhotoPickerControllerAuthorCredits : %@",[userInfo objectForKey:DZNPhotoPickerControllerAuthorCredits]);
-    NSLog(@"DZNPhotoPickerControllerSourceName : %@",[userInfo objectForKey:DZNPhotoPickerControllerSourceName]);
+    NSLog(@"OriginalImage : %@",[userInfo objectForKey:UIImagePickerControllerOriginalImage]);
+    NSLog(@"EditedImage : %@",[userInfo objectForKey:UIImagePickerControllerEditedImage]);
+    NSLog(@"CropRect : %@", NSStringFromCGRect([[userInfo objectForKey:UIImagePickerControllerCropRect] CGRectValue]));
+    NSLog(@"CropMode : %d", [[_photoPayload objectForKey:DZNPhotoPickerControllerCropMode] integerValue]);
+    NSLog(@"MediaType : %@",[userInfo objectForKey:UIImagePickerControllerMediaType]);
+    NSLog(@"ReferenceURL : %@",[userInfo objectForKey:UIImagePickerControllerReferenceURL]);
+    NSLog(@"AuthorCredits : %@",[userInfo objectForKey:DZNPhotoPickerControllerAuthorCredits]);
+    NSLog(@"SourceName : %@",[userInfo objectForKey:DZNPhotoPickerControllerSourceName]);
 
     UIImage *image = [userInfo objectForKey:UIImagePickerControllerEditedImage];
     if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];
-    
-    NSLog(@"%s %@ size : %@",__FUNCTION__, image, NSStringFromCGSize(image.size));
     
     [_button setImage:image forState:UIControlStateNormal];
 }
@@ -195,7 +188,7 @@
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"Delete Photo",nil)]) {
         [_button setImage:nil forState:UIControlStateNormal];
-        _imagePayload = nil;
+        _photoPayload = nil;
     }
 }
 
