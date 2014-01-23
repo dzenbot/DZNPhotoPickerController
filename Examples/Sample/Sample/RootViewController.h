@@ -15,8 +15,7 @@
                                                 UIPopoverControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIButton *button;
-@property (nonatomic, weak) IBOutlet UIImageView *imageView;
 
-- (IBAction)importImage:(id)sender;
+- (IBAction)pressButton:(id)sender;
 
 @end
