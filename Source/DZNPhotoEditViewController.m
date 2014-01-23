@@ -474,12 +474,13 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     
     if (editedPhoto && !CGRectEqualToRect(cropRect, CGRectZero)) {
         
-        [DZNPhotoEditViewController didFinishPickingEditedImage:editedPhoto
-                                                  withCropRect:cropRect
-                                             fromOriginalImage:_imageView.image
-                                                  referenceURL:_photoDescription.fullURL
-                                                    authorName:_photoDescription.authorName
-                                                    sourceName:_photoDescription.sourceName];
+        [DZNPhotoEditViewController didFinishPickingOriginalImage:_imageView.image
+                                                      editedImage:editedPhoto
+                                                         cropRect:cropRect
+                                                         cropMode:self.cropMode
+                                                     referenceURL:_photoDescription.fullURL
+                                                       authorName:_photoDescription.authorName
+                                                       sourceName:_photoDescription.sourceName];
     }
 }
 
@@ -493,23 +494,25 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     }
 }
 
-+ (void)didFinishPickingEditedImage:(UIImage *)editedImage
-                       withCropRect:(CGRect)cropRect
-                  fromOriginalImage:(UIImage *)originalImage
-                       referenceURL:(NSURL *)referenceURL
-                         authorName:(NSString *)authorName
-                         sourceName:(NSString *)sourceName
++ (void)didFinishPickingOriginalImage:(UIImage *)originalImage
+                          editedImage:(UIImage *)editedImage
+                             cropRect:(CGRect)cropRect
+                             cropMode:(DZNPhotoEditViewControllerCropMode)cropMode
+                         referenceURL:(NSURL *)referenceURL
+                           authorName:(NSString *)authorName
+                           sourceName:(NSString *)sourceName
 {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                      [NSValue valueWithCGRect:cropRect],UIImagePickerControllerCropRect,
                                      @"public.image",UIImagePickerControllerMediaType,
                                      nil];
     
-    if (editedImage != nil) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
     if (originalImage != nil) [userInfo setObject:originalImage forKey:UIImagePickerControllerOriginalImage];
+    if (editedImage != nil) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
     if (referenceURL != nil) [userInfo setObject:referenceURL.absoluteString forKey:UIImagePickerControllerReferenceURL];
     if (authorName != nil) [userInfo setObject:authorName forKey:DZNPhotoPickerControllerAuthorCredits];
     if (sourceName != nil) [userInfo setObject:sourceName forKey:DZNPhotoPickerControllerSourceName];
+    if (cropMode != DZNPhotoEditViewControllerCropModeNone) [userInfo setObject:[NSNumber numberWithInteger:cropMode] forKey:DZNPhotoPickerControllerCropMode];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kDZNPhotoPickerDidFinishPickingNotification object:nil userInfo:userInfo];
 }

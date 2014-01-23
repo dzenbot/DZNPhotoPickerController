@@ -49,18 +49,20 @@ typedef NS_ENUM(NSInteger, DZNPhotoEditViewControllerCropMode) {
 /*
  * Proxy class method to be called whenever the user picks a photo, with or without editing the image.
  *
+ * @param originalImage The original image before edition.
  * @param editedImage The image result after edition.
  * @param cropRect The applied rectangle on the cropping. If no edited, the default value is CGRectZero.
- * @param originalImage The original image before edition.
+ * @param cropMode The crop mode being used.
  * @param referenceURL The source url of the original image.
  * @param authorName The name of the author of the photo.
  * @param sourceName The name of the photo service from where the photo was fetched.
  */
-+ (void)didFinishPickingEditedImage:(UIImage *)editedImage
-                       withCropRect:(CGRect)cropRect
-                  fromOriginalImage:(UIImage *)originalImage
-                       referenceURL:(NSURL *)referenceURL
-                         authorName:(NSString *)authorName
-                         sourceName:(NSString *)sourceName;
++ (void)didFinishPickingOriginalImage:(UIImage *)originalImage
+                          editedImage:(UIImage *)editedImage
+                             cropRect:(CGRect)cropRect
+                             cropMode:(DZNPhotoEditViewControllerCropMode)cropMode
+                         referenceURL:(NSURL *)referenceURL
+                           authorName:(NSString *)authorName
+                           sourceName:(NSString *)sourceName;
 
 @end

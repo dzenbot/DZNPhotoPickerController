@@ -544,21 +544,21 @@ static NSString *kTagCellID = @"kTagCellID";
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:description.fullURL
                                                               options:SDWebImageCacheMemoryOnly|SDWebImageLowPriority
                                                              progress:NULL
-                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
-                                                                if (!error) {
-                                                                    [DZNPhotoEditViewController didFinishPickingEditedImage:nil
-                                                                                                               withCropRect:CGRectZero
-                                                                                                          fromOriginalImage:image
-                                                                                                               referenceURL:description.fullURL
-                                                                                                                 authorName:description.authorName
-                                                                                                                 sourceName:description.sourceName];
-                                                                }
-                                                                else {
-                                                                    [self setSearchError:error];
-                                                                }
-                                                                
-                                                                [self showActivityIndicators:NO];
-                                                            }];
+                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
+                                                 if (!error) {
+                                                     
+                                                     [DZNPhotoEditViewController didFinishPickingOriginalImage:image editedImage:nil cropRect:CGRectZero
+                                                                                                      cropMode:DZNPhotoEditViewControllerCropModeNone
+                                                                                                  referenceURL:description.fullURL
+                                                                                                    authorName:description.authorName
+                                                                                                    sourceName:description.sourceName];
+                                                 }
+                                                 else {
+                                                     [self setSearchError:error];
+                                                 }
+                                                 
+                                                 [self showActivityIndicators:NO];
+                                             }];
     }
     
     [_collectionView deselectItemAtIndexPath:indexPath animated:YES];

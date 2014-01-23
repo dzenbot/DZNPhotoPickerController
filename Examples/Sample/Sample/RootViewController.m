@@ -124,7 +124,7 @@
     UIImage *image = [_imagePayload objectForKey:UIImagePickerControllerOriginalImage];
     
     DZNPhotoPickerController *editor = [[DZNPhotoPickerController alloc] initWithEditableImage:image];
-    editor.editingMode = DZNPhotoEditViewControllerCropModeCircular;
+    editor.editingMode = [[_imagePayload objectForKey:DZNPhotoPickerControllerCropMode] integerValue];
     editor.delegate = self;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
