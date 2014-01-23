@@ -68,26 +68,22 @@ static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPicker
 @property (nonatomic) DZNPhotoPickerControllerCCLicense supportedLicenses;
 
 /*
- * 
+ * Initializes and returns a newly created picker controller, on edit mode only.
+ * This is a convenience method for initializing the receiver and pushing a photo edit view controller onto the navigation stack, with a presetted image to edit.
+ *
+ * @param image The image to be edited.
+ * @returns The initialized picker controller.
  */
 - (instancetype)initWithEditableImage:(UIImage *)image;
 
 /*
  * Returns an array of the available media types for the specified service type.
- * NOTE: For now, this will only return kUTTypeImage. Maybe on a future, this library could have video and audio search support.
+ * NOTE: Only kUTTypeImage will be returned for now. Maybe on a future, this library could have video and audio search support.
  * 
  * @param serviceType The specified service type.
  * @return An array whose elements identify the available media types for the supported services.
  */
 + (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerService)supportedServices;
-
-/*
- * Returns the photo service name string.
- *
- * @param service The specified service type.
- * @return The photo service name.
- */
-NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service);
 
 /*
  * Registers for a specified photo service and enables API transactions.
@@ -100,6 +96,14 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service);
  * @discussion You must create an app for every photo service you'd like to use, and generate a consumer key and secret from their sites.
  */
 + (void)registerForServiceType:(DZNPhotoPickerControllerService)service withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret;
+
+/*
+ * Returns the photo service name string.
+ *
+ * @param service The specified service type.
+ * @return The photo service name.
+ */
+NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service);
 
 @end
 
