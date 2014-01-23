@@ -9,7 +9,7 @@ This framework tries to mimic as close as possible the native UIImagePickerContr
 ### Features
 * Search photos on mutiple service providers (Only 500px and Flickr for now)
 * Present the photo picker with a pre-defined search term to automatically start searching.
-* Exact same UI layouts and behavious than UIImagePickerController.
+* Exact same UI layouts and behaviour than UIImagePickerController.
 * Edit photo selections with manual cropping.
 * Circular crop (like Contacts app) and custom crop size support.
 * Support for custom edition mode while using UIImagePickerController.
@@ -18,7 +18,7 @@ This framework tries to mimic as close as possible the native UIImagePickerContr
 
 Available in [Cocoa Pods](http://cocoapods.org/?q=DZNPhotoPickerController)
 ```
-pod 'DZNPhotoPickerController', '~> 1.0.2'
+pod 'DZNPhotoPickerController', '~> 1.0.3'
 ```
 
 ## How to use
@@ -34,11 +34,11 @@ Before even creating a new instance of DZNPhotoPickerController, it is recommend
 ```
 + (void)initialize
 {
-    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerServiceType500px
+    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerService500px
                                     withConsumerKey:YOUR_500px_KEY
                                   andConsumerSecret:YOUR_500px_SECRET];
     
-    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerServiceTypeFlickr
+    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerServiceFlickr
                                     withConsumerKey:YOUR_Flickr_KEY
                                   andConsumerSecret:YOUR_Flickr_SECRET];
 }
@@ -47,18 +47,18 @@ Before even creating a new instance of DZNPhotoPickerController, it is recommend
 ### Step 3
 Instantiating a DZNPhotoPickerController is very similar to instantiate a UIImagePickerController object:
 ```
-DZNPhotoPickerController *_controller = [[DZNPhotoPickerController alloc] init];
-_controller.allowsEditing = YES;
-_controller.serviceType = DZNPhotoPickerControllerServiceType500px | DZNPhotoPickerControllerServiceTypeFlickr;
-_controller.delegate = self;
+DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];
+picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
+picker.allowsEditing = YES;
+picker.delegate = self;
     
-[self presentViewController:_controller animated:YES completion:NO];
+[self presentViewController:picker animated:YES completion:NO];
 ````
 
 You can additionally set more properties:
 ```
-_controller.initialSearchTerm = @"Surf";
-_controller.editingMode = DZNPhotoEditViewControllerCropModeCircular;
+picker.initialSearchTerm = @"Surf";
+picker.editingMode = DZNPhotoEditViewControllerCropModeCircular;
 ````
 
 ### Sample project
