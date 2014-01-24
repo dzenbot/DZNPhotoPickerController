@@ -521,6 +521,8 @@ static NSString *kTagCellID = @"kTagCellID";
         [_activityIndicator stopAnimating];
     }
     
+    self.collectionView.userInteractionEnabled = !visible;
+    
     _loading = visible;
 }
 
@@ -542,11 +544,11 @@ static NSString *kTagCellID = @"kTagCellID";
         [self showActivityIndicators:YES];
 
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:description.fullURL
-                                                              options:SDWebImageCacheMemoryOnly|SDWebImageLowPriority
+                                                              options:SDWebImageCacheMemoryOnly|SDWebImageRetryFailed
                                                              progress:NULL
                                              completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
-                                                 if (!error) {
-                                                     
+                                                 
+                                                 if (image) {
                                                      [DZNPhotoEditViewController didFinishPickingOriginalImage:image editedImage:nil cropRect:CGRectZero
                                                                                                       cropMode:DZNPhotoEditViewControllerCropModeNone
                                                                                                   referenceURL:description.fullURL

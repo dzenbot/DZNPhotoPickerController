@@ -98,8 +98,8 @@
 {
     DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];
     picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
-    picker.allowsEditing = YES;
-    picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
+    picker.allowsEditing = NO;
+//    picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     picker.delegate = self;
     picker.initialSearchTerm = @"Daft Punk";
     
@@ -229,6 +229,8 @@
 
 - (void)photoPickerController:(DZNPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)info
 {
+    NSLog(@"%s",__FUNCTION__);
+    
     [self updateImage:info];
     [self saveImage:info];
     
@@ -242,6 +244,8 @@
 
 - (void)photoPickerControllerDidCancel:(DZNPhotoPickerController *)picker
 {
+    NSLog(@"%s",__FUNCTION__);
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [_popoverController dismissPopoverAnimated:YES];
     }
