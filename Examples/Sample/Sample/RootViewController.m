@@ -37,12 +37,12 @@
     
     UIGraphicsBeginImageContextWithOptions(_button.frame.size, NO, 0);
     UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, _button.frame.size.width, _button.frame.size.height)];
-    [[UIColor darkGrayColor] setFill];
+    [[UIColor colorWithWhite:0 alpha:0.25] setFill];
     [clipPath fill];
-    [self.button setBackgroundImage:UIGraphicsGetImageFromCurrentImageContext() forState:UIControlStateNormal];
+    [_button setBackgroundImage:UIGraphicsGetImageFromCurrentImageContext() forState:UIControlStateHighlighted];
     UIGraphicsEndImageContext();
     
-    self.button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+    _button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
 }
 
 
@@ -59,7 +59,7 @@
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Choose Photo", nil)];
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Search Photo", nil)];
     
-    if ([_button imageForState:UIControlStateNormal]) {
+    if (_imageView.image) {
         [actionSheet addButtonWithTitle:NSLocalizedString(@"Edit Photo", nil)];
         [actionSheet addButtonWithTitle:NSLocalizedString(@"Delete Photo", nil)];
     }
@@ -98,8 +98,8 @@
 {
     DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];
     picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
-    picker.allowsEditing = NO;
-//    picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
+    picker.allowsEditing = YES;
+    picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     picker.delegate = self;
     picker.initialSearchTerm = @"Daft Punk";
     
@@ -147,7 +147,8 @@
     UIImage *image = [userInfo objectForKey:UIImagePickerControllerEditedImage];
     if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];
     
-    [_button setImage:image forState:UIControlStateNormal];
+    _imageView.image = image;
+    [_button setTitle:nil forState:UIControlStateNormal];
 }
 
 - (void)saveImage:(NSDictionary *)userInfo
@@ -161,8 +162,11 @@
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
     if (error) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil
-                                              cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                        message:error.localizedDescription
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                              otherButtonTitles:nil];
         [alert show];
     }
 }
@@ -187,7 +191,8 @@
         [self presentPhotoEditor];
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"Delete Photo",nil)]) {
-        [_button setImage:nil forState:UIControlStateNormal];
+        [_button setTitle:@"Tap Here" forState:UIControlStateNormal];
+        _imageView.image = nil;
         _photoPayload = nil;
     }
 }
@@ -229,8 +234,6 @@
 
 - (void)photoPickerController:(DZNPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)info
 {
-    NSLog(@"%s",__FUNCTION__);
-    
     [self updateImage:info];
     [self saveImage:info];
     
@@ -244,8 +247,6 @@
 
 - (void)photoPickerControllerDidCancel:(DZNPhotoPickerController *)picker
 {
-    NSLog(@"%s",__FUNCTION__);
-    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [_popoverController dismissPopoverAnimated:YES];
     }

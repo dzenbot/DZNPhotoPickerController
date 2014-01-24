@@ -518,7 +518,7 @@ static NSString *kTagCellID = @"kTagCellID";
         [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
     }
     else {
-        [_activityIndicator stopAnimating];
+        [self.activityIndicator stopAnimating];
     }
     
     self.collectionView.userInteractionEnabled = !visible;
@@ -759,19 +759,19 @@ static NSString *kTagCellID = @"kTagCellID";
                 _loadButton.enabled = YES;
                 [_loadButton setTitleColor:self.view.window.tintColor forState:UIControlStateNormal];
 
-                _activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-                [_activityIndicator stopAnimating];
+                self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+                [self.activityIndicator stopAnimating];
             }
             else {
                 _loadButton.enabled = NO;
                 [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
 
-                _activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-                _activityIndicator.color = [UIColor grayColor];
+                self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+                self.activityIndicator.color = [UIColor grayColor];
             }
         }
         else {
-            [_activityIndicator stopAnimating];
+            [self.activityIndicator stopAnimating];
             
             [_loadButton removeFromSuperview];
             [self setLoadButton:nil];

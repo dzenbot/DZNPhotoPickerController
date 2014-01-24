@@ -14,6 +14,7 @@
                                                 UIImagePickerControllerDelegate, DZNPhotoPickerControllerDelegate,
                                                 UIPopoverControllerDelegate>
 
+@property (nonatomic, weak) IBOutlet UIImageView *imageView;
 @property (nonatomic, weak) IBOutlet UIButton *button;
 
 - (IBAction)pressButton:(id)sender;
