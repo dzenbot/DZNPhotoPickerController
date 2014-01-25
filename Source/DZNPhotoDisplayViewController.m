@@ -251,7 +251,7 @@ static NSString *kTagCellID = @"kTagCellID";
     frame.origin.y = shouldShift ? statusHeight : 0.0;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && !shouldShift) {
-        frame.origin.y += ([self nestedInOtherModal] ? 0.0 : statusHeight+kMinimumBarHeight);
+        frame.origin.y += statusHeight+kMinimumBarHeight;
     }
     
     return frame;
@@ -397,14 +397,6 @@ static NSString *kTagCellID = @"kTagCellID";
     }
     
     return result;
-}
-
-/*
- * Checks if the current controller is already nested in antoher modal presentation.
- */
-- (BOOL)nestedInOtherModal
-{
-    return (self.presentingViewController.presentingViewController) ? YES : NO;
 }
 
 /*
