@@ -41,8 +41,6 @@
     [clipPath fill];
     [_button setBackgroundImage:UIGraphicsGetImageFromCurrentImageContext() forState:UIControlStateHighlighted];
     UIGraphicsEndImageContext();
-    
-    _button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
 }
 
 

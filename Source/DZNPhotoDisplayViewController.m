@@ -22,10 +22,8 @@ static NSString *kThumbFooterID = @"kThumbFooterID";
 static NSString *kTagCellID = @"kTagCellID";
 
 @interface DZNPhotoDisplayViewController () <UISearchDisplayDelegate, UISearchBarDelegate,
-                                            UICollectionViewDelegateFlowLayout, UICollectionViewDataSource,
-                                            UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate>
+                                            UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UISearchDisplayController *searchController;
 @property (nonatomic, readwrite) UIButton *loadButton;
@@ -46,7 +44,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (id)init
 {
-    self = [super init];
+    self = [super initWithCollectionViewLayout:[DZNPhotoDisplayViewController flowLayout]];
     if (self) {
         
         self.title = NSLocalizedString(@"Internet Photos", nil);
@@ -64,11 +62,9 @@ static NSString *kTagCellID = @"kTagCellID";
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.edgesForExtendedLayout = UIRectEdgeTop;
-    self.extendedLayoutIncludesOpaqueBars = NO;
+    self.edgesForExtendedLayout = UIRectEdgeAll;
+    self.extendedLayoutIncludesOpaqueBars = YES;
     self.automaticallyAdjustsScrollViewInsets = YES;
-    
-    [self.view addSubview:self.collectionView];
     
     _searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
     _searchController.searchResultsTableView.backgroundColor = [UIColor whiteColor];
@@ -82,6 +78,15 @@ static NSString *kTagCellID = @"kTagCellID";
     _searchController.delegate = self;
     
     [_searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kTagCellID];
+    
+    self.collectionView.backgroundView = [UIView new];
+    self.collectionView.backgroundView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight;
+    self.collectionView.contentInset = UIEdgeInsetsMake(self.searchBar.frame.size.height+8.0, 0, 0, 0);
+    self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(self.searchBar.frame.size.height, 0, 0, 0);
+    
+    [self.collectionView registerClass:[DZNPhotoDisplayViewCell class] forCellWithReuseIdentifier:kThumbCellID];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kThumbFooterID];
 }
 
 - (void)viewDidLoad
@@ -140,33 +145,6 @@ static NSString *kTagCellID = @"kTagCellID";
     return (DZNPhotoPickerController *)[super navigationController];
 }
 
-- (UICollectionView *)collectionView
-{
-    if (!_collectionView)
-    {
-        CGRect frame = CGRectZero;
-        frame.origin.y = [self topBarsSize].height;
-        frame.size = [self contentSize];
-        
-        _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:[DZNPhotoDisplayViewController flowLayout]];
-        _collectionView.backgroundView = [UIView new];
-        _collectionView.backgroundView.backgroundColor = [UIColor whiteColor];
-        
-        _collectionView.delegate = self;
-        _collectionView.dataSource = self;
-        
-        [_collectionView registerClass:[DZNPhotoDisplayViewCell class] forCellWithReuseIdentifier:kThumbCellID];
-        [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kThumbFooterID];
-        
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-            _collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-        }
-        
-        [self.view addSubview:_collectionView];
-    }
-    return _collectionView;
-}
-
 - (UISearchBar *)searchBar
 {
     if (!_searchBar)
@@ -199,7 +177,7 @@ static NSString *kTagCellID = @"kTagCellID";
         [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
         [_loadButton addTarget:self action:@selector(downloadData) forControlEvents:UIControlEventTouchUpInside];
         [_loadButton.titleLabel setFont:[UIFont systemFontOfSize:17.0]];
-        [_loadButton setBackgroundColor:_collectionView.backgroundView.backgroundColor];
+        [_loadButton setBackgroundColor:self.collectionView.backgroundView.backgroundColor];
         
         [_loadButton addSubview:self.activityIndicator];
     }
@@ -212,21 +190,16 @@ static NSString *kTagCellID = @"kTagCellID";
     {
         _activityIndicator = [[UIActivityIndicatorView alloc] init];
         _activityIndicator.hidesWhenStopped = YES;
+        _activityIndicator.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
     }
-    _activityIndicator.center = _activityIndicator.superview.center;
     return _activityIndicator;
 }
 
 - (CGSize)cellSize
 {
-    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)_collectionView.collectionViewLayout;
+    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
     CGFloat size = (self.navigationController.view.bounds.size.width/_columnCount) - flowLayout.minimumLineSpacing;
     return CGSizeMake(size, size);
-}
-
-- (CGSize)headerSize
-{
-    return [_searchBar isFirstResponder] ? CGSizeMake(0, 94.0) : CGSizeMake(0, 50.0);
 }
 
 - (CGSize)footerSize
@@ -239,7 +212,7 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (CGSize)topBarsSize
 {
-    CGFloat topBarsHeight = self.navigationController.view.frame.size.height;
+    CGFloat topBarsHeight = 0;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         CGFloat statusHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
@@ -249,10 +222,9 @@ static NSString *kTagCellID = @"kTagCellID";
     CGFloat navigationHeight = self.navigationController.navigationBar.frame.size.height;
     topBarsHeight += navigationHeight;
     
-    CGFloat headerSize = [self headerSize].height;
-    topBarsHeight += headerSize;
+    topBarsHeight += self.searchBar.frame.size.height+8.0;
     
-    return CGSizeMake(self.navigationController.view.frame.size.width, headerSize);
+    return CGSizeMake(self.navigationController.view.frame.size.width, topBarsHeight);
 }
 
 /*
@@ -292,13 +264,11 @@ static NSString *kTagCellID = @"kTagCellID";
 - (NSUInteger)rowCount
 {
     CGSize contentSize = [self contentSize];
-    NSLog(@"contentSize : %@", NSStringFromCGSize(contentSize));
     
     CGFloat footerSize = [self footerSize].height;
     contentSize.height -= footerSize;
     
     CGFloat cellHeight = [self cellSize].height;
-    NSLog(@"[self cellSize] : %@", NSStringFromCGSize([self cellSize]));
     
     NSUInteger count = (int)(contentSize.height/cellHeight);
     return count;
@@ -463,10 +433,10 @@ static NSString *kTagCellID = @"kTagCellID";
     [self showActivityIndicators:NO];
     
     [_photoDescriptions addObjectsFromArray:[self photoDescriptionsFromResponse:response]];
-    [_collectionView reloadData];
+    [self.collectionView reloadData];
     
-    CGSize contentSize = _collectionView.contentSize;
-    _collectionView.contentSize = CGSizeMake(contentSize.width, contentSize.height+[self footerSize].height);
+    CGSize contentSize = self.collectionView.contentSize;
+    self.collectionView.contentSize = CGSizeMake(contentSize.width, contentSize.height+[self footerSize].height);
 }
 
 /*
@@ -518,7 +488,7 @@ static NSString *kTagCellID = @"kTagCellID";
     }
     
     _loading = visible;
-    _collectionView.userInteractionEnabled = !visible;
+    self.collectionView.userInteractionEnabled = !visible;
 }
 
 /*
@@ -558,7 +528,7 @@ static NSString *kTagCellID = @"kTagCellID";
                                              }];
     }
     
-    [_collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    [self.collectionView deselectItemAtIndexPath:indexPath animated:YES];
 }
 
 /*
@@ -622,7 +592,7 @@ static NSString *kTagCellID = @"kTagCellID";
     [self showActivityIndicators:YES];
     _searchTerm = keyword;
     
-    NSLog(@"Searching %@ in %@", keyword, NSStringFromServiceType(_selectedService));
+    NSLog(@"Searching \"%@\" (page %d) on %@", keyword, _currentPage, NSStringFromServiceType(_selectedService));
     
     if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
         
@@ -684,7 +654,7 @@ static NSString *kTagCellID = @"kTagCellID";
         
     }
     
-    for (DZNPhotoDisplayViewCell *cell in [_collectionView visibleCells]) {
+    for (DZNPhotoDisplayViewCell *cell in [self.collectionView visibleCells]) {
         [cell.imageView cancelCurrentImageLoad];
     }
 }
@@ -708,7 +678,7 @@ static NSString *kTagCellID = @"kTagCellID";
     [_photoDescriptions removeAllObjects];
     _currentPage = 1;
     
-    [_collectionView reloadData];
+    [self.collectionView reloadData];
 }
 
 
@@ -733,7 +703,7 @@ static NSString *kTagCellID = @"kTagCellID";
     
     [cell.imageView cancelCurrentImageLoad];
     [cell.imageView setImageWithURL:description.thumbURL placeholderImage:nil
-                              options:SDWebImageCacheMemoryOnly|SDWebImageRetryFailed completed:NULL];
+                              options:SDWebImageCacheMemoryOnly completed:NULL];
     
     return cell;
 }
@@ -745,9 +715,11 @@ static NSString *kTagCellID = @"kTagCellID";
         UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kThumbFooterID forIndexPath:indexPath];
         
         if ([self shouldShowFooter]) {
+            
             if (!_loadButton && footer.subviews.count == 0) {
                 [footer addSubview:self.loadButton];
             }
+            
             _loadButton.frame = footer.bounds;
             
             if (_photoDescriptions.count > 0) {
@@ -828,20 +800,20 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    CGSize size = CGSizeZero;
-    if (_photoDescriptions.count == 0) size = [self contentSize];
-    else size = [self footerSize];
-    
-    return size;
+    if (_photoDescriptions.count == 0) {
+        return [self contentSize];
+    }
+    else return [self footerSize];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DZNPhotoDisplayViewCell *cell = (DZNPhotoDisplayViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
     if (cell.imageView.image) {
         return YES;
     }
-    return NO;
+    else return NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
@@ -854,8 +826,8 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
 {
-    if ([NSStringFromSelector(action) isEqualToString:@"copy:"])
-    {
+    if ([NSStringFromSelector(action) isEqualToString:@"copy:"]) {
+        
         DZNPhotoDisplayViewCell *cell = (DZNPhotoDisplayViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
 
         UIImage *image = cell.imageView.image;

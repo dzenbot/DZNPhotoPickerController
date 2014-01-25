@@ -15,9 +15,9 @@
 @class DZNPhotoPickerController, DZNPhotoEditViewController;
 
 /*
- * The controller in charge of searching and displaying thumb images from different photo services.
+ * The collection view controller in charge of displaying the resulting thumb images.
  */
-@interface DZNPhotoDisplayViewController : UIViewController
+@interface DZNPhotoDisplayViewController : UICollectionViewController
 
 /* The nearest ancestor in the view controller hierarchy that is a photo picker controller. */
 @property (nonatomic, readonly) DZNPhotoPickerController *navigationController;
