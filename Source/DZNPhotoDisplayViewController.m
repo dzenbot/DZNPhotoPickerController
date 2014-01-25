@@ -507,10 +507,6 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)showActivityIndicators:(BOOL)visible
 {
-    if ([UIApplication sharedApplication].networkActivityIndicatorVisible == visible) {
-        return;
-    }
-    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = visible;
     
     if (visible) {
@@ -521,9 +517,8 @@ static NSString *kTagCellID = @"kTagCellID";
         [self.activityIndicator stopAnimating];
     }
     
-    self.collectionView.userInteractionEnabled = !visible;
-    
     _loading = visible;
+    _collectionView.userInteractionEnabled = !visible;
 }
 
 /*
