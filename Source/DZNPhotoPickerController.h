@@ -41,7 +41,7 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerCCLicense) {
 };
 
 static NSString *DZNPhotoPickerControllerAuthorCredits = @"DZNPhotoPickerControllerAuthorCredits";
-static NSString *DZNPhotoPickerControllerSourceName = @"DZNPhotoPickerControllerAuthorCredits";
+static NSString *DZNPhotoPickerControllerSourceName = @"DZNPhotoPickerControllerSourceName";
 static NSString *DZNPhotoPickerControllerCropMode = @"DZNPhotoPickerControllerCropMode";
 static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPickerDidFinishPickingNotification";
 
