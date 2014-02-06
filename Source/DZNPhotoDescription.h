@@ -9,6 +9,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DZNPhotoPickerController.h"
 
 /*
  * The data model to encapsulate meta data about a photo, provided by the photo service.
@@ -40,5 +41,18 @@
                                  thumbURL:(NSURL *)thumbURL
                                   fullURL:(NSURL *)fullURL
                                sourceName:(NSString *)sourceName;
+
+
+
+/*
+ Parsed and returns a list of photo descriptions from a request response.
+ 
+ @param service The source service of the response.
+ @param reponse The response with already parsed JSON.
+ 
+ @returns A list of new photo descriptions.
+ */
++ (NSArray *)photoDescriptionsFromService:(DZNPhotoPickerControllerService)service
+                             withResponse:(NSArray *)reponse;
 
 @end

@@ -5,13 +5,13 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>DA506BD7-30B2-4546-A1B6-0556C20E34A2</string>
+	<string>0362DA81-A164-4D07-95C1-2CEDE85CB2F2</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Sample</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>3058127B-D2B9-4B93-BA83-1EDD5FC3752D</key>
-		<string>https://github.com/dzenbot/UIPhotoPickerController.git</string>
+		<key>5504B2F0-33DD-499D-AB35-69978237D178</key>
+		<string>https://github.com/dzenbot/DZNPhotoPickerController.git</string>
 		<key>6A58C0FE-4989-4664-9D6B-B15B3F136E4E</key>
 		<string>https://github.com/dzenbot/NRGramKit.git</string>
 	</dict>
@@ -19,19 +19,27 @@
 	<string>Examples/Sample/Sample.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>3058127B-D2B9-4B93-BA83-1EDD5FC3752D</key>
+		<key>5504B2F0-33DD-499D-AB35-69978237D178</key>
 		<string>../../..</string>
 		<key>6A58C0FE-4989-4664-9D6B-B15B3F136E4E</key>
 		<string>../../../../_Forks/NRGramKit</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/dzenbot/UIPhotoPickerController.git</string>
+	<string>https://github.com/dzenbot/DZNPhotoPickerController.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>3058127B-D2B9-4B93-BA83-1EDD5FC3752D</string>
+	<string>5504B2F0-33DD-499D-AB35-69978237D178</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>5504B2F0-33DD-499D-AB35-69978237D178</string>
+			<key>IDESourceControlWCCName</key>
+			<string>DZNPhotoPickerController</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
@@ -39,14 +47,6 @@
 			<string>6A58C0FE-4989-4664-9D6B-B15B3F136E4E</string>
 			<key>IDESourceControlWCCName</key>
 			<string>NRGramKit</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>3058127B-D2B9-4B93-BA83-1EDD5FC3752D</string>
-			<key>IDESourceControlWCCName</key>
-			<string>UIPhotoPickerController</string>
 		</dict>
 	</array>
 </dict>

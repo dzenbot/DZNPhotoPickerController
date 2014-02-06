@@ -315,14 +315,6 @@ static NSString *kTagCellID = @"kTagCellID";
 }
 
 /*
- * Returns the selected service name.
- */
-- (NSString *)selectedServiceName
-{
-    return NSStringFromServiceType(_selectedService);
-}
-
-/*
  * Returns the a complete & valide source url of a specific service url.
  * This applies only for some photo services, that do not expose the source url on their API.
  */
@@ -364,42 +356,6 @@ static NSString *kTagCellID = @"kTagCellID";
 }
 
 /*
- * Returns a list of photo descriptions from a request response.
- * This is the simple parser to created custom data model objects.
- */
-- (NSArray *)photoDescriptionsFromResponse:(NSArray *)reponse
-{
-    NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:reponse.count];
-    
-    if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
-        for (NSDictionary *object in reponse) {
-
-            DZNPhotoDescription *description = [DZNPhotoDescription photoDescriptionWithTitle:[object valueForKey:@"username"]
-                                             authorName:[NSString stringWithFormat:@"%@ %@",[object valueForKeyPath:@"user.firstname"],[object valueForKeyPath:@"user.lastname"]]
-                                               thumbURL:[NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:0] valueForKey:@"url"]]
-                                                fullURL:[NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:1] valueForKey:@"url"]]
-                                             sourceName:[self selectedServiceName]];
-            
-            [result addObject:description];
-        }
-    }
-    else if ((_selectedService & DZNPhotoPickerControllerServiceFlickr) > 0) {
-        for (NSDictionary *object in reponse) {
-            
-            DZNPhotoDescription *description = [DZNPhotoDescription photoDescriptionWithTitle:[object valueForKey:@"title"]
-                                             authorName:[object valueForKey:@"owner"]
-                                               thumbURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:object]
-                                                fullURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLarge1024 fromPhotoDictionary:object]
-                                             sourceName:[self selectedServiceName]];
-            
-            [result addObject:description];
-        }
-    }
-    
-    return result;
-}
-
-/*
  * Checks if an additional footer for loading more content should be displayed.
  */
 - (BOOL)shouldShowFooter
@@ -424,7 +380,9 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     [self showActivityIndicators:NO];
     
-    [_photoDescriptions addObjectsFromArray:[self photoDescriptionsFromResponse:response]];
+    NSArray *descriptions = [DZNPhotoDescription photoDescriptionsFromService:_selectedService withResponse:response];
+    
+    [_photoDescriptions addObjectsFromArray:descriptions];
     [self.collectionView reloadData];
     
     CGSize contentSize = self.collectionView.contentSize;
