@@ -9,7 +9,6 @@
 //
 
 #import "DZNPhotoEditViewController.h"
-#import "DZNPhotoPickerController.h"
 #import "DZNPhotoDisplayViewController.h"
 #import "DZNPhotoDescription.h"
 

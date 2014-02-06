@@ -41,3 +41,12 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerCCLicense) {
     DZNPhotoPickerControllerCCLicenseBY_NC_SA = (1 << 4),       // Attribution-NonCommercial-ShareAlike     http://creativecommons.org/licenses/by-nc-sa/4.0
     DZNPhotoPickerControllerCCLicenseBY_NC_ND = (1 << 5)        // Attribution-NonCommercial-NoDerivs       http://creativecommons.org/licenses/by-nc-nd/4.0
 };
+
+/*
+ * Types of supported cropping modes.
+ */
+typedef NS_ENUM(NSInteger, DZNPhotoEditViewControllerCropMode) {
+    DZNPhotoEditViewControllerCropModeNone = -1,
+    DZNPhotoEditViewControllerCropModeSquare = 0,
+    DZNPhotoEditViewControllerCropModeCircular
+};
