@@ -9,6 +9,7 @@
 //
 
 #import "DZNPhotoDescription.h"
+#import "DZNPhotoPickerController.h"
 
 #import <FlickrKit/FlickrKit.h>
 

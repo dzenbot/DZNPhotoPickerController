@@ -97,9 +97,6 @@
     return @[(NSString*)kUTTypeImage];
 }
 
-/*
- * Returns the photo service name string.
- */
 NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service)
 {
     switch (service) {

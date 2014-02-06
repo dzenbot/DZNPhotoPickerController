@@ -87,6 +87,7 @@
 		4F570181180E5E6D00E12444 /* DZNPhotoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoEditViewController.m; sourceTree = "<group>"; };
 		4F570182180E5E6D00E12444 /* DZNPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerController.h; sourceTree = "<group>"; };
 		4F570183180E5E6D00E12444 /* DZNPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerController.m; sourceTree = "<group>"; };
+		4FB91A9C18A322B900F8C92B /* DZNPhotoPickerConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerConstants.h; sourceTree = "<group>"; };
 		4FD61C0618759E0D0048DC0C /* Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
 		81CB7D6B303A4384A940032C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		880742B9C52B4EC59B669AE3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -208,6 +209,7 @@
 				4F57017D180E5E6D00E12444 /* DZNPhotoDisplayViewCell.m */,
 				4F57017A180E5E6D00E12444 /* DZNPhotoDescription.h */,
 				4F57017B180E5E6D00E12444 /* DZNPhotoDescription.m */,
+				4FB91A9C18A322B900F8C92B /* DZNPhotoPickerConstants.h */,
 				4F29052A18759967005E9F39 /* UIImagePickerController+Edit.h */,
 				4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */,
 			);

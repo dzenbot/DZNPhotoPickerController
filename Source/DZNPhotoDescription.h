@@ -9,7 +9,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DZNPhotoPickerController.h"
+#import "DZNPhotoPickerConstants.h"
 
 /*
  * The data model to encapsulate meta data about a photo, provided by the photo service.

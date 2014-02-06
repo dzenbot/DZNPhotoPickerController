@@ -12,6 +12,9 @@
 
 @class DZNPhotoDescription;
 
+/*
+ * Types of supported cropping modes.
+ */
 typedef NS_ENUM(NSInteger, DZNPhotoEditViewControllerCropMode) {
     DZNPhotoEditViewControllerCropModeNone = -1,
     DZNPhotoEditViewControllerCropModeSquare = 0,

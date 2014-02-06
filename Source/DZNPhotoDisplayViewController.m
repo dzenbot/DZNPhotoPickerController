@@ -15,7 +15,7 @@
 #import "DZNPhotoDisplayViewCell.h"
 #import "DZNPhotoDescription.h"
 
-#define kMinimumBarHeight 44.0
+#define  kDZNPhotoMinimumBarHeight 44.0
 
 static NSString *kThumbCellID = @"kThumbCellID";
 static NSString *kThumbFooterID = @"kThumbFooterID";
@@ -246,12 +246,12 @@ static NSString *kTagCellID = @"kTagCellID";
     
     CGFloat statusHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? [UIApplication sharedApplication].statusBarFrame.size.height : 0.0;
     
-    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, kMinimumBarHeight);
-    frame.size.height = shouldShift ? kMinimumBarHeight*2 : kMinimumBarHeight;
+    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width,  kDZNPhotoMinimumBarHeight);
+    frame.size.height = shouldShift ?  kDZNPhotoMinimumBarHeight*2 :  kDZNPhotoMinimumBarHeight;
     frame.origin.y = shouldShift ? statusHeight : 0.0;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && !shouldShift) {
-        frame.origin.y += statusHeight+kMinimumBarHeight;
+        frame.origin.y += statusHeight+ kDZNPhotoMinimumBarHeight;
     }
     
     return frame;
@@ -816,7 +816,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kMinimumBarHeight;
+    return  kDZNPhotoMinimumBarHeight;
 }
 
 
