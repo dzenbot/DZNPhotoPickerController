@@ -27,30 +27,14 @@
 /* The name of the photo service. */
 @property (nonatomic, copy) NSString *sourceName;
 
+
 /*
- * Allocates a new instance of the DZNPhotoDescription class, sends it an init message, and returns the initialized object with property values.
+ * Parsed and returns a list of photo descriptions from a request response.
  *
- * @param title The title assigned by the author.
- * @param authorName The name of the author.
- * @param thumbURL The url of the thumb version.
- * @param fullURL The url of the full size version.
- * @param sourceName The name of the photo service.
- */
-+ (instancetype)photoDescriptionWithTitle:(NSString *)title
-                               authorName:(NSString *)authorName
-                                 thumbURL:(NSURL *)thumbURL
-                                  fullURL:(NSURL *)fullURL
-                               sourceName:(NSString *)sourceName;
-
-
-
-/*
- Parsed and returns a list of photo descriptions from a request response.
- 
- @param service The source service of the response.
- @param reponse The response with already parsed JSON.
- 
- @returns A list of new photo descriptions.
+ * @param service The source service of the response.
+ * @param reponse The response with already parsed JSON.
+ *
+ * @returns A list of new photo descriptions.
  */
 + (NSArray *)photoDescriptionsFromService:(DZNPhotoPickerControllerService)service
                              withResponse:(NSArray *)reponse;

@@ -14,7 +14,16 @@
 
 @implementation DZNPhotoDescription
 
-+ (instancetype)photoDescriptionWithTitle:(NSString *)title authorName:(NSString *)authorName thumbURL:(NSURL *)thumbURL fullURL:(NSURL *)fullURL sourceName:(NSString *)sourceName
+/*
+ Allocates a new instance of the DZNPhotoDescription class, sends it an init message, and returns the initialized object with property values.
+
+ @param title The title assigned by the author.
+ @param authorName The name of the author.
+ @param thumbURL The url of the thumb version.
+ @param fullURL The url of the full size version.
+ @param sourceName The name of the photo service.
+ */
++ (instancetype)descriptionWithTitle:(NSString *)title authorName:(NSString *)authorName thumbURL:(NSURL *)thumbURL fullURL:(NSURL *)fullURL sourceName:(NSString *)sourceName
 {
     DZNPhotoDescription *photo = [DZNPhotoDescription new];
     photo.title = title;
@@ -32,11 +41,11 @@
     if ((service & DZNPhotoPickerControllerService500px) > 0) {
         for (NSDictionary *object in reponse) {
             
-            DZNPhotoDescription *description = [DZNPhotoDescription photoDescriptionWithTitle:[object valueForKey:@"username"]
-                                                                                   authorName:[NSString stringWithFormat:@"%@ %@",[object valueForKeyPath:@"user.firstname"],[object valueForKeyPath:@"user.lastname"]]
-                                                                                     thumbURL:[NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:0] valueForKey:@"url"]]
-                                                                                      fullURL:[NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:1] valueForKey:@"url"]]
-                                                                                   sourceName:[NSStringFromServiceType(service) lowercaseString]];
+            DZNPhotoDescription *description = [DZNPhotoDescription descriptionWithTitle:[object valueForKey:@"username"]
+                                                                              authorName:[NSString stringWithFormat:@"%@ %@",[object valueForKeyPath:@"user.firstname"],[object valueForKeyPath:@"user.lastname"]]
+                                                                                thumbURL:[NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:0] valueForKey:@"url"]]
+                                                                                 fullURL:[NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:1] valueForKey:@"url"]]
+                                                                              sourceName:[NSStringFromServiceType(service) lowercaseString]];
             
             [result addObject:description];
         }
@@ -44,11 +53,11 @@
     else if ((service & DZNPhotoPickerControllerServiceFlickr) > 0) {
         for (NSDictionary *object in reponse) {
             
-            DZNPhotoDescription *description = [DZNPhotoDescription photoDescriptionWithTitle:[object valueForKey:@"title"]
-                                                                                   authorName:[object valueForKey:@"owner"]
-                                                                                     thumbURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:object]
-                                                                                      fullURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLarge1024 fromPhotoDictionary:object]
-                                                                                   sourceName:[NSStringFromServiceType(service) lowercaseString]];
+            DZNPhotoDescription *description = [DZNPhotoDescription descriptionWithTitle:[object valueForKey:@"title"]
+                                                                              authorName:[object valueForKey:@"owner"]
+                                                                                thumbURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:object]
+                                                                                 fullURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLarge1024 fromPhotoDictionary:object]
+                                                                              sourceName:[NSStringFromServiceType(service) lowercaseString]];
             
             [result addObject:description];
         }
