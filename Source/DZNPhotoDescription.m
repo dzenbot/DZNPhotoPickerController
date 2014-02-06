@@ -54,6 +54,8 @@
     else if ((service & DZNPhotoPickerControllerServiceFlickr) > 0) {
         for (NSDictionary *object in reponse) {
             
+            NSLog(@"object : %@", object);
+            
             DZNPhotoDescription *description = [DZNPhotoDescription descriptionWithTitle:[object valueForKey:@"title"]
                                                                               authorName:[object valueForKey:@"owner"]
                                                                                 thumbURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:object]

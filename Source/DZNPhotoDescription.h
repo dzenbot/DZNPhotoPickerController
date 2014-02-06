@@ -27,7 +27,6 @@
 /* The name of the photo service. */
 @property (nonatomic, copy) NSString *sourceName;
 
-
 /*
  * Parsed and returns a list of photo descriptions from a request response.
  *

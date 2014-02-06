@@ -42,6 +42,9 @@
 		4F570186180E5E6D00E12444 /* DZNPhotoDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57017F180E5E6D00E12444 /* DZNPhotoDisplayViewController.m */; };
 		4F570187180E5E6D00E12444 /* DZNPhotoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570181180E5E6D00E12444 /* DZNPhotoEditViewController.m */; };
 		4F570188180E5E6D00E12444 /* DZNPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570183180E5E6D00E12444 /* DZNPhotoPickerController.m */; };
+		4FB91AA418A43A6200F8C92B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FB91AA218A43A6200F8C92B /* InfoPlist.strings */; };
+		4FB91AA818A43A7300F8C92B /* 500px.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FB91AA618A43A7300F8C92B /* 500px.json */; };
+		4FB91AA918A43A7300F8C92B /* flickr.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FB91AA718A43A7300F8C92B /* flickr.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +91,9 @@
 		4F570182180E5E6D00E12444 /* DZNPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerController.h; sourceTree = "<group>"; };
 		4F570183180E5E6D00E12444 /* DZNPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerController.m; sourceTree = "<group>"; };
 		4FB91A9C18A322B900F8C92B /* DZNPhotoPickerConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerConstants.h; sourceTree = "<group>"; };
+		4FB91AA318A43A6200F8C92B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
+		4FB91AA618A43A7300F8C92B /* 500px.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 500px.json; sourceTree = "<group>"; };
+		4FB91AA718A43A7300F8C92B /* flickr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = flickr.json; sourceTree = "<group>"; };
 		4FD61C0618759E0D0048DC0C /* Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
 		81CB7D6B303A4384A940032C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		880742B9C52B4EC59B669AE3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -181,7 +187,9 @@
 		4F570168180E5D0E00E12444 /* SampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				4FB91AA518A43A7300F8C92B /* Fixtures */,
 				4F57016E180E5D0E00E12444 /* SampleTests.m */,
+				4FB91AA118A43A6200F8C92B /* en.lproj */,
 				4F570169180E5D0E00E12444 /* Supporting Files */,
 			);
 			path = SampleTests;
@@ -215,6 +223,23 @@
 			);
 			name = Source;
 			path = ../../Source;
+			sourceTree = "<group>";
+		};
+		4FB91AA118A43A6200F8C92B /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				4FB91AA218A43A6200F8C92B /* InfoPlist.strings */,
+			);
+			path = en.lproj;
+			sourceTree = "<group>";
+		};
+		4FB91AA518A43A7300F8C92B /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				4FB91AA618A43A7300F8C92B /* 500px.json */,
+				4FB91AA718A43A7300F8C92B /* flickr.json */,
+			);
+			path = Fixtures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,6 +333,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FB91AA418A43A6200F8C92B /* InfoPlist.strings in Resources */,
+				4FB91AA818A43A7300F8C92B /* 500px.json in Resources */,
+				4FB91AA918A43A7300F8C92B /* flickr.json in Resources */,
 				4F57016D180E5D0E00E12444 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,6 +439,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				4F57016C180E5D0E00E12444 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		4FB91AA218A43A6200F8C92B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4FB91AA318A43A6200F8C92B /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
