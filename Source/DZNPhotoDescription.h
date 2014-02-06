@@ -26,6 +26,10 @@
 @property (nonatomic, copy) NSURL *fullURL;
 /* The name of the photo service. */
 @property (nonatomic, copy) NSString *sourceName;
+/* The user's profile url, if any. */
+@property (nonatomic, copy) NSString *userURL;
+/* The user's username. */
+@property (nonatomic, copy) NSString *userName;
 
 /*
  * Parsed and returns a list of photo descriptions from a request response.
