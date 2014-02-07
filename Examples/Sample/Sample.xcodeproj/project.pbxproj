@@ -40,12 +40,12 @@
 		4F64C15918A53D9C00FBEE9A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570162180E5D0E00E12444 /* XCTest.framework */; };
 		4F64C15A18A53D9C00FBEE9A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570140180E5D0E00E12444 /* Foundation.framework */; };
 		4F64C15B18A53D9C00FBEE9A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570144180E5D0E00E12444 /* UIKit.framework */; };
-		4F64C19C18A53E7C00FBEE9A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F64C19418A53E7C00FBEE9A /* InfoPlist.strings */; };
-		4F64C19D18A53E7C00FBEE9A /* 500px.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F64C19718A53E7C00FBEE9A /* 500px.json */; };
-		4F64C19E18A53E7C00FBEE9A /* flickr.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F64C19818A53E7C00FBEE9A /* flickr.json */; };
-		4F64C19F18A53E7C00FBEE9A /* DZNPhotoTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F64C19918A53E7C00FBEE9A /* DZNPhotoTests-Info.plist */; };
-		4F64C1A018A53E7C00FBEE9A /* DZNPhotoMetadataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64C19B18A53E7C00FBEE9A /* DZNPhotoMetadataTests.m */; };
-		4F64C1A318A53F1300FBEE9A /* DZNPhotoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64C1A218A53F1300FBEE9A /* DZNPhotoTests.m */; };
+		4FD4403118A54524006FD491 /* DZNPhotoMetadataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4402818A54524006FD491 /* DZNPhotoMetadataTests.m */; };
+		4FD4403218A54524006FD491 /* DZNPhotoTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FD4402918A54524006FD491 /* DZNPhotoTests-Info.plist */; };
+		4FD4403318A54524006FD491 /* DZNPhotoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4402B18A54524006FD491 /* DZNPhotoTests.m */; };
+		4FD4403418A54524006FD491 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FD4402C18A54524006FD491 /* InfoPlist.strings */; };
+		4FD4403518A54524006FD491 /* 500px.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FD4402F18A54524006FD491 /* 500px.json */; };
+		4FD4403618A54524006FD491 /* flickr.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FD4403018A54524006FD491 /* flickr.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,14 +88,14 @@
 		4F570182180E5E6D00E12444 /* DZNPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerController.h; sourceTree = "<group>"; };
 		4F570183180E5E6D00E12444 /* DZNPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerController.m; sourceTree = "<group>"; };
 		4F64C15818A53D9C00FBEE9A /* DZNPhotoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DZNPhotoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F64C19518A53E7C00FBEE9A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		4F64C19718A53E7C00FBEE9A /* 500px.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 500px.json; sourceTree = "<group>"; };
-		4F64C19818A53E7C00FBEE9A /* flickr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = flickr.json; sourceTree = "<group>"; };
-		4F64C19918A53E7C00FBEE9A /* DZNPhotoTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DZNPhotoTests-Info.plist"; sourceTree = "<group>"; };
-		4F64C19A18A53E7C00FBEE9A /* DZNPhotoTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DZNPhotoTests-Prefix.pch"; sourceTree = "<group>"; };
-		4F64C19B18A53E7C00FBEE9A /* DZNPhotoMetadataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoMetadataTests.m; sourceTree = "<group>"; };
-		4F64C1A218A53F1300FBEE9A /* DZNPhotoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoTests.m; sourceTree = "<group>"; };
 		4FB91A9C18A322B900F8C92B /* DZNPhotoPickerConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerConstants.h; sourceTree = "<group>"; };
+		4FD4402818A54524006FD491 /* DZNPhotoMetadataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoMetadataTests.m; sourceTree = "<group>"; };
+		4FD4402918A54524006FD491 /* DZNPhotoTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DZNPhotoTests-Info.plist"; sourceTree = "<group>"; };
+		4FD4402A18A54524006FD491 /* DZNPhotoTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DZNPhotoTests-Prefix.pch"; sourceTree = "<group>"; };
+		4FD4402B18A54524006FD491 /* DZNPhotoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoTests.m; sourceTree = "<group>"; };
+		4FD4402D18A54524006FD491 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4FD4402F18A54524006FD491 /* 500px.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 500px.json; sourceTree = "<group>"; };
+		4FD4403018A54524006FD491 /* flickr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = flickr.json; sourceTree = "<group>"; };
 		4FD61C0618759E0D0048DC0C /* Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
 		81CB7D6B303A4384A940032C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		880742B9C52B4EC59B669AE3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -201,41 +201,32 @@
 				4FB91A9C18A322B900F8C92B /* DZNPhotoPickerConstants.h */,
 				4F29052A18759967005E9F39 /* UIImagePickerController+Edit.h */,
 				4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */,
-				4F64C19318A53E7C00FBEE9A /* DZNPhotoTests */,
+				4FD4402718A54524006FD491 /* DZNPhotoTests */,
 			);
 			name = Source;
 			path = ../../Source;
 			sourceTree = "<group>";
 		};
-		4F64C19318A53E7C00FBEE9A /* DZNPhotoTests */ = {
+		4FD4402718A54524006FD491 /* DZNPhotoTests */ = {
 			isa = PBXGroup;
 			children = (
-				4F64C1A118A53E8B00FBEE9A /* Supporting Files */,
-				4F64C19618A53E7C00FBEE9A /* Fixtures */,
-				4F64C1A218A53F1300FBEE9A /* DZNPhotoTests.m */,
-				4F64C19B18A53E7C00FBEE9A /* DZNPhotoMetadataTests.m */,
+				4FD4402818A54524006FD491 /* DZNPhotoMetadataTests.m */,
+				4FD4402918A54524006FD491 /* DZNPhotoTests-Info.plist */,
+				4FD4402A18A54524006FD491 /* DZNPhotoTests-Prefix.pch */,
+				4FD4402B18A54524006FD491 /* DZNPhotoTests.m */,
+				4FD4402C18A54524006FD491 /* InfoPlist.strings */,
+				4FD4402E18A54524006FD491 /* Fixtures */,
 			);
-			name = DZNPhotoTests;
-			path = Tests;
+			path = DZNPhotoTests;
 			sourceTree = "<group>";
 		};
-		4F64C19618A53E7C00FBEE9A /* Fixtures */ = {
+		4FD4402E18A54524006FD491 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
-				4F64C19718A53E7C00FBEE9A /* 500px.json */,
-				4F64C19818A53E7C00FBEE9A /* flickr.json */,
+				4FD4402F18A54524006FD491 /* 500px.json */,
+				4FD4403018A54524006FD491 /* flickr.json */,
 			);
 			path = Fixtures;
-			sourceTree = "<group>";
-		};
-		4F64C1A118A53E8B00FBEE9A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4F64C19418A53E7C00FBEE9A /* InfoPlist.strings */,
-				4F64C19918A53E7C00FBEE9A /* DZNPhotoTests-Info.plist */,
-				4F64C19A18A53E7C00FBEE9A /* DZNPhotoTests-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -329,10 +320,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F64C19D18A53E7C00FBEE9A /* 500px.json in Resources */,
-				4F64C19E18A53E7C00FBEE9A /* flickr.json in Resources */,
-				4F64C19F18A53E7C00FBEE9A /* DZNPhotoTests-Info.plist in Resources */,
-				4F64C19C18A53E7C00FBEE9A /* InfoPlist.strings in Resources */,
+				4FD4403518A54524006FD491 /* 500px.json in Resources */,
+				4FD4403418A54524006FD491 /* InfoPlist.strings in Resources */,
+				4FD4403218A54524006FD491 /* DZNPhotoTests-Info.plist in Resources */,
+				4FD4403618A54524006FD491 /* flickr.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,8 +383,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F64C1A018A53E7C00FBEE9A /* DZNPhotoMetadataTests.m in Sources */,
-				4F64C1A318A53F1300FBEE9A /* DZNPhotoTests.m in Sources */,
+				4FD4403118A54524006FD491 /* DZNPhotoMetadataTests.m in Sources */,
+				4FD4403318A54524006FD491 /* DZNPhotoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,10 +423,10 @@
 			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
-		4F64C19418A53E7C00FBEE9A /* InfoPlist.strings */ = {
+		4FD4402C18A54524006FD491 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4F64C19518A53E7C00FBEE9A /* en */,
+				4FD4402D18A54524006FD491 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -638,6 +629,7 @@
 				4F64C16818A53D9C00FBEE9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
