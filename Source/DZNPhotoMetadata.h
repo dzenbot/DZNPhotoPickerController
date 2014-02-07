@@ -34,6 +34,11 @@
 @property (nonatomic, copy) NSString *serviceName;
 
 /*
+ Allocates a new instance of DZNPhotoMetadata, initialized with a valid service name.
+ */
++ (instancetype)photosMetadataFromService:(DZNPhotoPickerControllerService)service;
+
+/*
  * Parsed and returns a list of photo metadata from a request response.
  *
  * @param service The source service of the response.

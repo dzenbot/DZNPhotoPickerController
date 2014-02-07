@@ -15,9 +15,6 @@
 
 @implementation DZNPhotoMetadata
 
-/*
- Allocates a new instance of DZNPhotoMetadata, initialized with a valid service name.
- */
 + (instancetype)photosMetadataFromService:(DZNPhotoPickerControllerService)service
 {
     if (service != 0) {
