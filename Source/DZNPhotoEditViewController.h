@@ -11,7 +11,7 @@
 #import <UIKit/UIKit.h>
 #import "DZNPhotoPickerConstants.h"
 
-@class DZNPhotoDescription;
+@class DZNPhotoMetadata;
 
 /*
  * The controller in charge of displaying the big resolution image with the different cropping modes.
@@ -26,10 +26,11 @@
 /*
  * Initializes a photo editor with a specified cropping mode (square, circular or custom)
  *
+ * @param metadata The photo metadata.
  * @param mode The crop mode.
  * @return A new instance of the editor controller.
  */
-- (instancetype)initWithPhotoDescription:(DZNPhotoDescription *)description cropMode:(DZNPhotoEditViewControllerCropMode)mode;
+- (instancetype)initWithPhotoMetadata:(DZNPhotoMetadata *)metadata cropMode:(DZNPhotoEditViewControllerCropMode)mode;
 
 /*
  * Initializes a photo editor initialized with the specified image and cropping mode (square, circular or custom).
@@ -48,12 +49,12 @@
  * @param editedImage The image result after edition.
  * @param cropRect The applied rectangle on the cropping. If no edited, the default value is CGRectZero.
  * @param cropMode The crop mode being used.
- * @param photoDescription The photo description data.
+ * @param photoDescription The photo metadata.
  */
 + (void)didFinishPickingOriginalImage:(UIImage *)originalImage
                           editedImage:(UIImage *)editedImage
                              cropRect:(CGRect)cropRect
                              cropMode:(DZNPhotoEditViewControllerCropMode)cropMode
-                     photoDescription:(DZNPhotoDescription *)photoDescription;
+                        photoMetadata:(DZNPhotoMetadata *)metadata;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  DZNPhotoDescription.h
+//  DZNPhotoMetadata.h
 //  DZNPhotoPickerController
 //  https://github.com/dzenbot/DZNPhotoPickerController
 //
@@ -14,7 +14,7 @@
 /*
  * The data model to encapsulate meta data about a photo, provided by the photo service.
  */
-@interface DZNPhotoDescription : NSObject
+@interface DZNPhotoMetadata : NSObject
 
 /* The id of the photo. */
 @property (nonatomic, copy) NSNumber *id;
@@ -34,14 +34,14 @@
 @property (nonatomic, copy) NSString *serviceName;
 
 /*
- * Parsed and returns a list of photo descriptions from a request response.
+ * Parsed and returns a list of photo metadata from a request response.
  *
  * @param service The source service of the response.
  * @param reponse The response with already parsed JSON.
  *
- * @returns A list of new photo descriptions.
+ * @returns A list of new photos metadata.
  */
-+ (NSArray *)photoDescriptionsFromService:(DZNPhotoPickerControllerService)service withResponse:(NSArray *)reponse;
++ (NSArray *)photosMetadataFromService:(DZNPhotoPickerControllerService)service withResponse:(NSArray *)reponse;
 
 
 @end

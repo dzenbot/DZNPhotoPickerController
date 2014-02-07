@@ -10,7 +10,7 @@
 
 #import "DZNPhotoEditViewController.h"
 #import "DZNPhotoDisplayViewController.h"
-#import "DZNPhotoDescription.h"
+#import "DZNPhotoMetadata.h"
 
 #import "UIImageView+WebCache.h"
 
@@ -28,8 +28,8 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 
 @interface DZNPhotoEditViewController () <UIScrollViewDelegate>
 
-/* The photo description data object. */
-@property (nonatomic, weak) DZNPhotoDescription *photoDescription;
+/* The photo metadata data object. */
+@property (nonatomic, weak) DZNPhotoMetadata *photoMetadata;
 @property (nonatomic, strong) UIImage *editingImage;
 
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -40,15 +40,15 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 @end
 
 @implementation DZNPhotoEditViewController
-@synthesize photoDescription = _photoDescription;
+@synthesize photoMetadata = _photoMetadata;
 @synthesize cropMode = _cropMode;
 @synthesize cropSize = _cropSize;
 
-- (instancetype)initWithPhotoDescription:(DZNPhotoDescription *)description cropMode:(DZNPhotoEditViewControllerCropMode)mode;
+- (instancetype)initWithPhotoMetadata:(DZNPhotoMetadata *)metadata cropMode:(DZNPhotoEditViewControllerCropMode)mode;
 {
     self = [super init];
     if (self) {
-        _photoDescription = description;
+        _photoMetadata = metadata;
         _cropMode = mode;
     }
     return self;
@@ -107,7 +107,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         [activityIndicatorView startAnimating];
         [_bottomView addSubview:activityIndicatorView];
         
-        [_imageView setImageWithURL:_photoDescription.fullURL placeholderImage:nil
+        [_imageView setImageWithURL:_photoMetadata.fullURL placeholderImage:nil
                             options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
                           completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
                               if (!error) _button.enabled = YES;
@@ -477,7 +477,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
                                                       editedImage:editedPhoto
                                                          cropRect:cropRect
                                                          cropMode:self.cropMode
-                                                 photoDescription:self.photoDescription];
+                                                 photoMetadata:self.photoMetadata];
     }
 }
 
@@ -495,7 +495,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
                           editedImage:(UIImage *)editedImage
                              cropRect:(CGRect)cropRect
                              cropMode:(DZNPhotoEditViewControllerCropMode)cropMode
-                     photoDescription:(DZNPhotoDescription *)description
+                        photoMetadata:(DZNPhotoMetadata *)metadata;
 {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                      [NSValue valueWithCGRect:cropRect],UIImagePickerControllerCropRect,
@@ -506,13 +506,13 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     if (editedImage) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
     if (cropMode != DZNPhotoEditViewControllerCropModeNone) [userInfo setObject:[NSNumber numberWithInteger:cropMode] forKey:DZNPhotoPickerControllerCropMode];
 
-    if (description.fullURL) [userInfo setObject:description.fullURL forKey:UIImagePickerControllerReferenceURL];
-    if (description.serviceName) [userInfo setObject:description.serviceName forKey:DZNPhotoPickerControllerServiceName];
+    if (metadata.fullURL) [userInfo setObject:metadata.fullURL forKey:UIImagePickerControllerReferenceURL];
+    if (metadata.serviceName) [userInfo setObject:metadata.serviceName forKey:DZNPhotoPickerControllerServiceName];
 
-    NSMutableDictionary *credits = [NSMutableDictionary dictionaryWithObject:description.id forKey:@"photo_id"];
-    if (description.fullName) [credits setObject:description.fullName forKey:@"author_fullname"];
-    if (description.userName) [credits setObject:description.userName forKey:@"author_username"];
-    if (description.profileURL) [userInfo setObject:description.profileURL forKey:@"author_profile_url"];
+    NSMutableDictionary *credits = [NSMutableDictionary dictionaryWithObject:metadata.id forKey:@"photo_id"];
+    if (metadata.fullName) [credits setObject:metadata.fullName forKey:@"author_fullname"];
+    if (metadata.userName) [credits setObject:metadata.userName forKey:@"author_username"];
+    if (metadata.profileURL) [userInfo setObject:metadata.profileURL forKey:@"author_profile_url"];
     
     [userInfo setObject:credits forKey:DZNPhotoPickerControllerAuthorCredits];
     

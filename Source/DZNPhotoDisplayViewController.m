@@ -13,7 +13,7 @@
 #import "DZNPhotoEditViewController.h"
 
 #import "DZNPhotoDisplayViewCell.h"
-#import "DZNPhotoDescription.h"
+#import "DZNPhotoMetadata.h"
 
 #define  kDZNPhotoMinimumBarHeight 44.0
 
@@ -29,7 +29,7 @@ static NSString *kTagCellID = @"kTagCellID";
 @property (nonatomic, readwrite) UIButton *loadButton;
 @property (nonatomic, readwrite) UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic, strong) NSMutableArray *photoDescriptions;
+@property (nonatomic, strong) NSMutableArray *photosMetadata;
 @property (nonatomic, strong) NSMutableArray *searchTags;
 @property (nonatomic, strong) NSArray *segmentedControlTitles;
 @property (nonatomic) DZNPhotoPickerControllerService selectedService;
@@ -103,8 +103,8 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     [super viewWillAppear:animated];
     
-    if (!_photoDescriptions) {
-        _photoDescriptions = [NSMutableArray new];
+    if (!_photosMetadata) {
+        _photosMetadata = [NSMutableArray new];
 
         if (_searchTerm.length == 0) {
             [self.searchDisplayController setActive:YES];
@@ -360,7 +360,7 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (BOOL)shouldShowFooter
 {
-    return (_photoDescriptions.count%_resultPerPage == 0) ? YES : NO;
+    return (_photosMetadata.count%_resultPerPage == 0) ? YES : NO;
 }
 
 
@@ -380,9 +380,9 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     [self showActivityIndicators:NO];
     
-    NSArray *descriptions = [DZNPhotoDescription photoDescriptionsFromService:_selectedService withResponse:response];
+    NSArray *photosMetadata = [DZNPhotoMetadata photosMetadataFromService:_selectedService withResponse:response];
     
-    [_photoDescriptions addObjectsFromArray:descriptions];
+    [_photosMetadata addObjectsFromArray:photosMetadata];
     [self.collectionView reloadData];
     
     CGSize contentSize = self.collectionView.contentSize;
@@ -447,18 +447,18 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)handleSelectionAtIndexPath:(NSIndexPath *)indexPath
 {
-    DZNPhotoDescription *description = [_photoDescriptions objectAtIndex:indexPath.row];
+    DZNPhotoMetadata *metadata = [_photosMetadata objectAtIndex:indexPath.row];
     
     if (self.navigationController.allowsEditing) {
         
-        DZNPhotoEditViewController *photoEditViewController = [[DZNPhotoEditViewController alloc] initWithPhotoDescription:description cropMode:self.navigationController.editingMode];
+        DZNPhotoEditViewController *photoEditViewController = [[DZNPhotoEditViewController alloc] initWithPhotoMetadata:metadata cropMode:self.navigationController.editingMode];
         [self.navigationController pushViewController:photoEditViewController animated:YES];
     }
     else {
         
         [self showActivityIndicators:YES];
 
-        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:description.fullURL
+        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:metadata.fullURL
                                                               options:SDWebImageCacheMemoryOnly|SDWebImageRetryFailed
                                                              progress:NULL
                                              completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
@@ -468,7 +468,7 @@ static NSString *kTagCellID = @"kTagCellID";
                                                                                                    editedImage:nil
                                                                                                       cropRect:CGRectZero
                                                                                                       cropMode:DZNPhotoEditViewControllerCropModeNone
-                                                                                              photoDescription:description];
+                                                                                                 photoMetadata:metadata];
                 
                                                  }
                                                  else {
@@ -622,11 +622,11 @@ static NSString *kTagCellID = @"kTagCellID";
 }
 
 /*
- * Removes all photo description from the array and cleans the collection view from photo thumbnails.
+ * Removes all photo metadata from the array and cleans the collection view from photo thumbnails.
  */
 - (void)resetPhotos
 {
-    [_photoDescriptions removeAllObjects];
+    [_photosMetadata removeAllObjects];
     _currentPage = 1;
     
     [self.collectionView reloadData];
@@ -642,7 +642,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _photoDescriptions.count;
+    return _photosMetadata.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -650,11 +650,11 @@ static NSString *kTagCellID = @"kTagCellID";
     DZNPhotoDisplayViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kThumbCellID forIndexPath:indexPath];
     cell.tag = indexPath.row;
     
-    DZNPhotoDescription *description = [_photoDescriptions objectAtIndex:indexPath.row];
+    DZNPhotoMetadata *metadata = [_photosMetadata objectAtIndex:indexPath.row];
     
     [cell.imageView cancelCurrentImageLoad];
-    [cell.imageView setImageWithURL:description.thumbURL placeholderImage:nil
-                              options:SDWebImageCacheMemoryOnly completed:NULL];
+    [cell.imageView setImageWithURL:metadata.thumbURL placeholderImage:nil
+                            options:SDWebImageCacheMemoryOnly completed:NULL];
     
     return cell;
 }
@@ -673,7 +673,7 @@ static NSString *kTagCellID = @"kTagCellID";
             
             _loadButton.frame = footer.bounds;
             
-            if (_photoDescriptions.count > 0) {
+            if (_photosMetadata.count > 0) {
                 _loadButton.enabled = YES;
                 [_loadButton setTitleColor:self.view.window.tintColor forState:UIControlStateNormal];
 
@@ -751,7 +751,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    if (_photoDescriptions.count == 0) {
+    if (_photosMetadata.count == 0) {
         return [self contentSize];
     }
     else return [self footerSize];

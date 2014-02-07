@@ -11,7 +11,7 @@
 #import "DZNPhotoPickerController.h"
 #import "DZNPhotoDisplayViewController.h"
 #import "DZNPhotoEditViewController.h"
-#import "DZNPhotoDescription.h"
+#import "DZNPhotoMetadata.h"
 
 #import <MobileCoreServices/UTCoreTypes.h>
 
