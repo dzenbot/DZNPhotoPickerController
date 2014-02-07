@@ -6,7 +6,8 @@
 //  Copyright (c) 2014 DZN Labs. All rights reserved.
 
 #import <XCTest/XCTest.h>
-#import "DZNPhotoPickerConstants.h"
+
+#import "DZNPhotoMetadata.h"
 #import "DZNPhotoPickerController.h"
 
 static NSBundle *_testTargetBundle;
@@ -22,7 +23,6 @@ static NSBundle *_testTargetBundle;
     
     NSString *bundleIdentifier = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
     _testTargetBundle = [NSBundle bundleWithIdentifier:bundleIdentifier];
-    
 }
 
 - (void)tearDown
@@ -33,35 +33,39 @@ static NSBundle *_testTargetBundle;
 - (NSDictionary *)JSONObjectForService:(DZNPhotoPickerControllerService)service
 {
     XCTAssertNotNil(_testTargetBundle, @"path : %@", _testTargetBundle);
+    XCTAssertNotNil(_testTargetBundle, @"The target bundle cannot be nil.");
 
     NSString *path = [_testTargetBundle pathForResource:[NSStringFromServiceType(service) lowercaseString] ofType:@"json"];
-    XCTAssertNotNil(path, @"path : %@", path);
+    XCTAssertNotNil(path, @"The path to the file cannot be nil.");
     
     NSData *data = [NSData dataWithContentsOfFile:path];
-    XCTAssertNotNil(data, @"data : %@", data);
+    XCTAssertNotNil(data, @"The NSData representation of the JSON content cannot be nil.");
     
     id object = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions|NSJSONWritingPrettyPrinted error:nil];
-    XCTAssertNotNil(data, @"object : %@", object);
+    XCTAssertNotNil(object, @"The JSON object must not be nil.");
     
     return object;
 }
 
-- (void)test500pxSearch
+- (void)testServicesParsing
 {
-    NSDictionary *object = [self JSONObjectForService:DZNPhotoPickerControllerService500px];
-    XCTAssertNotNil(object, @"500px object : %@", object);
-
-    
+    [self testParsingForService:DZNPhotoPickerControllerService500px];
+    [self testParsingForService:DZNPhotoPickerControllerServiceFlickr];
 }
 
-- (void)testFlickrSearch
+- (void)testParsingForService:(DZNPhotoPickerControllerService)service
 {
-    NSDictionary *object = [self JSONObjectForService:DZNPhotoPickerControllerServiceFlickr];
-    XCTAssertNotNil(object, @"Flickr object : %@", object);
+    service = DZNPhotoPickerControllerService500px;
     
+    NSDictionary *object = [self JSONObjectForService:service];
+
+    NSArray *result = [DZNPhotoMetadata photosMetadataFromService:service withResponse:@[object]];
+    XCTAssertNotNil(result, @"The parsing result cannot be nil.");
+
+    DZNPhotoMetadata *metadata = [result firstObject];
+    XCTAssertNotNil(metadata, @"metadata cannot be nil.");
     
+    XCTAssertFalse((metadata.id && metadata.title && metadata.thumbURL && metadata.fullURL && metadata.fullName && metadata.userName && metadata.profileURL && metadata.serviceName), @"No attribute from a metadata object should be nil. %@", metadata.id);
 }
-
-
 
 @end
