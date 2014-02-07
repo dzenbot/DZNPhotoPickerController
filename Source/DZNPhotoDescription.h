@@ -16,20 +16,22 @@
  */
 @interface DZNPhotoDescription : NSObject
 
-/* The title assigned by the author. */
+/* The id of the photo. */
+@property (nonatomic, copy) NSNumber *id;
+/* The title of the photo assigned by the author. */
 @property (nonatomic, copy) NSString *title;
-/* The name of the author. */
-@property (nonatomic, copy) NSString *authorName;
-/* The url of the thumb version. */
+/* The url of the thumb version of the photo. */
 @property (nonatomic, copy) NSURL *thumbURL;
-/* The url of the full size version. */
+/* The url of the full size version of the photo. */
 @property (nonatomic, copy) NSURL *fullURL;
-/* The name of the photo service. */
-@property (nonatomic, copy) NSString *sourceName;
-/* The user's profile url, if any. */
-@property (nonatomic, copy) NSString *userURL;
-/* The user's username. */
+/* The author's full name. */
+@property (nonatomic, copy) NSString *fullName;
+/* The author's user name. */
 @property (nonatomic, copy) NSString *userName;
+/* The url of the author's profile. */
+@property (nonatomic, copy) NSURL *profileURL;
+/* The name of the photo service. */
+@property (nonatomic, copy) NSString *serviceName;
 
 /*
  * Parsed and returns a list of photo descriptions from a request response.
@@ -39,7 +41,7 @@
  *
  * @returns A list of new photo descriptions.
  */
-+ (NSArray *)photoDescriptionsFromService:(DZNPhotoPickerControllerService)service
-                             withResponse:(NSArray *)reponse;
++ (NSArray *)photoDescriptionsFromService:(DZNPhotoPickerControllerService)service withResponse:(NSArray *)reponse;
+
 
 @end

@@ -16,54 +16,48 @@
 @implementation DZNPhotoDescription
 
 /*
- Allocates a new instance of the DZNPhotoDescription class, sends it an init message, and returns the initialized object with property values.
-
- @param title The title assigned by the author.
- @param authorName The name of the author.
- @param thumbURL The url of the thumb version.
- @param fullURL The url of the full size version.
- @param sourceName The name of the photo service.
+ Allocates a new instance of DZNPhotoDescription, initialized with a valid service name.
  */
-+ (instancetype)descriptionWithTitle:(NSString *)title authorName:(NSString *)authorName thumbURL:(NSURL *)thumbURL fullURL:(NSURL *)fullURL sourceName:(NSString *)sourceName
++ (instancetype)photoDescriptionFromService:(DZNPhotoPickerControllerService)service
 {
-    DZNPhotoDescription *photo = [DZNPhotoDescription new];
-    photo.title = title;
-    photo.authorName = authorName;
-    photo.thumbURL = thumbURL;
-    photo.fullURL = fullURL;
-    photo.sourceName = sourceName;
-    return photo;
+    if (service != 0) {
+        DZNPhotoDescription *description = [DZNPhotoDescription new];
+        description.serviceName = [NSStringFromServiceType(service) lowercaseString];
+        return description;
+    }
+    return nil;
 }
 
 + (NSArray *)photoDescriptionsFromService:(DZNPhotoPickerControllerService)service withResponse:(NSArray *)reponse
 {
     NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:reponse.count];
     
-    if ((service & DZNPhotoPickerControllerService500px) > 0) {
-        for (NSDictionary *object in reponse) {
+    for (NSDictionary *object in reponse) {
+        
+        DZNPhotoDescription *description = [DZNPhotoDescription photoDescriptionFromService:service];
+        
+        if ((service & DZNPhotoPickerControllerService500px) > 0) {
             
-            DZNPhotoDescription *description = [DZNPhotoDescription descriptionWithTitle:[object valueForKey:@"username"]
-                                                                              authorName:[NSString stringWithFormat:@"%@ %@",[object valueForKeyPath:@"user.firstname"],[object valueForKeyPath:@"user.lastname"]]
-                                                                                thumbURL:[NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:0] valueForKey:@"url"]]
-                                                                                 fullURL:[NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:1] valueForKey:@"url"]]
-                                                                              sourceName:[NSStringFromServiceType(service) lowercaseString]];
-            
-            [result addObject:description];
+            description.id = [object valueForKey:@"id"];
+            description.title = [object valueForKey:@"description"];
+            description.thumbURL = [NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:0] valueForKey:@"url"]];
+            description.fullURL = [NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:1] valueForKey:@"url"]];
+            description.fullName = [object valueForKeyPath:@"user.fullname"];
+            description.userName = [object valueForKeyPath:@"user.username"];
+            description.profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/%@", description.userName]];
         }
-    }
-    else if ((service & DZNPhotoPickerControllerServiceFlickr) > 0) {
-        for (NSDictionary *object in reponse) {
+        else if ((service & DZNPhotoPickerControllerServiceFlickr) > 0) {
             
-            NSLog(@"object : %@", object);
-            
-            DZNPhotoDescription *description = [DZNPhotoDescription descriptionWithTitle:[object valueForKey:@"title"]
-                                                                              authorName:[object valueForKey:@"owner"]
-                                                                                thumbURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:object]
-                                                                                 fullURL:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLarge1024 fromPhotoDictionary:object]
-                                                                              sourceName:[NSStringFromServiceType(service) lowercaseString]];
-            
-            [result addObject:description];
+            description.id = [object valueForKey:@"id"];
+            description.title = [object valueForKey:@"title"];
+            description.thumbURL = [[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:object];
+            description.fullURL = [[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLarge1024 fromPhotoDictionary:object];
+            description.fullName = nil;
+            description.userName = [object valueForKey:@"owner"];
+            description.profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.flickr.com/photos/%@", description.userName]];
         }
+        
+        [result addObject:description];
     }
     
     return result;

@@ -99,7 +99,7 @@
     picker.allowsEditing = YES;
     picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     picker.delegate = self;
-    picker.initialSearchTerm = @"Daft Punk";
+    picker.initialSearchTerm = @"Nature";
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         _popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
@@ -136,11 +136,11 @@
     NSLog(@"OriginalImage : %@",[userInfo objectForKey:UIImagePickerControllerOriginalImage]);
     NSLog(@"EditedImage : %@",[userInfo objectForKey:UIImagePickerControllerEditedImage]);
     NSLog(@"CropRect : %@", NSStringFromCGRect([[userInfo objectForKey:UIImagePickerControllerCropRect] CGRectValue]));
-    NSLog(@"CropMode : %d", [[_photoPayload objectForKey:DZNPhotoPickerControllerCropMode] integerValue]);
+    NSLog(@"CropMode : %d", [[userInfo objectForKey:DZNPhotoPickerControllerCropMode] integerValue]);
     NSLog(@"MediaType : %@",[userInfo objectForKey:UIImagePickerControllerMediaType]);
     NSLog(@"ReferenceURL : %@",[userInfo objectForKey:UIImagePickerControllerReferenceURL]);
     NSLog(@"AuthorCredits : %@",[userInfo objectForKey:DZNPhotoPickerControllerAuthorCredits]);
-    NSLog(@"SourceName : %@",[userInfo objectForKey:DZNPhotoPickerControllerSourceName]);
+    NSLog(@"SourceName : %@",[userInfo objectForKey:DZNPhotoPickerControllerServiceName]);
 
     UIImage *image = [userInfo objectForKey:UIImagePickerControllerEditedImage];
     if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];

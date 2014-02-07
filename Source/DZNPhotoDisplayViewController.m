@@ -464,11 +464,12 @@ static NSString *kTagCellID = @"kTagCellID";
                                              completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
                                                  
                                                  if (image) {
-                                                     [DZNPhotoEditViewController didFinishPickingOriginalImage:image editedImage:nil cropRect:CGRectZero
+                                                     [DZNPhotoEditViewController didFinishPickingOriginalImage:image
+                                                                                                   editedImage:nil
+                                                                                                      cropRect:CGRectZero
                                                                                                       cropMode:DZNPhotoEditViewControllerCropModeNone
-                                                                                                  referenceURL:description.fullURL
-                                                                                                    authorName:description.authorName
-                                                                                                    sourceName:description.sourceName];
+                                                                                              photoDescription:description];
+                
                                                  }
                                                  else {
                                                      [self setSearchError:error];

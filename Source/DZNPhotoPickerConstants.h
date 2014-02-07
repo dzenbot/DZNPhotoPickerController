@@ -8,10 +8,11 @@
 //  Licence: MIT-Licence
 //
 
-static NSString *DZNPhotoPickerControllerAuthorCredits = @"DZNPhotoPickerControllerAuthorCredits";
-static NSString *DZNPhotoPickerControllerSourceName = @"DZNPhotoPickerControllerSourceName";
-static NSString *DZNPhotoPickerControllerCropMode = @"DZNPhotoPickerControllerCropMode";
-static NSString *kDZNPhotoPickerDidFinishPickingNotification = @"kDZNPhotoPickerDidFinishPickingNotification";
+static NSString *const DZNPhotoPickerControllerServiceName = @"DZNPhotoPickerControllerServiceName";
+static NSString *const DZNPhotoPickerControllerCropMode = @"DZNPhotoPickerControllerCropMode";
+static NSString *const DZNPhotoPickerControllerAuthorCredits = @"DZNPhotoPickerControllerAuthorCredits";
+
+static NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDidFinishPickingNotification";
 
 /*
  * Types of supported photo services

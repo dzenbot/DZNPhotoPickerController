@@ -60,7 +60,7 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickPhoto:) name:kDZNPhotoPickerDidFinishPickingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickPhoto:) name:DZNPhotoPickerDidFinishPickingNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated

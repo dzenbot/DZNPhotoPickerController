@@ -48,16 +48,12 @@
  * @param editedImage The image result after edition.
  * @param cropRect The applied rectangle on the cropping. If no edited, the default value is CGRectZero.
  * @param cropMode The crop mode being used.
- * @param referenceURL The source url of the original image.
- * @param authorName The name of the author of the photo.
- * @param sourceName The name of the photo service from where the photo was fetched.
+ * @param photoDescription The photo description data.
  */
 + (void)didFinishPickingOriginalImage:(UIImage *)originalImage
                           editedImage:(UIImage *)editedImage
                              cropRect:(CGRect)cropRect
                              cropMode:(DZNPhotoEditViewControllerCropMode)cropMode
-                         referenceURL:(NSURL *)referenceURL
-                           authorName:(NSString *)authorName
-                           sourceName:(NSString *)sourceName;
+                     photoDescription:(DZNPhotoDescription *)photoDescription;
 
 @end
