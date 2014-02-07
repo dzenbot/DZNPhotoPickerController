@@ -24,6 +24,8 @@
 @property (nonatomic, copy) NSURL *thumbURL;
 /* The url of the full size version of the photo. */
 @property (nonatomic, copy) NSURL *fullURL;
+/* The url of the photo's source page. */
+@property (nonatomic, copy) NSURL *detailURL;
 /* The author's full name. */
 @property (nonatomic, copy) NSString *fullName;
 /* The author's user name. */

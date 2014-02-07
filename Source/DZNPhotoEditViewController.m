@@ -497,6 +497,10 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
                              cropMode:(DZNPhotoEditViewControllerCropMode)cropMode
                         photoMetadata:(DZNPhotoMetadata *)metadata;
 {
+    if (!originalImage || !metadata) {
+        return;
+    }
+    
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                      [NSValue valueWithCGRect:cropRect],UIImagePickerControllerCropRect,
                                      @"public.image",UIImagePickerControllerMediaType,
@@ -505,15 +509,16 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     if (originalImage) [userInfo setObject:originalImage forKey:UIImagePickerControllerOriginalImage];
     if (editedImage) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
     if (cropMode != DZNPhotoEditViewControllerCropModeNone) [userInfo setObject:[NSNumber numberWithInteger:cropMode] forKey:DZNPhotoPickerControllerCropMode];
-
-    if (metadata.fullURL) [userInfo setObject:metadata.fullURL forKey:UIImagePickerControllerReferenceURL];
+    
     if (metadata.serviceName) [userInfo setObject:metadata.serviceName forKey:DZNPhotoPickerControllerServiceName];
 
     NSMutableDictionary *credits = [NSMutableDictionary dictionaryWithObject:metadata.id forKey:@"photo_id"];
+    if (metadata.detailURL) [credits setObject:metadata.detailURL forKey:@"photo_detail_url"];
+    if (metadata.fullURL) [credits setObject:metadata.fullURL forKey:@"photo_image_url"];
     if (metadata.fullName) [credits setObject:metadata.fullName forKey:@"author_fullname"];
     if (metadata.userName) [credits setObject:metadata.userName forKey:@"author_username"];
-    if (metadata.profileURL) [userInfo setObject:metadata.profileURL forKey:@"author_profile_url"];
-    
+    if (metadata.profileURL) [credits setObject:metadata.profileURL forKey:@"author_profile_url"];
+
     [userInfo setObject:credits forKey:DZNPhotoPickerControllerAuthorCredits];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFinishPickingNotification object:nil userInfo:userInfo];

@@ -315,47 +315,6 @@ static NSString *kTagCellID = @"kTagCellID";
 }
 
 /*
- * Returns the a complete & valide source url of a specific service url.
- * This applies only for some photo services, that do not expose the source url on their API.
- */
-- (NSString *)sourceUrlForImageUrl:(NSString *)url
-{
-    switch (_selectedService) {
-        case DZNPhotoPickerControllerService500px:
-            return nil;
-            
-        case DZNPhotoPickerControllerServiceFlickr:
-        {
-            NSArray *components = [url componentsSeparatedByString:@"/"];
-            NSString *lastComponent = [components lastObject];
-            
-            NSArray *ids = [lastComponent componentsSeparatedByString:@"_"];
-            
-            if (ids.count > 0) {
-                NSString *photoId = [ids objectAtIndex:0];
-                NSString *profileUrl = [NSString stringWithFormat:@"http://flickr.com/photo.gne?id=%@/", photoId];
-                return [NSURL URLWithString:profileUrl];
-            }
-            else {
-                return nil;
-            }
-        }
-            
-        case DZNPhotoPickerControllerServiceGoogleImages:
-            return nil;
-            
-        case DZNPhotoPickerControllerServiceBingImages:
-            return nil;
-            
-        case DZNPhotoPickerControllerServiceYahooImages:
-            return nil;
-            
-        default:
-            return nil;
-    }
-}
-
-/*
  * Checks if an additional footer for loading more content should be displayed.
  */
 - (BOOL)shouldShowFooter
