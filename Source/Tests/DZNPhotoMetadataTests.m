@@ -1,9 +1,11 @@
-//  ParsingTests.m
+//
+//  DZNPhotoMetadataTests.m
 //  DZNPhotoPickerController
 //  https://github.com/dzenbot/DZNPhotoPickerController
 //
 //  Created by Ignacio Romero Zurbuchen on 7/02/14.
 //  Copyright (c) 2014 DZN Labs. All rights reserved.
+//
 
 #import <XCTest/XCTest.h>
 
@@ -12,10 +14,11 @@
 
 static NSBundle *_testTargetBundle;
 
-@interface ParsingTests : XCTestCase
+@interface DZNPhotoMetadataTests : XCTestCase
+
 @end
 
-@implementation ParsingTests
+@implementation DZNPhotoMetadataTests
 
 - (void)setUp
 {
@@ -34,7 +37,7 @@ static NSBundle *_testTargetBundle;
 {
     XCTAssertNotNil(_testTargetBundle, @"path : %@", _testTargetBundle);
     XCTAssertNotNil(_testTargetBundle, @"The target bundle cannot be nil.");
-
+    
     NSString *path = [_testTargetBundle pathForResource:[NSStringFromServiceType(service) lowercaseString] ofType:@"json"];
     XCTAssertNotNil(path, @"The path to the file cannot be nil.");
     
@@ -58,10 +61,10 @@ static NSBundle *_testTargetBundle;
     service = DZNPhotoPickerControllerService500px;
     
     NSDictionary *object = [self JSONObjectForService:service];
-
+    
     NSArray *result = [DZNPhotoMetadata photosMetadataFromService:service withResponse:@[object]];
     XCTAssertNotNil(result, @"The parsing result cannot be nil.");
-
+    
     DZNPhotoMetadata *metadata = [result firstObject];
     XCTAssertNotNil(metadata, @"metadata cannot be nil.");
     

@@ -32,23 +32,24 @@
 		4F570157180E5D0E00E12444 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F570155180E5D0E00E12444 /* Main_iPad.storyboard */; };
 		4F57015A180E5D0E00E12444 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570159180E5D0E00E12444 /* RootViewController.m */; };
 		4F57015C180E5D0E00E12444 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F57015B180E5D0E00E12444 /* Images.xcassets */; };
-		4F570163180E5D0E00E12444 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570162180E5D0E00E12444 /* XCTest.framework */; };
-		4F570164180E5D0E00E12444 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570140180E5D0E00E12444 /* Foundation.framework */; };
-		4F570165180E5D0E00E12444 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570144180E5D0E00E12444 /* UIKit.framework */; };
-		4F57016D180E5D0E00E12444 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F57016B180E5D0E00E12444 /* InfoPlist.strings */; };
-		4F57016F180E5D0E00E12444 /* ParsingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57016E180E5D0E00E12444 /* ParsingTests.m */; };
 		4F570184180E5E6D00E12444 /* DZNPhotoMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57017B180E5E6D00E12444 /* DZNPhotoMetadata.m */; };
 		4F570185180E5E6D00E12444 /* DZNPhotoDisplayViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57017D180E5E6D00E12444 /* DZNPhotoDisplayViewCell.m */; };
 		4F570186180E5E6D00E12444 /* DZNPhotoDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57017F180E5E6D00E12444 /* DZNPhotoDisplayViewController.m */; };
 		4F570187180E5E6D00E12444 /* DZNPhotoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570181180E5E6D00E12444 /* DZNPhotoEditViewController.m */; };
 		4F570188180E5E6D00E12444 /* DZNPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570183180E5E6D00E12444 /* DZNPhotoPickerController.m */; };
-		4FB91AA418A43A6200F8C92B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FB91AA218A43A6200F8C92B /* InfoPlist.strings */; };
-		4FB91AAA18A509DE00F8C92B /* 500px.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FB91AA618A43A7300F8C92B /* 500px.json */; };
-		4FB91AAB18A509DE00F8C92B /* flickr.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FB91AA718A43A7300F8C92B /* flickr.json */; };
+		4F64C15918A53D9C00FBEE9A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570162180E5D0E00E12444 /* XCTest.framework */; };
+		4F64C15A18A53D9C00FBEE9A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570140180E5D0E00E12444 /* Foundation.framework */; };
+		4F64C15B18A53D9C00FBEE9A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570144180E5D0E00E12444 /* UIKit.framework */; };
+		4F64C19C18A53E7C00FBEE9A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F64C19418A53E7C00FBEE9A /* InfoPlist.strings */; };
+		4F64C19D18A53E7C00FBEE9A /* 500px.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F64C19718A53E7C00FBEE9A /* 500px.json */; };
+		4F64C19E18A53E7C00FBEE9A /* flickr.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F64C19818A53E7C00FBEE9A /* flickr.json */; };
+		4F64C19F18A53E7C00FBEE9A /* DZNPhotoTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F64C19918A53E7C00FBEE9A /* DZNPhotoTests-Info.plist */; };
+		4F64C1A018A53E7C00FBEE9A /* DZNPhotoMetadataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64C19B18A53E7C00FBEE9A /* DZNPhotoMetadataTests.m */; };
+		4F64C1A318A53F1300FBEE9A /* DZNPhotoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64C1A218A53F1300FBEE9A /* DZNPhotoTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4F570166180E5D0E00E12444 /* PBXContainerItemProxy */ = {
+		4F64C16518A53D9C00FBEE9A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4F570135180E5D0E00E12444 /* Project object */;
 			proxyType = 1;
@@ -75,11 +76,7 @@
 		4F570158180E5D0E00E12444 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		4F570159180E5D0E00E12444 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		4F57015B180E5D0E00E12444 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		4F570161180E5D0E00E12444 /* SampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F570162180E5D0E00E12444 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		4F57016A180E5D0E00E12444 /* SampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SampleTests-Info.plist"; sourceTree = "<group>"; };
-		4F57016C180E5D0E00E12444 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		4F57016E180E5D0E00E12444 /* ParsingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParsingTests.m; sourceTree = "<group>"; };
 		4F57017A180E5E6D00E12444 /* DZNPhotoMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoMetadata.h; sourceTree = "<group>"; };
 		4F57017B180E5E6D00E12444 /* DZNPhotoMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoMetadata.m; sourceTree = "<group>"; };
 		4F57017C180E5E6D00E12444 /* DZNPhotoDisplayViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoDisplayViewCell.h; sourceTree = "<group>"; };
@@ -90,10 +87,15 @@
 		4F570181180E5E6D00E12444 /* DZNPhotoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoEditViewController.m; sourceTree = "<group>"; };
 		4F570182180E5E6D00E12444 /* DZNPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerController.h; sourceTree = "<group>"; };
 		4F570183180E5E6D00E12444 /* DZNPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerController.m; sourceTree = "<group>"; };
+		4F64C15818A53D9C00FBEE9A /* DZNPhotoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DZNPhotoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F64C19518A53E7C00FBEE9A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4F64C19718A53E7C00FBEE9A /* 500px.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 500px.json; sourceTree = "<group>"; };
+		4F64C19818A53E7C00FBEE9A /* flickr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = flickr.json; sourceTree = "<group>"; };
+		4F64C19918A53E7C00FBEE9A /* DZNPhotoTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DZNPhotoTests-Info.plist"; sourceTree = "<group>"; };
+		4F64C19A18A53E7C00FBEE9A /* DZNPhotoTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DZNPhotoTests-Prefix.pch"; sourceTree = "<group>"; };
+		4F64C19B18A53E7C00FBEE9A /* DZNPhotoMetadataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoMetadataTests.m; sourceTree = "<group>"; };
+		4F64C1A218A53F1300FBEE9A /* DZNPhotoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoTests.m; sourceTree = "<group>"; };
 		4FB91A9C18A322B900F8C92B /* DZNPhotoPickerConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerConstants.h; sourceTree = "<group>"; };
-		4FB91AA318A43A6200F8C92B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
-		4FB91AA618A43A7300F8C92B /* 500px.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 500px.json; sourceTree = "<group>"; };
-		4FB91AA718A43A7300F8C92B /* flickr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = flickr.json; sourceTree = "<group>"; };
 		4FD61C0618759E0D0048DC0C /* Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
 		81CB7D6B303A4384A940032C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		880742B9C52B4EC59B669AE3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -111,13 +113,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F57015E180E5D0E00E12444 /* Frameworks */ = {
+		4F64C15518A53D9C00FBEE9A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F570163180E5D0E00E12444 /* XCTest.framework in Frameworks */,
-				4F570165180E5D0E00E12444 /* UIKit.framework in Frameworks */,
-				4F570164180E5D0E00E12444 /* Foundation.framework in Frameworks */,
+				4F64C15918A53D9C00FBEE9A /* XCTest.framework in Frameworks */,
+				4F64C15B18A53D9C00FBEE9A /* UIKit.framework in Frameworks */,
+				4F64C15A18A53D9C00FBEE9A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,7 +133,6 @@
 				4F570179180E5E6D00E12444 /* Source */,
 				4F57013F180E5D0E00E12444 /* Frameworks */,
 				4F57013E180E5D0E00E12444 /* Products */,
-				4F570168180E5D0E00E12444 /* SampleTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,7 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				4F57013D180E5D0E00E12444 /* Sample.app */,
-				4F570161180E5D0E00E12444 /* SampleTests.xctest */,
+				4F64C15818A53D9C00FBEE9A /* DZNPhotoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -184,26 +185,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4F570168180E5D0E00E12444 /* SampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				4FB91AA518A43A7300F8C92B /* Fixtures */,
-				4F57016E180E5D0E00E12444 /* ParsingTests.m */,
-				4FB91AA118A43A6200F8C92B /* en.lproj */,
-				4F570169180E5D0E00E12444 /* Supporting Files */,
-			);
-			path = SampleTests;
-			sourceTree = "<group>";
-		};
-		4F570169180E5D0E00E12444 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4F57016A180E5D0E00E12444 /* SampleTests-Info.plist */,
-				4F57016B180E5D0E00E12444 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		4F570179180E5E6D00E12444 /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,26 +201,41 @@
 				4FB91A9C18A322B900F8C92B /* DZNPhotoPickerConstants.h */,
 				4F29052A18759967005E9F39 /* UIImagePickerController+Edit.h */,
 				4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */,
+				4F64C19318A53E7C00FBEE9A /* DZNPhotoTests */,
 			);
 			name = Source;
 			path = ../../Source;
 			sourceTree = "<group>";
 		};
-		4FB91AA118A43A6200F8C92B /* en.lproj */ = {
+		4F64C19318A53E7C00FBEE9A /* DZNPhotoTests */ = {
 			isa = PBXGroup;
 			children = (
-				4FB91AA218A43A6200F8C92B /* InfoPlist.strings */,
+				4F64C1A118A53E8B00FBEE9A /* Supporting Files */,
+				4F64C19618A53E7C00FBEE9A /* Fixtures */,
+				4F64C1A218A53F1300FBEE9A /* DZNPhotoTests.m */,
+				4F64C19B18A53E7C00FBEE9A /* DZNPhotoMetadataTests.m */,
 			);
-			path = en.lproj;
+			name = DZNPhotoTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
-		4FB91AA518A43A7300F8C92B /* Fixtures */ = {
+		4F64C19618A53E7C00FBEE9A /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
-				4FB91AA618A43A7300F8C92B /* 500px.json */,
-				4FB91AA718A43A7300F8C92B /* flickr.json */,
+				4F64C19718A53E7C00FBEE9A /* 500px.json */,
+				4F64C19818A53E7C00FBEE9A /* flickr.json */,
 			);
 			path = Fixtures;
+			sourceTree = "<group>";
+		};
+		4F64C1A118A53E8B00FBEE9A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4F64C19418A53E7C00FBEE9A /* InfoPlist.strings */,
+				4F64C19918A53E7C00FBEE9A /* DZNPhotoTests-Info.plist */,
+				4F64C19A18A53E7C00FBEE9A /* DZNPhotoTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,22 +260,22 @@
 			productReference = 4F57013D180E5D0E00E12444 /* Sample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4F570160180E5D0E00E12444 /* SampleTests */ = {
+		4F64C15718A53D9C00FBEE9A /* DZNPhotoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4F570175180E5D0E00E12444 /* Build configuration list for PBXNativeTarget "SampleTests" */;
+			buildConfigurationList = 4F64C16918A53D9C00FBEE9A /* Build configuration list for PBXNativeTarget "DZNPhotoTests" */;
 			buildPhases = (
-				4F57015D180E5D0E00E12444 /* Sources */,
-				4F57015E180E5D0E00E12444 /* Frameworks */,
-				4F57015F180E5D0E00E12444 /* Resources */,
+				4F64C15418A53D9C00FBEE9A /* Sources */,
+				4F64C15518A53D9C00FBEE9A /* Frameworks */,
+				4F64C15618A53D9C00FBEE9A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4F570167180E5D0E00E12444 /* PBXTargetDependency */,
+				4F64C16618A53D9C00FBEE9A /* PBXTargetDependency */,
 			);
-			name = SampleTests;
-			productName = SampleTests;
-			productReference = 4F570161180E5D0E00E12444 /* SampleTests.xctest */;
+			name = DZNPhotoTests;
+			productName = DZNPhotoTests;
+			productReference = 4F64C15818A53D9C00FBEE9A /* DZNPhotoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -292,7 +288,7 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "DZN Labs";
 				TargetAttributes = {
-					4F570160180E5D0E00E12444 = {
+					4F64C15718A53D9C00FBEE9A = {
 						TestTargetID = 4F57013C180E5D0E00E12444;
 					};
 				};
@@ -312,7 +308,7 @@
 			targets = (
 				4F57013C180E5D0E00E12444 /* Sample */,
 				4F4ADE92182DD9C9007AC796 /* Documentation */,
-				4F570160180E5D0E00E12444 /* SampleTests */,
+				4F64C15718A53D9C00FBEE9A /* DZNPhotoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -322,21 +318,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FB91AAB18A509DE00F8C92B /* flickr.json in Resources */,
 				4F570157180E5D0E00E12444 /* Main_iPad.storyboard in Resources */,
-				4FB91AAA18A509DE00F8C92B /* 500px.json in Resources */,
 				4F57015C180E5D0E00E12444 /* Images.xcassets in Resources */,
 				4F570154180E5D0E00E12444 /* Main_iPhone.storyboard in Resources */,
 				4F57014B180E5D0E00E12444 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F57015F180E5D0E00E12444 /* Resources */ = {
+		4F64C15618A53D9C00FBEE9A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FB91AA418A43A6200F8C92B /* InfoPlist.strings in Resources */,
-				4F57016D180E5D0E00E12444 /* InfoPlist.strings in Resources */,
+				4F64C19D18A53E7C00FBEE9A /* 500px.json in Resources */,
+				4F64C19E18A53E7C00FBEE9A /* flickr.json in Resources */,
+				4F64C19F18A53E7C00FBEE9A /* DZNPhotoTests-Info.plist in Resources */,
+				4F64C19C18A53E7C00FBEE9A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,21 +388,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F57015D180E5D0E00E12444 /* Sources */ = {
+		4F64C15418A53D9C00FBEE9A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F57016F180E5D0E00E12444 /* ParsingTests.m in Sources */,
+				4F64C1A018A53E7C00FBEE9A /* DZNPhotoMetadataTests.m in Sources */,
+				4F64C1A318A53F1300FBEE9A /* DZNPhotoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4F570167180E5D0E00E12444 /* PBXTargetDependency */ = {
+		4F64C16618A53D9C00FBEE9A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4F57013C180E5D0E00E12444 /* Sample */;
-			targetProxy = 4F570166180E5D0E00E12444 /* PBXContainerItemProxy */;
+			targetProxy = 4F64C16518A53D9C00FBEE9A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -435,18 +432,10 @@
 			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
-		4F57016B180E5D0E00E12444 /* InfoPlist.strings */ = {
+		4F64C19418A53E7C00FBEE9A /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4F57016C180E5D0E00E12444 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		4FB91AA218A43A6200F8C92B /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4FB91AA318A43A6200F8C92B /* en */,
+				4F64C19518A53E7C00FBEE9A /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -570,7 +559,7 @@
 			};
 			name = Release;
 		};
-		4F570176180E5D0E00E12444 /* Debug */ = {
+		4F64C16718A53D9C00FBEE9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
@@ -581,19 +570,19 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Sample/Sample-Prefix.pch";
+				GCC_PREFIX_HEADER = "DZNPhotoTests/DZNPhotoTests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "SampleTests/SampleTests-Info.plist";
+				INFOPLIST_FILE = "DZNPhotoTests/DZNPhotoTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
-		4F570177180E5D0E00E12444 /* Release */ = {
+		4F64C16818A53D9C00FBEE9A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
@@ -604,8 +593,8 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Sample/Sample-Prefix.pch";
-				INFOPLIST_FILE = "SampleTests/SampleTests-Info.plist";
+				GCC_PREFIX_HEADER = "DZNPhotoTests/DZNPhotoTests-Prefix.pch";
+				INFOPLIST_FILE = "DZNPhotoTests/DZNPhotoTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -642,14 +631,13 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4F570175180E5D0E00E12444 /* Build configuration list for PBXNativeTarget "SampleTests" */ = {
+		4F64C16918A53D9C00FBEE9A /* Build configuration list for PBXNativeTarget "DZNPhotoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4F570176180E5D0E00E12444 /* Debug */,
-				4F570177180E5D0E00E12444 /* Release */,
+				4F64C16718A53D9C00FBEE9A /* Debug */,
+				4F64C16818A53D9C00FBEE9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
