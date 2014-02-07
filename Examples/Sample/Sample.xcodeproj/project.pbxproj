@@ -36,7 +36,7 @@
 		4F570164180E5D0E00E12444 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570140180E5D0E00E12444 /* Foundation.framework */; };
 		4F570165180E5D0E00E12444 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570144180E5D0E00E12444 /* UIKit.framework */; };
 		4F57016D180E5D0E00E12444 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F57016B180E5D0E00E12444 /* InfoPlist.strings */; };
-		4F57016F180E5D0E00E12444 /* SampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57016E180E5D0E00E12444 /* SampleTests.m */; };
+		4F57016F180E5D0E00E12444 /* ParsingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57016E180E5D0E00E12444 /* ParsingTests.m */; };
 		4F570184180E5E6D00E12444 /* DZNPhotoMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57017B180E5E6D00E12444 /* DZNPhotoMetadata.m */; };
 		4F570185180E5E6D00E12444 /* DZNPhotoDisplayViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57017D180E5E6D00E12444 /* DZNPhotoDisplayViewCell.m */; };
 		4F570186180E5E6D00E12444 /* DZNPhotoDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57017F180E5E6D00E12444 /* DZNPhotoDisplayViewController.m */; };
@@ -79,7 +79,7 @@
 		4F570162180E5D0E00E12444 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		4F57016A180E5D0E00E12444 /* SampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SampleTests-Info.plist"; sourceTree = "<group>"; };
 		4F57016C180E5D0E00E12444 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		4F57016E180E5D0E00E12444 /* SampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleTests.m; sourceTree = "<group>"; };
+		4F57016E180E5D0E00E12444 /* ParsingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParsingTests.m; sourceTree = "<group>"; };
 		4F57017A180E5E6D00E12444 /* DZNPhotoMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoMetadata.h; sourceTree = "<group>"; };
 		4F57017B180E5E6D00E12444 /* DZNPhotoMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoMetadata.m; sourceTree = "<group>"; };
 		4F57017C180E5E6D00E12444 /* DZNPhotoDisplayViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoDisplayViewCell.h; sourceTree = "<group>"; };
@@ -188,7 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				4FB91AA518A43A7300F8C92B /* Fixtures */,
-				4F57016E180E5D0E00E12444 /* SampleTests.m */,
+				4F57016E180E5D0E00E12444 /* ParsingTests.m */,
 				4FB91AA118A43A6200F8C92B /* en.lproj */,
 				4F570169180E5D0E00E12444 /* Supporting Files */,
 			);
@@ -396,7 +396,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F57016F180E5D0E00E12444 /* SampleTests.m in Sources */,
+				4F57016F180E5D0E00E12444 /* ParsingTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

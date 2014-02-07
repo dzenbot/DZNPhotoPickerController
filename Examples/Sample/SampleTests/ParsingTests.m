@@ -1,10 +1,9 @@
+//  ParsingTests.m
+//  DZNPhotoPickerController
+//  https://github.com/dzenbot/DZNPhotoPickerController
 //
-//  SampleTests.m
-//  SampleTests
-//
-//  Created by Ignacio on 10/16/13.
-//  Copyright (c) 2013 DZN Labs. All rights reserved.
-//
+//  Created by Ignacio Romero Zurbuchen on 7/02/14.
+//  Copyright (c) 2014 DZN Labs. All rights reserved.
 
 #import <XCTest/XCTest.h>
 #import "DZNPhotoPickerConstants.h"
@@ -12,10 +11,10 @@
 
 static NSBundle *_testTargetBundle;
 
-@interface SampleTests : XCTestCase
+@interface ParsingTests : XCTestCase
 @end
 
-@implementation SampleTests
+@implementation ParsingTests
 
 - (void)setUp
 {
