@@ -43,8 +43,8 @@
 		4F570187180E5E6D00E12444 /* DZNPhotoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570181180E5E6D00E12444 /* DZNPhotoEditViewController.m */; };
 		4F570188180E5E6D00E12444 /* DZNPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570183180E5E6D00E12444 /* DZNPhotoPickerController.m */; };
 		4FB91AA418A43A6200F8C92B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FB91AA218A43A6200F8C92B /* InfoPlist.strings */; };
-		4FB91AA818A43A7300F8C92B /* 500px.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FB91AA618A43A7300F8C92B /* 500px.json */; };
-		4FB91AA918A43A7300F8C92B /* flickr.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FB91AA718A43A7300F8C92B /* flickr.json */; };
+		4FB91AAA18A509DE00F8C92B /* 500px.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FB91AA618A43A7300F8C92B /* 500px.json */; };
+		4FB91AAB18A509DE00F8C92B /* flickr.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FB91AA718A43A7300F8C92B /* flickr.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -322,7 +322,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FB91AAB18A509DE00F8C92B /* flickr.json in Resources */,
 				4F570157180E5D0E00E12444 /* Main_iPad.storyboard in Resources */,
+				4FB91AAA18A509DE00F8C92B /* 500px.json in Resources */,
 				4F57015C180E5D0E00E12444 /* Images.xcassets in Resources */,
 				4F570154180E5D0E00E12444 /* Main_iPhone.storyboard in Resources */,
 				4F57014B180E5D0E00E12444 /* InfoPlist.strings in Resources */,
@@ -334,8 +336,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FB91AA418A43A6200F8C92B /* InfoPlist.strings in Resources */,
-				4FB91AA818A43A7300F8C92B /* 500px.json in Resources */,
-				4FB91AA918A43A7300F8C92B /* flickr.json in Resources */,
 				4F57016D180E5D0E00E12444 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

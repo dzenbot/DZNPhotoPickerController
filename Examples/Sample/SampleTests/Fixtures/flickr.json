@@ -1,11 +1,11 @@
 {
-    farm = 8;
-    id = 6457178639;
-    isfamily = 0;
-    isfriend = 0;
-    ispublic = 1;
-    owner = "26726600@N00";
-    secret = a7eae115e4;
-    server = 7143;
-    title = "Daft Streampunk";
+    "farm" : 8,
+    "id" : 6457178639,
+    "isfamily" : 0,
+    "isfriend" : 0,
+    "ispublic" : 1,
+    "owner" : "26726600@N00",
+    "secret" : "a7eae115e4",
+    "server" : 7143,
+    "title" : "Daft Streampunk"
 }
