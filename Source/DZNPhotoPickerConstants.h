@@ -8,11 +8,11 @@
 //  Licence: MIT-Licence
 //
 
-static NSString *const DZNPhotoPickerControllerServiceName = @"DZNPhotoPickerControllerServiceName";
-static NSString *const DZNPhotoPickerControllerCropMode = @"DZNPhotoPickerControllerCropMode";
-static NSString *const DZNPhotoPickerControllerAuthorCredits = @"DZNPhotoPickerControllerAuthorCredits";
+UIKIT_EXTERN NSString *const DZNPhotoPickerControllerServiceName;           // An NSString (i.e. 500px, Flickr, etc.)
+UIKIT_EXTERN NSString *const DZNPhotoPickerControllerCropMode;              // An NSNumber (encapsulating DZNPhotoEditViewControllerCropMode value)
+UIKIT_EXTERN NSString *const DZNPhotoPickerControllerPhotoAttributes;       // A NSDictionary (encapsulating photo attributes)
 
-static NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDidFinishPickingNotification";
+UIKIT_EXTERN NSString *const DZNPhotoPickerDidFinishPickingNotification;    // The notification key used when photo picked.
 
 /*
  * Types of supported photo services
@@ -31,6 +31,8 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerService) {
 /*
  * Types of Creative Commons licences.
  * Defined in http://creativecommons.org/licenses/
+ * More info about 500px license in http://500px.com/creativecommons
+ * More info about Flickr license in ...
  */
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerCCLicense) {
     DZNPhotoPickerControllerCCLicenseBY_ZERO = -1,              // No Rights Reserved                       http://creativecommons.org/about/cc0

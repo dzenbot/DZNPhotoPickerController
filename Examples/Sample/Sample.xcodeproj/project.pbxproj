@@ -210,12 +210,10 @@
 		4FD4402718A54524006FD491 /* DZNPhotoTests */ = {
 			isa = PBXGroup;
 			children = (
-				4FD4402818A54524006FD491 /* DZNPhotoMetadataTests.m */,
-				4FD4402918A54524006FD491 /* DZNPhotoTests-Info.plist */,
-				4FD4402A18A54524006FD491 /* DZNPhotoTests-Prefix.pch */,
 				4FD4402B18A54524006FD491 /* DZNPhotoTests.m */,
-				4FD4402C18A54524006FD491 /* InfoPlist.strings */,
+				4FD4402818A54524006FD491 /* DZNPhotoMetadataTests.m */,
 				4FD4402E18A54524006FD491 /* Fixtures */,
+				4FD4403718A54A00006FD491 /* Supporting Files */,
 			);
 			path = DZNPhotoTests;
 			sourceTree = "<group>";
@@ -227,6 +225,16 @@
 				4FD4403018A54524006FD491 /* flickr.json */,
 			);
 			path = Fixtures;
+			sourceTree = "<group>";
+		};
+		4FD4403718A54A00006FD491 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4FD4402918A54524006FD491 /* DZNPhotoTests-Info.plist */,
+				4FD4402A18A54524006FD491 /* DZNPhotoTests-Prefix.pch */,
+				4FD4402C18A54524006FD491 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

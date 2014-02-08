@@ -15,6 +15,11 @@
 
 #import <MobileCoreServices/UTCoreTypes.h>
 
+NSString *const DZNPhotoPickerControllerServiceName = @"DZNPhotoPickerControllerServiceName";
+NSString *const DZNPhotoPickerControllerCropMode = @"DZNPhotoPickerControllerCropMode";
+NSString *const DZNPhotoPickerControllerPhotoAttributes = @"DZNPhotoPickerControllerPhotoAttributes";
+NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDidFinishPickingNotification";
+
 @interface DZNPhotoPickerController ()
 @property (nonatomic, getter = isEditing) BOOL editing;
 @property (nonatomic, assign) UIImage *editingImage;

@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  Sample
 //
-//  Created by Ignacio on 10/16/13.
+//  Created by Ignacio Romero Zurbuchen on 10/16/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
 //
 

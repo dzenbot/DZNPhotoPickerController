@@ -2,7 +2,7 @@
 //  RootViewController.m
 //  Sample
 //
-//  Created by Ignacio on 10/5/13.
+//  Created by Ignacio Romero Zurbuchen on 10/5/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
 //
 
@@ -139,8 +139,8 @@
     NSLog(@"CropMode : %d", [[userInfo objectForKey:DZNPhotoPickerControllerCropMode] integerValue]);
     NSLog(@"MediaType : %@",[userInfo objectForKey:UIImagePickerControllerMediaType]);
     NSLog(@"SourceName : %@",[userInfo objectForKey:DZNPhotoPickerControllerServiceName]);
-    NSLog(@"AuthorCredits : %@",[userInfo objectForKey:DZNPhotoPickerControllerAuthorCredits]);
-
+    NSLog(@"AuthorCredits : %@",[userInfo objectForKey:DZNPhotoPickerControllerPhotoAttributes]);
+    
     UIImage *image = [userInfo objectForKey:UIImagePickerControllerEditedImage];
     if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];
     

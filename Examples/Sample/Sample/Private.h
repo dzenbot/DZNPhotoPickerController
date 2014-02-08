@@ -2,12 +2,12 @@
 //  Private.h
 //  Sample
 //
-//  Created by Ignacio on 1/2/14.
+//  Created by Ignacio Romero Zurbuchen on 1/2/14.
 //  Copyright (c) 2014 DZN Labs. All rights reserved.
 //
 
 /*
- * IMPORTANT: These tokens are here for example purpose only. If you intend to use DZNPhotoPickerController on one of your projects, please generate new key and secret tokens on every photo services that you will use.
+ * IMPORTANT: These tokens are here for example purpose only. If you intend to use DZNPhotoPickerController on one of your projects, please generate new key and secret tokens on every photo services that you will requiere.
  * For more information about where to generate this token, please refere to DZNPhotoPickerController header documentation.
  */
 

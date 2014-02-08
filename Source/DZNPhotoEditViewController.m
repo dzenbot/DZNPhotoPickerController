@@ -519,7 +519,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     if (metadata.userName) [credits setObject:metadata.userName forKey:@"author_username"];
     if (metadata.profileURL) [credits setObject:metadata.profileURL forKey:@"author_profile_url"];
 
-    [userInfo setObject:credits forKey:DZNPhotoPickerControllerAuthorCredits];
+    [userInfo setObject:credits forKey:DZNPhotoPickerControllerPhotoAttributes];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFinishPickingNotification object:nil userInfo:userInfo];
 }
