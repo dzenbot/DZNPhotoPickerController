@@ -8,7 +8,7 @@
 //  Licence: MIT-Licence
 //
 
-#import <UIKit/UIKit.h>
+#import <UIKit/UIImagePickerController.h>
 #import "DZNPhotoPickerConstants.h"
 
 /* 

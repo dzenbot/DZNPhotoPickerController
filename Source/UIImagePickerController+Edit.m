@@ -9,7 +9,6 @@
 //
 
 #import "UIImagePickerController+Edit.h"
-#import "DZNPhotoPickerController.h"
 
 static DZNPhotoEditViewControllerCropMode _editingMode;
 

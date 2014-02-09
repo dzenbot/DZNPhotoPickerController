@@ -12,7 +12,7 @@
 #import <FlickrKit/FlickrKit.h>
 #import <PXAPI.h>
 
-@class DZNPhotoPickerController, DZNPhotoEditViewController;
+@class DZNPhotoPickerController;
 
 /*
  * The collection view controller in charge of displaying the resulting thumb images.

@@ -9,7 +9,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DZNPhotoPickerConstants.h"
 #import "DZNPhotoEditViewController.h"
 
 @protocol DZNPhotoPickerControllerDelegate;

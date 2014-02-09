@@ -10,8 +10,6 @@
 
 #import "DZNPhotoPickerController.h"
 #import "DZNPhotoDisplayViewController.h"
-#import "DZNPhotoEditViewController.h"
-#import "DZNPhotoMetadata.h"
 
 #import <MobileCoreServices/UTCoreTypes.h>
 
