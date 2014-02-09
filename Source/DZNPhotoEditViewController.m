@@ -473,6 +473,8 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     
     if (editedPhoto && !CGRectEqualToRect(cropRect, CGRectZero)) {
         
+        NSLog(@"%s",__FUNCTION__);
+        
         [DZNPhotoEditViewController didFinishPickingOriginalImage:_imageView.image
                                                       editedImage:editedPhoto
                                                          cropRect:cropRect
@@ -497,7 +499,8 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
                              cropMode:(DZNPhotoEditViewControllerCropMode)cropMode
                         photoMetadata:(DZNPhotoMetadata *)metadata;
 {
-    if (!originalImage || !metadata) {
+    if (!originalImage && !editedImage) {
+        NSLog(@"returning?");
         return;
     }
     
@@ -512,14 +515,15 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     
     if (metadata.serviceName) [userInfo setObject:metadata.serviceName forKey:DZNPhotoPickerControllerServiceName];
 
-    NSMutableDictionary *credits = [NSMutableDictionary dictionaryWithObject:metadata.id forKey:@"photo_id"];
-    if (metadata.detailURL) [credits setObject:metadata.detailURL forKey:@"photo_detail_url"];
-    if (metadata.fullURL) [credits setObject:metadata.fullURL forKey:@"photo_image_url"];
-    if (metadata.fullName) [credits setObject:metadata.fullName forKey:@"author_fullname"];
-    if (metadata.userName) [credits setObject:metadata.userName forKey:@"author_username"];
-    if (metadata.profileURL) [credits setObject:metadata.profileURL forKey:@"author_profile_url"];
+    NSMutableDictionary *attributes = [NSMutableDictionary new];
+    if (metadata.id) [attributes setObject:metadata.id forKey:@"photo_id"];
+    if (metadata.detailURL) [attributes setObject:metadata.detailURL forKey:@"photo_detail_url"];
+    if (metadata.fullURL) [attributes setObject:metadata.fullURL forKey:@"photo_image_url"];
+    if (metadata.fullName) [attributes setObject:metadata.fullName forKey:@"author_fullname"];
+    if (metadata.userName) [attributes setObject:metadata.userName forKey:@"author_username"];
+    if (metadata.profileURL) [attributes setObject:metadata.profileURL forKey:@"author_profile_url"];
 
-    [userInfo setObject:credits forKey:DZNPhotoPickerControllerPhotoAttributes];
+    [userInfo setObject:attributes forKey:DZNPhotoPickerControllerPhotoAttributes];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFinishPickingNotification object:nil userInfo:userInfo];
 }

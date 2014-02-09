@@ -135,11 +135,11 @@
     
     NSLog(@"OriginalImage : %@",[userInfo objectForKey:UIImagePickerControllerOriginalImage]);
     NSLog(@"EditedImage : %@",[userInfo objectForKey:UIImagePickerControllerEditedImage]);
+    NSLog(@"MediaType : %@",[userInfo objectForKey:UIImagePickerControllerMediaType]);
     NSLog(@"CropRect : %@", NSStringFromCGRect([[userInfo objectForKey:UIImagePickerControllerCropRect] CGRectValue]));
     NSLog(@"CropMode : %d", [[userInfo objectForKey:DZNPhotoPickerControllerCropMode] integerValue]);
-    NSLog(@"MediaType : %@",[userInfo objectForKey:UIImagePickerControllerMediaType]);
-    NSLog(@"SourceName : %@",[userInfo objectForKey:DZNPhotoPickerControllerServiceName]);
-    NSLog(@"AuthorCredits : %@",[userInfo objectForKey:DZNPhotoPickerControllerPhotoAttributes]);
+    NSLog(@"ServiceName : %@",[userInfo objectForKey:DZNPhotoPickerControllerServiceName]);
+    NSLog(@"PhotoAttributes : %@",[userInfo objectForKey:DZNPhotoPickerControllerPhotoAttributes]);
     
     UIImage *image = [userInfo objectForKey:UIImagePickerControllerEditedImage];
     if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];
