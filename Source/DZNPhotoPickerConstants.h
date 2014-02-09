@@ -9,8 +9,8 @@
 //
 
 UIKIT_EXTERN NSString *const DZNPhotoPickerControllerServiceName;           // An NSString (i.e. 500px, Flickr, etc.)
-UIKIT_EXTERN NSString *const DZNPhotoPickerControllerCropMode;              // An NSNumber (encapsulating DZNPhotoEditViewControllerCropMode value)
-UIKIT_EXTERN NSString *const DZNPhotoPickerControllerPhotoAttributes;       // A NSDictionary (encapsulating photo attributes)
+UIKIT_EXTERN NSString *const DZNPhotoPickerControllerCropMode;              // An NSString (i.e. square, circular)
+UIKIT_EXTERN NSString *const DZNPhotoPickerControllerPhotoAttributes;       // An NSDictionary (encapsulating photo attributes)
 
 UIKIT_EXTERN NSString *const DZNPhotoPickerDidFinishPickingNotification;    // The notification key used when photo picked.
 
@@ -59,8 +59,16 @@ typedef NS_ENUM(NSInteger, DZNPhotoEditViewControllerCropMode) {
 /*
  * Returns the photo service name string.
  *
- * @param service The specified service type.
- * @return The photo service name.
+ * @param type The specified service type.
+ * @returns The photo service name.
  */
-extern NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service);
+UIKIT_EXTERN NSString *NSStringFromServiceType(DZNPhotoPickerControllerService type);
+
+/*
+ * Returns the photo crop mode name string.
+ *
+ * @param mode The specified crop mode.
+ * @returns The photo crop mode name.
+ */
+UIKIT_EXTERN NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode);
 

@@ -94,17 +94,14 @@ NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDid
 
 #pragma mark - Getter methods
 
-/*
- * Returns an array whose elements identify the available media types for the supported services.
- */
 + (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerService)supportedServices
 {
-    return @[(NSString*)kUTTypeImage];
+    return @[(NSString *)kUTTypeImage];
 }
 
-NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service)
+NSString *NSStringFromServiceType(DZNPhotoPickerControllerService type)
 {
-    switch (service) {
+    switch (type) {
         case DZNPhotoPickerControllerService500px:          return @"500px";
         case DZNPhotoPickerControllerServiceFlickr:         return @"Flickr";
         case DZNPhotoPickerControllerServiceGoogleImages:   return @"Google Images";
@@ -114,6 +111,15 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service)
         case DZNPhotoPickerControllerServiceInstagram:      return @"Instagram";
         case DZNPhotoPickerControllerServiceDribbble:       return @"Dribbble";
         default:                                            return nil;
+    }
+}
+
+extern NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
+{
+    switch (mode) {
+        case DZNPhotoEditViewControllerCropModeSquare:      return @"square";
+        case DZNPhotoEditViewControllerCropModeCircular:    return @"circular";
+        default:                                            return @"none";
     }
 }
 

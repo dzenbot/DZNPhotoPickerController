@@ -64,6 +64,12 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     return self;
 }
 
++ (void)editImage:(UIImage *)image cropMode:(DZNPhotoEditViewControllerCropMode)mode inNavigationController:(UINavigationController *)controller
+{
+    DZNPhotoEditViewController *editController = [[self alloc] initWithImage:image cropMode:mode];
+    [controller pushViewController:editController animated:YES];
+}
+
 
 #pragma mark - View lifecycle
 
@@ -500,18 +506,17 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
                         photoMetadata:(DZNPhotoMetadata *)metadata;
 {
     if (!originalImage && !editedImage) {
-        NSLog(@"returning?");
         return;
     }
     
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                     [NSValue valueWithCGRect:cropRect],UIImagePickerControllerCropRect,
-                                     @"public.image",UIImagePickerControllerMediaType,
+                                     [NSValue valueWithCGRect:cropRect], UIImagePickerControllerCropRect,
+                                     @"public.image", UIImagePickerControllerMediaType,
+                                     NSStringFromCropMode(cropMode), DZNPhotoPickerControllerCropMode,
                                      nil];
     
     if (originalImage) [userInfo setObject:originalImage forKey:UIImagePickerControllerOriginalImage];
     if (editedImage) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
-    if (cropMode != DZNPhotoEditViewControllerCropModeNone) [userInfo setObject:[NSNumber numberWithInteger:cropMode] forKey:DZNPhotoPickerControllerCropMode];
     
     if (metadata.serviceName) [userInfo setObject:metadata.serviceName forKey:DZNPhotoPickerControllerServiceName];
 

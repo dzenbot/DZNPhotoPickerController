@@ -137,7 +137,7 @@
     NSLog(@"EditedImage : %@",[userInfo objectForKey:UIImagePickerControllerEditedImage]);
     NSLog(@"MediaType : %@",[userInfo objectForKey:UIImagePickerControllerMediaType]);
     NSLog(@"CropRect : %@", NSStringFromCGRect([[userInfo objectForKey:UIImagePickerControllerCropRect] CGRectValue]));
-    NSLog(@"CropMode : %d", [[userInfo objectForKey:DZNPhotoPickerControllerCropMode] integerValue]);
+    NSLog(@"CropMode : %@", [userInfo objectForKey:DZNPhotoPickerControllerCropMode]);
     NSLog(@"ServiceName : %@",[userInfo objectForKey:DZNPhotoPickerControllerServiceName]);
     NSLog(@"PhotoAttributes : %@",[userInfo objectForKey:DZNPhotoPickerControllerPhotoAttributes]);
     
@@ -201,8 +201,7 @@
     if (picker.editingMode == DZNPhotoEditViewControllerCropModeCircular) {
         
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-        DZNPhotoEditViewController *photoEditViewController = [[DZNPhotoEditViewController alloc] initWithImage:image cropMode:DZNPhotoEditViewControllerCropModeCircular];
-        [picker pushViewController:photoEditViewController animated:YES];
+        [DZNPhotoEditViewController editImage:image cropMode:picker.editingMode inNavigationController:picker];
     }
     else {
         [self updateImage:info];

@@ -45,7 +45,7 @@ static DZNPhotoEditViewControllerCropMode _editingMode;
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]){
         
-        if ([[notification.userInfo  allKeys] containsObject:UIImagePickerControllerEditedImage]) {
+        if ([[notification.userInfo allKeys] containsObject:UIImagePickerControllerEditedImage]) {
             self.editingMode = DZNPhotoEditViewControllerCropModeNone;
         }
         

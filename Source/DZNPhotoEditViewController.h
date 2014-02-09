@@ -24,7 +24,7 @@
 @property (nonatomic) CGSize cropSize;
 
 /*
- * Initializes a photo editor with a specified cropping mode (square, circular or custom)
+ * Initializes a photo editor with a specified cropping mode (i.e. square, circular).
  *
  * @param metadata The photo metadata.
  * @param mode The crop mode.
@@ -33,14 +33,24 @@
 - (instancetype)initWithPhotoMetadata:(DZNPhotoMetadata *)metadata cropMode:(DZNPhotoEditViewControllerCropMode)mode;
 
 /*
- * Initializes a photo editor initialized with the specified image and cropping mode (square, circular or custom).
- * Use this initializer to push a DZNPhotoEditViewController after picking an image with UIImagePickerController, and use a custom crop mode. This will give users the ability to crop an avatar image, with a circular crop like the Contacts app.
+ * Initializes a photo editor with the specified image and cropping mode (i.e. square, circular).
+ * Use this initializer to push a DZNPhotoEditViewController after picking an image with UIImagePickerController, and use a custom crop mode. This will give users the ability to crop an avatar image, with a circular crop like Apple's Contacts app.
  *
  * @param image The image to display in the photo editor.
  * @param mode The crop mode.
  * @return A new instance of the editor controller.
  */
 - (instancetype)initWithImage:(UIImage *)image cropMode:(DZNPhotoEditViewControllerCropMode)mode;
+
+/*
+ * Initializes and pushes a photo editor with the specified image and cropping mode (i.e. square, circular).
+ *
+ * @param image The image to display in the photo editor.
+ * @param mode The crop mode.
+ * @param controller The navigation controller where to push the view controller. It generally is the UIImagePickerController.
+ * @return A new instance of the editor controller.
+ */
++ (void)editImage:(UIImage *)image cropMode:(DZNPhotoEditViewControllerCropMode)mode inNavigationController:(UINavigationController *)controller;
 
 /*
  * Proxy class method to be called whenever the user picks a photo, with or without editing the image.
