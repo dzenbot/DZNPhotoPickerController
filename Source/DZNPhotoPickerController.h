@@ -15,7 +15,7 @@
 @protocol DZNPhotoPickerControllerDelegate;
 
 /* 
- * A photo picker for iOS 7 using popular photo services like 500px, Flickr and many others.
+ * A photo search/picker for iOS 7 similar to UIImagePickerControl, providing photos from popular photography like 500px, Flickr and many others.
  * This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behavior.
  *
  * @discussion Due to Terms of Use of some photo services, the images cannot be cached when showing thumbnails results and full screen images.
@@ -37,7 +37,8 @@
 
 /*
  * Initializes and returns a newly created picker controller, on edit mode only.
- * This is a convenience method for initializing the receiver and pushing a photo edit view controller onto the navigation stack, with a presetted image to edit.
+ *
+ * @discussion This is a convenience method for initializing the receiver and pushing a photo edit view controller onto the navigation stack, with a presetted image to edit.
  *
  * @param image The image to be edited.
  * @returns The initialized picker controller.
@@ -46,30 +47,24 @@
 
 /*
  * Returns an array of the available media types for the specified service type.
+ *
  * @discussion Only kUTTypeImage will be returned for now. Maybe on a future, this library could have video and audio search support.
  * 
- * @param serviceType The specified service type.
+ * @param services The specified supported services.
  * @return An array whose elements identify the available media types for the supported services.
  */
-+ (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerService)supportedServices;
++ (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerService)services;
 
 /*
  * Registers for a specified photo service and enables API transactions.
- * @discussion You must create an app for every photo service you'd like to use, and generate a consumer key and secret from their sites. Run this method on when initializing the view controller that will use DZNPhotoPickerController, typically in +initialize method.
  *
- * @param service The photo service to register, such as 500px, Flickr, Google Images, etc.
+ * @discussion You must create an app for every photo service you'd like to use, and generate a consumer key and secret from their sites. Run this method on when initializing the view controller that will use DZNPhotoPickerController, typically in the +initialize method.
+ *
+ * @param service The photo service to register (i.e. 500px, Flickr, Google Images, etc.)
  * @param consumerKey The API consumer key.
  * @param consumerSecret The API consumer secret token.
  */
-+ (void)registerForServiceType:(DZNPhotoPickerControllerService)service withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret;
-
-/*
- * Returns the photo service name string.
- *
- * @param service The specified service type.
- * @return The photo service name.
- */
-NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service);
++ (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret;
 
 @end
 

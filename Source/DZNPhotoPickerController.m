@@ -123,7 +123,7 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service)
 /*
  * Registers for a specified photo service and enables API transactions.
  */
-+ (void)registerForServiceType:(DZNPhotoPickerControllerService)service withConsumerKey:(NSString *)consumerKey andConsumerSecret:(NSString *)consumerSecret;
++ (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret;
 {
     switch (service) {
         case DZNPhotoPickerControllerService500px:

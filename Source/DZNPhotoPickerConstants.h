@@ -31,8 +31,10 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerService) {
 /*
  * Types of Creative Commons licences.
  * Defined in http://creativecommons.org/licenses/
- * More info about 500px license in http://500px.com/creativecommons
- * More info about Flickr license in ...
+ *
+ * Additional license info:
+ * 500px: http://500px.com/creativecommons/
+ * Flickr: http://flickr.com/creativecommons/
  */
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerCCLicense) {
     DZNPhotoPickerControllerCCLicenseBY_ZERO = -1,              // No Rights Reserved                       http://creativecommons.org/about/cc0
@@ -53,3 +55,12 @@ typedef NS_ENUM(NSInteger, DZNPhotoEditViewControllerCropMode) {
     DZNPhotoEditViewControllerCropModeSquare = 0,
     DZNPhotoEditViewControllerCropModeCircular
 };
+
+/*
+ * Returns the photo service name string.
+ *
+ * @param service The specified service type.
+ * @return The photo service name.
+ */
+extern NSString *NSStringFromServiceType(DZNPhotoPickerControllerService service);
+

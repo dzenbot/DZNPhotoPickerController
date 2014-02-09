@@ -22,13 +22,13 @@
 
 + (void)initialize
 {
-    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerService500px
-                                    withConsumerKey:k500pxConsumerKey
-                                  andConsumerSecret:k500pxConsumerSecret];
+    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerService500px
+                                    consumerKey:k500pxConsumerKey
+                                  consumerSecret:k500pxConsumerSecret];
     
-    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerServiceFlickr
-                                    withConsumerKey:kFlickrConsumerKey
-                                  andConsumerSecret:kFlickrConsumerSecret];
+    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceFlickr
+                                    consumerKey:kFlickrConsumerKey
+                                  consumerSecret:kFlickrConsumerSecret];
 }
 
 - (void)viewDidLoad
