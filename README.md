@@ -1,5 +1,3 @@
-![UIPhotoPickerController](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController.png)
-
 DZNPhotoPickerController
 ========================
 
@@ -13,11 +11,13 @@ This framework tries to mimic as close as possible the native UIImagePickerContr
 * Edit photo selections with cropping guides (square and circular, like the Contacts app).
 * Support for circular cropping mode for using with UIImagePickerController (check on UIImagePickerController+Edit).
 
+![screenshots](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_screenshots.png)
+
 ## Installation
 
 Available in [Cocoa Pods](http://cocoapods.org/?q=DZNPhotoPickerController)
 ```
-pod 'DZNPhotoPickerController', '~> 1.0.7'
+pod 'DZNPhotoPickerController', '~> 1.0.10'
 ```
 
 ## How to use
