@@ -522,6 +522,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
     NSMutableDictionary *attributes = [NSMutableDictionary new];
     if (metadata.id) [attributes setObject:metadata.id forKey:@"photo_id"];
+    if (metadata.title) [attributes setObject:metadata.title forKey:@"photo_title"];
     if (metadata.detailURL) [attributes setObject:metadata.detailURL forKey:@"photo_detail_url"];
     if (metadata.fullURL) [attributes setObject:metadata.fullURL forKey:@"photo_image_url"];
     if (metadata.fullName) [attributes setObject:metadata.fullName forKey:@"author_fullname"];
