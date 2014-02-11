@@ -416,7 +416,7 @@ static NSString *kTagCellID = @"kTagCellID";
         
         [self showActivityIndicators:YES];
 
-        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:metadata.fullURL
+        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:metadata.sourceURL
                                                               options:SDWebImageCacheMemoryOnly|SDWebImageRetryFailed
                                                              progress:NULL
                                              completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
@@ -499,8 +499,6 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     [self showActivityIndicators:YES];
     _searchTerm = keyword;
-    
-    NSLog(@"Searching \"%@\" (page %d) on %@", keyword, _currentPage, NSStringFromServiceType(_selectedService));
     
     if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
         

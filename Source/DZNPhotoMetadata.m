@@ -37,22 +37,22 @@
             metadata.id = [object valueForKey:@"id"];
             metadata.title = [object valueForKey:@"metadata"];
             metadata.thumbURL = [NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:0] valueForKey:@"url"]];
-            metadata.fullURL = [NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:1] valueForKey:@"url"]];
+            metadata.sourceURL = [NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:1] valueForKey:@"url"]];
             metadata.detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/photo/%@", metadata.id]];
-            metadata.fullName = [[object valueForKeyPath:@"user.fullname"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            metadata.userName = [object valueForKeyPath:@"user.username"];
-            metadata.profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/%@", metadata.userName]];
+            metadata.authorName = [[object valueForKeyPath:@"user.fullname"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            metadata.authorUsername = [object valueForKeyPath:@"user.username"];
+            metadata.authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/%@", metadata.authorUsername]];
         }
         else if ((service & DZNPhotoPickerControllerServiceFlickr) > 0) {
             
             metadata.id = [object valueForKey:@"id"];
             metadata.title = [object valueForKey:@"title"];
             metadata.thumbURL = [[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:object];
-            metadata.fullURL = [[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLarge1024 fromPhotoDictionary:object];
-            metadata.detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.flickr.com/photos/%@/%@", metadata.userName, metadata.id]];
-            metadata.fullName = nil;
-            metadata.userName = [object valueForKey:@"owner"];
-            metadata.profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.flickr.com/photos/%@", metadata.userName]];
+            metadata.sourceURL = [[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLarge1024 fromPhotoDictionary:object];
+            metadata.detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.flickr.com/photos/%@/%@", metadata.authorUsername, metadata.id]];
+            metadata.authorName = nil;
+            metadata.authorUsername = [object valueForKey:@"owner"];
+            metadata.authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.flickr.com/photos/%@", metadata.authorUsername]];
         }
         
         [result addObject:metadata];

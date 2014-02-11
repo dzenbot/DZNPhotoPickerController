@@ -113,7 +113,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         [activityIndicatorView startAnimating];
         [_bottomView addSubview:activityIndicatorView];
         
-        [_imageView setImageWithURL:_photoMetadata.fullURL placeholderImage:nil
+        [_imageView setImageWithURL:_photoMetadata.sourceURL placeholderImage:nil
                             options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
                           completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
                               if (!error) _button.enabled = YES;
@@ -524,10 +524,10 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     if (metadata.id) [attributes setObject:metadata.id forKey:@"photo_id"];
     if (metadata.title) [attributes setObject:metadata.title forKey:@"photo_title"];
     if (metadata.detailURL) [attributes setObject:metadata.detailURL forKey:@"photo_detail_url"];
-    if (metadata.fullURL) [attributes setObject:metadata.fullURL forKey:@"photo_image_url"];
-    if (metadata.fullName) [attributes setObject:metadata.fullName forKey:@"author_fullname"];
-    if (metadata.userName) [attributes setObject:metadata.userName forKey:@"author_username"];
-    if (metadata.profileURL) [attributes setObject:metadata.profileURL forKey:@"author_profile_url"];
+    if (metadata.sourceURL) [attributes setObject:metadata.sourceURL forKey:@"photo_source_url"];
+    if (metadata.authorName) [attributes setObject:metadata.authorName forKey:@"author_name"];
+    if (metadata.authorUsername) [attributes setObject:metadata.authorUsername forKey:@"author_username"];
+    if (metadata.authorProfileURL) [attributes setObject:metadata.authorProfileURL forKey:@"author_profile_url"];
 
     [userInfo setObject:attributes forKey:DZNPhotoPickerControllerPhotoAttributes];
     

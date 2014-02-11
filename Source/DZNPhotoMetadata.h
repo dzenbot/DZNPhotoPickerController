@@ -23,15 +23,15 @@
 /* The url of the thumb version of the photo. */
 @property (nonatomic, copy) NSURL *thumbURL;
 /* The url of the full size version of the photo. */
-@property (nonatomic, copy) NSURL *fullURL;
+@property (nonatomic, copy) NSURL *sourceURL;
 /* The url of the photo's source page. */
 @property (nonatomic, copy) NSURL *detailURL;
 /* The author's full name. */
-@property (nonatomic, copy) NSString *fullName;
+@property (nonatomic, copy) NSString *authorName;
 /* The author's user name. */
-@property (nonatomic, copy) NSString *userName;
+@property (nonatomic, copy) NSString *authorUsername;
 /* The url of the author's profile. */
-@property (nonatomic, copy) NSURL *profileURL;
+@property (nonatomic, copy) NSURL *authorProfileURL;
 /* The name of the photo service. */
 @property (nonatomic, copy) NSString *serviceName;
 
