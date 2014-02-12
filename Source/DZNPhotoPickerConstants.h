@@ -8,7 +8,6 @@
 //  Licence: MIT-Licence
 //
 
-UIKIT_EXTERN NSString *const DZNPhotoPickerControllerServiceName;           // An NSString (i.e. 500px, Flickr, etc.)
 UIKIT_EXTERN NSString *const DZNPhotoPickerControllerCropMode;              // An NSString (i.e. square, circular)
 UIKIT_EXTERN NSString *const DZNPhotoPickerControllerPhotoAttributes;       // An NSDictionary (encapsulating photo attributes)
 

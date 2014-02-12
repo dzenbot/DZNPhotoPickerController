@@ -13,7 +13,6 @@
 
 #import <MobileCoreServices/UTCoreTypes.h>
 
-NSString *const DZNPhotoPickerControllerServiceName = @"DZNPhotoPickerControllerServiceName";
 NSString *const DZNPhotoPickerControllerCropMode = @"DZNPhotoPickerControllerCropMode";
 NSString *const DZNPhotoPickerControllerPhotoAttributes = @"DZNPhotoPickerControllerPhotoAttributes";
 NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDidFinishPickingNotification";

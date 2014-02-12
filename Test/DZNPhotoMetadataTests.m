@@ -68,7 +68,7 @@ static NSBundle *_testTargetBundle;
     DZNPhotoMetadata *metadata = [result firstObject];
     XCTAssertNotNil(metadata, @"metadata cannot be nil.");
     
-    XCTAssertFalse((metadata.id && metadata.title && metadata.thumbURL && metadata.sourceURL && metadata.detailURL && metadata.authorName && metadata.authorUsername && metadata.authorProfileURL && metadata.serviceName), @"No attribute from a metadata object should be nil. %@", metadata.id);
+    XCTAssertFalse((metadata.id && metadata.thumbURL && metadata.sourceURL && metadata.detailURL && metadata.authorName && metadata.authorUsername && metadata.authorProfileURL && metadata.serviceName), @"No attribute from a metadata object should be nil. %@", metadata.id);
 }
 
 @end

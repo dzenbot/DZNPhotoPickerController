@@ -35,7 +35,6 @@
         if ((service & DZNPhotoPickerControllerService500px) > 0) {
             
             metadata.id = [object valueForKey:@"id"];
-            metadata.title = [object valueForKey:@"metadata"];
             metadata.thumbURL = [NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:0] valueForKey:@"url"]];
             metadata.sourceURL = [NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:1] valueForKey:@"url"]];
             metadata.detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/photo/%@", metadata.id]];
@@ -46,7 +45,6 @@
         else if ((service & DZNPhotoPickerControllerServiceFlickr) > 0) {
             
             metadata.id = [object valueForKey:@"id"];
-            metadata.title = [object valueForKey:@"title"];
             metadata.thumbURL = [[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:object];
             metadata.sourceURL = [[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeLarge1024 fromPhotoDictionary:object];
             metadata.detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.flickr.com/photos/%@/%@", metadata.authorUsername, metadata.id]];

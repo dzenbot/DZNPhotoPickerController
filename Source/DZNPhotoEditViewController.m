@@ -518,13 +518,10 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     if (originalImage) [userInfo setObject:originalImage forKey:UIImagePickerControllerOriginalImage];
     if (editedImage) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
     
-    if (metadata.serviceName) [userInfo setObject:metadata.serviceName forKey:DZNPhotoPickerControllerServiceName];
-
-    NSMutableDictionary *attributes = [NSMutableDictionary new];
-    if (metadata.id) [attributes setObject:metadata.id forKey:@"photo_id"];
-    if (metadata.title) [attributes setObject:metadata.title forKey:@"photo_title"];
-    if (metadata.detailURL) [attributes setObject:metadata.detailURL forKey:@"photo_detail_url"];
-    if (metadata.sourceURL) [attributes setObject:metadata.sourceURL forKey:@"photo_source_url"];
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObject:metadata.serviceName forKey:@"source_name"];
+    if (metadata.id) [attributes setObject:metadata.id forKey:@"source_id"];
+    if (metadata.detailURL) [attributes setObject:metadata.detailURL forKey:@"source_detail_url"];
+    if (metadata.sourceURL) [attributes setObject:metadata.sourceURL forKey:@"source_url"];
     if (metadata.authorName) [attributes setObject:metadata.authorName forKey:@"author_name"];
     if (metadata.authorUsername) [attributes setObject:metadata.authorUsername forKey:@"author_username"];
     if (metadata.authorProfileURL) [attributes setObject:metadata.authorProfileURL forKey:@"author_profile_url"];
