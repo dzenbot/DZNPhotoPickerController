@@ -14,7 +14,7 @@
 #import "DZNPhotoDisplayViewCell.h"
 #import "DZNPhotoMetadata.h"
 
-#import "DZNServiceFactory.h"
+#import "DZNPhotoServiceFactory.h"
 
 #define  kDZNPhotoMinimumBarHeight 44.0
 
@@ -471,7 +471,7 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    id<DZNClientProtocol> client =  [[DZNServiceFactory defaultFactory] clientForService:_selectedService];
+    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
     
     [client searchTagsWithKeyword:keyword completion:^(id response, NSError *error) {
         if (error) [self setSearchError:error];
@@ -516,7 +516,7 @@ static NSString *kTagCellID = @"kTagCellID";
     [self showActivityIndicators:YES];
     _searchTerm = keyword;
     
-    id<DZNClientProtocol> client =  [[DZNServiceFactory defaultFactory] clientForService:_selectedService];
+    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
     
     NSLog(@"client : %@", client);
     
@@ -577,7 +577,7 @@ static NSString *kTagCellID = @"kTagCellID";
     
     [self showActivityIndicators:NO];
     
-    id<DZNClientProtocol> client =  [[DZNServiceFactory defaultFactory] clientForService:_selectedService];
+    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
     [client cancelRequest];
     
 //    if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {

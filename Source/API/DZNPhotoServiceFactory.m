@@ -1,18 +1,18 @@
 //
-//  DZNServiceFactory.m
+//  DZNPhotoServiceFactory.m
 //  Sample
 //
 //  Created by Ignacio on 2/12/14.
 //  Copyright (c) 2014 DZN Labs. All rights reserved.
 //
 
-#import "DZNServiceFactory.h"
-#import "DZNHTTPClient.h"
+#import "DZNPhotoServiceFactory.h"
+#import "DZNPhotoServiceClient.h"
 
 #import <CommonCrypto/CommonDigest.h>
 
-NSString *const DZNHTTPClientConsumerKey = @"DZNHTTPClientConsumerKey";
-NSString *const DZNHTTPClientConsumerSecret = @"DZNHTTPClientConsumerSecret";
+NSString *const DZNPhotoServiceClientConsumerKey = @"DZNPhotoServiceClientConsumerKey";
+NSString *const DZNPhotoServiceClientConsumerSecret = @"DZNPhotoServiceClientConsumerSecret";
 
 @interface NSString (hash)
 @end
@@ -39,18 +39,18 @@ NSString *const DZNHTTPClientConsumerSecret = @"DZNHTTPClientConsumerSecret";
 
 @end
 
-@interface DZNServiceFactory ()
+@interface DZNPhotoServiceFactory ()
 @property (nonatomic, strong) NSMutableArray *clients;
 @end
 
-@implementation DZNServiceFactory
+@implementation DZNPhotoServiceFactory
 
 + (instancetype)defaultFactory
 {
-    static DZNServiceFactory *_sharedInstance = nil;
+    static DZNPhotoServiceFactory *_sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedInstance = [DZNServiceFactory new];
+        _sharedInstance = [DZNPhotoServiceFactory new];
         _sharedInstance.clients = [NSMutableArray new];
     });
     return _sharedInstance;
@@ -59,15 +59,15 @@ NSString *const DZNHTTPClientConsumerSecret = @"DZNHTTPClientConsumerSecret";
 
 #pragma mark - Getter methods
 
-- (id<DZNClientProtocol>)clientForService:(DZNPhotoPickerControllerService)service
+- (id<DZNPhotoServiceClientProtocol>)clientForService:(DZNPhotoPickerControllerService)service
 {
-    for (DZNHTTPClient *client in self.clients) {
+    for (DZNPhotoServiceClient *client in self.clients) {
         if (client.service == service) {
             return client;
         }
     }
     
-    DZNHTTPClient *client = [[DZNHTTPClient alloc] initWithService:service];
+    DZNPhotoServiceClient *client = [[DZNPhotoServiceClient alloc] initWithService:service];
     [self.clients addObject:client];
     
     return client;
@@ -78,8 +78,8 @@ NSString *const DZNHTTPClientConsumerSecret = @"DZNHTTPClientConsumerSecret";
     NSAssert(consumerKey, @"Please provide a non-null consumer key.");
     NSAssert(consumerSecret, @"Please provide a non-null consumer key.");
     
-    [[NSUserDefaults standardUserDefaults] setObject:consumerKey forKey:NSStringHashFromServiceType(service, DZNHTTPClientConsumerKey)];
-    [[NSUserDefaults standardUserDefaults] setObject:consumerSecret forKey:NSStringHashFromServiceType(service, DZNHTTPClientConsumerSecret)];
+    [[NSUserDefaults standardUserDefaults] setObject:consumerKey forKey:NSStringHashFromServiceType(service, DZNPhotoServiceClientConsumerKey)];
+    [[NSUserDefaults standardUserDefaults] setObject:consumerSecret forKey:NSStringHashFromServiceType(service, DZNPhotoServiceClientConsumerSecret)];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -91,7 +91,7 @@ NSString *NSStringHashFromServiceType(DZNPhotoPickerControllerService type, NSSt
 }
 
 
-#pragma mark - DZNServiceFactory methods
+#pragma mark - DZNPhotoServiceFactory methods
 
 - (void)reset
 {

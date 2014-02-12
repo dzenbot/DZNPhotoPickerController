@@ -1,5 +1,5 @@
 //
-//  DZNPhotoPickerConstants.h
+//  DZNPhotoPickerControllerConstants.h
 //  DZNPhotoPickerController
 //  https://github.com/dzenbot/DZNPhotoPickerController
 //

@@ -1,5 +1,5 @@
 //
-//  DZNClientProtocol.h
+//  DZNPhotoServiceClientProtocol.h
 //  Sample
 //
 //  Created by Ignacio on 2/12/14.
@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-UIKIT_EXTERN NSString *const DZNHTTPClientConsumerKey;
-UIKIT_EXTERN NSString *const DZNHTTPClientConsumerSecret;
+UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerKey;
+UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerSecret;
 
 UIKIT_EXTERN NSString *NSStringHashFromServiceType(DZNPhotoPickerControllerService type, NSString *key);
 
 typedef void (^DZNHTTPRequestCompletion)(NSArray *response, NSError *error);
 
-@protocol DZNClientProtocol <NSObject>
+@protocol DZNPhotoServiceClientProtocol <NSObject>
 
 - (void)searchTagsWithKeyword:(NSString *)keyword completion:(DZNHTTPRequestCompletion)completion;
 

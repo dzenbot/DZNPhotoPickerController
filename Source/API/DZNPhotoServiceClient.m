@@ -1,19 +1,19 @@
 //
-//  DZNHTTPClient.m
+//  DZNPhotoServiceClient.m
 //  Sample
 //
 //  Created by Ignacio on 2/12/14.
 //  Copyright (c) 2014 DZN Labs. All rights reserved.
 //
 
-#import "DZNHTTPClient.h"
+#import "DZNPhotoServiceClient.h"
 
-@interface DZNHTTPClient ()
+@interface DZNPhotoServiceClient ()
 @property (nonatomic, copy) DZNHTTPRequestCompletion completion;
 @property (nonatomic, copy) NSString *loadingPath;
 @end
 
-@implementation DZNHTTPClient
+@implementation DZNPhotoServiceClient
 
 - (instancetype)initWithService:(DZNPhotoPickerControllerService)service
 {
@@ -62,12 +62,12 @@
 
 - (NSString *)consumerKey
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:NSStringHashFromServiceType(self.service, DZNHTTPClientConsumerKey)];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:NSStringHashFromServiceType(self.service, DZNPhotoServiceClientConsumerKey)];
 }
 
 - (NSString *)consumerSecret
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:NSStringHashFromServiceType(self.service, DZNHTTPClientConsumerSecret)];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:NSStringHashFromServiceType(self.service, DZNPhotoServiceClientConsumerSecret)];
 }
 
 - (NSDictionary *)paramsWithKeyword:(NSString *)keyword
@@ -95,7 +95,7 @@
 }
 
 
-#pragma mark - DZNHTTPClient methods
+#pragma mark - DZNPhotoServiceClient methods
 
 - (void)searchTagsWithKeyword:(NSString *)keyword completion:(DZNHTTPRequestCompletion)completion
 {

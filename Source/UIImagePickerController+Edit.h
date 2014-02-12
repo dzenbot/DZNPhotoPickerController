@@ -9,7 +9,7 @@
 //
 
 #import <UIKit/UIImagePickerController.h>
-#import "DZNPhotoPickerConstants.h"
+#import "DZNPhotoPickerControllerConstants.h"
 
 /* 
  * An informal protocol (category) for allowing custom edition modes on UIImagePickerController,

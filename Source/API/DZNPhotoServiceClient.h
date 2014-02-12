@@ -1,5 +1,5 @@
 //
-//  DZNHTTPClient.h
+//  DZNPhotoServiceClient.h
 //  Sample
 //
 //  Created by Ignacio on 2/12/14.
@@ -7,13 +7,12 @@
 //
 
 #import "AFHTTPClient.h"
-#import "DZNPhotoPickerConstants.h"
-#import "DZNClientProtocol.h"
+#import "DZNPhotoPickerControllerConstants.h"
+#import "DZNPhotoServiceClientProtocol.h"
 
-@interface DZNHTTPClient : AFHTTPClient <DZNClientProtocol>
+@interface DZNPhotoServiceClient : AFHTTPClient <DZNPhotoServiceClientProtocol>
 
 @property (nonatomic) DZNPhotoPickerControllerService service;
-
 
 - (instancetype)initWithService:(DZNPhotoPickerControllerService)service;
 
