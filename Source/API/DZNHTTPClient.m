@@ -20,6 +20,7 @@
     self = [super initWithBaseURL:[self baseURLForService:service]];
     if (self) {
         self.service = service;
+        self.parameterEncoding = AFJSONParameterEncoding;
     }
     return self;
 }
@@ -69,26 +70,61 @@
     return [[NSUserDefaults standardUserDefaults] objectForKey:NSStringHashFromServiceType(self.service, DZNHTTPClientConsumerSecret)];
 }
 
+- (NSDictionary *)paramsWithKeyword:(NSString *)keyword
+{
+    return [self paramsWithKeyword:keyword page:0 resultPerPage:0];
+}
+
+- (NSDictionary *)paramsWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage
+{
+    NSAssert(keyword, @"\"keyword\" cannot be nil.");
+    NSAssert([self consumerKey], @"\"consumerKey\" cannot be nil.");
+    NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil.");
+    
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    [params setObject:[self consumerKey] forKey:@"consumer_key"];
+    [params setObject:keyword forKey:@"term"];
+    if (page > 0) [params setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+    if (resultPerPage > 0) [params setObject:[NSNumber numberWithInteger:resultPerPage] forKey:@"rpp"];
+    
+    if (self.service == DZNPhotoPickerControllerService500px) {
+        [params setObject:@[[NSNumber numberWithInteger:2],[NSNumber numberWithInteger:4]] forKey:@"image_size"];
+    }
+
+    return params;
+}
+
 
 #pragma mark - DZNHTTPClient methods
 
-- (void)searchPhotosWithKeyword:(NSString *)keyword parameters:(NSDictionary *)parameters completion:(DZNHTTPRequestCompletion)completion
-{
-    _loadingPath = [self searchPhotosPathForService:self.service];
-    [self getPath:_loadingPath parameters:parameters completion:completion];
-}
-
-- (void)searchTagsWithKeyword:(NSString *)keyword parameters:(NSDictionary *)parameters completion:(DZNHTTPRequestCompletion)completion
+- (void)searchTagsWithKeyword:(NSString *)keyword completion:(DZNHTTPRequestCompletion)completion
 {
     _loadingPath = [self searchTagsPathForService:self.service];
-    [self getPath:_loadingPath parameters:parameters completion:completion];
+    NSDictionary *params = [self paramsWithKeyword:keyword];
+    
+    [self getPath:_loadingPath params:params completion:completion];
 }
 
-- (void)getPath:(NSString *)path parameters:(NSDictionary *)parameters completion:(DZNHTTPRequestCompletion)completion
+- (void)searchPhotosWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage completion:(DZNHTTPRequestCompletion)completion
 {
-    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id response) {
+    _loadingPath = [self searchPhotosPathForService:self.service];
+    NSDictionary *params = [self paramsWithKeyword:keyword page:page resultPerPage:resultPerPage];
+    
+    [self getPath:_loadingPath params:params completion:completion];
+}
+
+- (void)getPath:(NSString *)path params:(NSDictionary *)params completion:(DZNHTTPRequestCompletion)completion
+{
+    NSLog(@"path : %@", path);
+    NSLog(@"params : %@", params);
+    
+    [self getPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
         
-        if (completion) completion(response, nil);
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+        NSLog(@"isValidJSONObject : %@", json ? @"YES" : @"NO");
+        NSLog(@"json.class : %@", NSStringFromClass(json.class));
+
+        if (completion) completion([json objectForKey:@"photos"], nil);
         _loadingPath = nil;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -99,7 +135,7 @@
     }];
 }
 
-- (void)cancelSearch
+- (void)cancelRequest
 {
     if (_loadingPath) {
         [self cancelAllHTTPOperationsWithMethod:@"GET" path:_loadingPath];

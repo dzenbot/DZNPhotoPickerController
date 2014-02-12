@@ -131,33 +131,33 @@ extern NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
 {
     [DZNServiceFactory setConsumerKey:consumerKey consumerSecret:consumerSecret service:service];
     
-    switch (service) {
-        case DZNPhotoPickerControllerService500px:
-            [PXRequest setConsumerKey:consumerKey consumerSecret:consumerSecret];
-            break;
-            
-        case DZNPhotoPickerControllerServiceFlickr:
-            [[FlickrKit sharedFlickrKit] initializeWithAPIKey:consumerKey sharedSecret:consumerSecret];
-            break;
-            
-        case DZNPhotoPickerControllerServiceGoogleImages:
-            break;
-            
-        case DZNPhotoPickerControllerServiceBingImages:
-            break;
-            
-        case DZNPhotoPickerControllerServiceYahooImages:
-            break;
-            
-        case DZNPhotoPickerControllerServicePanoramio:
-            break;
-            
-        case DZNPhotoPickerControllerServiceInstagram:
-            break;
-            
-        default:
-            break;
-    }
+//    switch (service) {
+//        case DZNPhotoPickerControllerService500px:
+//            [PXRequest setConsumerKey:consumerKey consumerSecret:consumerSecret];
+//            break;
+//            
+//        case DZNPhotoPickerControllerServiceFlickr:
+//            [[FlickrKit sharedFlickrKit] initializeWithAPIKey:consumerKey sharedSecret:consumerSecret];
+//            break;
+//            
+//        case DZNPhotoPickerControllerServiceGoogleImages:
+//            break;
+//            
+//        case DZNPhotoPickerControllerServiceBingImages:
+//            break;
+//            
+//        case DZNPhotoPickerControllerServiceYahooImages:
+//            break;
+//            
+//        case DZNPhotoPickerControllerServicePanoramio:
+//            break;
+//            
+//        case DZNPhotoPickerControllerServiceInstagram:
+//            break;
+//            
+//        default:
+//            break;
+//    }
 }
 
 

@@ -14,6 +14,8 @@
 #import "DZNPhotoDisplayViewCell.h"
 #import "DZNPhotoMetadata.h"
 
+#import "DZNServiceFactory.h"
+
 #define  kDZNPhotoMinimumBarHeight 44.0
 
 static NSString *kThumbCellID = @"kThumbCellID";
@@ -33,7 +35,7 @@ static NSString *kTagCellID = @"kTagCellID";
 @property (nonatomic, strong) NSArray *segmentedControlTitles;
 @property (nonatomic) DZNPhotoPickerControllerService selectedService;
 @property (nonatomic) DZNPhotoPickerControllerService previousService;
-@property (nonatomic, strong) PXRequest *PXRequest;
+//@property (nonatomic, strong) PXRequest *PXRequest;
 @property (nonatomic) NSInteger resultPerPage;
 @property (nonatomic) NSInteger currentPage;
 
@@ -336,6 +338,9 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)setPhotoSearchResponse:(NSArray *)response
 {
+//    NSLog(@"%s : %@",__FUNCTION__, response);
+//    return;
+    
     [self showActivityIndicators:NO];
     
     NSArray *photosMetadata = [DZNPhotoMetadata photosMetadataFromService:_selectedService withResponse:response];
@@ -352,6 +357,9 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)setTagSearchResponse:(NSArray *)response
 {
+    NSLog(@"%s : %@",__FUNCTION__, response);
+    return;
+    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
     if (!_searchTags) _searchTags = [NSMutableArray new];
@@ -462,17 +470,25 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)searchTagsWithKeyword:(NSString *)keyword
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
-    FKFlickrTagsGetRelated *search = [[FKFlickrTagsGetRelated alloc] init];
-    search.tag = keyword;
     
-    [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-                if (error) [self setSearchError:error];
-                else [self setTagSearchResponse:[response valueForKeyPath:@"tags.tag"]];
-            });
+    id<DZNClientProtocol> client =  [[DZNServiceFactory defaultFactory] clientForService:_selectedService];
+    
+    [client searchTagsWithKeyword:keyword completion:^(id response, NSError *error) {
+        if (error) [self setSearchError:error];
+        else [self setTagSearchResponse:response];
     }];
+
+
+//    FKFlickrTagsGetRelated *search = [[FKFlickrTagsGetRelated alloc] init];
+//    search.tag = keyword;
+//    
+//    [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//                if (error) [self setSearchError:error];
+//                else [self setTagSearchResponse:[response valueForKeyPath:@"tags.tag"]];
+//            });
+//    }];
 }
 
 /*
@@ -500,42 +516,54 @@ static NSString *kTagCellID = @"kTagCellID";
     [self showActivityIndicators:YES];
     _searchTerm = keyword;
     
-    if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
-        
-        NSString *term = [_searchTerm stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-        
-        _PXRequest = [PXRequest requestForSearchTerm:term page:_currentPage resultsPerPage:_resultPerPage
-                             photoSizes:PXPhotoModelSizeSmallThumbnail|PXPhotoModelSizeExtraLarge
-                                 except:PXPhotoModelCategoryUncategorized
-                             completion:^(NSDictionary *response, NSError *error) {
-                                 
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (error) [self setSearchError:error];
-                else [self setPhotoSearchResponse:[response valueForKey:@"photos"]];
-            });
-                                 
-        }];
-    }
-    else if ((_selectedService & DZNPhotoPickerControllerServiceFlickr) > 0) {
-        
-        FKFlickrPhotosSearch *search = [[FKFlickrPhotosSearch alloc] init];
-        search.text = _searchTerm; //[keyword stringByReplacingOccurrencesOfString:@" " withString:@" OR "];
-        search.content_type = @"1";
-        search.safe_search = @"1";
-        search.media = @"photos";
-        search.in_gallery = @"true";
-        search.per_page = [NSString stringWithFormat:@"%ld",(long)_resultPerPage];
-        search.page = [NSString stringWithFormat:@"%ld",(long)_currentPage];
+    id<DZNClientProtocol> client =  [[DZNServiceFactory defaultFactory] clientForService:_selectedService];
+    
+    NSLog(@"client : %@", client);
+    
+    [client searchPhotosWithKeyword:keyword page:_currentPage resultPerPage:_resultPerPage completion:^(id response, NSError *error) {
+        if (error) [self setSearchError:error];
+        else [self setPhotoSearchResponse:response];
+    }];
 
-        [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (error) [self setSearchError:error];
-                else [self setPhotoSearchResponse:[response valueForKeyPath:@"photos.photo"]];
-            });
-            
-        }];
-    }
+    
+//    if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
+//        
+//        NSString *term = [_searchTerm stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+//        
+//        
+//        
+//        _PXRequest = [PXRequest requestForSearchTerm:term page:_currentPage resultsPerPage:_resultPerPage
+//                             photoSizes:PXPhotoModelSizeSmallThumbnail|PXPhotoModelSizeExtraLarge
+//                                 except:PXPhotoModelCategoryUncategorized
+//                             completion:^(NSDictionary *response, NSError *error) {
+//                                 
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                if (error) [self setSearchError:error];
+//                else [self setPhotoSearchResponse:[response valueForKey:@"photos"]];
+//            });
+//                                 
+//        }];
+//    }
+//    else if ((_selectedService & DZNPhotoPickerControllerServiceFlickr) > 0) {
+//        
+//        FKFlickrPhotosSearch *search = [[FKFlickrPhotosSearch alloc] init];
+//        search.text = _searchTerm; //[keyword stringByReplacingOccurrencesOfString:@" " withString:@" OR "];
+//        search.content_type = @"1";
+//        search.safe_search = @"1";
+//        search.media = @"photos";
+//        search.in_gallery = @"true";
+//        search.per_page = [NSString stringWithFormat:@"%ld",(long)_resultPerPage];
+//        search.page = [NSString stringWithFormat:@"%ld",(long)_currentPage];
+//
+//        [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
+//            
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                if (error) [self setSearchError:error];
+//                else [self setPhotoSearchResponse:[response valueForKeyPath:@"photos.photo"]];
+//            });
+//            
+//        }];
+//    }
 }
 
 /*
@@ -549,16 +577,19 @@ static NSString *kTagCellID = @"kTagCellID";
     
     [self showActivityIndicators:NO];
     
-    if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
-        
-        if (_PXRequest) {
-            [_PXRequest cancel];
-            _PXRequest = nil;
-        }
-    }
-    else if ((_selectedService & DZNPhotoPickerControllerServiceFlickr) > 0) {
-        
-    }
+    id<DZNClientProtocol> client =  [[DZNServiceFactory defaultFactory] clientForService:_selectedService];
+    [client cancelRequest];
+    
+//    if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
+//        
+//        if (_PXRequest) {
+//            [_PXRequest cancel];
+//            _PXRequest = nil;
+//        }
+//    }
+//    else if ((_selectedService & DZNPhotoPickerControllerServiceFlickr) > 0) {
+//        
+//    }
     
     for (DZNPhotoDisplayViewCell *cell in [self.collectionView visibleCells]) {
         [cell.imageView cancelCurrentImageLoad];

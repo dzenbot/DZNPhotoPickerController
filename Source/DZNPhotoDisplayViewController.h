@@ -9,8 +9,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <FlickrKit/FlickrKit.h>
-#import <PXAPI.h>
+//#import <FlickrKit/FlickrKit.h>
+//#import <PXAPI.h>
 
 @class DZNPhotoPickerController;
 

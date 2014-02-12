@@ -13,6 +13,14 @@ UIKIT_EXTERN NSString *const DZNHTTPClientConsumerSecret;
 
 UIKIT_EXTERN NSString *NSStringHashFromServiceType(DZNPhotoPickerControllerService type, NSString *key);
 
+typedef void (^DZNHTTPRequestCompletion)(NSArray *response, NSError *error);
+
 @protocol DZNClientProtocol <NSObject>
+
+- (void)searchTagsWithKeyword:(NSString *)keyword completion:(DZNHTTPRequestCompletion)completion;
+
+- (void)searchPhotosWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage completion:(DZNHTTPRequestCompletion)completion;
+
+- (void)cancelRequest;
 
 @end

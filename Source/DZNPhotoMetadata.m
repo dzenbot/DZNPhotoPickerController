@@ -34,6 +34,9 @@
         
         if ((service & DZNPhotoPickerControllerService500px) > 0) {
             
+            NSLog(@"object : %@", object);
+//            continue;
+            
             metadata.id = [object valueForKey:@"id"];
             metadata.thumbURL = [NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:0] valueForKey:@"url"]];
             metadata.sourceURL = [NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:1] valueForKey:@"url"]];
