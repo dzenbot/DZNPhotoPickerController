@@ -46,6 +46,7 @@
 		4F9C250218AB1B8900940B3F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F9C24FA18AB1B8900940B3F /* InfoPlist.strings */; };
 		4F9C250318AB1B8900940B3F /* 500px.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F9C24FD18AB1B8900940B3F /* 500px.json */; };
 		4F9C250418AB1B8900940B3F /* flickr.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F9C24FE18AB1B8900940B3F /* flickr.json */; };
+		4F9C251318AB217700940B3F /* DZNServiceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C251218AB217700940B3F /* DZNServiceFactory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,9 @@
 		4F9C24FB18AB1B8900940B3F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4F9C24FD18AB1B8900940B3F /* 500px.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 500px.json; sourceTree = "<group>"; };
 		4F9C24FE18AB1B8900940B3F /* flickr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = flickr.json; sourceTree = "<group>"; };
+		4F9C251118AB217700940B3F /* DZNServiceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNServiceFactory.h; sourceTree = "<group>"; };
+		4F9C251218AB217700940B3F /* DZNServiceFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNServiceFactory.m; sourceTree = "<group>"; };
+		4F9C251418AB224600940B3F /* DZNClientProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZNClientProtocol.h; sourceTree = "<group>"; };
 		4FB91A9C18A322B900F8C92B /* DZNPhotoPickerConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerConstants.h; sourceTree = "<group>"; };
 		4FD61C0618759E0D0048DC0C /* Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
 		81CB7D6B303A4384A940032C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,6 +206,7 @@
 				4FB91A9C18A322B900F8C92B /* DZNPhotoPickerConstants.h */,
 				4F29052A18759967005E9F39 /* UIImagePickerController+Edit.h */,
 				4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */,
+				4F9C250C18AB216300940B3F /* API */,
 			);
 			name = Source;
 			path = ../../Source;
@@ -236,6 +241,16 @@
 				4F9C24FA18AB1B8900940B3F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4F9C250C18AB216300940B3F /* API */ = {
+			isa = PBXGroup;
+			children = (
+				4F9C251118AB217700940B3F /* DZNServiceFactory.h */,
+				4F9C251218AB217700940B3F /* DZNServiceFactory.m */,
+				4F9C251418AB224600940B3F /* DZNClientProtocol.h */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -378,6 +393,7 @@
 			files = (
 				4F570187180E5E6D00E12444 /* DZNPhotoEditViewController.m in Sources */,
 				4F570185180E5E6D00E12444 /* DZNPhotoDisplayViewCell.m in Sources */,
+				4F9C251318AB217700940B3F /* DZNServiceFactory.m in Sources */,
 				4F570186180E5E6D00E12444 /* DZNPhotoDisplayViewController.m in Sources */,
 				4F570184180E5E6D00E12444 /* DZNPhotoMetadata.m in Sources */,
 				4F570151180E5D0E00E12444 /* AppDelegate.m in Sources */,
