@@ -99,7 +99,7 @@
     picker.allowsEditing = YES;
     picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     picker.delegate = self;
-    picker.initialSearchTerm = @"Nature";
+//    picker.initialSearchTerm = @"Nature";
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         _popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
