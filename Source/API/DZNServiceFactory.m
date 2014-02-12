@@ -7,6 +7,7 @@
 //
 
 #import "DZNServiceFactory.h"
+#import "DZNHTTPClient.h"
 
 @interface DZNServiceFactory ()
 @property (nonatomic, strong) NSMutableArray *clients;
