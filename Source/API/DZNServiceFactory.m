@@ -24,7 +24,10 @@ NSString *const DZNHTTPClientConsumerSecret = @"DZNHTTPClientConsumerSecret";
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion"
     CC_SHA1(data.bytes, data.length, digest);
+#pragma clang diagnostic pop
     
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
     
