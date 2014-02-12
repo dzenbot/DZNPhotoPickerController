@@ -16,4 +16,8 @@
 
 - (id<DZNClientProtocol>)clientForService:(DZNPhotoPickerControllerService)service;
 
+- (void)reset;
+
++ (void)setConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret service:(DZNPhotoPickerControllerService)service;
+
 @end

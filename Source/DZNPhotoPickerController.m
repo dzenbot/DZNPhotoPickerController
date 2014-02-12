@@ -10,6 +10,7 @@
 
 #import "DZNPhotoPickerController.h"
 #import "DZNPhotoDisplayViewController.h"
+#import "DZNServiceFactory.h"
 
 #import <MobileCoreServices/UTCoreTypes.h>
 
@@ -128,6 +129,8 @@ extern NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
  */
 + (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret;
 {
+    [DZNServiceFactory setConsumerKey:consumerKey consumerSecret:consumerSecret service:service];
+    
     switch (service) {
         case DZNPhotoPickerControllerService500px:
             [PXRequest setConsumerKey:consumerKey consumerSecret:consumerSecret];

@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+UIKIT_EXTERN NSString *const DZNHTTPClientConsumerKey;
+UIKIT_EXTERN NSString *const DZNHTTPClientConsumerSecret;
+
+UIKIT_EXTERN NSString *NSStringHashFromServiceType(DZNPhotoPickerControllerService type, NSString *key);
+
 @protocol DZNClientProtocol <NSObject>
 
 @end
