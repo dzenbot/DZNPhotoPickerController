@@ -27,10 +27,7 @@
     for (NSDictionary *object in reponse) {
         
         DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:service];
-        
-        if ((service & DZNPhotoPickerControllerServiceFlickr) > 0) {
-            tag.content = [object objectForKey:@"_content"];
-        }
+        tag.content = [object objectForKey:@"_content"];
         
         [result addObject:tag];
     }

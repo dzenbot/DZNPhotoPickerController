@@ -13,6 +13,7 @@
 
 #import "DZNPhotoDisplayViewCell.h"
 #import "DZNPhotoMetadata.h"
+#import "DZNPhotoTag.h"
 
 #import "DZNPhotoServiceFactory.h"
 
@@ -364,11 +365,11 @@ static NSString *kTagCellID = @"kTagCellID";
     if (!_searchTags) _searchTags = [NSMutableArray new];
     else [_searchTags removeAllObjects];
     
-    for (NSDictionary *tag in response) {
-        [_searchTags addObject:[tag objectForKey:@"_content"]];
-    }
+    _searchTags = [NSMutableArray arrayWithArray:[DZNPhotoTag photoTagListFromService:_selectedService withResponse:response]];
     
-    [_searchTags insertObject:_searchBar.text atIndex:0];
+    DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:_selectedService];
+    tag.content = _searchBar.text;
+    [_searchTags insertObject:tag atIndex:0];
     
     [_searchController.searchResultsTableView reloadData];
 }
@@ -729,8 +730,8 @@ static NSString *kTagCellID = @"kTagCellID";
     
     if (indexPath.row <= _searchTags.count-1) {
         
-        NSString *tagString = [_searchTags objectAtIndex:indexPath.row];
-        cell.textLabel.text = tagString;
+        DZNPhotoTag *tag = [_searchTags objectAtIndex:indexPath.row];
+        cell.textLabel.text = tag.content;
     }
     else {
         cell.textLabel.text = @"Empty";
@@ -749,8 +750,8 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *tagString = [_searchTags objectAtIndex:indexPath.row];
-    [self shouldSearchPhotos:tagString];
+    DZNPhotoTag *tag = [_searchTags objectAtIndex:indexPath.row];
+    [self shouldSearchPhotos:tag.content];
     
     [self.searchDisplayController setActive:NO animated:YES];
     

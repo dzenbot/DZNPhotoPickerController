@@ -309,7 +309,7 @@
 		4F570135180E5D0E00E12444 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = DZ;
+				CLASSPREFIX = DZN;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "DZN Labs";
 				TargetAttributes = {
