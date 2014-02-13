@@ -500,6 +500,11 @@ static NSString *kTagCellID = @"kTagCellID";
     [self showActivityIndicators:YES];
     _searchTerm = keyword;
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion"
+    NSLog(@"Searching \"%@\" (page %d) on %@", keyword, _currentPage, NSStringFromServiceType(_selectedService));
+#pragma clang diagnostic pop
+    
     if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
         
         NSString *term = [_searchTerm stringByReplacingOccurrencesOfString:@" " withString:@"+"];
