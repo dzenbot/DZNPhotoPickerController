@@ -17,6 +17,8 @@
 
 /* The current photo service. */
 @property (nonatomic) DZNPhotoPickerControllerService service;
+/* YES if the HTTP client is loading. */
+@property (nonatomic, readonly) BOOL loading;
 
 /*
  * Initializes a new HTTP service client.

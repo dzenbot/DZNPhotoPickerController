@@ -339,16 +339,13 @@ static NSString *kTagCellID = @"kTagCellID";
 /*
  * Sets the current photo search response and refreshs the collection view.
  */
-- (void)setPhotoSearchResponse:(NSArray *)response
+- (void)setPhotoSearchList:(NSArray *)list
 {
-//    NSLog(@"%s : %@",__FUNCTION__, response);
-//    return;
+    NSLog(@"%s : %@",__FUNCTION__, list);
     
     [self showActivityIndicators:NO];
     
-    NSArray *photosMetadata = [DZNPhotoMetadata photoMetadataListFromService:_selectedService withResponse:response];
-    
-    [_photosMetadata addObjectsFromArray:photosMetadata];
+    [_photosMetadata addObjectsFromArray:list];
     [self.collectionView reloadData];
     
     CGSize contentSize = self.collectionView.contentSize;
@@ -358,14 +355,14 @@ static NSString *kTagCellID = @"kTagCellID";
 /*
  * Sets a tag search response and refreshs the results tableview from the UISearchDisplayController.
  */
-- (void)setTagSearchResponse:(NSArray *)response
+- (void)setTagSearchList:(NSArray *)list
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
     if (!_searchTags) _searchTags = [NSMutableArray new];
     else [_searchTags removeAllObjects];
     
-    _searchTags = [NSMutableArray arrayWithArray:[DZNPhotoTag photoTagListFromService:_selectedService withResponse:response]];
+    _searchTags = [NSMutableArray arrayWithArray:list];
     
     DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:_selectedService];
     tag.content = _searchBar.text;
@@ -477,9 +474,9 @@ static NSString *kTagCellID = @"kTagCellID";
     
     id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
     
-    [client searchTagsWithKeyword:keyword completion:^(id response, NSError *error) {
+    [client searchTagsWithKeyword:keyword completion:^(NSArray *list, NSError *error) {
         if (error) [self setSearchError:error];
-        else [self setTagSearchResponse:response];
+        else [self setTagSearchList:list];
     }];
 }
 
@@ -510,9 +507,9 @@ static NSString *kTagCellID = @"kTagCellID";
     
     id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
     
-    [client searchPhotosWithKeyword:keyword page:_currentPage resultPerPage:_resultPerPage completion:^(id response, NSError *error) {
+    [client searchPhotosWithKeyword:keyword page:_currentPage resultPerPage:_resultPerPage completion:^(NSArray *list, NSError *error) {
         if (error) [self setSearchError:error];
-        else [self setPhotoSearchResponse:response];
+        else [self setPhotoSearchList:list];
     }];
 }
 

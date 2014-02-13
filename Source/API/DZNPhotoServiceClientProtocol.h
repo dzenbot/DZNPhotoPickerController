@@ -13,7 +13,7 @@ UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerSecret;
 
 UIKIT_EXTERN NSString *NSStringHashFromServiceType(DZNPhotoPickerControllerService type, NSString *key);
 
-typedef void (^DZNHTTPRequestCompletion)(NSArray *response, NSError *error);
+typedef void (^DZNHTTPRequestCompletion)(NSArray *list, NSError *error);
 
 /*
  * Base HTTP photo service protocol.

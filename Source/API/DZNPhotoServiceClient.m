@@ -178,6 +178,18 @@ static NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService servi
     return data;
 }
 
+- (NSArray *)objectListForKeyPath:(NSString *)keyPath withJSON:(NSDictionary *)json
+{
+    NSArray *object = [json valueForKeyPath:keyPath];
+    
+    if ([keyPath isEqualToString:tagsResourceKeyPathForService(self.service)]) {
+        return [DZNPhotoTag photoTagListFromService:self.service withResponse:object];
+    }
+    else {
+        return [DZNPhotoMetadata photoMetadataListFromService:self.service withResponse:object];
+    }
+}
+
 
 #pragma mark - DZNPhotoServiceClient methods
 
@@ -213,7 +225,7 @@ static NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService servi
         NSData *data = [self processData:response];
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves|NSJSONReadingAllowFragments error:nil];
 
-        if (completion) completion([json valueForKeyPath:keyPath], nil);
+        if (completion) completion([self objectListForKeyPath:keyPath withJSON:json], nil);
         _loadingPath = nil;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -227,7 +239,11 @@ static NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService servi
 - (void)cancelRequest
 {
     if (_loadingPath) {
+        
+        if (self.service == DZNPhotoPickerControllerServiceFlickr) _loadingPath = @"";
         [self cancelAllHTTPOperationsWithMethod:@"GET" path:_loadingPath];
+        
+        _loadingPath = nil;
     }
 }
 
