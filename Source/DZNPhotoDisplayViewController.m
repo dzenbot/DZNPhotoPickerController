@@ -528,9 +528,9 @@ static NSString *kTagCellID = @"kTagCellID";
         [client cancelRequest];
     }
     
-    for (DZNPhotoDisplayViewCell *cell in [self.collectionView visibleCells]) {
-        [cell.imageView cancelCurrentImageLoad];
-    }
+//    for (DZNPhotoDisplayViewCell *cell in [self.collectionView visibleCells]) {
+//        [cell.imageView cancelCurrentImageLoad];
+//    }
 }
 
 /*

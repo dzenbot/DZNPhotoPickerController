@@ -170,15 +170,15 @@ extern NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
 {
     [self setViewControllers:nil];
     
-    DZNPhotoDisplayViewController *photoDisplayController = [[DZNPhotoDisplayViewController alloc] init];
-    photoDisplayController.searchTerm = _initialSearchTerm;
+    DZNPhotoDisplayViewController *controller = [[DZNPhotoDisplayViewController alloc] init];
+    controller.searchTerm = _initialSearchTerm;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPicker:)];
-        [photoDisplayController.navigationItem setRightBarButtonItem:cancel];
+        [controller.navigationItem setRightBarButtonItem:cancel];
     }
     
-    [self setViewControllers:@[photoDisplayController]];
+    [self setViewControllers:@[controller]];
 }
 
 /*
@@ -187,9 +187,9 @@ extern NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
 - (void)showPhotoEditorController
 {
     [self setViewControllers:nil];
-    DZNPhotoEditViewController *photoEditorController = [[DZNPhotoEditViewController alloc] initWithImage:_editingImage cropMode:self.editingMode];
     
-    [self setViewControllers:@[photoEditorController]];
+    DZNPhotoEditViewController *controller = [[DZNPhotoEditViewController alloc] initWithImage:_editingImage cropMode:self.editingMode];
+    [self setViewControllers:@[controller]];
 }
 
 /*
@@ -207,7 +207,10 @@ extern NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
  */
 - (void)cancelPicker:(id)sender
 {
-    
+    DZNPhotoDisplayViewController *controller = (DZNPhotoDisplayViewController *)[self.viewControllers objectAtIndex:0];
+    if ([controller respondsToSelector:@selector(stopLoadingRequest)]) {
+        [controller stopLoadingRequest];
+    }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerControllerDidCancel:)]) {
         [self.delegate photoPickerControllerDidCancel:self];
