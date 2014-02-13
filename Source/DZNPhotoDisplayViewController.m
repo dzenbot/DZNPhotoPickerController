@@ -474,7 +474,7 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
+    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
     
     [client searchTagsWithKeyword:keyword completion:^(id response, NSError *error) {
         if (error) [self setSearchError:error];
@@ -508,7 +508,7 @@ static NSString *kTagCellID = @"kTagCellID";
     _searchTerm = keyword;
     
     id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
-        
+    
     [client searchPhotosWithKeyword:keyword page:_currentPage resultPerPage:_resultPerPage completion:^(id response, NSError *error) {
         if (error) [self setSearchError:error];
         else [self setPhotoSearchResponse:response];

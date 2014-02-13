@@ -163,12 +163,12 @@ static NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService servi
 - (NSData *)processData:(NSData *)data
 {
     if (self.service == DZNPhotoPickerControllerServiceFlickr) {
+        
         NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        if ([string rangeOfString:@"jsonFlickrApi("].location != NSNotFound) {
-            string = [[string stringByReplacingOccurrencesOfString:@"jsonFlickrApi(" withString:@""] stringByReplacingOccurrencesOfString:@")" withString:@""];
-            
-            NSLog(@"string : %@", string);
-            
+        NSString *responsePrefix = @"jsonFlickrApi(";
+        
+        if ([string rangeOfString:responsePrefix].location != NSNotFound) {
+            string = [[string stringByReplacingOccurrencesOfString:responsePrefix withString:@""] stringByReplacingOccurrencesOfString:@")" withString:@""];
             return [string dataUsingEncoding:NSUTF8StringEncoding];
         }
     }
@@ -181,11 +181,16 @@ static NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService servi
 
 - (void)searchTagsWithKeyword:(NSString *)keyword completion:(DZNHTTPRequestCompletion)completion
 {
+    if (_loadingPath) {
+        [self cancelRequest];
+        return;
+    }
+    
     _loadingPath = tagSearchUrlPathForService(self.service);
     NSString *keyPath = tagsResourceKeyPathForService(self.service);
     NSDictionary *params = [self tagsParamsWithKeyword:keyword];
     
-    [self getResource:keyPath path:_loadingPath params:params completion:completion];
+    [self getResourceForKeyPath:keyPath path:_loadingPath params:params completion:completion];
 }
 
 - (void)searchPhotosWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage completion:(DZNHTTPRequestCompletion)completion
@@ -194,29 +199,22 @@ static NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService servi
     NSString *keyPath = photosResourceKeyPathForService(self.service);
     NSDictionary *params = [self photosParamsWithKeyword:keyword page:page resultPerPage:resultPerPage];
     
-    [self getResource:keyPath path:_loadingPath params:params completion:completion];
+    [self getResourceForKeyPath:keyPath path:_loadingPath params:params completion:completion];
 }
 
-- (void)getResource:(NSString *)resource path:(NSString *)path params:(NSDictionary *)params completion:(DZNHTTPRequestCompletion)completion
+- (void)getResourceForKeyPath:(NSString *)keyPath path:(NSString *)path params:(NSDictionary *)params completion:(DZNHTTPRequestCompletion)completion
 {
-    if (_loadingPath) {
-        [self cancelRequest];
-        return;
-    }
-    
     if (self.service == DZNPhotoPickerControllerServiceFlickr) path = @"";
-    
+
     [self getPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
         
         NSData *data = [self processData:response];
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves|NSJSONReadingAllowFragments error:nil];
 
-        if (completion) completion([json valueForKeyPath:resource], nil);
+        if (completion) completion([json valueForKeyPath:keyPath], nil);
         _loadingPath = nil;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        NSLog(@"error : %@", error);
         
         if (completion) completion(nil, error);
         _loadingPath = nil;

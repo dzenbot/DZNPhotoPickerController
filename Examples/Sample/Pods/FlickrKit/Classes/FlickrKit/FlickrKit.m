@@ -416,6 +416,9 @@
 	//Find possible secret
 	NSString *secret = [photoDict valueForKey:@"secret"];
 	
+    NSMutableString *url = [NSMutableString stringWithFormat:@"http://farm%@.static.flickr.com/%@/%@_%@", [[photoDict valueForKey:@"farm"] stringValue], [photoDict valueForKey:@"server"], [photoDict valueForKey:@"id"], [photoDict valueForKey:@"secret"]];
+    [url appendFormat:@"_q.jpg"];
+    [url appendFormat:@"_b.jpg"];
 	
 	return [self photoURLForSize:size photoID:photoID server:server secret:secret farm:farm];
 }
@@ -423,6 +426,10 @@
 - (NSURL *) photoURLForSize:(FKPhotoSize)size photoID:(NSString *)photoID server:(NSString *)server secret:(NSString *)secret farm:(NSString *)farm {
     // http://farm{farm-id}.static.flickr.com/{server-id}/{id}_{secret}_[mstb].jpg
 	// http://farm{farm-id}.static.flickr.com/{server-id}/{id}_{secret}.jpg
+    
+    NSMutableString *url = [NSMutableString stringWithFormat:@"http://farm%@.static.flickr.com/%@/%@_%@", farm, server, photoID, server];
+    [url appendFormat:@"_q.jpg"];
+    [url appendFormat:@"_b.jpg"];
     
     static NSString *photoSource = @"http://static.flickr.com/";
 	
@@ -439,6 +446,8 @@
 	
 	NSString *sizeKey = FKIdentifierForSize(size);
 	[URLString appendFormat:@"_%@.jpg", sizeKey];
+    
+    http://farm6.static.flickr.com/5205/5307511113_4cbdb71883_q.jpg
     
 	return [NSURL URLWithString:URLString];
 }
