@@ -1,1 +1,0 @@
-../../FlickrKit/Classes/Model/Generated/Photos/People/FKFlickrPhotosPeopleDeleteCoords.h

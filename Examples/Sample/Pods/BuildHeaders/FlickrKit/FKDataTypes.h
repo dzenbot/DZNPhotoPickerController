@@ -1,1 +1,0 @@
-../../FlickrKit/Classes/FlickrKit/FKDataTypes.h
