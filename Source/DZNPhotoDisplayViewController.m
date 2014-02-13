@@ -517,9 +517,7 @@ static NSString *kTagCellID = @"kTagCellID";
     _searchTerm = keyword;
     
     id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
-    
-    NSLog(@"client : %@", client);
-    
+        
     [client searchPhotosWithKeyword:keyword page:_currentPage resultPerPage:_resultPerPage completion:^(id response, NSError *error) {
         if (error) [self setSearchError:error];
         else [self setPhotoSearchResponse:response];
