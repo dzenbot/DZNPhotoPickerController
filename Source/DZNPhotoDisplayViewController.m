@@ -345,7 +345,7 @@ static NSString *kTagCellID = @"kTagCellID";
     
     [self showActivityIndicators:NO];
     
-    NSArray *photosMetadata = [DZNPhotoMetadata photosMetadataFromService:_selectedService withResponse:response];
+    NSArray *photosMetadata = [DZNPhotoMetadata photoMetadataListFromService:_selectedService withResponse:response];
     
     [_photosMetadata addObjectsFromArray:photosMetadata];
     [self.collectionView reloadData];

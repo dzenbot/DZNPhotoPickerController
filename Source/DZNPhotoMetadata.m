@@ -10,11 +10,9 @@
 
 #import "DZNPhotoMetadata.h"
 
-#import <FlickrKit/FlickrKit.h>
-
 @implementation DZNPhotoMetadata
 
-+ (instancetype)photosMetadataFromService:(DZNPhotoPickerControllerService)service
++ (instancetype)photoMetadataFromService:(DZNPhotoPickerControllerService)service
 {
     if (service != 0) {
         DZNPhotoMetadata *metadata = [DZNPhotoMetadata new];
@@ -24,13 +22,13 @@
     return nil;
 }
 
-+ (NSArray *)photosMetadataFromService:(DZNPhotoPickerControllerService)service withResponse:(NSArray *)reponse
++ (NSArray *)photoMetadataListFromService:(DZNPhotoPickerControllerService)service withResponse:(NSArray *)reponse
 {
     NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:reponse.count];
     
     for (NSDictionary *object in reponse) {
         
-        DZNPhotoMetadata *metadata = [DZNPhotoMetadata photosMetadataFromService:service];
+        DZNPhotoMetadata *metadata = [DZNPhotoMetadata photoMetadataFromService:service];
         
         if ((service & DZNPhotoPickerControllerService500px) > 0) {
             
@@ -39,6 +37,7 @@
             metadata.authorUsername = [object valueForKeyPath:@"user.username"];
             metadata.authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/%@", metadata.authorUsername]];
             metadata.detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/photo/%@", metadata.id]];
+            
             metadata.thumbURL = [NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:0] valueForKey:@"url"]];
             metadata.sourceURL = [NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:1] valueForKey:@"url"]];
         }

@@ -48,6 +48,7 @@
 		4F9C250418AB1B8900940B3F /* flickr.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F9C24FE18AB1B8900940B3F /* flickr.json */; };
 		4F9C251318AB217700940B3F /* DZNPhotoServiceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C251218AB217700940B3F /* DZNPhotoServiceFactory.m */; };
 		4F9C251718AB25C800940B3F /* DZNPhotoServiceClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C251618AB25C800940B3F /* DZNPhotoServiceClient.m */; };
+		4F9C251A18ACF3F800940B3F /* DZNPhotoTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C251918ACF3F800940B3F /* DZNPhotoTag.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,8 @@
 		4F9C251418AB224600940B3F /* DZNPhotoServiceClientProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceClientProtocol.h; sourceTree = "<group>"; };
 		4F9C251518AB25C800940B3F /* DZNPhotoServiceClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceClient.h; sourceTree = "<group>"; };
 		4F9C251618AB25C800940B3F /* DZNPhotoServiceClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoServiceClient.m; sourceTree = "<group>"; };
+		4F9C251818ACF3F800940B3F /* DZNPhotoTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoTag.h; sourceTree = "<group>"; };
+		4F9C251918ACF3F800940B3F /* DZNPhotoTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoTag.m; sourceTree = "<group>"; };
 		4FB91A9C18A322B900F8C92B /* DZNPhotoPickerControllerConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerControllerConstants.h; sourceTree = "<group>"; };
 		4FD61C0618759E0D0048DC0C /* Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
 		81CB7D6B303A4384A940032C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -207,6 +210,8 @@
 				4F57017D180E5E6D00E12444 /* DZNPhotoDisplayViewCell.m */,
 				4F57017A180E5E6D00E12444 /* DZNPhotoMetadata.h */,
 				4F57017B180E5E6D00E12444 /* DZNPhotoMetadata.m */,
+				4F9C251818ACF3F800940B3F /* DZNPhotoTag.h */,
+				4F9C251918ACF3F800940B3F /* DZNPhotoTag.m */,
 				4F29052A18759967005E9F39 /* UIImagePickerController+Edit.h */,
 				4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */,
 				4F9C250C18AB216300940B3F /* API */,
@@ -402,6 +407,7 @@
 				4F570186180E5E6D00E12444 /* DZNPhotoDisplayViewController.m in Sources */,
 				4F570184180E5E6D00E12444 /* DZNPhotoMetadata.m in Sources */,
 				4F570151180E5D0E00E12444 /* AppDelegate.m in Sources */,
+				4F9C251A18ACF3F800940B3F /* DZNPhotoTag.m in Sources */,
 				4F9C251718AB25C800940B3F /* DZNPhotoServiceClient.m in Sources */,
 				4F57015A180E5D0E00E12444 /* RootViewController.m in Sources */,
 				4F570188180E5E6D00E12444 /* DZNPhotoPickerController.m in Sources */,

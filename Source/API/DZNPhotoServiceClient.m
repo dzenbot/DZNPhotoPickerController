@@ -7,6 +7,8 @@
 //
 
 #import "DZNPhotoServiceClient.h"
+#import "DZNPhotoMetadata.h"
+#import "DZNPhotoTag.h"
 
 @interface DZNPhotoServiceClient ()
 @property (nonatomic, copy) DZNHTTPRequestCompletion completion;
