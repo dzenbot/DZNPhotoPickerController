@@ -207,6 +207,8 @@ extern NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
  */
 - (void)cancelPicker:(id)sender
 {
+    
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerControllerDidCancel:)]) {
         [self.delegate photoPickerControllerDidCancel:self];
     }

@@ -359,9 +359,6 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)setTagSearchResponse:(NSArray *)response
 {
-    NSLog(@"%s : %@",__FUNCTION__, response);
-    return;
-    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
     if (!_searchTags) _searchTags = [NSMutableArray new];
@@ -516,46 +513,6 @@ static NSString *kTagCellID = @"kTagCellID";
         if (error) [self setSearchError:error];
         else [self setPhotoSearchResponse:response];
     }];
-
-    
-//    if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
-//        
-//        NSString *term = [_searchTerm stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-//        
-//        
-//        
-//        _PXRequest = [PXRequest requestForSearchTerm:term page:_currentPage resultsPerPage:_resultPerPage
-//                             photoSizes:PXPhotoModelSizeSmallThumbnail|PXPhotoModelSizeExtraLarge
-//                                 except:PXPhotoModelCategoryUncategorized
-//                             completion:^(NSDictionary *response, NSError *error) {
-//                                 
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                if (error) [self setSearchError:error];
-//                else [self setPhotoSearchResponse:[response valueForKey:@"photos"]];
-//            });
-//                                 
-//        }];
-//    }
-//    else if ((_selectedService & DZNPhotoPickerControllerServiceFlickr) > 0) {
-//        
-//        FKFlickrPhotosSearch *search = [[FKFlickrPhotosSearch alloc] init];
-//        search.text = _searchTerm; //[keyword stringByReplacingOccurrencesOfString:@" " withString:@" OR "];
-//        search.content_type = @"1";
-//        search.safe_search = @"1";
-//        search.media = @"photos";
-//        search.in_gallery = @"true";
-//        search.per_page = [NSString stringWithFormat:@"%ld",(long)_resultPerPage];
-//        search.page = [NSString stringWithFormat:@"%ld",(long)_currentPage];
-//
-//        [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
-//            
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                if (error) [self setSearchError:error];
-//                else [self setPhotoSearchResponse:[response valueForKeyPath:@"photos.photo"]];
-//            });
-//            
-//        }];
-//    }
 }
 
 /*
@@ -836,7 +793,6 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     NSString *str = searchBar.text;
     [self shouldSearchPhotos:str];
-    
     [self searchBarShouldShift:NO];
 }
 
