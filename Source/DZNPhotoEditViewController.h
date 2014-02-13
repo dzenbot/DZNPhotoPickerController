@@ -9,7 +9,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DZNPhotoPickerConstants.h"
+#import "DZNPhotoPickerControllerConstants.h"
 
 @class DZNPhotoMetadata;
 

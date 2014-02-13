@@ -1,1 +1,0 @@
-../../FlickrKit/Classes/Network/FKImageUploadNetworkOperation.h

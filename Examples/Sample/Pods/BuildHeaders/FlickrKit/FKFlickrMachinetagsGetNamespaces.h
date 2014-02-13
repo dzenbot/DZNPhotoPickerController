@@ -1,1 +1,0 @@
-../../FlickrKit/Classes/Model/Generated/Machinetags/FKFlickrMachinetagsGetNamespaces.h

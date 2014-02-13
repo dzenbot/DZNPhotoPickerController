@@ -13,6 +13,9 @@
 
 #import "DZNPhotoDisplayViewCell.h"
 #import "DZNPhotoMetadata.h"
+#import "DZNPhotoTag.h"
+
+#import "DZNPhotoServiceFactory.h"
 
 #define  kDZNPhotoMinimumBarHeight 44.0
 
@@ -33,7 +36,7 @@ static NSString *kTagCellID = @"kTagCellID";
 @property (nonatomic, strong) NSArray *segmentedControlTitles;
 @property (nonatomic) DZNPhotoPickerControllerService selectedService;
 @property (nonatomic) DZNPhotoPickerControllerService previousService;
-@property (nonatomic, strong) PXRequest *PXRequest;
+//@property (nonatomic, strong) PXRequest *PXRequest;
 @property (nonatomic) NSInteger resultPerPage;
 @property (nonatomic) NSInteger currentPage;
 
@@ -281,30 +284,32 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     if (!_segmentedControlTitles)
     {
+        DZNPhotoPickerControllerService services = self.navigationController.supportedServices;
+
         NSMutableArray *titles = [NSMutableArray array];
         
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerService500px) > 0) {
+        if ((services & DZNPhotoPickerControllerService500px) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerService500px)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceFlickr) > 0) {
+        if ((services & DZNPhotoPickerControllerServiceFlickr) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceFlickr)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
+        if ((services & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceGoogleImages)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceBingImages) > 0) {
+        if ((services & DZNPhotoPickerControllerServiceBingImages) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceBingImages)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceYahooImages) > 0) {
+        if ((services & DZNPhotoPickerControllerServiceYahooImages) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceYahooImages)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServicePanoramio) > 0) {
+        if ((services & DZNPhotoPickerControllerServicePanoramio) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServicePanoramio)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceInstagram) > 0) {
+        if ((services & DZNPhotoPickerControllerServiceInstagram) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceInstagram)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceDribbble) > 0) {
+        if ((services & DZNPhotoPickerControllerServiceDribbble) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceDribbble)];
         }
         
@@ -334,13 +339,11 @@ static NSString *kTagCellID = @"kTagCellID";
 /*
  * Sets the current photo search response and refreshs the collection view.
  */
-- (void)setPhotoSearchResponse:(NSArray *)response
+- (void)setPhotoSearchList:(NSArray *)list
 {
     [self showActivityIndicators:NO];
     
-    NSArray *photosMetadata = [DZNPhotoMetadata photosMetadataFromService:_selectedService withResponse:response];
-    
-    [_photosMetadata addObjectsFromArray:photosMetadata];
+    [_photosMetadata addObjectsFromArray:list];
     [self.collectionView reloadData];
     
     CGSize contentSize = self.collectionView.contentSize;
@@ -350,18 +353,18 @@ static NSString *kTagCellID = @"kTagCellID";
 /*
  * Sets a tag search response and refreshs the results tableview from the UISearchDisplayController.
  */
-- (void)setTagSearchResponse:(NSArray *)response
+- (void)setTagSearchList:(NSArray *)list
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
     if (!_searchTags) _searchTags = [NSMutableArray new];
     else [_searchTags removeAllObjects];
     
-    for (NSDictionary *tag in response) {
-        [_searchTags addObject:[tag objectForKey:@"_content"]];
-    }
+    _searchTags = [NSMutableArray arrayWithArray:list];
     
-    [_searchTags insertObject:_searchBar.text atIndex:0];
+    DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:_selectedService];
+    tag.content = _searchBar.text;
+    [_searchTags insertObject:tag atIndex:0];
     
     [_searchController.searchResultsTableView reloadData];
 }
@@ -372,6 +375,10 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)setSearchError:(NSError *)error
 {
     [self showActivityIndicators:NO];
+    
+    if (error.code == NSURLErrorCancelled || error.code == NSURLErrorUnknown) {
+        return;
+    }
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
     [alert show];
@@ -462,16 +469,12 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)searchTagsWithKeyword:(NSString *)keyword
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
-    FKFlickrTagsGetRelated *search = [[FKFlickrTagsGetRelated alloc] init];
-    search.tag = keyword;
     
-    [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-                if (error) [self setSearchError:error];
-                else [self setTagSearchResponse:[response valueForKeyPath:@"tags.tag"]];
-            });
+    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
+    
+    [client searchTagsWithKeyword:keyword completion:^(NSArray *list, NSError *error) {
+        if (error) [self setSearchError:error];
+        else [self setTagSearchList:list];
     }];
 }
 
@@ -505,42 +508,12 @@ static NSString *kTagCellID = @"kTagCellID";
     NSLog(@"Searching \"%@\" (page %d) on %@", keyword, _currentPage, NSStringFromServiceType(_selectedService));
 #pragma clang diagnostic pop
     
-    if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
-        
-        NSString *term = [_searchTerm stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-        
-        _PXRequest = [PXRequest requestForSearchTerm:term page:_currentPage resultsPerPage:_resultPerPage
-                             photoSizes:PXPhotoModelSizeSmallThumbnail|PXPhotoModelSizeExtraLarge
-                                 except:PXPhotoModelCategoryUncategorized
-                             completion:^(NSDictionary *response, NSError *error) {
-                                 
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (error) [self setSearchError:error];
-                else [self setPhotoSearchResponse:[response valueForKey:@"photos"]];
-            });
-                                 
-        }];
-    }
-    else if ((_selectedService & DZNPhotoPickerControllerServiceFlickr) > 0) {
-        
-        FKFlickrPhotosSearch *search = [[FKFlickrPhotosSearch alloc] init];
-        search.text = _searchTerm; //[keyword stringByReplacingOccurrencesOfString:@" " withString:@" OR "];
-        search.content_type = @"1";
-        search.safe_search = @"1";
-        search.media = @"photos";
-        search.in_gallery = @"true";
-        search.per_page = [NSString stringWithFormat:@"%ld",(long)_resultPerPage];
-        search.page = [NSString stringWithFormat:@"%ld",(long)_currentPage];
-
-        [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (error) [self setSearchError:error];
-                else [self setPhotoSearchResponse:[response valueForKeyPath:@"photos.photo"]];
-            });
-            
-        }];
-    }
+    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
+    
+    [client searchPhotosWithKeyword:keyword page:_currentPage resultPerPage:_resultPerPage completion:^(NSArray *list, NSError *error) {
+        if (error) [self setSearchError:error];
+        else [self setPhotoSearchList:list];
+    }];
 }
 
 /*
@@ -548,26 +521,17 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)stopLoadingRequest
 {
-    if (!self.loading) {
-        return;
-    }
-    
-    [self showActivityIndicators:NO];
-    
-    if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
+    if (self.loading) {
         
-        if (_PXRequest) {
-            [_PXRequest cancel];
-            _PXRequest = nil;
-        }
-    }
-    else if ((_selectedService & DZNPhotoPickerControllerServiceFlickr) > 0) {
+        [self showActivityIndicators:NO];
         
+        id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
+        [client cancelRequest];
     }
     
-    for (DZNPhotoDisplayViewCell *cell in [self.collectionView visibleCells]) {
-        [cell.imageView cancelCurrentImageLoad];
-    }
+//    for (DZNPhotoDisplayViewCell *cell in [self.collectionView visibleCells]) {
+//        [cell.imageView cancelCurrentImageLoad];
+//    }
 }
 
 /*
@@ -613,6 +577,7 @@ static NSString *kTagCellID = @"kTagCellID";
     DZNPhotoMetadata *metadata = [_photosMetadata objectAtIndex:indexPath.row];
     
     [cell.imageView cancelCurrentImageLoad];
+    
     [cell.imageView setImageWithURL:metadata.thumbURL placeholderImage:nil
                             options:SDWebImageCacheMemoryOnly completed:NULL];
     
@@ -765,8 +730,8 @@ static NSString *kTagCellID = @"kTagCellID";
     
     if (indexPath.row <= _searchTags.count-1) {
         
-        NSString *tagString = [_searchTags objectAtIndex:indexPath.row];
-        cell.textLabel.text = tagString;
+        DZNPhotoTag *tag = [_searchTags objectAtIndex:indexPath.row];
+        cell.textLabel.text = tag.content;
     }
     else {
         cell.textLabel.text = @"Empty";
@@ -785,8 +750,8 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *tagString = [_searchTags objectAtIndex:indexPath.row];
-    [self shouldSearchPhotos:tagString];
+    DZNPhotoTag *tag = [_searchTags objectAtIndex:indexPath.row];
+    [self shouldSearchPhotos:tag.content];
     
     [self.searchDisplayController setActive:NO animated:YES];
     
@@ -798,9 +763,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-//    if (_loading) {
-//        [self stopLoadingRequest];
-//    }
+    [self stopLoadingRequest];
     
     return YES;
 }
@@ -831,7 +794,6 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     NSString *str = searchBar.text;
     [self shouldSearchPhotos:str];
-    
     [self searchBarShouldShift:NO];
 }
 

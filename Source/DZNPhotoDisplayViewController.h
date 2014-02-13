@@ -9,8 +9,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <FlickrKit/FlickrKit.h>
-#import <PXAPI.h>
 
 @class DZNPhotoPickerController;
 
@@ -29,5 +27,10 @@
 @property (nonatomic) NSUInteger rowCount;
 /* YES if the controller started a request and loading content. */
 @property (nonatomic, getter = isLoading) BOOL loading;
+
+/*
+ * Stops any loading HTTP request.
+ */
+- (void)stopLoadingRequest;
 
 @end

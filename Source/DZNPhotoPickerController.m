@@ -10,6 +10,7 @@
 
 #import "DZNPhotoPickerController.h"
 #import "DZNPhotoDisplayViewController.h"
+#import "DZNPhotoServiceFactory.h"
 
 #import <MobileCoreServices/UTCoreTypes.h>
 
@@ -128,33 +129,35 @@ extern NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
  */
 + (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret;
 {
-    switch (service) {
-        case DZNPhotoPickerControllerService500px:
-            [PXRequest setConsumerKey:consumerKey consumerSecret:consumerSecret];
-            break;
-            
-        case DZNPhotoPickerControllerServiceFlickr:
-            [[FlickrKit sharedFlickrKit] initializeWithAPIKey:consumerKey sharedSecret:consumerSecret];
-            break;
-            
-        case DZNPhotoPickerControllerServiceGoogleImages:
-            break;
-            
-        case DZNPhotoPickerControllerServiceBingImages:
-            break;
-            
-        case DZNPhotoPickerControllerServiceYahooImages:
-            break;
-            
-        case DZNPhotoPickerControllerServicePanoramio:
-            break;
-            
-        case DZNPhotoPickerControllerServiceInstagram:
-            break;
-            
-        default:
-            break;
-    }
+    [DZNPhotoServiceFactory setConsumerKey:consumerKey consumerSecret:consumerSecret service:service];
+    
+//    switch (service) {
+//        case DZNPhotoPickerControllerService500px:
+//            [PXRequest setConsumerKey:consumerKey consumerSecret:consumerSecret];
+//            break;
+//            
+//        case DZNPhotoPickerControllerServiceFlickr:
+//            [[FlickrKit sharedFlickrKit] initializeWithAPIKey:consumerKey sharedSecret:consumerSecret];
+//            break;
+//            
+//        case DZNPhotoPickerControllerServiceGoogleImages:
+//            break;
+//            
+//        case DZNPhotoPickerControllerServiceBingImages:
+//            break;
+//            
+//        case DZNPhotoPickerControllerServiceYahooImages:
+//            break;
+//            
+//        case DZNPhotoPickerControllerServicePanoramio:
+//            break;
+//            
+//        case DZNPhotoPickerControllerServiceInstagram:
+//            break;
+//            
+//        default:
+//            break;
+//    }
 }
 
 
@@ -167,15 +170,15 @@ extern NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
 {
     [self setViewControllers:nil];
     
-    DZNPhotoDisplayViewController *photoDisplayController = [[DZNPhotoDisplayViewController alloc] init];
-    photoDisplayController.searchTerm = _initialSearchTerm;
+    DZNPhotoDisplayViewController *controller = [[DZNPhotoDisplayViewController alloc] init];
+    controller.searchTerm = _initialSearchTerm;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPicker:)];
-        [photoDisplayController.navigationItem setRightBarButtonItem:cancel];
+        [controller.navigationItem setRightBarButtonItem:cancel];
     }
     
-    [self setViewControllers:@[photoDisplayController]];
+    [self setViewControllers:@[controller]];
 }
 
 /*
@@ -184,9 +187,9 @@ extern NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
 - (void)showPhotoEditorController
 {
     [self setViewControllers:nil];
-    DZNPhotoEditViewController *photoEditorController = [[DZNPhotoEditViewController alloc] initWithImage:_editingImage cropMode:self.editingMode];
     
-    [self setViewControllers:@[photoEditorController]];
+    DZNPhotoEditViewController *controller = [[DZNPhotoEditViewController alloc] initWithImage:_editingImage cropMode:self.editingMode];
+    [self setViewControllers:@[controller]];
 }
 
 /*
@@ -204,6 +207,11 @@ extern NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
  */
 - (void)cancelPicker:(id)sender
 {
+    DZNPhotoDisplayViewController *controller = (DZNPhotoDisplayViewController *)[self.viewControllers objectAtIndex:0];
+    if ([controller respondsToSelector:@selector(stopLoadingRequest)]) {
+        [controller stopLoadingRequest];
+    }
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerControllerDidCancel:)]) {
         [self.delegate photoPickerControllerDidCancel:self];
     }

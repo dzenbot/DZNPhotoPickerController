@@ -1,21 +1,15 @@
 PODS:
-  - 500px-iOS-api (1.0.4)
   - AFNetworking (1.3.3)
-  - FlickrKit (1.0.2)
   - SDWebImage (3.5):
     - SDWebImage/Core
   - SDWebImage/Core (3.5)
 
 DEPENDENCIES:
-  - 500px-iOS-api (~> 1.0.4)
   - AFNetworking (~> 1.3.3)
-  - FlickrKit (~> 1.0.2)
   - SDWebImage (~> 3.4)
 
 SPEC CHECKSUMS:
-  500px-iOS-api: fde71ddd4a05f06b94b8ec7c29bbcd2e589b7e70
   AFNetworking: 61fdd49e2ffe6380378df37b3b6e70630bb9dd66
-  FlickrKit: b096e8995b2e830c302f4a2c03e87242d5f9f63a
   SDWebImage: f1a72472f8a2d54445f1fedafe2090593d9caf7f
 
 COCOAPODS: 0.29.0

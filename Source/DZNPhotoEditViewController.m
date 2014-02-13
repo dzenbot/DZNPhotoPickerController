@@ -479,8 +479,6 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     
     if (editedPhoto && !CGRectEqualToRect(cropRect, CGRectZero)) {
         
-        NSLog(@"%s",__FUNCTION__);
-        
         [DZNPhotoEditViewController didFinishPickingOriginalImage:_imageView.image
                                                       editedImage:editedPhoto
                                                          cropRect:cropRect
