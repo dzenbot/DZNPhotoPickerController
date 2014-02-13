@@ -383,6 +383,10 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     [self showActivityIndicators:NO];
     
+    if (error.code == NSURLErrorCancelled || error.code == NSURLErrorUnknown) {
+        return;
+    }
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
     [alert show];
 }
@@ -479,18 +483,6 @@ static NSString *kTagCellID = @"kTagCellID";
         if (error) [self setSearchError:error];
         else [self setTagSearchResponse:response];
     }];
-
-
-//    FKFlickrTagsGetRelated *search = [[FKFlickrTagsGetRelated alloc] init];
-//    search.tag = keyword;
-//    
-//    [[FlickrKit sharedFlickrKit] call:search completion:^(NSDictionary *response, NSError *error) {
-//        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//                if (error) [self setSearchError:error];
-//                else [self setTagSearchResponse:[response valueForKeyPath:@"tags.tag"]];
-//            });
-//    }];
 }
 
 /*
@@ -571,25 +563,13 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)stopLoadingRequest
 {
-    if (!self.loading) {
-        return;
+    if (self.loading) {
+        
+        [self showActivityIndicators:NO];
+        
+        id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
+        [client cancelRequest];
     }
-    
-    [self showActivityIndicators:NO];
-    
-    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
-    [client cancelRequest];
-    
-//    if ((_selectedService & DZNPhotoPickerControllerService500px) > 0) {
-//        
-//        if (_PXRequest) {
-//            [_PXRequest cancel];
-//            _PXRequest = nil;
-//        }
-//    }
-//    else if ((_selectedService & DZNPhotoPickerControllerServiceFlickr) > 0) {
-//        
-//    }
     
     for (DZNPhotoDisplayViewCell *cell in [self.collectionView visibleCells]) {
         [cell.imageView cancelCurrentImageLoad];
@@ -639,6 +619,7 @@ static NSString *kTagCellID = @"kTagCellID";
     DZNPhotoMetadata *metadata = [_photosMetadata objectAtIndex:indexPath.row];
     
     [cell.imageView cancelCurrentImageLoad];
+    
     [cell.imageView setImageWithURL:metadata.thumbURL placeholderImage:nil
                             options:SDWebImageCacheMemoryOnly completed:NULL];
     
@@ -824,9 +805,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-//    if (_loading) {
-//        [self stopLoadingRequest];
-//    }
+    [self stopLoadingRequest];
     
     return YES;
 }

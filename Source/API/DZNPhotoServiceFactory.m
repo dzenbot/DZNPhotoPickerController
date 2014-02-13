@@ -39,12 +39,20 @@ NSString *const DZNPhotoServiceClientConsumerSecret = @"DZNPhotoServiceClientCon
             return client;
         }
     }
-    
+        
     DZNPhotoServiceClient *client = [[DZNPhotoServiceClient alloc] initWithService:service];
     [self.clients addObject:client];
     
     return client;
 }
+
+NSString *NSStringHashFromServiceType(DZNPhotoPickerControllerService type, NSString *key)
+{
+    return [NSString stringWithFormat:@"%@%@", key, NSStringFromServiceType(type)];
+}
+
+
+#pragma mark - Setter methods
 
 + (void)setConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret service:(DZNPhotoPickerControllerService)service
 {
@@ -57,16 +65,15 @@ NSString *const DZNPhotoServiceClientConsumerSecret = @"DZNPhotoServiceClientCon
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-NSString *NSStringHashFromServiceType(DZNPhotoPickerControllerService type, NSString *key)
-{
-    return [NSString stringWithFormat:@"%@%@", key, NSStringFromServiceType(type)];
-}
-
 
 #pragma mark - DZNPhotoServiceFactory methods
 
 - (void)reset
 {
+    for (id<DZNPhotoServiceClientProtocol> client in _clients) {
+        [client cancelRequest];
+    }
+    
     _clients = nil;
     _clients = [NSMutableArray new];
 }
