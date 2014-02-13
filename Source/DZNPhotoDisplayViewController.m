@@ -341,8 +341,6 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)setPhotoSearchList:(NSArray *)list
 {
-    NSLog(@"%s : %@",__FUNCTION__, list);
-    
     [self showActivityIndicators:NO];
     
     [_photosMetadata addObjectsFromArray:list];

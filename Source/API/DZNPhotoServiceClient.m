@@ -195,11 +195,6 @@ static NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService servi
 
 - (void)searchTagsWithKeyword:(NSString *)keyword completion:(DZNHTTPRequestCompletion)completion
 {
-    if (_loadingPath) {
-        [self cancelRequest];
-        return;
-    }
-    
     _loadingPath = tagSearchUrlPathForService(self.service);
     NSString *keyPath = tagsResourceKeyPathForService(self.service);
     NSDictionary *params = [self tagsParamsWithKeyword:keyword];
@@ -218,6 +213,8 @@ static NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService servi
 
 - (void)getResourceForKeyPath:(NSString *)keyPath path:(NSString *)path params:(NSDictionary *)params completion:(DZNHTTPRequestCompletion)completion
 {
+    //NSLog(@"%s\nkeyPath : %@ \npath : %@\nparams: %@\n\n",__FUNCTION__, keyPath, path, params);
+    
     if (self.service == DZNPhotoPickerControllerServiceFlickr) path = @"";
 
     [self getPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
