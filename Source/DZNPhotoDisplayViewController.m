@@ -419,6 +419,14 @@ static NSString *kTagCellID = @"kTagCellID";
         DZNPhotoEditViewController *photoEditViewController = [[DZNPhotoEditViewController alloc] initWithPhotoMetadata:metadata cropMode:self.navigationController.editingMode];
         [self.navigationController pushViewController:photoEditViewController animated:YES];
     }
+    else if (!self.navigationController.enablePhotoDownload) {
+        
+        [DZNPhotoEditViewController didFinishPickingOriginalImage:nil
+                                                      editedImage:nil
+                                                         cropRect:CGRectZero
+                                                         cropMode:DZNPhotoEditViewControllerCropModeNone
+                                                    photoMetadata:metadata];
+    }
     else {
         
         [self showActivityIndicators:YES];

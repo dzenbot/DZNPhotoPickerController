@@ -33,6 +33,8 @@
 @property (nonatomic) DZNPhotoEditViewControllerCropMode editingMode;
 /* The supported licenses of photos to search. Default value is "All CC Reserved Attributions". Pending implementation. */
 @property (nonatomic) DZNPhotoPickerControllerCCLicense supportedLicenses;
+/* A Boolean value indicating whether the picker should download the photo after selecting it when allowsEditing is NO. Default value is YES. */
+@property (nonatomic) BOOL enablePhotoDownload;
 
 /*
  * Initializes and returns a newly created picker controller, on edit mode only.

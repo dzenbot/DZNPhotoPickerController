@@ -31,6 +31,7 @@ NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDid
     if (self) {
         
         _allowsEditing = NO;
+        _enablePhotoDownload = YES;
         _supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
         _supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
     }
@@ -130,34 +131,6 @@ extern NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
 + (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret;
 {
     [DZNPhotoServiceFactory setConsumerKey:consumerKey consumerSecret:consumerSecret service:service];
-    
-//    switch (service) {
-//        case DZNPhotoPickerControllerService500px:
-//            [PXRequest setConsumerKey:consumerKey consumerSecret:consumerSecret];
-//            break;
-//            
-//        case DZNPhotoPickerControllerServiceFlickr:
-//            [[FlickrKit sharedFlickrKit] initializeWithAPIKey:consumerKey sharedSecret:consumerSecret];
-//            break;
-//            
-//        case DZNPhotoPickerControllerServiceGoogleImages:
-//            break;
-//            
-//        case DZNPhotoPickerControllerServiceBingImages:
-//            break;
-//            
-//        case DZNPhotoPickerControllerServiceYahooImages:
-//            break;
-//            
-//        case DZNPhotoPickerControllerServicePanoramio:
-//            break;
-//            
-//        case DZNPhotoPickerControllerServiceInstagram:
-//            break;
-//            
-//        default:
-//            break;
-//    }
 }
 
 

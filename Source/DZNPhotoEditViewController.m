@@ -503,10 +503,6 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
                              cropMode:(DZNPhotoEditViewControllerCropMode)cropMode
                         photoMetadata:(DZNPhotoMetadata *)metadata;
 {
-    if (!originalImage && !editedImage) {
-        return;
-    }
-    
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                      [NSValue valueWithCGRect:cropRect], UIImagePickerControllerCropRect,
                                      @"public.image", UIImagePickerControllerMediaType,
@@ -523,7 +519,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     if (metadata.authorName) [attributes setObject:metadata.authorName forKey:@"author_name"];
     if (metadata.authorUsername) [attributes setObject:metadata.authorUsername forKey:@"author_username"];
     if (metadata.authorProfileURL) [attributes setObject:metadata.authorProfileURL forKey:@"author_profile_url"];
-
+    
     [userInfo setObject:attributes forKey:DZNPhotoPickerControllerPhotoAttributes];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFinishPickingNotification object:nil userInfo:userInfo];
