@@ -283,30 +283,32 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     if (!_segmentedControlTitles)
     {
+        DZNPhotoPickerControllerService services = self.navigationController.supportedServices;
+
         NSMutableArray *titles = [NSMutableArray array];
         
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerService500px) > 0) {
+        if ((services & DZNPhotoPickerControllerService500px) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerService500px)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceFlickr) > 0) {
+        if ((services & DZNPhotoPickerControllerServiceFlickr) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceFlickr)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
+        if ((services & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceGoogleImages)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceBingImages) > 0) {
+        if ((services & DZNPhotoPickerControllerServiceBingImages) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceBingImages)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceYahooImages) > 0) {
+        if ((services & DZNPhotoPickerControllerServiceYahooImages) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceYahooImages)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServicePanoramio) > 0) {
+        if ((services & DZNPhotoPickerControllerServicePanoramio) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServicePanoramio)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceInstagram) > 0) {
+        if ((services & DZNPhotoPickerControllerServiceInstagram) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceInstagram)];
         }
-        if ((self.navigationController.supportedServices & DZNPhotoPickerControllerServiceDribbble) > 0) {
+        if ((services & DZNPhotoPickerControllerServiceDribbble) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceDribbble)];
         }
         

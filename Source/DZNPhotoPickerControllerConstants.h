@@ -17,8 +17,8 @@ UIKIT_EXTERN NSString *const DZNPhotoPickerDidFinishPickingNotification;    // T
  * Types of supported photo services
  */
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerService) {
-    DZNPhotoPickerControllerService500px = (1 << 0),            // 500px                                    http://500px.com/developers/
-    DZNPhotoPickerControllerServiceFlickr = (1 << 1),           // Flickr                                   http://www.flickr.com/services/api/
+    DZNPhotoPickerControllerService500px = (1 << 1),            // 500px                                    http://500px.com/developers/
+    DZNPhotoPickerControllerServiceFlickr = (1 << 2),           // Flickr                                   http://www.flickr.com/services/api/
     DZNPhotoPickerControllerServiceGoogleImages = (1 << 3),     // Google Images                            https://developers.google.com/image-search/
     DZNPhotoPickerControllerServiceBingImages = (1 << 4),       // Bing Images                              http://datamarket.azure.com/dataset/bing/search/
     DZNPhotoPickerControllerServiceYahooImages = (1 << 5),      // Yahoo Images                             http://developer.yahoo.com/boss/search/

@@ -122,7 +122,7 @@ static NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService servi
     NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil.");
     
     NSMutableDictionary *params = [NSMutableDictionary new];
-    [params setObject:[self consumerKey] forKey:photoSearchUrlPathForService(self.service)];
+    [params setObject:[self consumerKey] forKey:keyForAPIConsumer(self.service)];
     [params setObject:keyword forKey:keyForSearchTerm(self.service)];
     [params setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     [params setObject:[NSNumber numberWithInteger:resultPerPage] forKey:keyForSearchResultPerPage(self.service)];
@@ -167,8 +167,6 @@ static NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService servi
     }
     
     [self getPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
-        
-        NSLog(@"response : %@", response);
         
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves|NSJSONReadingAllowFragments error:nil];
         NSLog(@"isValidJSONObject : %@", json ? @"YES" : @"NO");
