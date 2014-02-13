@@ -35,4 +35,9 @@
     return result;
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"serviceName = %@; content = %@;", self.serviceName, self.content];
+}
+
 @end
