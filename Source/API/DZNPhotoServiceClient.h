@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 DZN Labs. All rights reserved.
 //
 
-#import "AFHTTPClient.h"
+#import <AFNetworking/AFHTTPClient.h>
 #import "DZNPhotoPickerControllerConstants.h"
 #import "DZNPhotoServiceClientProtocol.h"
 

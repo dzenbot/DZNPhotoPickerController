@@ -90,7 +90,7 @@
 		4F570181180E5E6D00E12444 /* DZNPhotoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoEditViewController.m; sourceTree = "<group>"; };
 		4F570182180E5E6D00E12444 /* DZNPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerController.h; sourceTree = "<group>"; };
 		4F570183180E5E6D00E12444 /* DZNPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerController.m; sourceTree = "<group>"; };
-		4F64C15818A53D9C00FBEE9A /* DZNPhotoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DZNPhotoTests.xctest; path = Test.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F64C15818A53D9C00FBEE9A /* Test.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F9C24F618AB1B8900940B3F /* DZNPhotoMetadataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoMetadataTests.m; sourceTree = "<group>"; };
 		4F9C24F718AB1B8900940B3F /* DZNPhotoTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DZNPhotoTests-Info.plist"; sourceTree = "<group>"; };
 		4F9C24F818AB1B8900940B3F /* DZNPhotoTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DZNPhotoTests-Prefix.pch"; sourceTree = "<group>"; };
@@ -151,7 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				4F57013D180E5D0E00E12444 /* Sample.app */,
-				4F64C15818A53D9C00FBEE9A /* DZNPhotoTests.xctest */,
+				4F64C15818A53D9C00FBEE9A /* Test.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -300,7 +300,7 @@
 			);
 			name = Test;
 			productName = DZNPhotoTests;
-			productReference = 4F64C15818A53D9C00FBEE9A /* DZNPhotoTests.xctest */;
+			productReference = 4F64C15818A53D9C00FBEE9A /* Test.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */

@@ -60,4 +60,9 @@
     return result;
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"id = %@; authorName = %@; authorUsername = %@; authorProfileURL = %@; detailURL = %@; thumbURL = %@; sourceURL = %@;", self.id, self.authorName, self.authorUsername, self.authorProfileURL, self.detailURL, self.thumbURL, self.sourceURL];
+}
+
 @end
