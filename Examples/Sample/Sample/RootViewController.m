@@ -25,10 +25,14 @@
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerService500px
                                     consumerKey:k500pxConsumerKey
                                   consumerSecret:k500pxConsumerSecret];
+//
+//    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceFlickr
+//                                  consumerKey:kFlickrConsumerKey
+//                               consumerSecret:kFlickrConsumerSecret];
     
-    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceFlickr
-                                    consumerKey:kFlickrConsumerKey
-                                  consumerSecret:kFlickrConsumerSecret];
+    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceGoogleImages
+                                  consumerKey:kGoogleConsumerKey
+                               consumerSecret:kGoogleConsumerSecret];
 }
 
 - (void)viewDidLoad
@@ -95,7 +99,7 @@
 - (void)presentPhotoPicker
 {
     DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];
-    picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
+    picker.supportedServices = DZNPhotoPickerControllerServiceGoogleImages | DZNPhotoPickerControllerService500px;
     picker.allowsEditing = YES;
     picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     picker.delegate = self;

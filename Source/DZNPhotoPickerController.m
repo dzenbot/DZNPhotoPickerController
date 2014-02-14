@@ -32,7 +32,7 @@ NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDid
         
         _allowsEditing = NO;
         _enablePhotoDownload = YES;
-        _supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
+        _supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages;
         _supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
     }
     return self;
