@@ -36,7 +36,7 @@
 
 - (BOOL)loading
 {
-    return (_loadingPath != nil) ? YES : NO;
+    return (_loadingPath) ? YES : NO;
 }
 
 - (NSString *)consumerKey
