@@ -33,6 +33,11 @@
 /* The name of the photo service. */
 @property (nonatomic, copy) NSString *serviceName;
 
+/*
+ * Returns the name of the class. It is as good as calling NSStringFromClass().
+ *
+ * @return A the name of the class.
+ */
 + (NSString *)name;
 
 /*

@@ -7,6 +7,7 @@
 //
 
 #import "DZNPhotoTag.h"
+#import "DZNPhotoServiceEndpoints.h"
 
 @implementation DZNPhotoTag
 
@@ -32,13 +33,7 @@
     for (NSDictionary *object in reponse) {
         
         DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:service];
-        
-        if ((service & DZNPhotoPickerControllerServiceFlickr) > 0) {
-            tag.content = [object objectForKey:@"_content"];
-        }
-        else if ((service & DZNPhotoPickerControllerServiceInstagram) > 0) {
-            tag.content = [object objectForKey:@"name"];
-        }
+        tag.content = [object objectForKey:keyForSearchTagContent(service)];
         
         [result addObject:tag];
     }
