@@ -33,6 +33,11 @@
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceInstagram
                                   consumerKey:kInstagramConsumerKey
                                consumerSecret:kInstagramConsumerSecret];
+    
+    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceGoogleImages
+                                  consumerKey:kGoogleConsumerKey
+                               consumerSecret:kGoogleConsumerSecret];
+
 }
 
 - (void)viewDidLoad
@@ -99,7 +104,7 @@
 - (void)presentPhotoPicker
 {
     DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];
-    picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceInstagram;
+    picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceInstagram | DZNPhotoPickerControllerServiceGoogleImages;
     picker.allowsEditing = YES;
     picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     picker.delegate = self;
