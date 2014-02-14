@@ -23,12 +23,16 @@
 + (void)initialize
 {
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerService500px
-                                    consumerKey:k500pxConsumerKey
-                                  consumerSecret:k500pxConsumerSecret];
+                                  consumerKey:k500pxConsumerKey
+                               consumerSecret:k500pxConsumerSecret];
     
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceFlickr
-                                    consumerKey:kFlickrConsumerKey
-                                  consumerSecret:kFlickrConsumerSecret];
+                                  consumerKey:kFlickrConsumerKey
+                               consumerSecret:kFlickrConsumerSecret];
+    
+    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceInstagram
+                                  consumerKey:kInstagramConsumerKey
+                               consumerSecret:kInstagramConsumerSecret];
 }
 
 - (void)viewDidLoad
@@ -95,7 +99,7 @@
 - (void)presentPhotoPicker
 {
     DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];
-    picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
+    picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceInstagram;
     picker.allowsEditing = YES;
     picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     picker.delegate = self;

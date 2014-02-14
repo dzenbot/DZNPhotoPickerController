@@ -1,9 +1,11 @@
 //
 //  DZNPhotoTag.h
-//  Sample
+//  DZNPhotoPickerController
+//  https://github.com/dzenbot/DZNPhotoPickerController
 //
-//  Created by Ignacio on 2/13/14.
+//  Created by Ignacio Romero Zurbuchen on 2/13/14.
 //  Copyright (c) 2014 DZN Labs. All rights reserved.
+//  Licence: MIT-Licence
 //
 
 #import <Foundation/Foundation.h>
@@ -15,6 +17,13 @@
 @property (nonatomic, copy) NSString *content;
 /* The name of the photo service. */
 @property (nonatomic, copy) NSString *serviceName;
+
+/*
+ * Returns the name of the class. It is as good as calling NSStringFromClass().
+ *
+ * @return A the name of the class.
+ */
++ (NSString *)name;
 
 /*
  * Allocates a new instance of DZNPhotoTag, initialized with a supported photo service type.

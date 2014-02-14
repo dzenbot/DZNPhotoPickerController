@@ -513,7 +513,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     if (editedImage) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
     
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObject:metadata.serviceName forKey:@"source_name"];
-    if (metadata.id) [attributes setObject:metadata.id forKey:@"source_id"];
+    if (metadata.Id) [attributes setObject:metadata.Id forKey:@"source_id"];
     if (metadata.detailURL) [attributes setObject:metadata.detailURL forKey:@"source_detail_url"];
     if (metadata.sourceURL) [attributes setObject:metadata.sourceURL forKey:@"source_url"];
     if (metadata.authorName) [attributes setObject:metadata.authorName forKey:@"author_name"];

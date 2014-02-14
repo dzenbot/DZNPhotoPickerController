@@ -12,6 +12,11 @@
 
 @implementation DZNPhotoMetadata
 
++ (NSString *)name
+{
+    return NSStringFromClass([DZNPhotoMetadata class]);
+}
+
 + (instancetype)photoMetadataFromService:(DZNPhotoPickerControllerService)service
 {
     if (service != 0) {
@@ -36,22 +41,33 @@
             metadata.authorName = [[object valueForKeyPath:@"user.fullname"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             metadata.authorUsername = [object valueForKeyPath:@"user.username"];
             metadata.authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/%@", metadata.authorUsername]];
-            metadata.detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/photo/%@", metadata.id]];
+            metadata.detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/photo/%@", metadata.Id]];
             
-            metadata.thumbURL = [NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:0] valueForKey:@"url"]];
-            metadata.sourceURL = [NSURL URLWithString:[[[object valueForKey:@"images"] objectAtIndex:1] valueForKey:@"url"]];
+            metadata.thumbURL = [NSURL URLWithString:[[[object objectForKey:@"images"] objectAtIndex:0] objectForKey:@"url"]];
+            metadata.sourceURL = [NSURL URLWithString:[[[object objectForKey:@"images"] objectAtIndex:1] objectForKey:@"url"]];
         }
         else if ((service & DZNPhotoPickerControllerServiceFlickr) > 0) {
             
-            metadata.id = [object valueForKey:@"id"];
+            metadata.id = [object objectForKey:@"id"];
             metadata.authorName = nil;
-            metadata.authorUsername = [object valueForKey:@"owner"];
+            metadata.authorUsername = [object objectForKey:@"owner"];
             metadata.authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.flickr.com/photos/%@", metadata.authorUsername]];
-            metadata.detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.flickr.com/photos/%@/%@", metadata.authorUsername, metadata.id]];
+            metadata.detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.flickr.com/photos/%@/%@", metadata.authorUsername, metadata.Id]];
 
-            NSMutableString *url = [NSMutableString stringWithFormat:@"http://farm%@.static.flickr.com/%@/%@_%@", [[object valueForKey:@"farm"] stringValue], [object valueForKey:@"server"], [object valueForKey:@"id"], [object valueForKey:@"secret"]];
+            NSMutableString *url = [NSMutableString stringWithFormat:@"http://farm%@.static.flickr.com/%@/%@_%@", [[object objectForKey:@"farm"] stringValue], [object objectForKey:@"server"], [object objectForKey:@"id"], [object objectForKey:@"secret"]];
             metadata.thumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@_q.jpg", url]];
             metadata.sourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@_b.jpg", url]];
+        }
+        else if ((service & DZNPhotoPickerControllerServiceInstagram) > 0) {
+            
+            metadata.id = [object objectForKey:@"id"];
+            metadata.authorName = [object valueForKeyPath:@"user.full_name"];
+            metadata.authorUsername = [object valueForKeyPath:@"user.username"];
+            metadata.authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://instagram.com/%@", metadata.authorUsername]];
+            metadata.detailURL = [NSURL URLWithString:[object objectForKey:@"link"]];
+            
+            metadata.thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"images.thumbnail.url"]];
+            metadata.sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"images.standard_resolution.url"]];
         }
         
         [result addObject:metadata];
@@ -62,7 +78,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"serviceName = %@; id = %@; authorName = %@; authorUsername = %@; authorProfileURL = %@; detailURL = %@; thumbURL = %@; sourceURL = %@;", self.serviceName, self.id, self.authorName, self.authorUsername, self.authorProfileURL, self.detailURL, self.thumbURL, self.sourceURL];
+    return [NSString stringWithFormat:@"serviceName = %@; id = %@; authorName = %@; authorUsername = %@; authorProfileURL = %@; detailURL = %@; thumbURL = %@; sourceURL = %@;", self.serviceName, self.Id, self.authorName, self.authorUsername, self.authorProfileURL, self.detailURL, self.thumbURL, self.sourceURL];
 }
 
 @end

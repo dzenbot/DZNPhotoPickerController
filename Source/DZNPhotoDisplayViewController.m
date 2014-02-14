@@ -294,6 +294,9 @@ static NSString *kTagCellID = @"kTagCellID";
         if ((services & DZNPhotoPickerControllerServiceFlickr) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceFlickr)];
         }
+        if ((services & DZNPhotoPickerControllerServiceInstagram) > 0) {
+            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceInstagram)];
+        }
         if ((services & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceGoogleImages)];
         }
@@ -305,9 +308,6 @@ static NSString *kTagCellID = @"kTagCellID";
         }
         if ((services & DZNPhotoPickerControllerServicePanoramio) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServicePanoramio)];
-        }
-        if ((services & DZNPhotoPickerControllerServiceInstagram) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceInstagram)];
         }
         if ((services & DZNPhotoPickerControllerServiceDribbble) > 0) {
             [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceDribbble)];
@@ -362,9 +362,12 @@ static NSString *kTagCellID = @"kTagCellID";
     
     _searchTags = [NSMutableArray arrayWithArray:list];
     
-    DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:_selectedService];
-    tag.content = _searchBar.text;
-    [_searchTags insertObject:tag atIndex:0];
+    if (_searchTags.count == 0) {
+        
+        DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:_selectedService];
+        tag.content = _searchBar.text;
+        [_searchTags addObject:tag];
+    }
     
     [_searchController.searchResultsTableView reloadData];
 }
@@ -478,7 +481,12 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
+    DZNPhotoPickerControllerService service = _selectedService;
+    if (service == DZNPhotoPickerControllerService500px) {
+        service = DZNPhotoPickerControllerServiceFlickr;
+    }
+    
+    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:service];
     
     [client searchTagsWithKeyword:keyword completion:^(NSArray *list, NSError *error) {
         if (error) [self setSearchError:error];
@@ -736,13 +744,13 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTagCellID];
     
-    if (indexPath.row <= _searchTags.count-1) {
-        
-        DZNPhotoTag *tag = [_searchTags objectAtIndex:indexPath.row];
-        cell.textLabel.text = tag.content;
+    DZNPhotoTag *tag = [_searchTags objectAtIndex:indexPath.row];
+    
+    if (_searchTags.count == 1) {
+        cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Search for \"%@\"", nil), tag.content];
     }
     else {
-        cell.textLabel.text = @"Empty";
+        cell.textLabel.text = tag.content;
     }
     
     return cell;
