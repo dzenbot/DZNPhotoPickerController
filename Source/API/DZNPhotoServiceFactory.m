@@ -54,14 +54,14 @@ NSString *NSStringHashFromServiceType(DZNPhotoPickerControllerService type, NSSt
 
 #pragma mark - Setter methods
 
-+ (void)setConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret service:(DZNPhotoPickerControllerService)service
++ (void)setConsumerKey:(NSString *)key consumerSecret:(NSString *)secret service:(DZNPhotoPickerControllerService)service
 {
-    NSAssert(consumerKey, @"\"consumerKey\" cannot be nil.");
-    NSAssert(consumerSecret, @"\"consumerSecret\" cannot be nil.");
+    NSAssert(key, @"\"key\" cannot be nil.");
+    NSAssert(secret, @"\"secret\" cannot be nil.");
     NSAssert((service == DZNPhotoPickerControllerService500px || service == DZNPhotoPickerControllerServiceFlickr), @"Only 500px and Flickr are supported at this moment.");
 
-    [[NSUserDefaults standardUserDefaults] setObject:consumerKey forKey:NSStringHashFromServiceType(service, DZNPhotoServiceClientConsumerKey)];
-    [[NSUserDefaults standardUserDefaults] setObject:consumerSecret forKey:NSStringHashFromServiceType(service, DZNPhotoServiceClientConsumerSecret)];
+    [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSStringHashFromServiceType(service, DZNPhotoServiceClientConsumerKey)];
+    [[NSUserDefaults standardUserDefaults] setObject:secret forKey:NSStringHashFromServiceType(service, DZNPhotoServiceClientConsumerSecret)];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
