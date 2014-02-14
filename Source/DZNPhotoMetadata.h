@@ -17,7 +17,7 @@
 @interface DZNPhotoMetadata : NSObject
 
 /* The id of the photo. */
-@property (nonatomic, copy) NSNumber *id;
+@property (nonatomic, copy) id Id;
 /* The url of the thumb version of the photo. */
 @property (nonatomic, copy) NSURL *thumbURL;
 /* The url of the full size version of the photo. */
@@ -32,6 +32,8 @@
 @property (nonatomic, copy) NSURL *authorProfileURL;
 /* The name of the photo service. */
 @property (nonatomic, copy) NSString *serviceName;
+
++ (NSString *)name;
 
 /*
  * Allocates a new instance of DZNPhotoMetadata, initialized with a supported photo service type.

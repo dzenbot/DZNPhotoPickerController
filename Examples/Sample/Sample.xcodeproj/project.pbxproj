@@ -40,6 +40,7 @@
 		4F64C15918A53D9C00FBEE9A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570162180E5D0E00E12444 /* XCTest.framework */; };
 		4F64C15A18A53D9C00FBEE9A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570140180E5D0E00E12444 /* Foundation.framework */; };
 		4F64C15B18A53D9C00FBEE9A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570144180E5D0E00E12444 /* UIKit.framework */; };
+		4F97B27618ADD1F000DED8C0 /* instagram.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F97B27518ADD1F000DED8C0 /* instagram.json */; };
 		4F9C24FF18AB1B8900940B3F /* DZNPhotoMetadataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C24F618AB1B8900940B3F /* DZNPhotoMetadataTests.m */; };
 		4F9C250018AB1B8900940B3F /* DZNPhotoTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F9C24F718AB1B8900940B3F /* DZNPhotoTests-Info.plist */; };
 		4F9C250118AB1B8900940B3F /* DZNPhotoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C24F918AB1B8900940B3F /* DZNPhotoTests.m */; };
@@ -91,6 +92,7 @@
 		4F570182180E5E6D00E12444 /* DZNPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerController.h; sourceTree = "<group>"; };
 		4F570183180E5E6D00E12444 /* DZNPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerController.m; sourceTree = "<group>"; };
 		4F64C15818A53D9C00FBEE9A /* Test.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F97B27518ADD1F000DED8C0 /* instagram.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = instagram.json; sourceTree = "<group>"; };
 		4F9C24F618AB1B8900940B3F /* DZNPhotoMetadataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoMetadataTests.m; sourceTree = "<group>"; };
 		4F9C24F718AB1B8900940B3F /* DZNPhotoTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DZNPhotoTests-Info.plist"; sourceTree = "<group>"; };
 		4F9C24F818AB1B8900940B3F /* DZNPhotoTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DZNPhotoTests-Prefix.pch"; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 			children = (
 				4F9C24FD18AB1B8900940B3F /* 500px.json */,
 				4F9C24FE18AB1B8900940B3F /* flickr.json */,
+				4F97B27518ADD1F000DED8C0 /* instagram.json */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F570157180E5D0E00E12444 /* Main_iPad.storyboard in Resources */,
+				4F97B27618ADD1F000DED8C0 /* instagram.json in Resources */,
 				4F57015C180E5D0E00E12444 /* Images.xcassets in Resources */,
 				4F570154180E5D0E00E12444 /* Main_iPhone.storyboard in Resources */,
 				4F57014B180E5D0E00E12444 /* InfoPlist.strings in Resources */,

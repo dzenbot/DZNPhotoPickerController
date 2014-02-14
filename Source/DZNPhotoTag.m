@@ -10,6 +10,11 @@
 
 @implementation DZNPhotoTag
 
++ (NSString *)name
+{
+    return NSStringFromClass([DZNPhotoTag class]);
+}
+
 + (instancetype)photoTagFromService:(DZNPhotoPickerControllerService)service
 {
     if (service != 0) {
@@ -27,11 +32,17 @@
     for (NSDictionary *object in reponse) {
         
         DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:service];
-        tag.content = [object objectForKey:@"_content"];
+        
+        if ((service & DZNPhotoPickerControllerServiceFlickr) > 0) {
+            tag.content = [object objectForKey:@"_content"];
+        }
+        else if ((service & DZNPhotoPickerControllerServiceInstagram) > 0) {
+            tag.content = [object objectForKey:@"name"];
+        }
         
         [result addObject:tag];
     }
-    
+
     return result;
 }
 

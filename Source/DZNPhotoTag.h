@@ -16,6 +16,8 @@
 /* The name of the photo service. */
 @property (nonatomic, copy) NSString *serviceName;
 
++ (NSString *)name;
+
 /*
  * Allocates a new instance of DZNPhotoTag, initialized with a supported photo service type.
  *
