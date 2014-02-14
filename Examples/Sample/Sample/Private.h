@@ -16,6 +16,3 @@
 
 #define kFlickrConsumerKey      @"7f8cf8f237f79fef1fff97f253ec341a"
 #define kFlickrConsumerSecret   @"c8a8ce8e92912bf9"
-
-#define kGoogleConsumerKey      @"AIzaSyCQoWprcnKWhhaN-VcBoisBs2eS8OVFWQc"
-#define kGoogleConsumerSecret   @"001846249404918407654:4zrdq_dxrvq" //cx

@@ -213,7 +213,7 @@ static NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService servi
 
 - (void)getResourceForKeyPath:(NSString *)keyPath path:(NSString *)path params:(NSDictionary *)params completion:(DZNHTTPRequestCompletion)completion
 {
-    NSLog(@"%s\nkeyPath : %@ \npath : %@\nparams: %@\n\n",__FUNCTION__, keyPath, path, params);
+    //NSLog(@"%s\nkeyPath : %@ \npath : %@\nparams: %@\n\n",__FUNCTION__, keyPath, path, params);
     
     if (self.service == DZNPhotoPickerControllerServiceFlickr) path = @"";
 
