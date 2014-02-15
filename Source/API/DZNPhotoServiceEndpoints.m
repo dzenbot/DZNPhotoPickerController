@@ -69,6 +69,11 @@ UIKIT_EXTERN NSString *keyForAPIConsumer(DZNPhotoPickerControllerService service
         case DZNPhotoPickerControllerService500px:      return @"consumer_key";
         case DZNPhotoPickerControllerServiceFlickr:     return @"api_key";
         case DZNPhotoPickerControllerServiceInstagram:  return @"client_id";
+UIKIT_EXTERN NSString *apiSecretForAPIConsumer(DZNPhotoPickerControllerService service)
+{
+    switch (service) {
+
+        case DZNPhotoPickerControllerServiceGoogleImages:  return @"cx";
         default:                                        return nil;
     }
 }

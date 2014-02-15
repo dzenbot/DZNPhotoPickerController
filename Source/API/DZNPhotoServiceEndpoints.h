@@ -25,6 +25,8 @@ UIKIT_EXTERN NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerServ
 
 UIKIT_EXTERN NSString *keyForAPIConsumer(DZNPhotoPickerControllerService service);
 
+UIKIT_EXTERN NSString *apiSecretForAPIConsumer(DZNPhotoPickerControllerService service);
+
 UIKIT_EXTERN NSString *keyForSearchTerm(DZNPhotoPickerControllerService service);
 
 UIKIT_EXTERN NSString *keyForSearchTag(DZNPhotoPickerControllerService service);
