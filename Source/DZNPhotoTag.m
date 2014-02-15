@@ -1,14 +1,22 @@
 //
 //  DZNPhotoTag.m
-//  Sample
+//  DZNPhotoPickerController
+//  https://github.com/dzenbot/DZNPhotoPickerController
 //
-//  Created by Ignacio on 2/13/14.
+//  Created by Ignacio Romero Zurbuchen on 2/13/14.
 //  Copyright (c) 2014 DZN Labs. All rights reserved.
+//  Licence: MIT-Licence
 //
 
 #import "DZNPhotoTag.h"
+#import "DZNPhotoServiceEndpoints.h"
 
 @implementation DZNPhotoTag
+
++ (NSString *)name
+{
+    return NSStringFromClass([DZNPhotoTag class]);
+}
 
 + (instancetype)photoTagFromService:(DZNPhotoPickerControllerService)service
 {
@@ -27,11 +35,11 @@
     for (NSDictionary *object in reponse) {
         
         DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:service];
-        tag.content = [object objectForKey:@"_content"];
+        tag.content = [object objectForKey:keyForSearchTagContent(service)];
         
         [result addObject:tag];
     }
-    
+
     return result;
 }
 

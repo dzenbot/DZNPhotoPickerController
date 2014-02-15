@@ -19,11 +19,11 @@ UIKIT_EXTERN NSString *const DZNPhotoPickerDidFinishPickingNotification;    // T
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerService) {
     DZNPhotoPickerControllerService500px = (1 << 0),            // 500px                                    http://500px.com/developers/
     DZNPhotoPickerControllerServiceFlickr = (1 << 1),           // Flickr                                   http://www.flickr.com/services/api/
-    DZNPhotoPickerControllerServiceGoogleImages = (1 << 2),     // Google Images                            https://developers.google.com/image-search/
-    DZNPhotoPickerControllerServiceBingImages = (1 << 3),       // Bing Images                              http://datamarket.azure.com/dataset/bing/search/
-    DZNPhotoPickerControllerServiceYahooImages = (1 << 4),      // Yahoo Images                             http://developer.yahoo.com/boss/search/
-    DZNPhotoPickerControllerServicePanoramio = (1 << 5),        // Panoramio                                http://www.panoramio.com/api/
-    DZNPhotoPickerControllerServiceInstagram = (1 << 6),        // Instagram                                http://instagram.com/developer/
+    DZNPhotoPickerControllerServiceInstagram = (1 << 2),        // Instagram                                http://instagram.com/developer/
+    DZNPhotoPickerControllerServiceGoogleImages = (1 << 3),     // Google Images                            https://developers.google.com/image-search/
+    DZNPhotoPickerControllerServiceBingImages = (1 << 4),       // Bing Images                              http://datamarket.azure.com/dataset/bing/search/
+    DZNPhotoPickerControllerServiceYahooImages = (1 << 5),      // Yahoo Images                             http://developer.yahoo.com/boss/search/
+    DZNPhotoPickerControllerServicePanoramio = (1 << 6),        // Panoramio                                http://www.panoramio.com/api/
     DZNPhotoPickerControllerServiceDribbble = (1 << 7)          // Dribbble                                 http://dribbble.com/api/
 };
 

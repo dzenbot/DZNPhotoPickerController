@@ -35,7 +35,7 @@
     if (!_imageView)
     {
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-        _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        _imageView.contentMode = UIViewContentModeScaleAspectFill;
         _imageView.clipsToBounds = YES;
         _imageView.userInteractionEnabled = NO;
     }

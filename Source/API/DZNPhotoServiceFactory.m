@@ -1,9 +1,11 @@
 //
 //  DZNPhotoServiceFactory.m
-//  Sample
+//  DZNPhotoPickerController
+//  https://github.com/dzenbot/DZNPhotoPickerController
 //
-//  Created by Ignacio on 2/12/14.
+//  Created by Ignacio Romero Zurbuchen on 2/12/14.
 //  Copyright (c) 2014 DZN Labs. All rights reserved.
+//  Licence: MIT-Licence
 //
 
 #import "DZNPhotoServiceFactory.h"
@@ -58,7 +60,10 @@ NSString *NSStringHashFromServiceType(DZNPhotoPickerControllerService type, NSSt
 {
     NSAssert(key, @"\"key\" cannot be nil.");
     NSAssert(secret, @"\"secret\" cannot be nil.");
-    NSAssert((service == DZNPhotoPickerControllerService500px || service == DZNPhotoPickerControllerServiceFlickr), @"Only 500px and Flickr are supported at this moment.");
+    NSAssert((service == DZNPhotoPickerControllerService500px ||
+              service == DZNPhotoPickerControllerServiceFlickr ||
+              service == DZNPhotoPickerControllerServiceInstagram ||
+              service == DZNPhotoPickerControllerServiceGoogleImages), @"Only 500px, Flickr, Instagram & Google Images are supported at this moment.");
 
     [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSStringHashFromServiceType(service, DZNPhotoServiceClientConsumerKey)];
     [[NSUserDefaults standardUserDefaults] setObject:secret forKey:NSStringHashFromServiceType(service, DZNPhotoServiceClientConsumerSecret)];
