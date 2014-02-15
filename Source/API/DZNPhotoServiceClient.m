@@ -78,7 +78,7 @@
     [params setObject:[self consumerKey] forKey:keyForAPIConsumer(self.service)];
     [params setObject:keyword forKey:keyForSearchTerm(self.service)];
 
-    if (self.service != DZNPhotoPickerControllerServiceInstagram) {
+    if (self.service != DZNPhotoPickerControllerServiceInstagram && self.service != DZNPhotoPickerControllerServiceGoogleImages) {
         [params setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
         [params setObject:[NSNumber numberWithInteger:resultPerPage] forKey:keyForSearchResultPerPage(self.service)];
     }
@@ -93,6 +93,12 @@
         [params setObject:[NSNumber numberWithBool:YES] forKey:@"in_gallery"];
         [params setObject:[NSNumber numberWithInteger:1] forKey:@"safe_search"];
         [params setObject:[NSNumber numberWithInteger:1] forKey:@"content_type"];
+    }else if (self.service == DZNPhotoPickerControllerServiceGoogleImages) {
+        [params setObject:[self consumerSecret] forKey:apiSecretForAPIConsumer(self.service)];
+        [params setObject:@"image" forKey:@"searchType"];
+        [params setObject:@"medium" forKey:@"safe"];
+        [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(self.service)];
+        [params setObject:@(resultPerPage * page) forKey:@"start"];
     }
 
     return params;
