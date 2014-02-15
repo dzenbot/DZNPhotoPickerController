@@ -49,6 +49,7 @@ static DZNPhotoEditViewControllerCropMode _editingMode;
         }
         
         [self.delegate imagePickerController:self didFinishPickingMediaWithInfo:notification.userInfo];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
 }
 

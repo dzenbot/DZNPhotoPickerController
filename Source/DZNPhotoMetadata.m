@@ -21,7 +21,7 @@
 {
     if (service != 0) {
         DZNPhotoMetadata *metadata = [DZNPhotoMetadata new];
-        metadata.serviceName = [NSStringFromServiceType(service) lowercaseString];
+        metadata.serviceName = [NSStringFromService(service) lowercaseString];
         return metadata;
     }
     return nil;

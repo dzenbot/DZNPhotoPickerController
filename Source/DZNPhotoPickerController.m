@@ -98,15 +98,15 @@ NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDid
     return @[(NSString *)kUTTypeImage];
 }
 
-NSString *NSStringFromServiceType(DZNPhotoPickerControllerService type)
+NSString *NSStringFromService(DZNPhotoPickerControllerService type)
 {
     switch (type) {
         case DZNPhotoPickerControllerService500px:          return @"500px";
         case DZNPhotoPickerControllerServiceFlickr:         return @"Flickr";
         case DZNPhotoPickerControllerServiceInstagram:      return @"Instagram";
-        case DZNPhotoPickerControllerServiceGoogleImages:   return @"Google Images";
-        case DZNPhotoPickerControllerServiceBingImages:     return @"Bing Images";
-        case DZNPhotoPickerControllerServiceYahooImages:    return @"Yahoo Images";
+        case DZNPhotoPickerControllerServiceGoogleImages:   return @"Google";
+        case DZNPhotoPickerControllerServiceBingImages:     return @"Bing";
+        case DZNPhotoPickerControllerServiceYahooImages:    return @"Yahoo";
         case DZNPhotoPickerControllerServicePanoramio:      return @"Panoramio";
         case DZNPhotoPickerControllerServiceDribbble:       return @"Dribbble";
         default:                                            return nil;

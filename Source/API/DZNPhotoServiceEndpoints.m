@@ -14,6 +14,13 @@
 
 @implementation DZNPhotoServiceEndpoints
 
+
+NSString *NSUserDefaultsUniqueKey(DZNPhotoPickerControllerService type, NSString *key)
+{
+    return [NSString stringWithFormat:@"%@%@", key, NSStringFromService(type)];
+}
+
+
 UIKIT_EXTERN NSURL *baseURLForService(DZNPhotoPickerControllerService service)
 {
     switch (service) {
@@ -25,12 +32,22 @@ UIKIT_EXTERN NSURL *baseURLForService(DZNPhotoPickerControllerService service)
     }
 }
 
+
 UIKIT_EXTERN NSString *tagsResourceKeyPathForService(DZNPhotoPickerControllerService service)
 {
     switch (service) {
         case DZNPhotoPickerControllerService500px:
         case DZNPhotoPickerControllerServiceFlickr:     return @"tags.tag";
         case DZNPhotoPickerControllerServiceInstagram:  return @"data";
+        default:                                        return nil;
+    }
+}
+
+UIKIT_EXTERN NSString *tagSearchUrlPathForService(DZNPhotoPickerControllerService service)
+{
+    switch (service) {
+        case DZNPhotoPickerControllerServiceFlickr:     return @"flickr.tags.getRelated";
+        case DZNPhotoPickerControllerServiceInstagram:  return @"tags/search";
         default:                                        return nil;
     }
 }
@@ -46,15 +63,6 @@ UIKIT_EXTERN NSString *photosResourceKeyPathForService(DZNPhotoPickerControllerS
     }
 }
 
-UIKIT_EXTERN NSString *tagSearchUrlPathForService(DZNPhotoPickerControllerService service)
-{
-    switch (service) {
-        case DZNPhotoPickerControllerServiceFlickr:     return @"flickr.tags.getRelated";
-        case DZNPhotoPickerControllerServiceInstagram:  return @"tags/search";
-        default:                                        return nil;
-    }
-}
-
 UIKIT_EXTERN NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerService service)
 {
     switch (service) {
@@ -66,7 +74,8 @@ UIKIT_EXTERN NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerServ
     }
 }
 
-UIKIT_EXTERN NSString *keyForAPIConsumer(DZNPhotoPickerControllerService service)
+
+UIKIT_EXTERN NSString *keyForAPIConsumerKey(DZNPhotoPickerControllerService service)
 {
     switch (service) {
         case DZNPhotoPickerControllerService500px:      return @"consumer_key";
@@ -77,7 +86,7 @@ UIKIT_EXTERN NSString *keyForAPIConsumer(DZNPhotoPickerControllerService service
     }
 }
 
-UIKIT_EXTERN NSString *apiSecretForAPIConsumer(DZNPhotoPickerControllerService service)
+UIKIT_EXTERN NSString *keyForAPIConsumerSecret(DZNPhotoPickerControllerService service)
 {
     switch (service) {
 

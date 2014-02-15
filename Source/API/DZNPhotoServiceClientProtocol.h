@@ -13,8 +13,6 @@
 UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerKey;
 UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerSecret;
 
-UIKIT_EXTERN NSString *NSStringHashFromServiceType(DZNPhotoPickerControllerService type, NSString *key);
-
 typedef void (^DZNHTTPRequestCompletion)(NSArray *list, NSError *error);
 
 /*

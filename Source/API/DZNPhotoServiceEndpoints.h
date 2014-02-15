@@ -13,19 +13,25 @@
 
 @interface DZNPhotoServiceEndpoints : NSObject
 
+UIKIT_EXTERN NSString *NSUserDefaultsUniqueKey(DZNPhotoPickerControllerService type, NSString *key);
+
+
 UIKIT_EXTERN NSURL *baseURLForService(DZNPhotoPickerControllerService service);
+
 
 UIKIT_EXTERN NSString *tagsResourceKeyPathForService(DZNPhotoPickerControllerService service);
 
-UIKIT_EXTERN NSString *photosResourceKeyPathForService(DZNPhotoPickerControllerService service);
-
 UIKIT_EXTERN NSString *tagSearchUrlPathForService(DZNPhotoPickerControllerService service);
+
+
+UIKIT_EXTERN NSString *photosResourceKeyPathForService(DZNPhotoPickerControllerService service);
 
 UIKIT_EXTERN NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerService service);
 
-UIKIT_EXTERN NSString *keyForAPIConsumer(DZNPhotoPickerControllerService service);
 
-UIKIT_EXTERN NSString *apiSecretForAPIConsumer(DZNPhotoPickerControllerService service);
+UIKIT_EXTERN NSString *keyForAPIConsumerKey(DZNPhotoPickerControllerService service);
+
+UIKIT_EXTERN NSString *keyForAPIConsumerSecret(DZNPhotoPickerControllerService service);
 
 UIKIT_EXTERN NSString *keyForSearchTerm(DZNPhotoPickerControllerService service);
 

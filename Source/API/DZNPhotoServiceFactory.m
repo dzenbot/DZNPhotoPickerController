@@ -10,6 +10,7 @@
 
 #import "DZNPhotoServiceFactory.h"
 #import "DZNPhotoServiceClient.h"
+#import "DZNPhotoServiceEndpoints.h"
 
 NSString *const DZNPhotoServiceClientConsumerKey = @"DZNPhotoServiceClientConsumerKey";
 NSString *const DZNPhotoServiceClientConsumerSecret = @"DZNPhotoServiceClientConsumerSecret";
@@ -48,11 +49,6 @@ NSString *const DZNPhotoServiceClientConsumerSecret = @"DZNPhotoServiceClientCon
     return client;
 }
 
-NSString *NSStringHashFromServiceType(DZNPhotoPickerControllerService type, NSString *key)
-{
-    return [NSString stringWithFormat:@"%@%@", key, NSStringFromServiceType(type)];
-}
-
 
 #pragma mark - Setter methods
 
@@ -65,8 +61,8 @@ NSString *NSStringHashFromServiceType(DZNPhotoPickerControllerService type, NSSt
               service == DZNPhotoPickerControllerServiceInstagram ||
               service == DZNPhotoPickerControllerServiceGoogleImages), @"Only 500px, Flickr, Instagram & Google Images are supported at this moment.");
 
-    [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSStringHashFromServiceType(service, DZNPhotoServiceClientConsumerKey)];
-    [[NSUserDefaults standardUserDefaults] setObject:secret forKey:NSStringHashFromServiceType(service, DZNPhotoServiceClientConsumerSecret)];
+    [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerKey)];
+    [[NSUserDefaults standardUserDefaults] setObject:secret forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerSecret)];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

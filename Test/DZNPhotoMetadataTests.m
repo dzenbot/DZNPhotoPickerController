@@ -38,7 +38,7 @@ static NSBundle *_testTargetBundle;
     XCTAssertNotNil(_testTargetBundle, @"path : %@", _testTargetBundle);
     XCTAssertNotNil(_testTargetBundle, @"The target bundle cannot be nil.");
     
-    NSString *path = [_testTargetBundle pathForResource:[NSStringFromServiceType(service) lowercaseString] ofType:@"json"];
+    NSString *path = [_testTargetBundle pathForResource:[NSStringFromService(service) lowercaseString] ofType:@"json"];
     XCTAssertNotNil(path, @"The path to the file cannot be nil.");
     
     NSData *data = [NSData dataWithContentsOfFile:path];

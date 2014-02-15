@@ -289,28 +289,28 @@ static NSString *kTagCellID = @"kTagCellID";
         NSMutableArray *titles = [NSMutableArray array];
         
         if ((services & DZNPhotoPickerControllerService500px) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerService500px)];
+            [titles addObject:NSStringFromService(DZNPhotoPickerControllerService500px)];
         }
         if ((services & DZNPhotoPickerControllerServiceFlickr) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceFlickr)];
+            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceFlickr)];
         }
         if ((services & DZNPhotoPickerControllerServiceInstagram) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceInstagram)];
+            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceInstagram)];
         }
         if ((services & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceGoogleImages)];
+            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceGoogleImages)];
         }
         if ((services & DZNPhotoPickerControllerServiceBingImages) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceBingImages)];
+            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceBingImages)];
         }
         if ((services & DZNPhotoPickerControllerServiceYahooImages) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceYahooImages)];
+            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceYahooImages)];
         }
         if ((services & DZNPhotoPickerControllerServicePanoramio) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServicePanoramio)];
+            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServicePanoramio)];
         }
         if ((services & DZNPhotoPickerControllerServiceDribbble) > 0) {
-            [titles addObject:NSStringFromServiceType(DZNPhotoPickerControllerServiceDribbble)];
+            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceDribbble)];
         }
         
         _segmentedControlTitles = [NSArray arrayWithArray:titles];
@@ -527,7 +527,7 @@ static NSString *kTagCellID = @"kTagCellID";
     
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wconversion"
-    NSLog(@"Searching \"%@\" (page %d) on %@", keyword, _currentPage, NSStringFromServiceType(_selectedService));
+    NSLog(@"Searching \"%@\" (page %d) on %@", keyword, _currentPage, NSStringFromService(_selectedService));
 #pragma clang diagnostic pop
     
     id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
@@ -913,6 +913,11 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

@@ -41,12 +41,12 @@
 
 - (NSString *)consumerKey
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:NSStringHashFromServiceType(self.service, DZNPhotoServiceClientConsumerKey)];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(self.service, DZNPhotoServiceClientConsumerKey)];
 }
 
 - (NSString *)consumerSecret
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:NSStringHashFromServiceType(self.service, DZNPhotoServiceClientConsumerSecret)];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(self.service, DZNPhotoServiceClientConsumerSecret)];
 }
 
 - (NSDictionary *)tagsParamsWithKeyword:(NSString *)keyword
@@ -56,7 +56,7 @@
     NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil.");
     
     NSMutableDictionary *params = [NSMutableDictionary new];
-    [params setObject:[self consumerKey] forKey:keyForAPIConsumer(self.service)];
+    [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(self.service)];
     [params setObject:keyword forKey:keyForSearchTag(self.service)];
     
     if (self.service == DZNPhotoPickerControllerServiceFlickr) {
@@ -75,7 +75,7 @@
     NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil.");
     
     NSMutableDictionary *params = [NSMutableDictionary new];
-    [params setObject:[self consumerKey] forKey:keyForAPIConsumer(self.service)];
+    [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(self.service)];
     [params setObject:keyword forKey:keyForSearchTerm(self.service)];
 
     if (self.service != DZNPhotoPickerControllerServiceInstagram && self.service != DZNPhotoPickerControllerServiceGoogleImages) {
@@ -94,7 +94,7 @@
         [params setObject:[NSNumber numberWithInteger:1] forKey:@"safe_search"];
         [params setObject:[NSNumber numberWithInteger:1] forKey:@"content_type"];
     }else if (self.service == DZNPhotoPickerControllerServiceGoogleImages) {
-        [params setObject:[self consumerSecret] forKey:apiSecretForAPIConsumer(self.service)];
+        [params setObject:[self consumerSecret] forKey:keyForAPIConsumerSecret(self.service)];
         [params setObject:@"image" forKey:@"searchType"];
         [params setObject:@"medium" forKey:@"safe"];
         [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(self.service)];

@@ -22,7 +22,7 @@
 {
     if (service != 0) {
         DZNPhotoTag *tag = [DZNPhotoTag new];
-        tag.serviceName = [NSStringFromServiceType(service) lowercaseString];
+        tag.serviceName = [NSStringFromService(service) lowercaseString];
         return tag;
     }
     return nil;
