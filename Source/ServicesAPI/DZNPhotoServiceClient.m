@@ -79,20 +79,20 @@
     [params setObject:keyword forKey:keyForSearchTerm(self.service)];
 
     if (self.service != DZNPhotoPickerControllerServiceInstagram && self.service != DZNPhotoPickerControllerServiceGoogleImages) {
-        [params setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
-        [params setObject:[NSNumber numberWithInteger:resultPerPage] forKey:keyForSearchResultPerPage(self.service)];
+        [params setObject:@(page) forKey:@"page"];
+        [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(self.service)];
     }
     
     if (self.service == DZNPhotoPickerControllerService500px) {
-        [params setObject:@[[NSNumber numberWithInteger:2],[NSNumber numberWithInteger:4]] forKey:@"image_size"];
+        [params setObject:@[@(2),@(4)] forKey:@"image_size"];
     }
     else if (self.service == DZNPhotoPickerControllerServiceFlickr) {
         [params setObject:photoSearchUrlPathForService(self.service) forKey:@"method"];
         [params setObject:@"json" forKey:@"format"];
         [params setObject:@"photos" forKey:@"media"];
-        [params setObject:[NSNumber numberWithBool:YES] forKey:@"in_gallery"];
-        [params setObject:[NSNumber numberWithInteger:1] forKey:@"safe_search"];
-        [params setObject:[NSNumber numberWithInteger:1] forKey:@"content_type"];
+        [params setObject:@(YES) forKey:@"in_gallery"];
+        [params setObject:@(1) forKey:@"safe_search"];
+        [params setObject:@(1) forKey:@"content_type"];
     }else if (self.service == DZNPhotoPickerControllerServiceGoogleImages) {
         [params setObject:[self consumerSecret] forKey:keyForAPIConsumerSecret(self.service)];
         [params setObject:@"image" forKey:@"searchType"];
