@@ -19,9 +19,9 @@ NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDid
 @implementation DZNPhotoPickerControllerConstants
 @end
 
-NSString *NSStringFromService(DZNPhotoPickerControllerService type)
+NSString *NSStringFromService(DZNPhotoPickerControllerService service)
 {
-    switch (type) {
+    switch (service) {
         case DZNPhotoPickerControllerService500px:          return @"500px";
         case DZNPhotoPickerControllerServiceFlickr:         return @"Flickr";
         case DZNPhotoPickerControllerServiceInstagram:      return @"Instagram";
@@ -74,6 +74,38 @@ DZNPhotoPickerControllerService DZNFirstPhotoServiceFromPhotoServices(DZNPhotoPi
         return DZNPhotoPickerControllerServiceDribbble;
     }
     return 0;
+}
+
+NSArray *NSArrayFromServices(DZNPhotoPickerControllerService services)
+{
+    NSMutableArray *titles = [NSMutableArray array];
+    
+    if ((services & DZNPhotoPickerControllerService500px) > 0) {
+        [titles addObject:NSStringFromService(DZNPhotoPickerControllerService500px)];
+    }
+    if ((services & DZNPhotoPickerControllerServiceFlickr) > 0) {
+        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceFlickr)];
+    }
+    if ((services & DZNPhotoPickerControllerServiceInstagram) > 0) {
+        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceInstagram)];
+    }
+    if ((services & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
+        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceGoogleImages)];
+    }
+    if ((services & DZNPhotoPickerControllerServiceBingImages) > 0) {
+        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceBingImages)];
+    }
+    if ((services & DZNPhotoPickerControllerServiceYahooImages) > 0) {
+        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceYahooImages)];
+    }
+    if ((services & DZNPhotoPickerControllerServicePanoramio) > 0) {
+        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServicePanoramio)];
+    }
+    if ((services & DZNPhotoPickerControllerServiceDribbble) > 0) {
+        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceDribbble)];
+    }
+    
+    return [NSArray arrayWithArray:titles];
 }
 
 NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)

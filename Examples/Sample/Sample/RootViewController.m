@@ -42,11 +42,10 @@
                                consumerSecret:kGoogleImagesSearchEngineID
                                  subscription:DZNPhotoPickerControllerSubscriptionFree];
     
-    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceGoogleImages
-                                  consumerKey:kYahooImagesConsumerKey
-                               consumerSecret:kYahooImagesConsumerSecret
-                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
-
+//    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceYahooImages
+//                                  consumerKey:kYahooImagesConsumerKey
+//                               consumerSecret:kYahooImagesConsumerSecret
+//                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
 }
 
 - (void)viewDidLoad

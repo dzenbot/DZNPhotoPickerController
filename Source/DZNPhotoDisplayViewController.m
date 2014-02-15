@@ -48,6 +48,8 @@ static NSString *kTagCellID = @"kTagCellID";
     self = [super initWithCollectionViewLayout:[DZNPhotoDisplayViewController flowLayout]];
     if (self) {
         self.title = NSLocalizedString(@"Internet Photos", nil);
+        
+        
     }
     return self;
 }
@@ -58,6 +60,13 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)loadView
 {
     [super loadView];
+    
+    _currentPage = 1;
+    _columnCount = 4;
+    _segmentedControlTitles = NSArrayFromServices(self.navigationController.supportedServices);
+    _selectedService = DZNFirstPhotoServiceFromPhotoServices(self.navigationController.supportedServices);
+    
+    NSAssert((_segmentedControlTitles.count < 5), @"DZNPhotoPickerController doesn't support more than 4 photo service providers.");
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -91,10 +100,6 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    _currentPage = 1;
-    _columnCount = 4;
-    _selectedService = DZNFirstPhotoServiceFromPhotoServices(self.navigationController.supportedServices);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -286,48 +291,6 @@ static NSString *kTagCellID = @"kTagCellID";
 - (NSInteger)resultPerPage
 {
     return self.columnCount * self.rowCount;
-}
-
-/*
- * Returns the segmented control titles, based on the supported services.
- * Default returns "500px" & "Flickr".
- */
-- (NSArray *)segmentedControlTitles
-{
-    if (!_segmentedControlTitles)
-    {
-        DZNPhotoPickerControllerService services = self.navigationController.supportedServices;
-
-        NSMutableArray *titles = [NSMutableArray array];
-        
-        if ((services & DZNPhotoPickerControllerService500px) > 0) {
-            [titles addObject:NSStringFromService(DZNPhotoPickerControllerService500px)];
-        }
-        if ((services & DZNPhotoPickerControllerServiceFlickr) > 0) {
-            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceFlickr)];
-        }
-        if ((services & DZNPhotoPickerControllerServiceInstagram) > 0) {
-            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceInstagram)];
-        }
-        if ((services & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
-            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceGoogleImages)];
-        }
-        if ((services & DZNPhotoPickerControllerServiceBingImages) > 0) {
-            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceBingImages)];
-        }
-        if ((services & DZNPhotoPickerControllerServiceYahooImages) > 0) {
-            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceYahooImages)];
-        }
-        if ((services & DZNPhotoPickerControllerServicePanoramio) > 0) {
-            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServicePanoramio)];
-        }
-        if ((services & DZNPhotoPickerControllerServiceDribbble) > 0) {
-            [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceDribbble)];
-        }
-        
-        _segmentedControlTitles = [NSArray arrayWithArray:titles];
-    }
-    return _segmentedControlTitles;
 }
 
 /*

@@ -70,10 +70,18 @@ typedef NS_ENUM(NSInteger, DZNPhotoPickerControllerSubscription) {
 /*
  * Returns a photo service name string.
  *
- * @param type The specified service type.
+ * @param service The specified service type.
  * @returns The photo service name.
  */
-UIKIT_EXTERN NSString *NSStringFromService(DZNPhotoPickerControllerService type);
+UIKIT_EXTERN NSString *NSStringFromService(DZNPhotoPickerControllerService service);
+
+/*
+ * Returns a list of photo service name strings.
+ *
+ * @param services The bitmap of service types.
+ * @returns The list of photo service names.
+ */
+UIKIT_EXTERN NSArray *NSArrayFromServices(DZNPhotoPickerControllerService services);
 
 /*
  * Returns a photo service type from name.
