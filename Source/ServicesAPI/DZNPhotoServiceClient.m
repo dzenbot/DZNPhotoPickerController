@@ -28,10 +28,9 @@
 {
     self = [super initWithBaseURL:baseURLForService(service)];
     if (self) {
-        self.service = service;
-        self.edition = edition;
         self.parameterEncoding = AFJSONParameterEncoding;
-        
+        _service = service;
+        _edition = edition;
     }
     return self;
 }
@@ -46,26 +45,27 @@
 
 - (NSString *)consumerKey
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(self.service, DZNPhotoServiceClientConsumerKey)];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(_service, DZNPhotoServiceClientConsumerKey)];
 }
 
 - (NSString *)consumerSecret
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(self.service, DZNPhotoServiceClientConsumerSecret)];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(_service, DZNPhotoServiceClientConsumerSecret)];
 }
 
 - (NSDictionary *)tagsParamsWithKeyword:(NSString *)keyword
 {
-    NSAssert(keyword, @"\"keyword\" cannot be nil.");
-    NSAssert([self consumerKey], @"\"consumerKey\" cannot be nil.");
-    NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil.");
+    NSAssert(keyword, @"\"keyword\" cannot be nil for %@.", NSStringFromService(_service));
+    NSAssert([self consumerKey], @"\"consumerKey\" cannot be nil for %@.", NSStringFromService(_service));
+    NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil for %@.", NSStringFromService(_service));
+    
     
     NSMutableDictionary *params = [NSMutableDictionary new];
-    [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(self.service)];
-    [params setObject:keyword forKey:keyForSearchTag(self.service)];
+    [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(_service)];
+    [params setObject:keyword forKey:keyForSearchTag(_service)];
     
-    if (self.service == DZNPhotoPickerControllerServiceFlickr) {
-        [params setObject:tagSearchUrlPathForService(self.service) forKey:@"method"];
+    if (_service == DZNPhotoPickerControllerServiceFlickr) {
+        [params setObject:tagSearchUrlPathForService(_service) forKey:@"method"];
         [params setObject:@"json" forKey:@"format"];
     }
     
@@ -74,42 +74,43 @@
 
 - (NSDictionary *)photosParamsWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage
 {
-    NSAssert(keyword, @"\"keyword\" cannot be nil.");
-    NSAssert((resultPerPage > 0), @"\"result per page\" must be higher than 0.");
-    NSAssert([self consumerKey], @"\"consumerKey\" cannot be nil.");
-    NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil.");
+    NSAssert(keyword, @"\"keyword\" cannot be nil for %@.", NSStringFromService(_service));
+    NSAssert((resultPerPage > 0), @"\"result per page\" must be higher than 0 for %@.", NSStringFromService(_service));
+    NSAssert([self consumerKey], @"\"consumerKey\" cannot be nil for %@.", NSStringFromService(_service));
+    NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil for %@.", NSStringFromService(_service));
+    
     
     NSMutableDictionary *params = [NSMutableDictionary new];
-    [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(self.service)];
-    [params setObject:keyword forKey:keyForSearchTerm(self.service)];
+    [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(_service)];
+    [params setObject:keyword forKey:keyForSearchTerm(_service)];
 
     
-    if (self.service == DZNPhotoPickerControllerService500px || self.service == DZNPhotoPickerControllerServiceFlickr)
+    if (_service == DZNPhotoPickerControllerService500px || _service == DZNPhotoPickerControllerServiceFlickr)
     {
         [params setObject:@(page) forKey:@"page"];
-        [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(self.service)];
+        [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(_service)];
     }
     
     
-    if (self.service == DZNPhotoPickerControllerService500px)
+    if (_service == DZNPhotoPickerControllerService500px)
     {
         [params setObject:@[@(2),@(4)] forKey:@"image_size"];
     }
-    else if (self.service == DZNPhotoPickerControllerServiceFlickr)
+    else if (_service == DZNPhotoPickerControllerServiceFlickr)
     {
-        [params setObject:photoSearchUrlPathForService(self.service) forKey:@"method"];
+        [params setObject:photoSearchUrlPathForService(_service) forKey:@"method"];
         [params setObject:@"json" forKey:@"format"];
         [params setObject:@"photos" forKey:@"media"];
         [params setObject:@(YES) forKey:@"in_gallery"];
         [params setObject:@(1) forKey:@"safe_search"];
         [params setObject:@(1) forKey:@"content_type"];
     }
-    else if (self.service == DZNPhotoPickerControllerServiceGoogleImages)
+    else if (_service == DZNPhotoPickerControllerServiceGoogleImages)
     {
-        [params setObject:[self consumerSecret] forKey:keyForAPIConsumerSecret(self.service)];
+        [params setObject:[self consumerSecret] forKey:keyForAPIConsumerSecret(_service)];
         [params setObject:@"image" forKey:@"searchType"];
         [params setObject:@"medium" forKey:@"safe"];
-        [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(self.service)];
+        [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(_service)];
         [params setObject:@(resultPerPage * page) forKey:@"start"];
     }
 
@@ -118,7 +119,7 @@
 
 - (NSData *)processData:(NSData *)data
 {
-    if (self.service == DZNPhotoPickerControllerServiceFlickr) {
+    if (_service == DZNPhotoPickerControllerServiceFlickr) {
         
         NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSString *responsePrefix = @"jsonFlickrApi(";
@@ -134,20 +135,20 @@
 
 - (NSArray *)objectListForObject:(NSString *)objectName withJSON:(NSDictionary *)json
 {
-    NSString *keyPath = keyPathForObjectName(self.service, objectName);
+    NSString *keyPath = keyPathForObjectName(_service, objectName);
     NSMutableArray *objects = [NSMutableArray arrayWithArray:[json valueForKeyPath:keyPath]];
     
     if ([objectName isEqualToString:[DZNPhotoTag name]]) {
         
-        if (self.service == DZNPhotoPickerControllerServiceFlickr) {
+        if (_service == DZNPhotoPickerControllerServiceFlickr) {
             NSString *keyword = [json valueForKeyPath:@"tags.source"];
-            if (keyword) [objects insertObject:@{keyForSearchTagContent(self.service):keyword} atIndex:0];
+            if (keyword) [objects insertObject:@{keyForSearchTagContent(_service):keyword} atIndex:0];
         }
         
-        return [DZNPhotoTag photoTagListFromService:self.service withResponse:objects];
+        return [DZNPhotoTag photoTagListFromService:_service withResponse:objects];
     }
     else if ([objectName isEqualToString:[DZNPhotoMetadata name]]) {
-        return [DZNPhotoMetadata photoMetadataListFromService:self.service withResponse:objects];
+        return [DZNPhotoMetadata photoMetadataListFromService:_service withResponse:objects];
     }
     
     return nil;
@@ -158,7 +159,7 @@
 
 - (void)searchTagsWithKeyword:(NSString *)keyword completion:(DZNHTTPRequestCompletion)completion
 {
-    _loadingPath = tagSearchUrlPathForService(self.service);
+    _loadingPath = tagSearchUrlPathForService(_service);
 
     NSDictionary *params = [self tagsParamsWithKeyword:keyword];
     [self getObject:[DZNPhotoTag name] path:_loadingPath params:params completion:completion];
@@ -166,7 +167,7 @@
 
 - (void)searchPhotosWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage completion:(DZNHTTPRequestCompletion)completion
 {
-    _loadingPath = photoSearchUrlPathForService(self.service);
+    _loadingPath = photoSearchUrlPathForService(_service);
 
     NSDictionary *params = [self photosParamsWithKeyword:keyword page:page resultPerPage:resultPerPage];
     [self getObject:[DZNPhotoMetadata name] path:_loadingPath params:params completion:completion];
@@ -176,12 +177,12 @@
 {
     NSLog(@"%s\nobjectName : %@ \npath : %@\nparams: %@\n\n",__FUNCTION__, objectName, path, params);
     
-    if (self.service == DZNPhotoPickerControllerServiceFlickr) {
+    if (_service == DZNPhotoPickerControllerServiceFlickr) {
         path = @"";
     }
-    if (self.service == DZNPhotoPickerControllerServiceInstagram)
+    if (_service == DZNPhotoPickerControllerServiceInstagram)
     {
-        NSString *keyword = [params objectForKey:keyForSearchTerm(self.service)];
+        NSString *keyword = [params objectForKey:keyForSearchTerm(_service)];
         path = [path stringByReplacingOccurrencesOfString:@"%@" withString:keyword];
     }
 
@@ -204,7 +205,7 @@
 {
     if (_loadingPath) {
         
-        if (self.service == DZNPhotoPickerControllerServiceFlickr) _loadingPath = @"";
+        if (_service == DZNPhotoPickerControllerServiceFlickr) _loadingPath = @"";
         [self cancelAllHTTPOperationsWithMethod:@"GET" path:_loadingPath];
         
         _loadingPath = nil;

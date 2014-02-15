@@ -20,5 +20,5 @@
 #define kInstagramConsumerKey       @"16759bba4b7e4831b80bf3412e7dcb16"
 #define kInstagramConsumerSecret    @"701c5a99144a401c8285b0c9df999509"
 
-#define kGoogleConsumerKey          @"AIzaSyCQoWprcnKWhhaN-VcBoisBs2eS8OVFWQc"
-#define kGoogleSearchEngineID       @"001846249404918407654:4zrdq_dxrvq"        //cx
+#define kGoogleConsumerKey          @"AIzaSyBiRs6vQmTVseUnMqUtJwpaJX-m5o9Djr0"
+#define kGoogleSearchEngineID       @"018335320449571565407:tg2a0fkobws"        //cx
