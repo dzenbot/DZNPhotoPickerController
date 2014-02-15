@@ -11,6 +11,9 @@
 #import <Foundation/Foundation.h>
 #import "DZNPhotoPickerControllerConstants.h"
 
+UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerKey;
+UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerSecret;
+
 @interface DZNPhotoServiceConstants : NSObject
 @end
 

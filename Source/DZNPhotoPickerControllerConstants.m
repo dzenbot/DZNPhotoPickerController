@@ -12,7 +12,9 @@
 
 NSString *const DZNPhotoPickerControllerCropMode = @"DZNPhotoPickerControllerCropMode";
 NSString *const DZNPhotoPickerControllerPhotoAttributes = @"DZNPhotoPickerControllerPhotoAttributes";
+
 NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDidFinishPickingNotification";
+
 
 @implementation DZNPhotoPickerControllerConstants
 @end

@@ -12,6 +12,9 @@
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 
+NSString *const DZNPhotoServiceClientConsumerKey = @"DZNPhotoServiceClientConsumerKey";
+NSString *const DZNPhotoServiceClientConsumerSecret = @"DZNPhotoServiceClientConsumerSecret";
+
 @implementation DZNPhotoServiceConstants
 @end
 

@@ -12,8 +12,7 @@
 #import "DZNPhotoServiceClient.h"
 #import "DZNPhotoServiceConstants.h"
 
-NSString *const DZNPhotoServiceClientConsumerKey = @"DZNPhotoServiceClientConsumerKey";
-NSString *const DZNPhotoServiceClientConsumerSecret = @"DZNPhotoServiceClientConsumerSecret";
+
 
 @interface DZNPhotoServiceFactory ()
 @property (nonatomic, strong) NSMutableArray *clients;
