@@ -462,6 +462,12 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (BOOL)canSearchTag:(NSString *)searchString
 {
+    if (_selectedService == DZNPhotoPickerControllerServiceGoogleImages){
+        [_searchTags removeAllObjects];
+        [_searchController.searchResultsTableView reloadData];
+        return NO;
+    }
+    
     if ([_searchController.searchBar isFirstResponder] && searchString.length > 2) {
         [self searchTagsWithKeyword:searchString];
         return YES;
