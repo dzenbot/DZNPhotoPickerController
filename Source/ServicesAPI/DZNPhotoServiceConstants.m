@@ -1,5 +1,5 @@
 //
-//  DZNPhotoServiceEndpoints.m
+//  DZNPhotoServiceConstants.m
 //  DZNPhotoPickerController
 //  https://github.com/dzenbot/DZNPhotoPickerController
 //
@@ -8,11 +8,11 @@
 //  Licence: MIT-Licence
 //
 
-#import "DZNPhotoServiceEndpoints.h"
+#import "DZNPhotoServiceConstants.h"
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 
-@implementation DZNPhotoServiceEndpoints
+@implementation DZNPhotoServiceConstants
 
 
 NSString *NSUserDefaultsUniqueKey(DZNPhotoPickerControllerService type, NSString *key)

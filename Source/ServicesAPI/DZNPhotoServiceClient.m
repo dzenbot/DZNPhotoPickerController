@@ -10,7 +10,7 @@
 
 #import "DZNPhotoServiceClient.h"
 
-#import "DZNPhotoServiceEndpoints.h"
+#import "DZNPhotoServiceConstants.h"
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 

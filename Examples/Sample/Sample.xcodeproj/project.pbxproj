@@ -42,7 +42,7 @@
 		4F64C15B18A53D9C00FBEE9A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570144180E5D0E00E12444 /* UIKit.framework */; };
 		4F97B27618ADD1F000DED8C0 /* instagram.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F97B27518ADD1F000DED8C0 /* instagram.json */; };
 		4F97B28818AFDC4200DED8C0 /* DZNPhotoServiceClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B28218AFDC4200DED8C0 /* DZNPhotoServiceClient.m */; };
-		4F97B28918AFDC4200DED8C0 /* DZNPhotoServiceEndpoints.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B28518AFDC4200DED8C0 /* DZNPhotoServiceEndpoints.m */; };
+		4F97B28918AFDC4200DED8C0 /* DZNPhotoServiceConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B28518AFDC4200DED8C0 /* DZNPhotoServiceConstants.m */; };
 		4F97B28A18AFDC4200DED8C0 /* DZNPhotoServiceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B28718AFDC4200DED8C0 /* DZNPhotoServiceFactory.m */; };
 		4F9C24FF18AB1B8900940B3F /* DZNPhotoMetadataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C24F618AB1B8900940B3F /* DZNPhotoMetadataTests.m */; };
 		4F9C250018AB1B8900940B3F /* DZNPhotoTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F9C24F718AB1B8900940B3F /* DZNPhotoTests-Info.plist */; };
@@ -97,8 +97,8 @@
 		4F97B28118AFDC4200DED8C0 /* DZNPhotoServiceClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceClient.h; sourceTree = "<group>"; };
 		4F97B28218AFDC4200DED8C0 /* DZNPhotoServiceClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoServiceClient.m; sourceTree = "<group>"; };
 		4F97B28318AFDC4200DED8C0 /* DZNPhotoServiceClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceClientProtocol.h; sourceTree = "<group>"; };
-		4F97B28418AFDC4200DED8C0 /* DZNPhotoServiceEndpoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceEndpoints.h; sourceTree = "<group>"; };
-		4F97B28518AFDC4200DED8C0 /* DZNPhotoServiceEndpoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoServiceEndpoints.m; sourceTree = "<group>"; };
+		4F97B28418AFDC4200DED8C0 /* DZNPhotoServiceConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceConstants.h; sourceTree = "<group>"; };
+		4F97B28518AFDC4200DED8C0 /* DZNPhotoServiceConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoServiceConstants.m; sourceTree = "<group>"; };
 		4F97B28618AFDC4200DED8C0 /* DZNPhotoServiceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceFactory.h; sourceTree = "<group>"; };
 		4F97B28718AFDC4200DED8C0 /* DZNPhotoServiceFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoServiceFactory.m; sourceTree = "<group>"; };
 		4F9C24F618AB1B8900940B3F /* DZNPhotoMetadataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoMetadataTests.m; sourceTree = "<group>"; };
@@ -228,13 +228,13 @@
 		4F97B28018AFDC4200DED8C0 /* ServicesAPI */ = {
 			isa = PBXGroup;
 			children = (
+				4F97B28618AFDC4200DED8C0 /* DZNPhotoServiceFactory.h */,
+				4F97B28718AFDC4200DED8C0 /* DZNPhotoServiceFactory.m */,
 				4F97B28118AFDC4200DED8C0 /* DZNPhotoServiceClient.h */,
 				4F97B28218AFDC4200DED8C0 /* DZNPhotoServiceClient.m */,
 				4F97B28318AFDC4200DED8C0 /* DZNPhotoServiceClientProtocol.h */,
-				4F97B28418AFDC4200DED8C0 /* DZNPhotoServiceEndpoints.h */,
-				4F97B28518AFDC4200DED8C0 /* DZNPhotoServiceEndpoints.m */,
-				4F97B28618AFDC4200DED8C0 /* DZNPhotoServiceFactory.h */,
-				4F97B28718AFDC4200DED8C0 /* DZNPhotoServiceFactory.m */,
+				4F97B28418AFDC4200DED8C0 /* DZNPhotoServiceConstants.h */,
+				4F97B28518AFDC4200DED8C0 /* DZNPhotoServiceConstants.m */,
 			);
 			path = ServicesAPI;
 			sourceTree = "<group>";
@@ -410,7 +410,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F97B28918AFDC4200DED8C0 /* DZNPhotoServiceEndpoints.m in Sources */,
+				4F97B28918AFDC4200DED8C0 /* DZNPhotoServiceConstants.m in Sources */,
 				4F97B28A18AFDC4200DED8C0 /* DZNPhotoServiceFactory.m in Sources */,
 				4F570187180E5E6D00E12444 /* DZNPhotoEditViewController.m in Sources */,
 				4F570185180E5E6D00E12444 /* DZNPhotoDisplayViewCell.m in Sources */,

@@ -9,7 +9,7 @@
 //
 
 #import "DZNPhotoTag.h"
-#import "DZNPhotoServiceEndpoints.h"
+#import "DZNPhotoServiceConstants.h"
 
 @implementation DZNPhotoTag
 

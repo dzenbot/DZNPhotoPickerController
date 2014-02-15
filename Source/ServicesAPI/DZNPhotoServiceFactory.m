@@ -10,7 +10,7 @@
 
 #import "DZNPhotoServiceFactory.h"
 #import "DZNPhotoServiceClient.h"
-#import "DZNPhotoServiceEndpoints.h"
+#import "DZNPhotoServiceConstants.h"
 
 NSString *const DZNPhotoServiceClientConsumerKey = @"DZNPhotoServiceClientConsumerKey";
 NSString *const DZNPhotoServiceClientConsumerSecret = @"DZNPhotoServiceClientConsumerSecret";

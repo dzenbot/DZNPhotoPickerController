@@ -1,5 +1,5 @@
 //
-//  DZNPhotoServiceEndpoints.h
+//  DZNPhotoServiceConstants.h
 //  DZNPhotoPickerController
 //  https://github.com/dzenbot/DZNPhotoPickerController
 //
@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 #import "DZNPhotoPickerControllerConstants.h"
 
-@interface DZNPhotoServiceEndpoints : NSObject
+@interface DZNPhotoServiceConstants : NSObject
 
 UIKIT_EXTERN NSString *NSUserDefaultsUniqueKey(DZNPhotoPickerControllerService type, NSString *key);
 
