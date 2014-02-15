@@ -14,15 +14,15 @@
 
 NSString *const DZNPhotoServiceClientConsumerKey = @"DZNPhotoServiceClientConsumerKey";
 NSString *const DZNPhotoServiceClientConsumerSecret = @"DZNPhotoServiceClientConsumerSecret";
+NSString *const DZNPhotoServiceClientEdition = @"DZNPhotoServiceClientEdition";
 
 @implementation DZNPhotoServiceConstants
 @end
 
-NSString *NSUserDefaultsUniqueKey(DZNPhotoPickerControllerService type, NSString *key)
+NSString *NSUserDefaultsUniqueKey(NSUInteger type, NSString *key)
 {
     return [NSString stringWithFormat:@"%@_%@", NSStringFromService(type), key];
 }
-
 
 NSURL *baseURLForService(DZNPhotoPickerControllerService service)
 {
@@ -34,7 +34,6 @@ NSURL *baseURLForService(DZNPhotoPickerControllerService service)
         default:                                                return nil;
     }
 }
-
 
 NSString *tagsResourceKeyPathForService(DZNPhotoPickerControllerService service)
 {
@@ -76,7 +75,6 @@ NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerService service)
         default:                                                return nil;
     }
 }
-
 
 NSString *keyForAPIConsumerKey(DZNPhotoPickerControllerService service)
 {

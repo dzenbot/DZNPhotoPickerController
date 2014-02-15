@@ -100,9 +100,17 @@
 /*
  * Registers for a specified photo service and enables API transactions.
  */
-+ (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret;
++ (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret
 {
-    [DZNPhotoServiceFactory setConsumerKey:consumerKey consumerSecret:consumerSecret service:service];
+    [self registerService:service consumerKey:key consumerSecret:secret edition:DZNPhotoPickerControllerServiceEditionFree];
+}
+
+/*
+ * Registers for a specified photo service and enables API transactions.
+ */
++ (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret edition:(DZNPhotoPickerControllerServiceEdition)edition
+{
+    [DZNPhotoServiceFactory setConsumerKey:key consumerSecret:secret service:service edition:edition];
 }
 
 

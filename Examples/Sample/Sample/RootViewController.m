@@ -36,7 +36,8 @@
     
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceGoogleImages
                                   consumerKey:kGoogleConsumerKey
-                               consumerSecret:kGoogleSearchEngineID];
+                               consumerSecret:kGoogleSearchEngineID
+                                      edition:DZNPhotoPickerControllerServiceEditionFree];
 
 }
 

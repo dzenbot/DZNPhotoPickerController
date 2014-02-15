@@ -17,7 +17,7 @@ UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerSecret;
 @interface DZNPhotoServiceConstants : NSObject
 @end
 
-UIKIT_EXTERN NSString *NSUserDefaultsUniqueKey(DZNPhotoPickerControllerService type, NSString *key);
+UIKIT_EXTERN NSString *NSUserDefaultsUniqueKey(NSUInteger type, NSString *key);
 
 
 UIKIT_EXTERN NSURL *baseURLForService(DZNPhotoPickerControllerService service);

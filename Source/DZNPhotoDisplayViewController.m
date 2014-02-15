@@ -96,8 +96,8 @@ static NSString *kTagCellID = @"kTagCellID";
     
     _currentPage = 1;
     _columnCount = 4;
-    _rowCount = [self rowCount];
-    _resultPerPage = _columnCount*_rowCount;
+    
+    NSLog(@"self.rowCount : %d", self.rowCount);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -259,20 +259,36 @@ static NSString *kTagCellID = @"kTagCellID";
 }
 
 /*
- * Dinamically calculate the available row count based on the collectionView's content size and the cell height.
+ * Calculates the available row count based on the collectionView's content size and the cell height.
  * This allows to easily modify the collectionView layout, for displaying the image thumbs.
  */
-- (NSUInteger)rowCount
+- (NSInteger)rowCount
 {
     CGSize contentSize = [self contentSize];
     
     CGFloat footerSize = [self footerSize].height;
     contentSize.height -= footerSize;
+    contentSize.height += self.navigationController.navigationBar.frame.size.height;
     
     CGFloat cellHeight = [self cellSize].height;
     
-    NSUInteger count = (int)(contentSize.height/cellHeight);
+    NSInteger count = (int)(contentSize.height/cellHeight);
+    
+    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
+    if (client.service == DZNPhotoPickerControllerServiceGoogleImages &&
+        client.edition == DZNPhotoPickerControllerServiceEditionFree) {
+        count = count/2;
+    }
+    
     return count;
+}
+
+/*
+ * Returns the appropriate number of result per page.
+ */
+- (NSInteger)resultPerPage
+{
+    return self.columnCount * self.rowCount;
 }
 
 /*
@@ -322,7 +338,7 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (BOOL)shouldShowFooter
 {
-    return (_photosMetadata.count%_resultPerPage == 0) ? YES : NO;
+    return (_photosMetadata.count%self.resultPerPage == 0) ? YES : NO;
 }
 
 
@@ -520,7 +536,7 @@ static NSString *kTagCellID = @"kTagCellID";
     
     id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
     
-    [client searchPhotosWithKeyword:keyword page:_currentPage resultPerPage:_resultPerPage completion:^(NSArray *list, NSError *error) {
+    [client searchPhotosWithKeyword:keyword page:_currentPage resultPerPage:self.resultPerPage completion:^(NSArray *list, NSError *error) {
         if (error) [self setSearchError:error];
         else [self setPhotoSearchList:list];
     }];

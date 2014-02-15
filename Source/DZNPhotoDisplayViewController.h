@@ -22,9 +22,9 @@
 /* The searching string. If setted before presentation, the controller will automatically start searching. */
 @property (nonatomic, strong) NSString *searchTerm;
 /* The count number of columns of thumbs to be displayed. */
-@property (nonatomic) NSUInteger columnCount;
+@property (nonatomic) NSInteger columnCount;
 /* The count number of rows of thumbs to be diplayed. */
-@property (nonatomic) NSUInteger rowCount;
+@property (nonatomic) NSInteger rowCount;
 /* YES if the controller started a request and loading content. */
 @property (nonatomic, getter = isLoading) BOOL loading;
 

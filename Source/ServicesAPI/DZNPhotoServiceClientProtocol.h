@@ -12,6 +12,7 @@
 
 UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerKey;
 UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerSecret;
+UIKIT_EXTERN NSString *const DZNPhotoServiceClientEdition;
 
 typedef void (^DZNHTTPRequestCompletion)(NSArray *list, NSError *error);
 
@@ -19,6 +20,13 @@ typedef void (^DZNHTTPRequestCompletion)(NSArray *list, NSError *error);
  * Base HTTP photo service protocol.
  */
 @protocol DZNPhotoServiceClientProtocol <NSObject>
+
+/* The current photo service. */
+@property (nonatomic) DZNPhotoPickerControllerService service;
+/* The current photo service edition. */
+@property (nonatomic) DZNPhotoPickerControllerServiceEdition edition;
+/* YES if the HTTP client is loading. */
+@property (nonatomic, readonly) BOOL loading;
 
 /*
  * Searches for a list of tags related to a keyword string.
