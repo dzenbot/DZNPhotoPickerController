@@ -103,11 +103,11 @@ NSString *NSStringFromServiceType(DZNPhotoPickerControllerService type)
     switch (type) {
         case DZNPhotoPickerControllerService500px:          return @"500px";
         case DZNPhotoPickerControllerServiceFlickr:         return @"Flickr";
+        case DZNPhotoPickerControllerServiceInstagram:      return @"Instagram";
         case DZNPhotoPickerControllerServiceGoogleImages:   return @"Google Images";
         case DZNPhotoPickerControllerServiceBingImages:     return @"Bing Images";
         case DZNPhotoPickerControllerServiceYahooImages:    return @"Yahoo Images";
         case DZNPhotoPickerControllerServicePanoramio:      return @"Panoramio";
-        case DZNPhotoPickerControllerServiceInstagram:      return @"Instagram";
         case DZNPhotoPickerControllerServiceDribbble:       return @"Dribbble";
         default:                                            return nil;
     }

@@ -5,48 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>0362DA81-A164-4D07-95C1-2CEDE85CB2F2</string>
+	<string>8A184109-DA19-4175-83EE-BE2091499960</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Sample</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>5504B2F0-33DD-499D-AB35-69978237D178</key>
-		<string>https://github.com/dzenbot/DZNPhotoPickerController.git</string>
-		<key>6A58C0FE-4989-4664-9D6B-B15B3F136E4E</key>
-		<string>https://github.com/dzenbot/NRGramKit.git</string>
+		<key>744370F5-196E-4461-9FB9-AB89D151CBB5</key>
+		<string>https://github.com/dzenbot/DZNPhotoPickerController</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Examples/Sample/Sample.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>5504B2F0-33DD-499D-AB35-69978237D178</key>
+		<key>744370F5-196E-4461-9FB9-AB89D151CBB5</key>
 		<string>../../..</string>
-		<key>6A58C0FE-4989-4664-9D6B-B15B3F136E4E</key>
-		<string>../../../../_Forks/NRGramKit</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/dzenbot/DZNPhotoPickerController.git</string>
+	<string>https://github.com/dzenbot/DZNPhotoPickerController</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>5504B2F0-33DD-499D-AB35-69978237D178</string>
+	<string>744370F5-196E-4461-9FB9-AB89D151CBB5</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>5504B2F0-33DD-499D-AB35-69978237D178</string>
+			<string>744370F5-196E-4461-9FB9-AB89D151CBB5</string>
 			<key>IDESourceControlWCCName</key>
 			<string>DZNPhotoPickerController</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>6A58C0FE-4989-4664-9D6B-B15B3F136E4E</string>
-			<key>IDESourceControlWCCName</key>
-			<string>NRGramKit</string>
 		</dict>
 	</array>
 </dict>
