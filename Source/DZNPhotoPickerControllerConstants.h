@@ -60,11 +60,11 @@ typedef NS_ENUM(NSInteger, DZNPhotoEditViewControllerCropMode) {
 };
 
 /*
- * Types of photo service editions (i.e. Free, Paid)
+ * Types of photo service subscription (i.e. Free, Paid)
  */
-typedef NS_ENUM(NSInteger, DZNPhotoPickerControllerServiceEdition) {
-    DZNPhotoPickerControllerServiceEditionFree,
-    DZNPhotoPickerControllerServiceEditionPaid
+typedef NS_ENUM(NSInteger, DZNPhotoPickerControllerSubscription) {
+    DZNPhotoPickerControllerSubscriptionFree,
+    DZNPhotoPickerControllerSubscriptionPaid
 };
 
 /*

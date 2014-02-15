@@ -273,7 +273,7 @@ static NSString *kTagCellID = @"kTagCellID";
     
     id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
     if (client.service == DZNPhotoPickerControllerServiceGoogleImages &&
-        client.edition == DZNPhotoPickerControllerServiceEditionFree) {
+        client.subscription == DZNPhotoPickerControllerSubscriptionFree) {
         count = count/2;
     }
     

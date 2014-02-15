@@ -63,9 +63,9 @@
  * @param service The photo service to register (i.e. 500px, Flickr, Google Images, etc.)
  * @param key The API consumer key.
  * @param secret The API consumer secret token.
- * @param edition The photo service edition type (i.e. Free & Paid). This param only affects Google Images API for now.
+ * @param subscription The photo service subscription type (i.e. Free & Paid). This param only affects Google Images API for now.
  */
-+ (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret edition:(DZNPhotoPickerControllerServiceEdition)edition;
++ (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret subscription:(DZNPhotoPickerControllerSubscription)subscription;
 
 @end
 

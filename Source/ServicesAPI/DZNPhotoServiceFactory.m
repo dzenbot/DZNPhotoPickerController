@@ -40,9 +40,9 @@
         }
     }
     
-    DZNPhotoPickerControllerServiceEdition edition = [[[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientEdition)] integerValue];
+    DZNPhotoPickerControllerSubscription subscription = [[[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientSubscription)] integerValue];
         
-    DZNPhotoServiceClient *client = [[DZNPhotoServiceClient alloc] initWithService:service edition:edition];
+    DZNPhotoServiceClient *client = [[DZNPhotoServiceClient alloc] initWithService:service subscription:subscription];
     [self.clients addObject:client];
     
     return client;
@@ -51,7 +51,7 @@
 
 #pragma mark - Setter methods
 
-+ (void)setConsumerKey:(NSString *)key consumerSecret:(NSString *)secret service:(DZNPhotoPickerControllerService)service edition:(DZNPhotoPickerControllerServiceEdition)edition
++ (void)setConsumerKey:(NSString *)key consumerSecret:(NSString *)secret service:(DZNPhotoPickerControllerService)service subscription:(DZNPhotoPickerControllerSubscription)subscription
 {
     NSAssert(key, @"\"key\" cannot be nil.");
     NSAssert(secret, @"\"secret\" cannot be nil.");
@@ -62,7 +62,7 @@
 
     [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerKey)];
     [[NSUserDefaults standardUserDefaults] setObject:secret forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerSecret)];
-    [[NSUserDefaults standardUserDefaults] setObject:@(edition) forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientEdition)];
+    [[NSUserDefaults standardUserDefaults] setObject:@(subscription) forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientSubscription)];
 
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

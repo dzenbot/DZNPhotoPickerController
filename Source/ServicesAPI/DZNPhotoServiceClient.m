@@ -21,16 +21,16 @@
 
 @implementation DZNPhotoServiceClient
 @synthesize service = _service;
-@synthesize edition = _edition;
+@synthesize subscription = _subscription;
 @synthesize loading = _loading;
 
-- (instancetype)initWithService:(DZNPhotoPickerControllerService)service edition:(DZNPhotoPickerControllerServiceEdition)edition
+- (instancetype)initWithService:(DZNPhotoPickerControllerService)service subscription:(DZNPhotoPickerControllerSubscription)subscription
 {
     self = [super initWithBaseURL:baseURLForService(service)];
     if (self) {
         self.parameterEncoding = AFJSONParameterEncoding;
         _service = service;
-        _edition = edition;
+        _subscription = subscription;
     }
     return self;
 }

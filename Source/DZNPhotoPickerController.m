@@ -103,12 +103,9 @@
     _supportedServices = services;
 }
 
-/*
- * Registers for a specified photo service and enables API transactions.
- */
-+ (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret edition:(DZNPhotoPickerControllerServiceEdition)edition
++ (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret subscription:(DZNPhotoPickerControllerSubscription)subscription
 {
-    [DZNPhotoServiceFactory setConsumerKey:key consumerSecret:secret service:service edition:edition];
+    [DZNPhotoServiceFactory setConsumerKey:key consumerSecret:secret service:service subscription:subscription];
 }
 
 

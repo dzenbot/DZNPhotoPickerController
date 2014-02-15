@@ -21,9 +21,9 @@
  * Initializes a new HTTP service client.
  *
  * @param service The specific photo search service.
- * @param edition The photo search service edition.
+ * @param subscription The photo search service subscription.
  * @return A new instance of an HTTP service client.
  */
-- (instancetype)initWithService:(DZNPhotoPickerControllerService)service edition:(DZNPhotoPickerControllerServiceEdition)edition;
+- (instancetype)initWithService:(DZNPhotoPickerControllerService)service subscription:(DZNPhotoPickerControllerSubscription)subscription;
 
 @end

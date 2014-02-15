@@ -25,22 +25,22 @@
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerService500px
                                   consumerKey:k500pxConsumerKey
                                consumerSecret:k500pxConsumerSecret
-                                      edition:DZNPhotoPickerControllerServiceEditionFree];
+                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
     
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceFlickr
                                   consumerKey:kFlickrConsumerKey
                                consumerSecret:kFlickrConsumerSecret
-                                      edition:DZNPhotoPickerControllerServiceEditionFree];
+                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
     
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceInstagram
                                   consumerKey:kInstagramConsumerKey
                                consumerSecret:kInstagramConsumerSecret
-                                      edition:DZNPhotoPickerControllerServiceEditionFree];
+                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
     
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceGoogleImages
                                   consumerKey:kGoogleConsumerKey
                                consumerSecret:kGoogleSearchEngineID
-                                      edition:DZNPhotoPickerControllerServiceEditionFree];
+                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
 
 }
 

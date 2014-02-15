@@ -12,7 +12,7 @@
 
 UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerKey;
 UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerSecret;
-UIKIT_EXTERN NSString *const DZNPhotoServiceClientEdition;
+UIKIT_EXTERN NSString *const DZNPhotoServiceClientSubscription;
 
 typedef void (^DZNHTTPRequestCompletion)(NSArray *list, NSError *error);
 
@@ -23,8 +23,8 @@ typedef void (^DZNHTTPRequestCompletion)(NSArray *list, NSError *error);
 
 /* The current photo service. */
 @property (nonatomic) DZNPhotoPickerControllerService service;
-/* The current photo service edition. */
-@property (nonatomic) DZNPhotoPickerControllerServiceEdition edition;
+/* The current photo service subscription. */
+@property (nonatomic) DZNPhotoPickerControllerSubscription subscription;
 /* YES if the HTTP client is loading. */
 @property (nonatomic, readonly) BOOL loading;
 
