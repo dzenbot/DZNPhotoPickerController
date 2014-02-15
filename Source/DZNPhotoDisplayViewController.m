@@ -95,7 +95,7 @@ static NSString *kTagCellID = @"kTagCellID";
     [super viewDidLoad];
     
     _currentPage = 1;
-    _columnCount = 3;
+    _columnCount = 4;
     _rowCount = [self rowCount];
     _resultPerPage = _columnCount*_rowCount;
 }

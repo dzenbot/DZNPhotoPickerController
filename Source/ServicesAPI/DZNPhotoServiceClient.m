@@ -132,11 +132,13 @@
     NSString *keyPath = keyPathForObjectName(self.service, objectName);
     NSMutableArray *objects = [NSMutableArray arrayWithArray:[json valueForKeyPath:keyPath]];
     
-    if (self.service == DZNPhotoPickerControllerServiceFlickr) {
-        [objects insertObject:@{keyForSearchTagContent(self.service):[json valueForKeyPath:@"tags.source"]} atIndex:0];
-    }
-    
     if ([objectName isEqualToString:[DZNPhotoTag name]]) {
+        
+        if (self.service == DZNPhotoPickerControllerServiceFlickr) {
+            NSString *keyword = [json valueForKeyPath:@"tags.source"];
+            if (keyword) [objects insertObject:@{keyForSearchTagContent(self.service):keyword} atIndex:0];
+        }
+        
         return [DZNPhotoTag photoTagListFromService:self.service withResponse:objects];
     }
     else if ([objectName isEqualToString:[DZNPhotoMetadata name]]) {
