@@ -38,8 +38,13 @@
                                  subscription:DZNPhotoPickerControllerSubscriptionFree];
     
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceGoogleImages
-                                  consumerKey:kGoogleConsumerKey
-                               consumerSecret:kGoogleSearchEngineID
+                                  consumerKey:kGoogleImagesConsumerKey
+                               consumerSecret:kGoogleImagesSearchEngineID
+                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
+    
+    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceGoogleImages
+                                  consumerKey:kYahooImagesConsumerKey
+                               consumerSecret:kYahooImagesConsumerSecret
                                  subscription:DZNPhotoPickerControllerSubscriptionFree];
 
 }

@@ -15,7 +15,7 @@
 
 /* 
  * A photo search/picker for iOS 7, similar to UIImagePickerControl, providing photos from popular photography like 500px, Flickr and many others.
- * This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behavior.
+ * This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behaviour.
  *
  * @discussion Due to Terms of Use of some photo services, the images cannot be cached when showing thumbnails results and full screen images.
  */
