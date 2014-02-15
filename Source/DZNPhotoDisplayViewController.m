@@ -462,12 +462,6 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (BOOL)canSearchTag:(NSString *)searchString
 {
-    if (_selectedService == DZNPhotoPickerControllerServiceGoogleImages){
-        [_searchTags removeAllObjects];
-        [_searchController.searchResultsTableView reloadData];
-        return NO;
-    }
-    
     if ([_searchController.searchBar isFirstResponder] && searchString.length > 2) {
         [self searchTagsWithKeyword:searchString];
         return YES;
@@ -486,13 +480,8 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)searchTagsWithKeyword:(NSString *)keyword
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    DZNPhotoPickerControllerService service = _selectedService;
-    if (service == DZNPhotoPickerControllerService500px) {
-        service = DZNPhotoPickerControllerServiceFlickr;
-    }
-    
-    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:service];
+
+    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
     
     [client searchTagsWithKeyword:keyword completion:^(NSArray *list, NSError *error) {
         if (error) [self setSearchError:error];
