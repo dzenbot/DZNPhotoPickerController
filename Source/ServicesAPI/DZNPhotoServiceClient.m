@@ -78,22 +78,29 @@
     [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(self.service)];
     [params setObject:keyword forKey:keyForSearchTerm(self.service)];
 
-    if (self.service != DZNPhotoPickerControllerServiceInstagram && self.service != DZNPhotoPickerControllerServiceGoogleImages) {
+    
+    if (self.service == DZNPhotoPickerControllerService500px || self.service == DZNPhotoPickerControllerServiceFlickr)
+    {
         [params setObject:@(page) forKey:@"page"];
         [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(self.service)];
     }
     
-    if (self.service == DZNPhotoPickerControllerService500px) {
+    
+    if (self.service == DZNPhotoPickerControllerService500px)
+    {
         [params setObject:@[@(2),@(4)] forKey:@"image_size"];
     }
-    else if (self.service == DZNPhotoPickerControllerServiceFlickr) {
+    else if (self.service == DZNPhotoPickerControllerServiceFlickr)
+    {
         [params setObject:photoSearchUrlPathForService(self.service) forKey:@"method"];
         [params setObject:@"json" forKey:@"format"];
         [params setObject:@"photos" forKey:@"media"];
         [params setObject:@(YES) forKey:@"in_gallery"];
         [params setObject:@(1) forKey:@"safe_search"];
         [params setObject:@(1) forKey:@"content_type"];
-    }else if (self.service == DZNPhotoPickerControllerServiceGoogleImages) {
+    }
+    else if (self.service == DZNPhotoPickerControllerServiceGoogleImages)
+    {
         [params setObject:[self consumerSecret] forKey:keyForAPIConsumerSecret(self.service)];
         [params setObject:@"image" forKey:@"searchType"];
         [params setObject:@"medium" forKey:@"safe"];
@@ -143,9 +150,7 @@
     _loadingPath = tagSearchUrlPathForService(self.service);
 
     NSDictionary *params = [self tagsParamsWithKeyword:keyword];
-    NSString *objectName = [DZNPhotoTag name];
-
-    [self getObject:objectName path:_loadingPath params:params completion:completion];
+    [self getObject:[DZNPhotoTag name] path:_loadingPath params:params completion:completion];
 }
 
 - (void)searchPhotosWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage completion:(DZNHTTPRequestCompletion)completion
@@ -153,18 +158,18 @@
     _loadingPath = photoSearchUrlPathForService(self.service);
 
     NSDictionary *params = [self photosParamsWithKeyword:keyword page:page resultPerPage:resultPerPage];
-    NSString *objectName = [DZNPhotoMetadata name];
-
-    [self getObject:objectName path:_loadingPath params:params completion:completion];
+    [self getObject:[DZNPhotoMetadata name] path:_loadingPath params:params completion:completion];
 }
 
 - (void)getObject:(NSString *)objectName path:(NSString *)path params:(NSDictionary *)params completion:(DZNHTTPRequestCompletion)completion
 {
     NSLog(@"%s\nobjectName : %@ \npath : %@\nparams: %@\n\n",__FUNCTION__, objectName, path, params);
     
-    if (self.service == DZNPhotoPickerControllerServiceFlickr) path = @"";
-    if (self.service == DZNPhotoPickerControllerServiceInstagram) {
-        
+    if (self.service == DZNPhotoPickerControllerServiceFlickr) {
+        path = @"";
+    }
+    if (self.service == DZNPhotoPickerControllerServiceInstagram)
+    {
         NSString *keyword = [params objectForKey:keyForSearchTerm(self.service)];
         path = [path stringByReplacingOccurrencesOfString:@"%@" withString:keyword];
     }
