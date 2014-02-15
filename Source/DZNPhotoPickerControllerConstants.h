@@ -68,7 +68,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoPickerControllerServiceEdition) {
 };
 
 /*
- * Returns the photo service name string.
+ * Returns a photo service name string.
  *
  * @param type The specified service type.
  * @returns The photo service name.
@@ -76,13 +76,20 @@ typedef NS_ENUM(NSInteger, DZNPhotoPickerControllerServiceEdition) {
 UIKIT_EXTERN NSString *NSStringFromService(DZNPhotoPickerControllerService type);
 
 /*
- * Returns the photo service type from name.
+ * Returns a photo service type from name.
  *
  * @param name The specified service name.
  * @returns The photo service type.
  */
 UIKIT_EXTERN DZNPhotoPickerControllerService DZNPhotoServiceFromName(NSString *name);
 
+/*
+ * Returns the first photo service type from a bitmask of services.
+ *
+ * @param services The bitmask of services.
+ * @returns The photo service type.
+ */
+UIKIT_EXTERN DZNPhotoPickerControllerService DZNFirstPhotoServiceFromPhotoServices(DZNPhotoPickerControllerService services);
 
 /*
  * Returns the photo crop mode name string.

@@ -47,9 +47,7 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     self = [super initWithCollectionViewLayout:[DZNPhotoDisplayViewController flowLayout]];
     if (self) {
-        
         self.title = NSLocalizedString(@"Internet Photos", nil);
-        _selectedService = DZNPhotoPickerControllerService500px;
     }
     return self;
 }
@@ -96,8 +94,7 @@ static NSString *kTagCellID = @"kTagCellID";
     
     _currentPage = 1;
     _columnCount = 4;
-    
-    NSLog(@"self.rowCount : %d", self.rowCount);
+    _selectedService = DZNFirstPhotoServiceFromPhotoServices(self.navigationController.supportedServices);
 }
 
 - (void)viewWillAppear:(BOOL)animated

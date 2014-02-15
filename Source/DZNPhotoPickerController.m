@@ -97,12 +97,10 @@
 
 #pragma mark - Setter methods
 
-/*
- * Registers for a specified photo service and enables API transactions.
- */
-+ (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret
+- (void)setSupportedServices:(DZNPhotoPickerControllerService)services
 {
-    [self registerService:service consumerKey:key consumerSecret:secret edition:DZNPhotoPickerControllerServiceEditionFree];
+    NSAssert(services > 0, @"You must set at least 1 service to be supported.");
+    _supportedServices = services;
 }
 
 /*

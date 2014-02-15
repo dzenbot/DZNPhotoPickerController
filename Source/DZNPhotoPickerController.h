@@ -57,16 +57,6 @@
 + (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerService)services;
 
 /*
- * Registers a specified photo service
- * @discussion Same than +registerService:consumerKey:consumerSecret:edition, but setting edition to 'Free' by default.
- *
- * @param service The photo service to register (i.e. 500px, Flickr, Google Images, etc.)
- * @param key The API consumer key.
- * @param secret The API consumer secret token.
- */
-+ (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret;
-
-/*
  * Registers a specified photo service.
  * @discussion You must create an app for every photo service you'd like to use, and generate a consumer key and secret from their sites. Run this method on when initializing the view controller that will use DZNPhotoPickerController, typically in the +initialize method.
  *

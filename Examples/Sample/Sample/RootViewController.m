@@ -24,15 +24,18 @@
 {
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerService500px
                                   consumerKey:k500pxConsumerKey
-                               consumerSecret:k500pxConsumerSecret];
+                               consumerSecret:k500pxConsumerSecret
+                                      edition:DZNPhotoPickerControllerServiceEditionFree];
     
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceFlickr
                                   consumerKey:kFlickrConsumerKey
-                               consumerSecret:kFlickrConsumerSecret];
+                               consumerSecret:kFlickrConsumerSecret
+                                      edition:DZNPhotoPickerControllerServiceEditionFree];
     
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceInstagram
                                   consumerKey:kInstagramConsumerKey
-                               consumerSecret:kInstagramConsumerSecret];
+                               consumerSecret:kInstagramConsumerSecret
+                                      edition:DZNPhotoPickerControllerServiceEditionFree];
     
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceGoogleImages
                                   consumerKey:kGoogleConsumerKey

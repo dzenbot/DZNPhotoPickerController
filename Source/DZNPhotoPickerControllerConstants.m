@@ -47,6 +47,35 @@ DZNPhotoPickerControllerService DZNPhotoServiceFromName(NSString *name)
     return -1;
 }
 
+DZNPhotoPickerControllerService DZNFirstPhotoServiceFromPhotoServices(DZNPhotoPickerControllerService services)
+{
+    if ((services & DZNPhotoPickerControllerService500px) > 0) {
+        return DZNPhotoPickerControllerService500px;
+    }
+    if ((services & DZNPhotoPickerControllerServiceFlickr) > 0) {
+        return DZNPhotoPickerControllerServiceFlickr;
+    }
+    if ((services & DZNPhotoPickerControllerServiceInstagram) > 0) {
+        return DZNPhotoPickerControllerServiceInstagram;
+    }
+    if ((services & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
+        return DZNPhotoPickerControllerServiceGoogleImages;
+    }
+    if ((services & DZNPhotoPickerControllerServiceBingImages) > 0) {
+        return DZNPhotoPickerControllerServiceBingImages;
+    }
+    if ((services & DZNPhotoPickerControllerServiceYahooImages) > 0) {
+        return DZNPhotoPickerControllerServiceYahooImages;
+    }
+    if ((services & DZNPhotoPickerControllerServicePanoramio) > 0) {
+        return DZNPhotoPickerControllerServicePanoramio;
+    }
+    if ((services & DZNPhotoPickerControllerServiceDribbble) > 0) {
+        return DZNPhotoPickerControllerServiceDribbble;
+    }
+    return 0;
+}
+
 NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
 {
     switch (mode) {
