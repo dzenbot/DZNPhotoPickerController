@@ -826,7 +826,8 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
 {
-    _selectedService = (1 << selectedScope);
+    NSString *name = [searchBar.scopeButtonTitles objectAtIndex:selectedScope];
+    _selectedService = DZNPhotoServiceFromName(name);
 }
 
 

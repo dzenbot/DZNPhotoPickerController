@@ -64,6 +64,15 @@ typedef NS_ENUM(NSInteger, DZNPhotoEditViewControllerCropMode) {
 UIKIT_EXTERN NSString *NSStringFromService(DZNPhotoPickerControllerService type);
 
 /*
+ * Returns the photo service type from name.
+ *
+ * @param name The specified service name.
+ * @returns The photo service type.
+ */
+UIKIT_EXTERN DZNPhotoPickerControllerService DZNPhotoServiceFromName(NSString *name);
+
+
+/*
  * Returns the photo crop mode name string.
  *
  * @param mode The specified crop mode.

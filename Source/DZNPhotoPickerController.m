@@ -113,7 +113,20 @@ NSString *NSStringFromService(DZNPhotoPickerControllerService type)
     }
 }
 
-extern NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
+DZNPhotoPickerControllerService DZNPhotoServiceFromName(NSString *name)
+{
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerService500px)])         return DZNPhotoPickerControllerService500px;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceFlickr)])        return DZNPhotoPickerControllerServiceFlickr;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceInstagram)])     return DZNPhotoPickerControllerServiceInstagram;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceGoogleImages)])  return DZNPhotoPickerControllerServiceGoogleImages;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceBingImages)])    return DZNPhotoPickerControllerServiceBingImages;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceYahooImages)])   return DZNPhotoPickerControllerServiceYahooImages;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServicePanoramio)])     return DZNPhotoPickerControllerServicePanoramio;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceDribbble)])      return DZNPhotoPickerControllerServiceDribbble;
+    return -1;
+}
+
+NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
 {
     switch (mode) {
         case DZNPhotoEditViewControllerCropModeSquare:      return @"square";
