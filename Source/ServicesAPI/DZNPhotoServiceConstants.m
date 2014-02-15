@@ -13,7 +13,7 @@
 #import "DZNPhotoTag.h"
 
 @implementation DZNPhotoServiceConstants
-
+@end
 
 NSString *NSUserDefaultsUniqueKey(DZNPhotoPickerControllerService type, NSString *key)
 {
@@ -69,7 +69,7 @@ NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerService service)
         case DZNPhotoPickerControllerService500px:              return @"photos/search";
         case DZNPhotoPickerControllerServiceFlickr:             return @"flickr.photos.search";
         case DZNPhotoPickerControllerServiceInstagram:          return @"tags/%@/media/recent";
-            case DZNPhotoPickerControllerServiceGoogleImages:   return @"";
+        case DZNPhotoPickerControllerServiceGoogleImages:   return @"";
         default:                                                return nil;
     }
 }
@@ -89,7 +89,7 @@ NSString *keyForAPIConsumerKey(DZNPhotoPickerControllerService service)
 NSString *keyForAPIConsumerSecret(DZNPhotoPickerControllerService service)
 {
     switch (service) {
-
+            
         case DZNPhotoPickerControllerServiceGoogleImages:       return @"cx";
         default:                                                return nil;
     }
@@ -147,5 +147,3 @@ NSString *keyPathForObjectName(DZNPhotoPickerControllerService service, NSString
     }
     return nil;
 }
-
-@end

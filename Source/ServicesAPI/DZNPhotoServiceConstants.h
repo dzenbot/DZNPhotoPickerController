@@ -12,6 +12,7 @@
 #import "DZNPhotoPickerControllerConstants.h"
 
 @interface DZNPhotoServiceConstants : NSObject
+@end
 
 UIKIT_EXTERN NSString *NSUserDefaultsUniqueKey(DZNPhotoPickerControllerService type, NSString *key);
 
@@ -42,5 +43,3 @@ UIKIT_EXTERN NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService
 UIKIT_EXTERN NSString *keyForSearchTagContent(DZNPhotoPickerControllerService service);
 
 UIKIT_EXTERN NSString *keyPathForObjectName(DZNPhotoPickerControllerService service, NSString *objectName);
-
-@end

@@ -36,7 +36,6 @@ static NSString *kTagCellID = @"kTagCellID";
 @property (nonatomic, strong) NSArray *segmentedControlTitles;
 @property (nonatomic) DZNPhotoPickerControllerService selectedService;
 @property (nonatomic) DZNPhotoPickerControllerService previousService;
-//@property (nonatomic, strong) PXRequest *PXRequest;
 @property (nonatomic) NSInteger resultPerPage;
 @property (nonatomic) NSInteger currentPage;
 
