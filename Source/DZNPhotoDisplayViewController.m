@@ -66,10 +66,12 @@ static NSString *kTagCellID = @"kTagCellID";
     
     _currentPage = 1;
     _columnCount = 4;
-    _segmentedControlTitles = NSArrayFromServices(self.navigationController.supportedServices);
-    _selectedService = DZNFirstPhotoServiceFromPhotoServices(self.navigationController.supportedServices);
     
-    NSAssert((_segmentedControlTitles.count < 5), @"DZNPhotoPickerController doesn't support more than 4 photo service providers.");
+    _segmentedControlTitles = NSArrayFromServices(self.navigationController.supportedServices);
+    NSAssert((_segmentedControlTitles.count < 4), @"DZNPhotoPickerController doesn't support more than 4 photo service providers.");
+    
+    _selectedService = DZNFirstPhotoServiceFromPhotoServices(self.navigationController.supportedServices);
+    NSAssert((_selectedService > 0), @"DZNPhotoPickerController requieres at least 1 supported photo service provider.");
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -167,7 +169,7 @@ static NSString *kTagCellID = @"kTagCellID";
         _searchBar.delegate = self;
         
         _searchBar.scopeButtonTitles = [self segmentedControlTitles];
-        _searchBar.selectedScopeButtonIndex = _selectedService-1;
+        _searchBar.selectedScopeButtonIndex = 0;
         
         [self.view addSubview:_searchBar];
     }

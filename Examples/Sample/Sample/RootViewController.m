@@ -42,10 +42,10 @@
                                consumerSecret:kGoogleImagesSearchEngineID
                                  subscription:DZNPhotoPickerControllerSubscriptionFree];
     
-//    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceYahooImages
-//                                  consumerKey:kYahooImagesConsumerKey
-//                               consumerSecret:kYahooImagesConsumerSecret
-//                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
+    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceYahooImages
+                                  consumerKey:kYahooImagesConsumerKey
+                               consumerSecret:kYahooImagesConsumerSecret
+                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
 }
 
 - (void)viewDidLoad
@@ -112,7 +112,7 @@
 - (void)presentPhotoPicker
 {
     DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];
-    picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceInstagram | DZNPhotoPickerControllerServiceGoogleImages;
+    picker.supportedServices = DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages | DZNPhotoPickerControllerServiceYahooImages;
     picker.allowsEditing = YES;
     picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     picker.delegate = self;
