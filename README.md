@@ -1,11 +1,11 @@
 DZNPhotoPickerController
 ========================
 
-A photo search/picker using popular providers like 500px, Flickr and many others..
+A photo search/picker using popular providers like 500px, Flickr, Intagram, Google Images and many others..
 This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behavior.
 
 ### Features
-* Search photos on mutiple service providers (Only 500px and Flickr for now)
+* Search photos on mutiple service providers (500px, Flickr, Intagram & Google Images)
 * Present the photo picker with a pre-defined search term to automatically start searching.
 * Exact same UI layouts and behaviour than UIImagePickerController.
 * Edit photo selections with cropping guides (square and circular, like the Contacts app).
