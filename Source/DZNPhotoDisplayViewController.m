@@ -43,13 +43,16 @@ static NSString *kTagCellID = @"kTagCellID";
 
 @implementation DZNPhotoDisplayViewController
 
-- (id)init
+- (instancetype)init
 {
-    self = [super initWithCollectionViewLayout:[DZNPhotoDisplayViewController flowLayout]];
+    return [self initWithCollectionViewLayout:[DZNPhotoDisplayViewController flowLayout]];
+}
+
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
+{
+    self = [super initWithCollectionViewLayout:layout];
     if (self) {
         self.title = NSLocalizedString(@"Internet Photos", nil);
-        
-        
     }
     return self;
 }
@@ -74,19 +77,6 @@ static NSString *kTagCellID = @"kTagCellID";
     self.extendedLayoutIncludesOpaqueBars = YES;
     self.automaticallyAdjustsScrollViewInsets = YES;
     
-    _searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-    _searchController.searchResultsTableView.backgroundColor = [UIColor whiteColor];
-    _searchController.searchResultsTableView.tableHeaderView = [UIView new];
-    _searchController.searchResultsTableView.tableFooterView = [UIView new];
-    _searchController.searchResultsTableView.backgroundView = [UIView new];
-    _searchController.searchResultsTableView.backgroundView.backgroundColor = [UIColor whiteColor];
-    _searchController.searchResultsTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
-    _searchController.searchResultsDataSource = self;
-    _searchController.searchResultsDelegate = self;
-    _searchController.delegate = self;
-    
-    [_searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kTagCellID];
-    
     self.collectionView.backgroundView = [UIView new];
     self.collectionView.backgroundView.backgroundColor = [UIColor whiteColor];
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight;
@@ -100,6 +90,19 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+    _searchController.searchResultsTableView.backgroundColor = [UIColor whiteColor];
+    _searchController.searchResultsTableView.tableHeaderView = [UIView new];
+    _searchController.searchResultsTableView.tableFooterView = [UIView new];
+    _searchController.searchResultsTableView.backgroundView = [UIView new];
+    _searchController.searchResultsTableView.backgroundView.backgroundColor = [UIColor whiteColor];
+    _searchController.searchResultsTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
+    _searchController.searchResultsDataSource = self;
+    _searchController.searchResultsDelegate = self;
+    _searchController.delegate = self;
+    
+    [_searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kTagCellID];
 }
 
 - (void)viewWillAppear:(BOOL)animated
