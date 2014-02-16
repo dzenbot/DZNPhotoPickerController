@@ -10,10 +10,6 @@
 
 #import <Foundation/Foundation.h>
 
-UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerKey;
-UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerSecret;
-UIKIT_EXTERN NSString *const DZNPhotoServiceClientSubscription;
-
 typedef void (^DZNHTTPRequestCompletion)(NSArray *list, NSError *error);
 
 /*
