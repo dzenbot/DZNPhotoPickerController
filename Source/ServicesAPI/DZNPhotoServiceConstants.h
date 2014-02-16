@@ -46,3 +46,7 @@ UIKIT_EXTERN NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService
 UIKIT_EXTERN NSString *keyForSearchTagContent(DZNPhotoPickerControllerService service);
 
 UIKIT_EXTERN NSString *keyPathForObjectName(DZNPhotoPickerControllerService service, NSString *objectName);
+
+
+UIKIT_EXTERN NSString *HMACSHA1(NSString *text, NSString *secret);
+

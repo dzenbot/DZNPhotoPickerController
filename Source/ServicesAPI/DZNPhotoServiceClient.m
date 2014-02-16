@@ -55,9 +55,9 @@
 
 - (NSDictionary *)tagsParamsWithKeyword:(NSString *)keyword
 {
-    NSAssert(keyword, @"\"keyword\" cannot be nil for %@.", NSStringFromService(_service));
-    NSAssert([self consumerKey], @"\"consumerKey\" cannot be nil for %@.", NSStringFromService(_service));
-    NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil for %@.", NSStringFromService(_service));
+    NSAssert(keyword, @"\"keyword\" cannot be nil for %@", NSStringFromService(_service));
+    NSAssert([self consumerKey], @"\"consumerKey\" cannot be nil for %@", NSStringFromService(_service));
+    NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil for %@", NSStringFromService(_service));
     
     
     NSMutableDictionary *params = [NSMutableDictionary new];
@@ -74,23 +74,24 @@
 
 - (NSDictionary *)photosParamsWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage
 {
-    NSAssert(keyword, @"\"keyword\" cannot be nil for %@.", NSStringFromService(_service));
-    NSAssert((resultPerPage > 0), @"\"result per page\" must be higher than 0 for %@.", NSStringFromService(_service));
-    NSAssert([self consumerKey], @"\"consumerKey\" cannot be nil for %@.", NSStringFromService(_service));
-    NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil for %@.", NSStringFromService(_service));
-    
-    
+    NSAssert(keyword, @"\"keyword\" cannot be nil for %@", NSStringFromService(_service));
+    NSAssert((resultPerPage > 0), @"\"result per page\" must be higher than 0 for %@", NSStringFromService(_service));
+    NSAssert([self consumerKey], @"\"consumerKey\" cannot be nil for %@", NSStringFromService(_service));
+    NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil for %@", NSStringFromService(_service));
+
     NSMutableDictionary *params = [NSMutableDictionary new];
     [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(_service)];
     [params setObject:keyword forKey:keyForSearchTerm(_service)];
 
-    
-    if (_service == DZNPhotoPickerControllerService500px || _service == DZNPhotoPickerControllerServiceFlickr)
-    {
-        [params setObject:@(page) forKey:@"page"];
+    if (_service != DZNPhotoPickerControllerServiceInstagram) {
         [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(_service)];
     }
-    
+    if (_service == DZNPhotoPickerControllerService500px || _service == DZNPhotoPickerControllerServiceFlickr) {
+        [params setObject:@(page) forKey:@"page"];
+    }
+    if (_service == DZNPhotoPickerControllerServiceGoogleImages || _service == DZNPhotoPickerControllerServiceYahooImages) {
+        [params setObject:@(resultPerPage*page) forKey:@"start"];
+    }
     
     if (_service == DZNPhotoPickerControllerService500px)
     {
@@ -110,8 +111,21 @@
         [params setObject:[self consumerSecret] forKey:keyForAPIConsumerSecret(_service)];
         [params setObject:@"image" forKey:@"searchType"];
         [params setObject:@"medium" forKey:@"safe"];
-        [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(_service)];
-        [params setObject:@(resultPerPage * page) forKey:@"start"];
+    }
+    else if (_service == DZNPhotoPickerControllerServiceYahooImages)
+    {
+        NSString *hmac = HMACSHA1(keyForAPIConsumerSecret(_service), [self consumerSecret]);
+        NSLog(@"hmac : %@",hmac);
+        
+        [params setObject:@"1.0" forKey:@"oauth_version"];
+        [params setObject:@"HMAC-SHA1" forKey:@"oauth_signature_method"];
+        [params setObject:hmac forKey:@"oauth_signature"];
+        [params setObject:@([[NSDate date] timeIntervalSince1970]) forKey:@"oauth_nonce"];
+        [params setObject:@([[NSDate date] timeIntervalSince1970]) forKey:@"oauth_timestamp"];
+        [params setObject:@"json" forKey:@"format"];
+        [params setObject:@"-porn" forKey:@"filter"];
+        
+        
     }
 
     return params;

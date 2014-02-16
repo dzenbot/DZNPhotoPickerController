@@ -45,6 +45,7 @@
 		4F97B28918AFDC4200DED8C0 /* DZNPhotoServiceConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B28518AFDC4200DED8C0 /* DZNPhotoServiceConstants.m */; };
 		4F97B28A18AFDC4200DED8C0 /* DZNPhotoServiceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B28718AFDC4200DED8C0 /* DZNPhotoServiceFactory.m */; };
 		4F97B28E18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B28D18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.m */; };
+		4F97B29018B066E500DED8C0 /* libcommonCrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F97B28F18B066E500DED8C0 /* libcommonCrypto.dylib */; };
 		4F9C24FF18AB1B8900940B3F /* DZNPhotoMetadataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C24F618AB1B8900940B3F /* DZNPhotoMetadataTests.m */; };
 		4F9C250018AB1B8900940B3F /* DZNPhotoTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F9C24F718AB1B8900940B3F /* DZNPhotoTests-Info.plist */; };
 		4F9C250118AB1B8900940B3F /* DZNPhotoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C24F918AB1B8900940B3F /* DZNPhotoTests.m */; };
@@ -104,6 +105,7 @@
 		4F97B28718AFDC4200DED8C0 /* DZNPhotoServiceFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoServiceFactory.m; sourceTree = "<group>"; };
 		4F97B28C18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerControllerConstants.h; sourceTree = "<group>"; };
 		4F97B28D18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerControllerConstants.m; sourceTree = "<group>"; };
+		4F97B28F18B066E500DED8C0 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
 		4F9C24F618AB1B8900940B3F /* DZNPhotoMetadataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoMetadataTests.m; sourceTree = "<group>"; };
 		4F9C24F718AB1B8900940B3F /* DZNPhotoTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DZNPhotoTests-Info.plist"; sourceTree = "<group>"; };
 		4F9C24F818AB1B8900940B3F /* DZNPhotoTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DZNPhotoTests-Prefix.pch"; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F97B29018B066E500DED8C0 /* libcommonCrypto.dylib in Frameworks */,
 				4F64C15918A53D9C00FBEE9A /* XCTest.framework in Frameworks */,
 				4F64C15B18A53D9C00FBEE9A /* UIKit.framework in Frameworks */,
 				4F64C15A18A53D9C00FBEE9A /* Foundation.framework in Frameworks */,
@@ -166,6 +169,7 @@
 		4F57013F180E5D0E00E12444 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F97B28F18B066E500DED8C0 /* libcommonCrypto.dylib */,
 				4F570140180E5D0E00E12444 /* Foundation.framework */,
 				4F570142180E5D0E00E12444 /* CoreGraphics.framework */,
 				4F570144180E5D0E00E12444 /* UIKit.framework */,
@@ -618,6 +622,10 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "DZNPhotoTests/DZNPhotoTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -637,6 +645,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DZNPhotoTests/DZNPhotoTests-Prefix.pch";
 				INFOPLIST_FILE = "DZNPhotoTests/DZNPhotoTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;

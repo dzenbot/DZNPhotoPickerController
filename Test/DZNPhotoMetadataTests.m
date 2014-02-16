@@ -36,16 +36,16 @@ static NSBundle *_testTargetBundle;
 - (NSDictionary *)JSONObjectForService:(DZNPhotoPickerControllerService)service
 {
     XCTAssertNotNil(_testTargetBundle, @"path : %@", _testTargetBundle);
-    XCTAssertNotNil(_testTargetBundle, @"The target bundle cannot be nil.");
+    XCTAssertNotNil(_testTargetBundle, @"The target bundle cannot be nil");
     
     NSString *path = [_testTargetBundle pathForResource:[NSStringFromService(service) lowercaseString] ofType:@"json"];
     XCTAssertNotNil(path, @"The path to the file cannot be nil.");
     
     NSData *data = [NSData dataWithContentsOfFile:path];
-    XCTAssertNotNil(data, @"The NSData representation of the JSON content cannot be nil.");
+    XCTAssertNotNil(data, @"The NSData representation of the JSON content cannot be nil");
     
     id object = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions|NSJSONWritingPrettyPrinted error:nil];
-    XCTAssertNotNil(object, @"The JSON object must not be nil.");
+    XCTAssertNotNil(object, @"The JSON object must not be nil");
     
     return object;
 }

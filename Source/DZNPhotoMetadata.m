@@ -68,14 +68,17 @@
             
             metadata.thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"images.thumbnail.url"]];
             metadata.sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"images.standard_resolution.url"]];
-        }else if ((service & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
+        }
+        else if ((service & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
             
             metadata.detailURL = [NSURL URLWithString:[object objectForKey:@"image.contextLink"]];
-            
             metadata.thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"image.thumbnailLink"]];
             metadata.sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"link"]];
-    
         }
+        else if ((service & DZNPhotoPickerControllerServiceYahooImages) > 0) {
+            
+        }
+        
         [result addObject:metadata];
     }
     

@@ -23,5 +23,5 @@
 #define kGoogleImagesConsumerKey        @"AIzaSyBiRs6vQmTVseUnMqUtJwpaJX-m5o9Djr0"
 #define kGoogleImagesSearchEngineID     @"018335320449571565407:tg2a0fkobws"        //cx
 
-#define kYahooImagesConsumerKey         @"dj0yJmk9NjFsZTlZZzZidVVhJmQ9WVdrOVoybFJPWE5HTnpRbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD05YQ--"
+#define kYahooImagesConsumerKey         @"dj0yJmk9NjFsZTlZZzZidVVhJmQ9WVdrOVoybFJPWE5HTnpRbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD05YQ"
 #define kYahooImagesConsumerSecret      @"ae066b31b5ff58da0e9eb408b4e8f6202d892a02"

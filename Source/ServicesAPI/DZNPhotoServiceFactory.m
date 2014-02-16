@@ -53,8 +53,8 @@
 
 + (void)setConsumerKey:(NSString *)key consumerSecret:(NSString *)secret service:(DZNPhotoPickerControllerService)service subscription:(DZNPhotoPickerControllerSubscription)subscription
 {
-    NSAssert(key, @"\"key\" cannot be nil.");
-    NSAssert(secret, @"\"secret\" cannot be nil.");
+    NSAssert(key, @"\"key\" cannot be nil");
+    NSAssert(secret, @"\"secret\" cannot be nil");
     NSAssert((service != DZNPhotoPickerControllerServiceBingImages &&
               service != DZNPhotoPickerControllerServicePanoramio &&
               service != DZNPhotoPickerControllerServiceDribbble), @"Only 500px, Flickr, Instagram, Google Images & Yahoo Images are supported at this moment.");
