@@ -474,17 +474,25 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 - (void)acceptEdition:(id)sender
 {
-    UIImage *editedPhoto = [self editedPhoto];
-    CGRect cropRect = [self cropRect];
-    
-    if (editedPhoto && !CGRectEqualToRect(cropRect, CGRectZero)) {
+    dispatch_queue_t exampleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+    dispatch_async(exampleQueue, ^{
         
-        [DZNPhotoEditViewController didFinishPickingOriginalImage:_imageView.image
-                                                      editedImage:editedPhoto
-                                                         cropRect:cropRect
-                                                         cropMode:self.cropMode
-                                                 photoMetadata:self.photoMetadata];
-    }
+        UIImage *editedPhoto = [self editedPhoto];
+        CGRect cropRect = [self cropRect];
+        
+        dispatch_queue_t queue = dispatch_get_main_queue();
+        dispatch_async(queue, ^{
+            
+            if (editedPhoto && !CGRectEqualToRect(cropRect, CGRectZero)) {
+                
+                [DZNPhotoEditViewController didFinishPickingOriginalImage:_imageView.image
+                                                              editedImage:editedPhoto
+                                                                 cropRect:cropRect
+                                                                 cropMode:self.cropMode
+                                                            photoMetadata:self.photoMetadata];
+            }
+        });
+    });
 }
 
 - (void)cancelEdition:(id)sender
