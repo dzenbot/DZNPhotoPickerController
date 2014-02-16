@@ -115,7 +115,7 @@ static NSString *kTagCellID = @"kTagCellID";
         _photosMetadata = [NSMutableArray new];
 
         if (_searchTerm.length == 0) {
-            [self.searchDisplayController setActive:YES];
+            [self.searchController setActive:YES];
             [_searchBar becomeFirstResponder];
         }
         else [self searchPhotosWithKeyword:_searchTerm];
@@ -483,8 +483,6 @@ static NSString *kTagCellID = @"kTagCellID";
         
         [self searchPhotosWithKeyword:keyword];
     }
-    
-    [self setSearchBarText:keyword];
 }
 
 /*
@@ -744,9 +742,10 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DZNPhotoTag *tag = [_searchTags objectAtIndex:indexPath.row];
-    [self shouldSearchPhotos:tag.content];
     
-    [self.searchDisplayController setActive:NO animated:YES];
+    [self shouldSearchPhotos:tag.content];
+    [self.searchController setActive:NO animated:YES];
+    [self setSearchBarText:tag.content];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -766,6 +765,18 @@ static NSString *kTagCellID = @"kTagCellID";
     return YES;
 }
 
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+//    if (searchBar.text.length > 0) {
+//        [self searchTagsWithKeyword:searchBar.text];
+//    }
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+//    [_searchTags removeAllObjects];
+}
+
 - (void)searchBarShouldShift:(BOOL)shift
 {
     _searchBar.showsScopeBar = shift;
@@ -778,21 +789,19 @@ static NSString *kTagCellID = @"kTagCellID";
                      completion:NULL];
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    
-}
-
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    NSString *str = searchBar.text;
-    [self shouldSearchPhotos:str];
+    NSString *text = searchBar.text;
+    [self shouldSearchPhotos:text];
     [self searchBarShouldShift:NO];
+    [self setSearchBarText:text];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    
+    NSString *text = searchBar.text;
+    [self searchBarShouldShift:NO];
+    [self setSearchBarText:text];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
@@ -803,7 +812,6 @@ static NSString *kTagCellID = @"kTagCellID";
 
 
 #pragma mark - UISearchDisplayDelegate methods
-#pragma mark Search State Change
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
 {
@@ -828,19 +836,15 @@ static NSString *kTagCellID = @"kTagCellID";
     
 }
 
-#pragma mark Loading and Unloading the Table View
-
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
 {
-    
+    NSLog(@"%s",__FUNCTION__);
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView
 {
-    
+    NSLog(@"%s",__FUNCTION__);
 }
-
-#pragma mark Showing and Hiding the Table View
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView
 {
@@ -869,7 +873,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-    UITableView *tableView = [[self searchDisplayController] searchResultsTableView];
+    UITableView *tableView = [self.searchController searchResultsTableView];
     [tableView setContentInset:UIEdgeInsetsZero];
     [tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
 }
