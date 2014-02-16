@@ -31,8 +31,8 @@ static NSString *kTagCellID = @"kTagCellID";
 @property (nonatomic, readwrite) UIButton *loadButton;
 @property (nonatomic, readwrite) UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic, strong) NSMutableArray *photosMetadata;
-@property (nonatomic, strong) NSMutableArray *searchTags;
+@property (nonatomic, strong) NSMutableArray *photoMetadatas;
+@property (nonatomic, strong) NSMutableArray *photoTags;
 @property (nonatomic, strong) NSArray *segmentedControlTitles;
 @property (nonatomic) DZNPhotoPickerControllerService selectedService;
 @property (nonatomic) DZNPhotoPickerControllerService previousService;
@@ -111,8 +111,8 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     [super viewWillAppear:animated];
     
-    if (!_photosMetadata) {
-        _photosMetadata = [NSMutableArray new];
+    if (!_photoMetadatas) {
+        _photoMetadatas = [NSMutableArray new];
 
         if (_searchTerm.length == 0) {
             [self.searchController setActive:YES];
@@ -303,7 +303,7 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (BOOL)shouldShowFooter
 {
-    return (_photosMetadata.count%self.resultPerPage == 0) ? YES : NO;
+    return (_photoMetadatas.count%self.resultPerPage == 0) ? YES : NO;
 }
 
 
@@ -323,7 +323,7 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     [self showActivityIndicators:NO];
     
-    [_photosMetadata addObjectsFromArray:list];
+    [_photoMetadatas addObjectsFromArray:list];
     [self.collectionView reloadData];
     
     CGSize contentSize = self.collectionView.contentSize;
@@ -337,16 +337,16 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
-    if (!_searchTags) _searchTags = [NSMutableArray new];
-    else [_searchTags removeAllObjects];
+    if (!_photoTags) _photoTags = [NSMutableArray new];
+    else [_photoTags removeAllObjects];
     
-    _searchTags = [NSMutableArray arrayWithArray:list];
+    [_photoTags addObjectsFromArray:list];
     
-    if (_searchTags.count == 0) {
+    if (_photoTags.count == 0) {
         
         DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:_selectedService];
         tag.content = _searchBar.text;
-        [_searchTags addObject:tag];
+        [_photoTags addObject:tag];
     }
     
     [_searchController.searchResultsTableView reloadData];
@@ -397,7 +397,7 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)handleSelectionAtIndexPath:(NSIndexPath *)indexPath
 {
-    DZNPhotoMetadata *metadata = [_photosMetadata objectAtIndex:indexPath.row];
+    DZNPhotoMetadata *metadata = [_photoMetadatas objectAtIndex:indexPath.row];
     
     if (self.navigationController.allowsEditing) {
         
@@ -442,14 +442,14 @@ static NSString *kTagCellID = @"kTagCellID";
 /*
  * Checks if the search string is long enough to perfom a tag search.
  */
-- (BOOL)canSearchTag:(NSString *)searchString
+- (BOOL)canSearchTag:(NSString *)term
 {
-    if ([_searchController.searchBar isFirstResponder] && searchString.length > 2) {
-        [self searchTagsWithKeyword:searchString];
+    if ([_searchController.searchBar isFirstResponder] && term.length > 2) {
+        [self searchTags:term];
         return YES;
     }
     else {
-        [_searchTags removeAllObjects];
+        [_photoTags removeAllObjects];
         [_searchController.searchResultsTableView reloadData];
         return NO;
     }
@@ -459,7 +459,7 @@ static NSString *kTagCellID = @"kTagCellID";
  * Triggers a tag search when typing more than 2 characters in the search bar.
  * This allows auto-completion and related tags to what the user wants to search.
  */
-- (void)searchTagsWithKeyword:(NSString *)keyword
+- (void)searchTags:(NSString *)keyword
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
@@ -541,7 +541,7 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)resetPhotos
 {
-    [_photosMetadata removeAllObjects];
+    [_photoMetadatas removeAllObjects];
     _currentPage = 1;
     
     [self.collectionView reloadData];
@@ -557,7 +557,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _photosMetadata.count;
+    return _photoMetadatas.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -565,7 +565,7 @@ static NSString *kTagCellID = @"kTagCellID";
     DZNPhotoDisplayViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kThumbCellID forIndexPath:indexPath];
     cell.tag = indexPath.row;
     
-    DZNPhotoMetadata *metadata = [_photosMetadata objectAtIndex:indexPath.row];
+    DZNPhotoMetadata *metadata = [_photoMetadatas objectAtIndex:indexPath.row];
     
     [cell.imageView cancelCurrentImageLoad];
     
@@ -589,7 +589,7 @@ static NSString *kTagCellID = @"kTagCellID";
             
             _loadButton.frame = footer.bounds;
             
-            if (_photosMetadata.count > 0) {
+            if (_photoMetadatas.count > 0) {
                 _loadButton.enabled = YES;
                 [_loadButton setTitleColor:self.view.window.tintColor forState:UIControlStateNormal];
 
@@ -667,7 +667,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    if (_photosMetadata.count == 0) {
+    if (_photoMetadatas.count == 0) {
         return [self contentSize];
     }
     else return [self footerSize];
@@ -712,16 +712,16 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _searchTags.count;
+    return _photoTags.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTagCellID];
     
-    DZNPhotoTag *tag = [_searchTags objectAtIndex:indexPath.row];
+    DZNPhotoTag *tag = [_photoTags objectAtIndex:indexPath.row];
     
-    if (_searchTags.count == 1) {
+    if (_photoTags.count == 1) {
         cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Search for \"%@\"", nil), tag.content];
     }
     else {
@@ -741,7 +741,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DZNPhotoTag *tag = [_searchTags objectAtIndex:indexPath.row];
+    DZNPhotoTag *tag = [_photoTags objectAtIndex:indexPath.row];
     
     [self shouldSearchPhotos:tag.content];
     [self.searchController setActive:NO animated:YES];
@@ -756,7 +756,6 @@ static NSString *kTagCellID = @"kTagCellID";
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
     [self stopLoadingRequest];
-    
     return YES;
 }
 
@@ -765,16 +764,19 @@ static NSString *kTagCellID = @"kTagCellID";
     return YES;
 }
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    [self stopLoadingRequest];
+}
+
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-//    if (searchBar.text.length > 0) {
-//        [self searchTagsWithKeyword:searchBar.text];
-//    }
+
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
-//    [_searchTags removeAllObjects];
+    [_photoTags removeAllObjects];
 }
 
 - (void)searchBarShouldShift:(BOOL)shift
@@ -792,6 +794,7 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     NSString *text = searchBar.text;
+    
     [self shouldSearchPhotos:text];
     [self searchBarShouldShift:NO];
     [self setSearchBarText:text];
@@ -800,6 +803,7 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     NSString *text = searchBar.text;
+    
     [self searchBarShouldShift:NO];
     [self setSearchBarText:text];
 }
@@ -827,7 +831,7 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     [self searchBarShouldShift:NO];
     
-    [_searchTags removeAllObjects];
+    [_photoTags removeAllObjects];
     [controller.searchResultsTableView reloadData];
 }
 
