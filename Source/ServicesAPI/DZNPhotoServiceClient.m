@@ -124,8 +124,6 @@
         [params setObject:@([[NSDate date] timeIntervalSince1970]) forKey:@"oauth_timestamp"];
         [params setObject:@"json" forKey:@"format"];
         [params setObject:@"-porn" forKey:@"filter"];
-        
-        
     }
 
     return params;

@@ -12,8 +12,8 @@
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 
-#import <CommonCrypto/CommonCrypto.h>
-#import <CommonCrypto/CommonDigest.h>
+//#import <CommonCrypto/CommonCrypto.h>
+//#import <CommonCrypto/CommonDigest.h>
 
 NSString *const DZNPhotoServiceClientConsumerKey = @"DZNPhotoServiceClientConsumerKey";
 NSString *const DZNPhotoServiceClientConsumerSecret = @"DZNPhotoServiceClientConsumerSecret";

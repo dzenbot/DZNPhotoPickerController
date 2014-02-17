@@ -54,6 +54,8 @@ static NSBundle *_testTargetBundle;
 {
     [self testParsingForService:DZNPhotoPickerControllerService500px];
     [self testParsingForService:DZNPhotoPickerControllerServiceFlickr];
+    [self testParsingForService:DZNPhotoPickerControllerServiceInstagram];
+    [self testParsingForService:DZNPhotoPickerControllerServiceGoogleImages];
 }
 
 - (void)testParsingForService:(DZNPhotoPickerControllerService)service
@@ -68,7 +70,7 @@ static NSBundle *_testTargetBundle;
     DZNPhotoMetadata *metadata = [result firstObject];
     XCTAssertNotNil(metadata, @"metadata cannot be nil. %@", metadata.description);
     
-    XCTAssertTrue((metadata.id && metadata.thumbURL && metadata.sourceURL && metadata.detailURL && metadata.authorName && metadata.authorUsername && metadata.authorProfileURL && metadata.serviceName), @"No attribute from a metadata object should be nil. %@", metadata.id);
+    XCTAssertTrue((metadata.thumbURL && metadata.sourceURL && metadata.detailURL && metadata.serviceName), @"Some attributes from a photo metadata object should not be nil.");
 }
 
 @end

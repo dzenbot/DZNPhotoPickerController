@@ -35,8 +35,8 @@
         
         DZNPhotoMetadata *metadata = [DZNPhotoMetadata photoMetadataFromService:service];
         
-        if ((service & DZNPhotoPickerControllerService500px) > 0) {
-            
+        if ((service & DZNPhotoPickerControllerService500px) > 0)
+        {
             metadata.id = [object valueForKey:@"id"];
             metadata.authorName = [[object valueForKeyPath:@"user.fullname"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             metadata.authorUsername = [object valueForKeyPath:@"user.username"];
@@ -46,8 +46,8 @@
             metadata.thumbURL = [NSURL URLWithString:[[[object objectForKey:@"images"] objectAtIndex:0] objectForKey:@"url"]];
             metadata.sourceURL = [NSURL URLWithString:[[[object objectForKey:@"images"] objectAtIndex:1] objectForKey:@"url"]];
         }
-        else if ((service & DZNPhotoPickerControllerServiceFlickr) > 0) {
-            
+        else if ((service & DZNPhotoPickerControllerServiceFlickr) > 0)
+        {
             metadata.id = [object objectForKey:@"id"];
             metadata.authorName = nil;
             metadata.authorUsername = [object objectForKey:@"owner"];
@@ -58,8 +58,8 @@
             metadata.thumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@_q.jpg", url]];
             metadata.sourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@_b.jpg", url]];
         }
-        else if ((service & DZNPhotoPickerControllerServiceInstagram) > 0) {
-            
+        else if ((service & DZNPhotoPickerControllerServiceInstagram) > 0)
+        {
             metadata.id = [object objectForKey:@"id"];
             metadata.authorName = [object valueForKeyPath:@"user.full_name"];
             metadata.authorUsername = [object valueForKeyPath:@"user.username"];
@@ -69,8 +69,8 @@
             metadata.thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"images.thumbnail.url"]];
             metadata.sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"images.standard_resolution.url"]];
         }
-        else if ((service & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
-            
+        else if ((service & DZNPhotoPickerControllerServiceGoogleImages) > 0)
+        {
             metadata.detailURL = [NSURL URLWithString:[object objectForKey:@"image.contextLink"]];
             metadata.thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"image.thumbnailLink"]];
             metadata.sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"link"]];
