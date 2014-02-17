@@ -1,16 +1,22 @@
 DZNPhotoPickerController
 ========================
 
-A photo search/picker for iPhone using popular providers like 500px, Flickr, Intagram, Google Images and many others..
-This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behavior.
+[![Screencast Vimeo Video](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_video_placeholder.png)](https://vimeo.com/86868566)
+
+A photo search/picker for iOS using popular providers like 500px, Flickr, Intagram, Google Images, etc. This control tries to mimic as close as possible UIKit's UIImagePickerController in terms of features, appearance and behaviour.
 
 ### Features
 * Search photos on mutiple service providers (500px, Flickr, Intagram & Google Images)
-* Search tags for auto-completion search (using Flickr's API as a common denominator).
+* Auto-completed typing for easier search (using Flickr's API as a common denominator).
 * Present the photo picker with a pre-defined search term to automatically start searching.
 * Exact same UI layouts and behaviours than UIImagePickerController.
 * Edit photo selections with cropping guides (square and circular, like the Contacts app).
-* Support for circular cropping mode for using with UIImagePickerController (check on UIImagePickerController+Edit).
+* Circular cropping mode for using with UIImagePickerController (check on UIImagePickerController+Edit).
+* Creative Commons licences optional filtering.
+* App Store safe. Innapropriate content disabled for all services.
+* Disable photo selection downloads and retrieve metadata instead.
+* iPhone (3.5" & 4") and iPad support.
+* ARC & 64bits support.
 
 ![screenshots](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_screenshots.png)
 ![services](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_services.png)
@@ -19,7 +25,7 @@ This framework tries to mimic as close as possible the native UIImagePickerContr
 
 Available in [Cocoa Pods](http://cocoapods.org/?q=DZNPhotoPickerController)
 ```
-pod 'DZNPhotoPickerController', '~> 1.1'
+pod 'DZNPhotoPickerController', '~> 1.2'
 ```
 
 ## How to use
@@ -27,26 +33,28 @@ pod 'DZNPhotoPickerController', '~> 1.1'
 ### Step 1
 
 ```
-Import "<DZNPhotoPickerController/DZNPhotoPickerController.h>" on your view controller.
+Import "DZNPhotoPickerController.h"
 ```
 
 ### Step 2
-Before even creating a new instance of DZNPhotoPickerController, it is recommended that you register to the photo services APIs on the +[NSObject initialize] method, like so:
+Before even creating a new instance of DZNPhotoPickerController, it is recommended that you register to the photo services APIs on the NSObject's calss method +initialize, like so:
 ```
 + (void)initialize
 {
     [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerService500px
                                     withConsumerKey:YOUR_500px_KEY
-                                  andConsumerSecret:YOUR_500px_SECRET];
+                                  andConsumerSecret:YOUR_500px_SECRET
+                                  subscription:DZNPhotoPickerControllerSubscriptionFree];
     
     [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerServiceFlickr
                                     withConsumerKey:YOUR_Flickr_KEY
-                                  andConsumerSecret:YOUR_Flickr_SECRET];
+                                  andConsumerSecret:YOUR_Flickr_SECRET
+                                  subscription:DZNPhotoPickerControllerSubscriptionFree];
 }
 ```
 
 ### Step 3
-Instantiating a DZNPhotoPickerController is very similar to instantiate a UIImagePickerController object:
+Creating a new instance of DZNPhotoPickerController is very similar to what you would do with UIImagePickerController:
 ```
 DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];
 picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
@@ -60,16 +68,44 @@ You can additionally set more properties:
 ```
 picker.initialSearchTerm = @"Surf";
 picker.editingMode = DZNPhotoEditViewControllerCropModeCircular;
+picker.enablePhotoDownload = YES;
+picker.supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
 ````
+
+### UIImagePickerController extension
+Another great feature of DZNPhotoPickerController is to allow circular edit mode when using UIImagePickerController, just like the Contact app when editing a user's avatar image.<br>
+Its use is really straightforward: on the delegate's method -imagePickerController:didFinishPickingMediaWithInfo: just call DZNPhotoEditViewController's class method +editImage:cropMode:inNavigationController. This will push the controller to the edit mode, and will then call -imagePickerController:didFinishPickingMediaWithInfo: once more, after user's interaction, but with a different editingMode value.
+
+```
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    if (picker.editingMode == DZNPhotoEditViewControllerCropModeCircular) {
+        
+        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        [DZNPhotoEditViewController editImage:image cropMode:picker.editingMode inNavigationController:picker];
+    }
+}
+```
 
 ### Sample project
 Take a look into the sample project. Everything is there.<br>
+
+### Collaboration
+Feel free to collaborate with this project! Big thanks to:
+- [SJ Singh](https://github.com/SJApps): Google Images search support.
+- [Felipe Saint-Jean](https://github.com/fsaint): 64bits fix of the editing guides.
+
+
+## Apps using DZNPhotoPickerController
+Are you using this control in your apps? Let me know at [iromero@dzen.cl](mailto:iromero@dzen.cl).<br>
+
+- [Epiclist](https://itunes.apple.com/us/app/id789778193/)
 
 
 ## License
 (The MIT License)
 
-Copyright (c) 2013 Ignacio Romero Zurbuchen <iromero@dzen.cl>
+Copyright (c) 2014 Ignacio Romero Zurbuchen <iromero@dzen.cl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
