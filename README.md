@@ -1,7 +1,7 @@
 DZNPhotoPickerController
 ========================
 
-A photo search/picker for iPhone using popular providers like 500px, Flickr, Intagram, Google Images and many others..
+A photo search/picker for iPhone using popular providers like 500px, Flickr, Intagram, Google Images and many others...
 This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behavior.
 
 ### Features
@@ -64,6 +64,11 @@ picker.editingMode = DZNPhotoEditViewControllerCropModeCircular;
 
 ### Sample project
 Take a look into the sample project. Everything is there.<br>
+
+## Apps using DZNPhotoPickerController
+Are you using this control in your apps? Let me know at [iromero@dzen.cl](mailto:iromero@dzen.cl).<br>
+
+#### [Epiclist](https://itunes.apple.com/us/app/id789778193/)
 
 
 ## License
