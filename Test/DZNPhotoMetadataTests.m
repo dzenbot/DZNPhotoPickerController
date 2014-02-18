@@ -15,7 +15,6 @@
 static NSBundle *_testTargetBundle;
 
 @interface DZNPhotoMetadataTests : XCTestCase
-
 @end
 
 @implementation DZNPhotoMetadataTests
