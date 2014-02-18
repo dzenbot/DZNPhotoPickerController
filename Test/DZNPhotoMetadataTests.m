@@ -8,9 +8,7 @@
 //
 
 #import <XCTest/XCTest.h>
-
 #import "DZNPhotoMetadata.h"
-#import "DZNPhotoPickerController.h"
 
 static NSBundle *_testTargetBundle;
 
@@ -55,6 +53,8 @@ static NSBundle *_testTargetBundle;
     [self testParsingForService:DZNPhotoPickerControllerServiceFlickr];
     [self testParsingForService:DZNPhotoPickerControllerServiceInstagram];
     [self testParsingForService:DZNPhotoPickerControllerServiceGoogleImages];
+//    [self testParsingForService:DZNPhotoPickerControllerServiceYahooImages];
+//    [self testParsingForService:DZNPhotoPickerControllerServiceBingImages];
 }
 
 - (void)testParsingForService:(DZNPhotoPickerControllerService)service
@@ -67,7 +67,7 @@ static NSBundle *_testTargetBundle;
     DZNPhotoMetadata *metadata = [result firstObject];
     XCTAssertNotNil(metadata, @"metadata cannot be nil. %@", metadata.description);
     
-    XCTAssertTrue((metadata.thumbURL && metadata.sourceURL && metadata.detailURL && metadata.serviceName), @"Some attributes from a photo metadata object should not be nil. %@", metadata.description);
+    XCTAssertTrue((metadata.thumbURL && metadata.sourceURL && metadata.detailURL && metadata.serviceName), @"Basic attributes from a photo metadata object cannnot be nil. %@", metadata.description);
 }
 
 @end
