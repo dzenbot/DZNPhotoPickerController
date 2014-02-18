@@ -54,7 +54,7 @@ static NSBundle *_testTargetBundle;
 {
     [self testParsingForService:DZNPhotoPickerControllerService500px];
     [self testParsingForService:DZNPhotoPickerControllerServiceFlickr];
-//    [self testParsingForService:DZNPhotoPickerControllerServiceInstagram];
+    [self testParsingForService:DZNPhotoPickerControllerServiceInstagram];
     [self testParsingForService:DZNPhotoPickerControllerServiceGoogleImages];
 }
 
