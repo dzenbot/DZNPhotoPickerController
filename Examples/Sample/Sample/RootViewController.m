@@ -154,7 +154,7 @@
     NSLog(@"MediaType : %@",[userInfo objectForKey:UIImagePickerControllerMediaType]);
     NSLog(@"CropRect : %@", NSStringFromCGRect([[userInfo objectForKey:UIImagePickerControllerCropRect] CGRectValue]));
     NSLog(@"CropMode : %@", [userInfo objectForKey:DZNPhotoPickerControllerCropMode]);
-    NSLog(@"PhotoAttributes : %@",[userInfo objectForKey:DZNPhotoPickerControllerPhotoAttributes]);
+    NSLog(@"PhotoAttributes : %@",[userInfo objectForKey:DZNPhotoPickerControllerPhotoMetadata]);
     
     UIImage *image = [userInfo objectForKey:UIImagePickerControllerEditedImage];
     if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];

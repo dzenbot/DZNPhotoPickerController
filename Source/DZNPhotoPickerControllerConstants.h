@@ -9,7 +9,7 @@
 //
 
 UIKIT_EXTERN NSString *const DZNPhotoPickerControllerCropMode;              // An NSString (i.e. square, circular)
-UIKIT_EXTERN NSString *const DZNPhotoPickerControllerPhotoAttributes;       // An NSDictionary (encapsulating photo attributes)
+UIKIT_EXTERN NSString *const DZNPhotoPickerControllerPhotoMetadata;         // an NSDictionary containing metadata from a captured photo
 
 UIKIT_EXTERN NSString *const DZNPhotoPickerDidFinishPickingNotification;    // The notification key used when photo picked.
 
