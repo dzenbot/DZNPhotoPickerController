@@ -45,7 +45,7 @@ static NSBundle *_testTargetBundle;
     XCTAssertNotNil(data, @"The NSData representation of the JSON content cannot be nil");
     
     id object = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions|NSJSONWritingPrettyPrinted error:nil];
-    XCTAssertNotNil(object, @"The JSON object must not be nil");
+    XCTAssertNotNil(object, @"The JSON object must not be nil : %@ (%@)", object, [NSStringFromService(service) lowercaseString]);
     
     return object;
 }
@@ -54,14 +54,12 @@ static NSBundle *_testTargetBundle;
 {
     [self testParsingForService:DZNPhotoPickerControllerService500px];
     [self testParsingForService:DZNPhotoPickerControllerServiceFlickr];
-    [self testParsingForService:DZNPhotoPickerControllerServiceInstagram];
+//    [self testParsingForService:DZNPhotoPickerControllerServiceInstagram];
     [self testParsingForService:DZNPhotoPickerControllerServiceGoogleImages];
 }
 
 - (void)testParsingForService:(DZNPhotoPickerControllerService)service
 {
-    service = DZNPhotoPickerControllerService500px;
-    
     NSDictionary *object = [self JSONObjectForService:service];
     
     NSArray *result = [DZNPhotoMetadata photoMetadataListFromService:service withResponse:@[object]];
@@ -70,7 +68,7 @@ static NSBundle *_testTargetBundle;
     DZNPhotoMetadata *metadata = [result firstObject];
     XCTAssertNotNil(metadata, @"metadata cannot be nil. %@", metadata.description);
     
-    XCTAssertTrue((metadata.thumbURL && metadata.sourceURL && metadata.detailURL && metadata.serviceName), @"Some attributes from a photo metadata object should not be nil.");
+    XCTAssertTrue((metadata.thumbURL && metadata.sourceURL && metadata.detailURL && metadata.serviceName), @"Some attributes from a photo metadata object should not be nil. %@", metadata.description);
 }
 
 @end

@@ -71,7 +71,7 @@
         }
         else if ((service & DZNPhotoPickerControllerServiceGoogleImages) > 0)
         {
-            metadata.detailURL = [NSURL URLWithString:[object objectForKey:@"image.contextLink"]];
+            metadata.detailURL = [NSURL URLWithString:[object valueForKeyPath:@"image.contextLink"]];
             metadata.thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"image.thumbnailLink"]];
             metadata.sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"link"]];
         }

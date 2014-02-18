@@ -38,7 +38,6 @@
  *
  * @param service The photo service of the response.
  * @param reponse The response with already parsed JSON.
- *
  * @returns A list of photo tags.
  */
 + (NSArray *)photoTagListFromService:(DZNPhotoPickerControllerService)service withResponse:(NSArray *)reponse;
