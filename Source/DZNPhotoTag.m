@@ -35,7 +35,7 @@
     for (NSDictionary *object in reponse) {
         
         DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:service];
-        tag.content = [object objectForKey:keyForSearchTagContent(service)];
+        tag.text = [object objectForKey:keyForSearchTagContent(service)];
         
         [result addObject:tag];
     }
@@ -45,7 +45,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"serviceName = %@; content = %@;", self.serviceName, self.content];
+    return [NSString stringWithFormat:@"serviceName = %@; content = %@;", self.serviceName, self.text];
 }
 
 @end

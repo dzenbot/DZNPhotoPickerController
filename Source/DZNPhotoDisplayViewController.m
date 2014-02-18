@@ -345,7 +345,7 @@ static NSString *kTagCellID = @"kTagCellID";
     if (_photoTags.count == 0) {
         
         DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:_selectedService];
-        tag.content = _searchBar.text;
+        tag.text = _searchBar.text;
         [_photoTags addObject:tag];
     }
     
@@ -722,10 +722,10 @@ static NSString *kTagCellID = @"kTagCellID";
     DZNPhotoTag *tag = [_photoTags objectAtIndex:indexPath.row];
     
     if (_photoTags.count == 1) {
-        cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Search for \"%@\"", nil), tag.content];
+        cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Search for \"%@\"", nil), tag.text];
     }
     else {
-        cell.textLabel.text = tag.content;
+        cell.textLabel.text = tag.text;
     }
     
     return cell;
@@ -743,9 +743,9 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     DZNPhotoTag *tag = [_photoTags objectAtIndex:indexPath.row];
     
-    [self shouldSearchPhotos:tag.content];
+    [self shouldSearchPhotos:tag.text];
     [self.searchController setActive:NO animated:YES];
-    [self setSearchBarText:tag.content];
+    [self setSearchBarText:tag.text];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

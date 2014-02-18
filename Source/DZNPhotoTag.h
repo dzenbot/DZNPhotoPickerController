@@ -14,7 +14,7 @@
 @interface DZNPhotoTag : NSObject
 
 /* The tag text. */
-@property (nonatomic, copy) NSString *content;
+@property (nonatomic, copy) NSString *text;
 /* The name of the photo service. */
 @property (nonatomic, copy) NSString *serviceName;
 
