@@ -17,9 +17,11 @@ A photo search/picker for iOS using popular providers like 500px, Flickr, Intagr
 * Disable photo selection downloads and retrieve metadata instead.
 * iPhone (3.5" & 4") and iPad support.
 * ARC & 64bits support.
-
+<br>
+<br>
 ![screenshots](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_screenshots.png)
 ![services](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_services.png)
+<br>
 
 ## Installation
 
