@@ -296,7 +296,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 /*
  * The square overlay mask image to be displayed on top of the photo as cropping guideline.
- * Created with PaintCode. The source file is available inside of Resource folder.
+ * Created with PaintCode. The source file is available inside of the Resource folder.
  */
 - (UIImage *)squareOverlayMask
 {
@@ -337,15 +337,15 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     [maskPath stroke];
     
     //Create the image using the current context.
-    UIImage *_maskedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *_image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    return _maskedImage;
+    return _image;
 }
 
 /*
  * The circular overlay mask image to be displayed on top of the photo as cropping guideline.
- * Created with PaintCode. The source file is available inside of Resource folder.
+ * Created with PaintCode. The source file is available inside of the Resource folder.
  */
 - (UIImage *)circularOverlayMask
 {
@@ -373,10 +373,10 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     [fillColor setFill];
     [clipPath fill];
     
-    UIImage *_maskedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *_image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return _maskedImage;
+    return _image;
 }
 
 /*
@@ -386,9 +386,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 {
     UIImage *_image = nil;
     
-    // Constant sizes
     CGRect bounds = self.navigationController.view.bounds;
-    
     CGRect cropRect = [self cropRect];
 
     CGFloat verticalMargin = (bounds.size.height-cropRect.size.height)/2;
@@ -396,8 +394,6 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     cropRect.origin.x = -_scrollView.contentOffset.x;
     cropRect.origin.y = -_scrollView.contentOffset.y - verticalMargin;
     
-//    [_scrollView drawViewHierarchyInRect:bounds afterScreenUpdates:NO];
-
     UIGraphicsBeginImageContextWithOptions(cropRect.size, NO, 0);{
         CGContextRef context = UIGraphicsGetCurrentContext();
         
@@ -417,19 +413,12 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
         CGFloat scale = 1.0 + round(increment * 10) / 10.0;
         
         UIGraphicsBeginImageContextWithOptions(circulatRect.size, NO, 0.0);{
-            
-//            UIBezierPath *maskPath = [UIBezierPath bezierPathWithOvalInRect:circulatRect];
-//            [maskPath addClip];
-            
+
             CGContextRef context = UIGraphicsGetCurrentContext();
             CGContextTranslateCTM(context, -kInnerEdgeInset, -kInnerEdgeInset);
             CGContextScaleCTM(context, scale, scale);
 
-            // Draw the image
             [_image drawInRect:circulatRect];
-            
-//            CGPathRef path = [maskPath CGPath];
-//            CGContextAddPath(context, path);
             
             _image = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
