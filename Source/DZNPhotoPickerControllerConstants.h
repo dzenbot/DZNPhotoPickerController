@@ -98,11 +98,3 @@ UIKIT_EXTERN DZNPhotoPickerControllerService DZNPhotoServiceFromName(NSString *n
  */
 UIKIT_EXTERN DZNPhotoPickerControllerService DZNFirstPhotoServiceFromPhotoServices(DZNPhotoPickerControllerService services);
 
-/*
- * Returns the photo crop mode name string.
- *
- * @param mode The specified crop mode.
- * @returns The photo crop mode name.
- */
-UIKIT_EXTERN NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode);
-

@@ -107,12 +107,3 @@ NSArray *NSArrayFromServices(DZNPhotoPickerControllerService services)
     
     return [NSArray arrayWithArray:titles];
 }
-
-NSString *NSStringFromCropMode(DZNPhotoEditViewControllerCropMode mode)
-{
-    switch (mode) {
-        case DZNPhotoEditViewControllerCropModeSquare:      return @"square";
-        case DZNPhotoEditViewControllerCropModeCircular:    return @"circular";
-        default:                                            return @"none";
-    }
-}

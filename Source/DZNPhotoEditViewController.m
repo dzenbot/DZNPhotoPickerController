@@ -395,6 +395,8 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
     cropRect.origin.x = -_scrollView.contentOffset.x;
     cropRect.origin.y = -_scrollView.contentOffset.y - verticalMargin;
+    
+//    [_scrollView drawViewHierarchyInRect:bounds afterScreenUpdates:NO];
 
     UIGraphicsBeginImageContextWithOptions(cropRect.size, NO, 0);{
         CGContextRef context = UIGraphicsGetCurrentContext();
@@ -514,7 +516,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                      [NSValue valueWithCGRect:cropRect], UIImagePickerControllerCropRect,
                                      @"public.image", UIImagePickerControllerMediaType,
-                                     NSStringFromCropMode(cropMode), DZNPhotoPickerControllerCropMode,
+                                     @(cropMode), DZNPhotoPickerControllerCropMode,
                                      nil];
     
     if (originalImage) [userInfo setObject:originalImage forKey:UIImagePickerControllerOriginalImage];
