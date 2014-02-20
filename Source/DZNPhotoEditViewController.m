@@ -522,7 +522,8 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     if (originalImage) [userInfo setObject:originalImage forKey:UIImagePickerControllerOriginalImage];
     if (editedImage) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
     
-    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObject:metadata.serviceName forKey:@"source_name"];
+    NSMutableDictionary *attributes = [NSMutableDictionary new];
+    if (metadata.serviceName) [attributes setObject:metadata.serviceName forKey:@"source_name"];
     if (metadata.Id) [attributes setObject:metadata.Id forKey:@"source_id"];
     if (metadata.detailURL) [attributes setObject:metadata.detailURL forKey:@"source_detail_url"];
     if (metadata.sourceURL) [attributes setObject:metadata.sourceURL forKey:@"source_url"];
@@ -530,7 +531,9 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     if (metadata.authorUsername) [attributes setObject:metadata.authorUsername forKey:@"author_username"];
     if (metadata.authorProfileURL) [attributes setObject:metadata.authorProfileURL forKey:@"author_profile_url"];
     
-    [userInfo setObject:attributes forKey:DZNPhotoPickerControllerPhotoMetadata];
+    if (attributes.allKeys.count > 0) {
+        [userInfo setObject:attributes forKey:DZNPhotoPickerControllerPhotoMetadata];
+    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFinishPickingNotification object:nil userInfo:userInfo];
 }
