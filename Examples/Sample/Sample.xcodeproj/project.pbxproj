@@ -46,7 +46,7 @@
 		4F97B28A18AFDC4200DED8C0 /* DZNPhotoServiceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B28718AFDC4200DED8C0 /* DZNPhotoServiceFactory.m */; };
 		4F97B28E18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B28D18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.m */; };
 		4F97B29218B1961600DED8C0 /* google.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F97B29118B1961600DED8C0 /* google.json */; };
-		4F9C24FF18AB1B8900940B3F /* DZNPhotoMetadataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C24F618AB1B8900940B3F /* DZNPhotoMetadataTests.m */; };
+		4F9C24FF18AB1B8900940B3F /* DZNPhotoParsingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C24F618AB1B8900940B3F /* DZNPhotoParsingTests.m */; };
 		4F9C250018AB1B8900940B3F /* DZNPhotoTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F9C24F718AB1B8900940B3F /* DZNPhotoTests-Info.plist */; };
 		4F9C250118AB1B8900940B3F /* DZNPhotoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C24F918AB1B8900940B3F /* DZNPhotoTests.m */; };
 		4F9C250218AB1B8900940B3F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F9C24FA18AB1B8900940B3F /* InfoPlist.strings */; };
@@ -110,7 +110,7 @@
 		4F97B28D18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerControllerConstants.m; sourceTree = "<group>"; };
 		4F97B28F18B066E500DED8C0 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
 		4F97B29118B1961600DED8C0 /* google.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = google.json; sourceTree = "<group>"; };
-		4F9C24F618AB1B8900940B3F /* DZNPhotoMetadataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoMetadataTests.m; sourceTree = "<group>"; };
+		4F9C24F618AB1B8900940B3F /* DZNPhotoParsingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoParsingTests.m; sourceTree = "<group>"; };
 		4F9C24F718AB1B8900940B3F /* DZNPhotoTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DZNPhotoTests-Info.plist"; sourceTree = "<group>"; };
 		4F9C24F818AB1B8900940B3F /* DZNPhotoTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DZNPhotoTests-Prefix.pch"; sourceTree = "<group>"; };
 		4F9C24F918AB1B8900940B3F /* DZNPhotoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoTests.m; sourceTree = "<group>"; };
@@ -256,7 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				4F9C24F918AB1B8900940B3F /* DZNPhotoTests.m */,
-				4F9C24F618AB1B8900940B3F /* DZNPhotoMetadataTests.m */,
+				4F9C24F618AB1B8900940B3F /* DZNPhotoParsingTests.m */,
 				4FDE2AC218B2FD4D00CE9FFB /* DZNPhotoTagTests.m */,
 				4F9C24FC18AB1B8900940B3F /* Fixtures */,
 				4F9C250518AB1B9700940B3F /* Supporting Files */,
@@ -451,7 +451,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F9C24FF18AB1B8900940B3F /* DZNPhotoMetadataTests.m in Sources */,
+				4F9C24FF18AB1B8900940B3F /* DZNPhotoParsingTests.m in Sources */,
 				4F9C250118AB1B8900940B3F /* DZNPhotoTests.m in Sources */,
 				4FDE2AC318B2FD4D00CE9FFB /* DZNPhotoTagTests.m in Sources */,
 			);

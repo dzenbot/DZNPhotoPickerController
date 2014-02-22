@@ -12,10 +12,10 @@
 
 static NSBundle *_testTargetBundle;
 
-@interface DZNPhotoMetadataTests : XCTestCase
+@interface DZNPhotoParsingTests : XCTestCase
 @end
 
-@implementation DZNPhotoMetadataTests
+@implementation DZNPhotoParsingTests
 
 - (void)setUp
 {
