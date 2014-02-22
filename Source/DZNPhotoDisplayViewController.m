@@ -303,7 +303,10 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (BOOL)shouldShowFooter
 {
-    return (_photoMetadatas.count%self.resultPerPage == 0) ? YES : NO;
+    if (_photoMetadatas.count > 0) {
+        return (_photoMetadatas.count%self.resultPerPage == 0) ? YES : NO;
+    }
+    return NO;
 }
 
 
