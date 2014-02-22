@@ -55,7 +55,6 @@
 		4F9C251A18ACF3F800940B3F /* DZNPhotoTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C251918ACF3F800940B3F /* DZNPhotoTag.m */; };
 		4FDE2ABF18B2F3A100CE9FFB /* yahoo.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FDE2ABE18B2F3A100CE9FFB /* yahoo.json */; };
 		4FDE2AC118B2F3AE00CE9FFB /* bing.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FDE2AC018B2F3AE00CE9FFB /* bing.json */; };
-		4FDE2AC318B2FD4D00CE9FFB /* DZNPhotoTagTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE2AC218B2FD4D00CE9FFB /* DZNPhotoTagTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,7 +121,6 @@
 		4FD61C0618759E0D0048DC0C /* Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
 		4FDE2ABE18B2F3A100CE9FFB /* yahoo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yahoo.json; sourceTree = "<group>"; };
 		4FDE2AC018B2F3AE00CE9FFB /* bing.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bing.json; sourceTree = "<group>"; };
-		4FDE2AC218B2FD4D00CE9FFB /* DZNPhotoTagTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoTagTests.m; sourceTree = "<group>"; };
 		81CB7D6B303A4384A940032C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		880742B9C52B4EC59B669AE3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -257,7 +255,6 @@
 			children = (
 				4F9C24F918AB1B8900940B3F /* DZNPhotoTests.m */,
 				4F9C24F618AB1B8900940B3F /* DZNPhotoParsingTests.m */,
-				4FDE2AC218B2FD4D00CE9FFB /* DZNPhotoTagTests.m */,
 				4F9C24FC18AB1B8900940B3F /* Fixtures */,
 				4F9C250518AB1B9700940B3F /* Supporting Files */,
 			);
@@ -453,7 +450,6 @@
 			files = (
 				4F9C24FF18AB1B8900940B3F /* DZNPhotoParsingTests.m in Sources */,
 				4F9C250118AB1B8900940B3F /* DZNPhotoTests.m in Sources */,
-				4FDE2AC318B2FD4D00CE9FFB /* DZNPhotoTagTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
