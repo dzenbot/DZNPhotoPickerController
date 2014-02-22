@@ -1,5 +1,5 @@
 //
-//  DZNPhotoTests.m
+//  DZNPhotoPickerControllerTests.m
 //  DZNPhotoPickerController
 //  https://github.com/dzenbot/DZNPhotoPickerController
 //
@@ -9,10 +9,10 @@
 
 #import <XCTest/XCTest.h>
 
-@interface DZNPhotoTests : XCTestCase
+@interface DZNPhotoPickerControllerTests : XCTestCase
 @end
 
-@implementation DZNPhotoTests
+@implementation DZNPhotoPickerControllerTests
 
 - (void)setUp
 {
