@@ -588,7 +588,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskAll;
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (BOOL)shouldAutorotate
