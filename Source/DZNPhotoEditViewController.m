@@ -465,6 +465,10 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 - (void)acceptEdition:(id)sender
 {
+    if (_scrollView.zoomScale > _scrollView.maximumZoomScale) {
+        return;
+    }
+    
     dispatch_queue_t exampleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
     dispatch_async(exampleQueue, ^{
         
@@ -488,6 +492,10 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 - (void)cancelEdition:(id)sender
 {
+    if (_scrollView.zoomScale > _scrollView.maximumZoomScale) {
+        return;
+    }
+    
     if (self.navigationController.viewControllers.count > 1) {
         [self.navigationController popViewControllerAnimated:YES];
     }
