@@ -27,7 +27,7 @@ A photo search/picker for iOS using popular providers like 500px, Flickr, Intagr
 
 Available in [Cocoa Pods](http://cocoapods.org/?q=DZNPhotoPickerController)
 ```
-pod 'DZNPhotoPickerController', '~> 1.2.1'
+pod 'DZNPhotoPickerController'
 ```
 
 ## How to use
