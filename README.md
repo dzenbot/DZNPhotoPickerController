@@ -39,7 +39,7 @@ Import "DZNPhotoPickerController.h"
 ```
 
 ### Step 2
-Before even creating a new instance of DZNPhotoPickerController, it is recommended that you register to the photo services APIs on the NSObject's calss method +initialize, like so:
+Before even creating a new instance of DZNPhotoPickerController, it is recommended that you register to the photo services APIs your will need, on your UIViewController's class method +initialize, like so:
 ```
 + (void)initialize
 {
