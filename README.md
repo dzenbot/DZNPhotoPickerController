@@ -27,7 +27,7 @@ A photo search/picker for iOS using popular providers like 500px, Flickr, Intagr
 
 Available in [Cocoa Pods](http://cocoapods.org/?q=DZNPhotoPickerController)
 ```
-pod 'DZNPhotoPickerController', '~> 1.2.1'
+pod 'DZNPhotoPickerController'
 ```
 
 ## How to use
@@ -39,7 +39,7 @@ Import "DZNPhotoPickerController.h"
 ```
 
 ### Step 2
-Before even creating a new instance of DZNPhotoPickerController, it is recommended that you register to the photo services APIs on the NSObject's calss method +initialize, like so:
+Before even creating a new instance of DZNPhotoPickerController, it is recommended that you register to the photo services APIs your will need, on your UIViewController's class method +initialize, like so:
 ```
 + (void)initialize
 {
