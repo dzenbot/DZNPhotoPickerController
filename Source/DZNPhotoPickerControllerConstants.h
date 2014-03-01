@@ -16,7 +16,7 @@ UIKIT_EXTERN NSString *const DZNPhotoPickerDidFinishPickingNotification;    // T
 @interface DZNPhotoPickerControllerConstants : NSObject
 @end
 
-/*
+/**
  * Types of supported photo services
  */
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerService) {
@@ -30,7 +30,7 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerService) {
     DZNPhotoPickerControllerServiceDribbble = (1 << 7)          // Dribbble                                 http://dribbble.com/api/
 };
 
-/*
+/**
  * Types of Creative Commons licences.
  * Defined in http://creativecommons.org/licenses/
  *
@@ -49,7 +49,7 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerCCLicense) {
     DZNPhotoPickerControllerCCLicenseBY_NC_ND = (1 << 5)        // Attribution-NonCommercial-NoDerivs       http://creativecommons.org/licenses/by-nc-nd/4.0
 };
 
-/*
+/**
  * Types of supported cropping modes.
  */
 typedef NS_ENUM(NSInteger, DZNPhotoEditViewControllerCropMode) {
@@ -58,7 +58,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoEditViewControllerCropMode) {
     DZNPhotoEditViewControllerCropModeCircular
 };
 
-/*
+/**
  * Types of photo service subscription (i.e. Free, Paid)
  */
 typedef NS_ENUM(NSInteger, DZNPhotoPickerControllerSubscription) {
@@ -66,7 +66,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoPickerControllerSubscription) {
     DZNPhotoPickerControllerSubscriptionPaid
 };
 
-/*
+/**
  * Returns a photo service name string.
  *
  * @param service The specified service type.
@@ -74,7 +74,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoPickerControllerSubscription) {
  */
 UIKIT_EXTERN NSString *NSStringFromService(DZNPhotoPickerControllerService service);
 
-/*
+/**
  * Returns a list of photo service name strings.
  *
  * @param services The bitmap of service types.
@@ -82,7 +82,7 @@ UIKIT_EXTERN NSString *NSStringFromService(DZNPhotoPickerControllerService servi
  */
 UIKIT_EXTERN NSArray *NSArrayFromServices(DZNPhotoPickerControllerService services);
 
-/*
+/**
  * Returns a photo service type from name.
  *
  * @param name The specified service name.
@@ -90,7 +90,7 @@ UIKIT_EXTERN NSArray *NSArrayFromServices(DZNPhotoPickerControllerService servic
  */
 UIKIT_EXTERN DZNPhotoPickerControllerService DZNPhotoServiceFromName(NSString *name);
 
-/*
+/**
  * Returns the first photo service type from a bitmask of services.
  *
  * @param services The bitmask of services.

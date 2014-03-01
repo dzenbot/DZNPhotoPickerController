@@ -12,19 +12,19 @@
 
 typedef void (^DZNHTTPRequestCompletion)(NSArray *list, NSError *error);
 
-/*
+/**
  * Base HTTP photo service protocol.
  */
 @protocol DZNPhotoServiceClientProtocol <NSObject>
 
-/* The current photo service. */
+/** The current photo service. */
 @property (nonatomic) DZNPhotoPickerControllerService service;
-/* The current photo service subscription. */
+/** The current photo service subscription. */
 @property (nonatomic) DZNPhotoPickerControllerSubscription subscription;
-/* YES if the HTTP client is loading. */
+/** YES if the HTTP client is loading. */
 @property (nonatomic, readonly) BOOL loading;
 
-/*
+/**
  * Searches for a list of tags related to a keyword string.
  *
  * @param keyword The tag to fetch related tags for.
@@ -32,7 +32,7 @@ typedef void (^DZNHTTPRequestCompletion)(NSArray *list, NSError *error);
  */
 - (void)searchTagsWithKeyword:(NSString *)keyword completion:(DZNHTTPRequestCompletion)completion;
 
-/*
+/**
  * Searches for a list of photos mathing on a tag or keyword term.
  *
  * @param keyword The keyword term to fetch related tags for.
@@ -42,7 +42,7 @@ typedef void (^DZNHTTPRequestCompletion)(NSArray *list, NSError *error);
  */
 - (void)searchPhotosWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage completion:(DZNHTTPRequestCompletion)completion;
 
-/*
+/**
  * Cancels all HTTP request of the client.
  */
 - (void)cancelRequest;

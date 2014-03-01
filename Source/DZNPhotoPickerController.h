@@ -13,7 +13,7 @@
 
 @protocol DZNPhotoPickerControllerDelegate;
 
-/* 
+/** 
  * A photo search/picker for iOS 7, similar to UIImagePickerControl, providing photos from popular photography like 500px, Flickr and many others.
  * This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behaviour.
  *
@@ -21,22 +21,22 @@
  */
 @interface DZNPhotoPickerController : UINavigationController
 
-/* The photo picker's delegate object. */
+/** The photo picker's delegate object. */
 @property (nonatomic, assign) id <UINavigationControllerDelegate, DZNPhotoPickerControllerDelegate> delegate;
-/* The photo services to be supported by the controller. Default values are 500px & Flickr. */
+/** The photo services to be supported by the controller. Default values are 500px & Flickr. */
 @property (nonatomic) DZNPhotoPickerControllerService supportedServices;
-/* A Boolean value indicating whether the user is allowed to edit a selected image. Default value is NO. */
+/** A Boolean value indicating whether the user is allowed to edit a selected image. Default value is NO. */
 @property (nonatomic) BOOL allowsEditing;
-/* An optional string term for auto-starting the photo search, as soon as the picker is presented. */
+/** An optional string term for auto-starting the photo search, as soon as the picker is presented. */
 @property (nonatomic, copy) NSString *initialSearchTerm;
-/* The editing mode (ie: Square, Circular or Custom). Default is Square. */
+/** The editing mode (ie: Square, Circular or Custom). Default is Square. */
 @property (nonatomic) DZNPhotoEditViewControllerCropMode editingMode;
-/* The supported licenses of photos to search. Default value is "All CC Reserved Attributions". Pending implementation. */
+/** The supported licenses of photos to search. Default value is "All CC Reserved Attributions". Pending implementation. */
 @property (nonatomic) DZNPhotoPickerControllerCCLicense supportedLicenses;
-/* A Boolean value indicating whether the picker should download the photo after selecting it when allowsEditing is NO. Default value is YES. */
+/** A Boolean value indicating whether the picker should download the photo after selecting it when allowsEditing is NO. Default value is YES. */
 @property (nonatomic) BOOL enablePhotoDownload;
 
-/*
+/**
  * Initializes and returns a newly created picker controller, on edit mode only.
  *
  * @discussion This is a convenience method for initializing the receiver and pushing a photo edit view controller onto the navigation stack, with a presetted image to edit.
@@ -46,7 +46,7 @@
  */
 - (instancetype)initWithEditableImage:(UIImage *)image;
 
-/*
+/**
  * Returns an array of the available media types for the specified service type.
  *
  * @discussion Only kUTTypeImage will be returned for now. Maybe on a future, this library could have video and audio search support.
@@ -56,7 +56,7 @@
  */
 + (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerService)services;
 
-/*
+/**
  * Registers a specified photo service.
  * @discussion You must create an app for every photo service you'd like to use, and generate a consumer key and secret from their sites. Run this method on when initializing the view controller that will use DZNPhotoPickerController, typically in the +initialize method.
  *
@@ -73,7 +73,7 @@
 @protocol DZNPhotoPickerControllerDelegate <NSObject>
 @required
 
-/*
+/**
  * Tells the delegate that the user picked a new photo.
  *
  * @see UIImagePickerControllerDelegate
@@ -83,7 +83,7 @@
  */
 - (void)photoPickerController:(DZNPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)userInfo;
 
-/*
+/**
  * Tells the delegate that the user cancelled the pick operation.
  * Your delegate’s implementation of this method should dismiss the picker view by calling the dismissModalViewControllerAnimated: method of the parent view controller.
  * Implementation of this method is optional, but expected.

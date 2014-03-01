@@ -12,20 +12,20 @@
 #import "DZNPhotoPickerControllerConstants.h"
 #import "DZNPhotoServiceClientProtocol.h"
 
-/*
+/**
  * A factory manager for creating multiple HTTP clients based on a photo search service.
  * This is main object to be used to API calls.
  */
 @interface DZNPhotoServiceFactory : NSObject
 
-/*
+/**
  * Returns the service’s default factory.
  *
  * @return The current service’s default factory, which is used for creating different HTTP service clients.
  */
 + (instancetype)defaultFactory;
 
-/*
+/**
  * Returns photo service client conforming its protocol, by either creating a new instance or reusing a previously created client.
  *
  * @param service The specified photo service.
@@ -33,7 +33,7 @@
  */
 - (id<DZNPhotoServiceClientProtocol>)clientForService:(DZNPhotoPickerControllerService)service;
 
-/*
+/**
  * Saves on NSUserDefaults API key and secret for a specific photo service.
  *
  * @param consumerKey The API consumer key.
@@ -42,7 +42,7 @@
  */
 + (void)setConsumerKey:(NSString *)key consumerSecret:(NSString *)secret service:(DZNPhotoPickerControllerService)service subscription:(DZNPhotoPickerControllerSubscription)subscription;
 
-/*
+/**
  * Resets the factory, by releasing all cached HTTP clients.
  */
 - (void)reset;

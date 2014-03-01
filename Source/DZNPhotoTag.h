@@ -13,19 +13,19 @@
 
 @interface DZNPhotoTag : NSObject
 
-/* The tag text. */
+/** The tag text. */
 @property (nonatomic, copy) NSString *text;
-/* The name of the photo service. */
+/** The name of the photo service. */
 @property (nonatomic, copy) NSString *serviceName;
 
-/*
+/**
  * Returns the name of the class. It is as good as calling NSStringFromClass().
  *
  * @return A the name of the class.
  */
 + (NSString *)name;
 
-/*
+/**
  * Allocates a new instance of DZNPhotoTag, initialized with a supported photo service type.
  *
  * @param service The specific photo search service.
@@ -33,7 +33,7 @@
  */
 + (instancetype)photoTagFromService:(DZNPhotoPickerControllerService)service;
 
-/*
+/**
  * Parses and returns a list of photo tags from a request response.
  *
  * @param service The photo service of the response.

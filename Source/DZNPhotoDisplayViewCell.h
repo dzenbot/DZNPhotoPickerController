@@ -11,12 +11,12 @@
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
 
-/*
+/**
  * The collection view cell to be displayed on search results, with photo thumbnail.
  */
 @interface DZNPhotoDisplayViewCell : UICollectionViewCell
 
-/* The image view of the table cell. (read-only). */
+/** The image view of the table cell. (read-only). */
 @property(nonatomic, readonly, retain) UIImageView *imageView;
 
 @end
