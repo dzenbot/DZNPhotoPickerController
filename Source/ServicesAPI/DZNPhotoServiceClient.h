@@ -8,7 +8,7 @@
 //  Licence: MIT-Licence
 //
 
-#import <AFNetworking/AFHTTPClient.h>
+#import <AFNetworking.h>
 #import "DZNPhotoPickerControllerConstants.h"
 #import "DZNPhotoServiceClientProtocol.h"
 
@@ -19,7 +19,7 @@ UIKIT_EXTERN NSString *const DZNPhotoServiceClientSubscription;
 /**
  * The HTTP service client used to interact with multiple RESTful APIs for photo search services.
  */
-@interface DZNPhotoServiceClient : AFHTTPClient <DZNPhotoServiceClientProtocol>
+@interface DZNPhotoServiceClient : AFHTTPRequestOperationManager <DZNPhotoServiceClientProtocol>
 
 /**
  * Initializes a new HTTP service client.
