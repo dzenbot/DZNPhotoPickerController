@@ -31,6 +31,7 @@ pod 'DZNPhotoPickerController'
 ```
 
 ## How to use
+For complete documentation, [visit CocoaPods' auto-generated doc](http://cocoadocs.org/docsets/DZNPhotoPickerController/1.2.3/)
 
 ### Step 1
 
