@@ -281,7 +281,7 @@ static NSString *kTagCellID = @"kTagCellID";
     
     NSInteger count = (int)(contentSize.height/cellHeight);
     
-    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
+    id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
     if (client.service == DZNPhotoPickerControllerServiceGoogleImages &&
         client.subscription == DZNPhotoPickerControllerSubscriptionFree) {
         count = count/2;
@@ -345,7 +345,8 @@ static NSString *kTagCellID = @"kTagCellID";
     
     [_photoTags addObjectsFromArray:list];
     
-    if (_photoTags.count == 0) {
+    if (_photoTags.count < 2) {
+        [_photoTags removeAllObjects];
         
         DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:_selectedService];
         tag.text = _searchBar.text;
@@ -465,8 +466,8 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)searchTags:(NSString *)keyword
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
-    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
+    
+    id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
     
     [client searchTagsWithKeyword:keyword completion:^(NSArray *list, NSError *error) {
         if (error) [self setSearchError:error];
@@ -502,7 +503,7 @@ static NSString *kTagCellID = @"kTagCellID";
     NSLog(@"Searching \"%@\" (page %d) on %@", keyword, _currentPage, NSStringFromService(_selectedService));
 #pragma clang diagnostic pop
     
-    id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
+    id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
     
     [client searchPhotosWithKeyword:keyword page:_currentPage resultPerPage:self.resultPerPage completion:^(NSArray *list, NSError *error) {
         if (error) [self setSearchError:error];
@@ -519,7 +520,7 @@ static NSString *kTagCellID = @"kTagCellID";
         
         [self showActivityIndicators:NO];
         
-        id<DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
+        id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
         [client cancelRequest];
     }
     
