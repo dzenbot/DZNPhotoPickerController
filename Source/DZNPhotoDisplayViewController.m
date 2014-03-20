@@ -497,12 +497,7 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     [self showActivityIndicators:YES];
     _searchTerm = keyword;
-    
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wconversion"
-    NSLog(@"Searching \"%@\" (page %d) on %@", keyword, _currentPage, NSStringFromService(_selectedService));
-#pragma clang diagnostic pop
-    
+
     id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
     
     [client searchPhotosWithKeyword:keyword page:_currentPage resultPerPage:self.resultPerPage completion:^(NSArray *list, NSError *error) {
