@@ -1,15 +1,15 @@
 PODS:
   - AFNetworking (1.3.3)
-  - SDWebImage (3.5):
+  - SDWebImage (3.5.4):
     - SDWebImage/Core
-  - SDWebImage/Core (3.5)
+  - SDWebImage/Core (3.5.4)
 
 DEPENDENCIES:
   - AFNetworking (~> 1.3.3)
-  - SDWebImage (~> 3.4)
+  - SDWebImage (~> 3.5.4)
 
 SPEC CHECKSUMS:
   AFNetworking: 61fdd49e2ffe6380378df37b3b6e70630bb9dd66
-  SDWebImage: f1a72472f8a2d54445f1fedafe2090593d9caf7f
+  SDWebImage: 1a62010700adbba823b621fc217906739dbf6aa5
 
 COCOAPODS: 0.29.0

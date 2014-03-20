@@ -13,6 +13,6 @@ Pod::Spec.new do |s|
   s.source_files  = 'Classes', 'Source/**/*.{h,m}'
   s.ios.framework = 'MobileCoreServices'
   s.dependency 'AFNetworking', '~> 1.3.3'
-  s.dependency 'SDWebImage', '~> 3.4'
+  s.dependency 'SDWebImage', '~> 3.5.4'
   s.requires_arc = true
 end
