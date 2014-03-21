@@ -16,9 +16,6 @@ NSString *const DZNPhotoPickerControllerPhotoMetadata = @"DZNPhotoPickerControll
 NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDidFinishPickingNotification";
 
 
-@implementation DZNPhotoPickerControllerConstants
-@end
-
 NSString *NSStringFromService(DZNPhotoPickerControllerService service)
 {
     switch (service) {

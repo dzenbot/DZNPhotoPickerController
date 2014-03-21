@@ -19,8 +19,6 @@ NSString *const DZNPhotoServiceClientConsumerKey = @"DZNPhotoServiceClientConsum
 NSString *const DZNPhotoServiceClientConsumerSecret = @"DZNPhotoServiceClientConsumerSecret";
 NSString *const DZNPhotoServiceClientSubscription = @"DZNPhotoServiceClientSubscription";
 
-@implementation DZNPhotoServiceConstants
-@end
 
 NSString *NSUserDefaultsUniqueKey(NSUInteger type, NSString *key)
 {

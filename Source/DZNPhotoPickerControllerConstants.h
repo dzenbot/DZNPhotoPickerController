@@ -13,8 +13,6 @@ UIKIT_EXTERN NSString *const DZNPhotoPickerControllerPhotoMetadata;         // a
 
 UIKIT_EXTERN NSString *const DZNPhotoPickerDidFinishPickingNotification;    // The notification key used when photo picked.
 
-@interface DZNPhotoPickerControllerConstants : NSObject
-@end
 
 /**
  * Types of supported photo services

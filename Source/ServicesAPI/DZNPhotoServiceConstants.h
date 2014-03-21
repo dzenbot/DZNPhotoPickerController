@@ -11,8 +11,6 @@
 #import <Foundation/Foundation.h>
 #import "DZNPhotoPickerControllerConstants.h"
 
-@interface DZNPhotoServiceConstants : NSObject
-@end
 
 /**
  * Returns an unique key for saving data to the NSUserDefaults.
