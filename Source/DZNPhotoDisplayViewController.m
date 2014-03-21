@@ -112,7 +112,6 @@ static NSString *kTagCellID = @"kTagCellID";
     [super viewWillAppear:animated];
     
     if (!_photoMetadatas) {
-        _photoMetadatas = [NSMutableArray new];
 
         if (_searchTerm.length == 0) {
             [self.searchController setActive:YES];
@@ -309,6 +308,17 @@ static NSString *kTagCellID = @"kTagCellID";
     return NO;
 }
 
+/*
+ * Checks if an empty data set for informing about empty results should be displayed.
+ */
+- (BOOL)displayEmptyDataSet
+{
+    if (_photoMetadatas && _photoMetadatas.count == 0 && !_loading) {
+        return YES;
+    }
+    return NO;
+}
+
 
 #pragma mark - Setter methods
 
@@ -325,6 +335,8 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)setPhotoSearchList:(NSArray *)list
 {
     [self showActivityIndicators:NO];
+    
+    if (!_photoMetadatas) _photoMetadatas = [NSMutableArray new];
     
     [_photoMetadatas addObjectsFromArray:list];
     [self.collectionView reloadData];
@@ -556,7 +568,10 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _photoMetadatas.count;
+    if (_photoMetadatas.count > 0) {
+        return _photoMetadatas.count;
+    }
+    return [self displayEmptyDataSet];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -564,12 +579,18 @@ static NSString *kTagCellID = @"kTagCellID";
     DZNPhotoDisplayViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kThumbCellID forIndexPath:indexPath];
     cell.tag = indexPath.row;
     
-    DZNPhotoMetadata *metadata = [_photoMetadatas objectAtIndex:indexPath.row];
+    if (_photoMetadatas.count > 0) {
+        DZNPhotoMetadata *metadata = [_photoMetadatas objectAtIndex:indexPath.row];
+        
+        [cell.imageView cancelCurrentImageLoad];
+        [cell.imageView setImageWithURL:metadata.thumbURL placeholderImage:nil
+                                options:SDWebImageCacheMemoryOnly completed:NULL];
+    }
     
-    [cell.imageView cancelCurrentImageLoad];
+    cell.titleLabel.text = [self displayEmptyDataSet] ? NSLocalizedString(@"No Photos Found", nil) : nil;
+    cell.detailLabel.text = [self displayEmptyDataSet] ? NSLocalizedString(@"Make sure that all words are spelled correctly.", nil) : nil;
     
-    [cell.imageView setImageWithURL:metadata.thumbURL placeholderImage:nil
-                            options:SDWebImageCacheMemoryOnly completed:NULL];
+    [cell layoutSubviews];
     
     return cell;
 }
@@ -622,7 +643,7 @@ static NSString *kTagCellID = @"kTagCellID";
     if ([[UIMenuController sharedMenuController] isMenuVisible]) {
         return NO;
     }
-    return YES;
+    return ![self displayEmptyDataSet];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -646,7 +667,7 @@ static NSString *kTagCellID = @"kTagCellID";
     if ([[UIMenuController sharedMenuController] isMenuVisible]) {
         return NO;
     }
-    return YES;
+    return ![self displayEmptyDataSet];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath;

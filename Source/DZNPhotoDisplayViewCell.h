@@ -16,7 +16,11 @@
  */
 @interface DZNPhotoDisplayViewCell : UICollectionViewCell
 
-/** The image view of the table cell. (read-only). */
-@property(nonatomic, readonly, retain) UIImageView *imageView;
+/** The image view of the cell. (read-only). */
+@property (nonatomic, readonly, retain) UIImageView *imageView;
+/** The title label of the table cell. (read-only). */
+@property (nonatomic, readonly, retain) UILabel *titleLabel;
+/** The detail label of the cell. (read-only). */
+@property (nonatomic, readonly, retain) UILabel *detailLabel;
 
 @end
