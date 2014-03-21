@@ -14,3 +14,9 @@ profile
 *.moved-aside
 DerivedData
 .idea/
+
+# CocoaPods
+Pods
+RestKit.xcodeproj/xcshareddata/
+RestKit.xcworkspace/xcshareddata/xcschemes/
+DerivedData
