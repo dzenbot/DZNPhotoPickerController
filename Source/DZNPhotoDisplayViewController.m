@@ -897,6 +897,15 @@ static NSString *kTagCellID = @"kTagCellID";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    _searchBar = nil;
+    _searchController = nil;
+    _searchTerm = nil;
+    _loadButton = nil;
+    _activityIndicator = nil;
+    _photoMetadatas = nil;
+    _photoTags = nil;
+    _segmentedControlTitles = nil;
 }
 
 

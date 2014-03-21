@@ -71,4 +71,13 @@
     [super layoutSubviews];
 }
 
+
+#pragma mark - View lifeterm
+
+- (void)dealloc
+{
+    _imageView.image = nil;
+    _imageView = nil;
+}
+
 @end

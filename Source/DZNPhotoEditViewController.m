@@ -576,6 +576,10 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     _imageView.image = nil;
     _imageView = nil;
     _scrollView = nil;
+    _editingImage = nil;
+    _cancelButton = nil;
+    _acceptButton = nil;
+    _bottomView = nil;
 }
 
 

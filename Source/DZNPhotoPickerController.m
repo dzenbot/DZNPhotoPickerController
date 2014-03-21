@@ -181,6 +181,9 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    _editingImage = nil;
+    _initialSearchTerm = nil;
 }
 
 

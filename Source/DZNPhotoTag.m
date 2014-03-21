@@ -48,4 +48,13 @@
     return [NSString stringWithFormat:@"serviceName = %@; content = %@;", self.serviceName, self.text];
 }
 
+
+#pragma mark - View lifeterm
+
+- (void)dealloc
+{
+    _text = nil;
+    _serviceName = nil;
+}
+
 @end

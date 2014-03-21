@@ -90,4 +90,19 @@
     return [NSString stringWithFormat:@"serviceName = %@; id = %@; authorName = %@; authorUsername = %@; authorProfileURL = %@; detailURL = %@; thumbURL = %@; sourceURL = %@;", self.serviceName, self.Id, self.authorName, self.authorUsername, self.authorProfileURL, self.detailURL, self.thumbURL, self.sourceURL];
 }
 
+
+#pragma mark - View lifeterm
+
+- (void)dealloc
+{
+    _Id = nil;
+    _thumbURL = nil;
+    _sourceURL = nil;
+    _detailURL = nil;
+    _authorName = nil;
+    _authorUsername = nil;
+    _authorProfileURL = nil;
+    _serviceName = nil;
+}
+
 @end
