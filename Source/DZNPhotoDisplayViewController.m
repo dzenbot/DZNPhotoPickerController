@@ -300,7 +300,7 @@ static NSString *kTagCellID = @"kTagCellID";
 /*
  * Checks if an additional footer for loading more content should be displayed.
  */
-- (BOOL)shouldShowFooter
+- (BOOL)displayLoadMore
 {
     if (_photoMetadatas.count > 0) {
         return (_photoMetadatas.count%self.resultPerPage == 0) ? YES : NO;
@@ -601,7 +601,7 @@ static NSString *kTagCellID = @"kTagCellID";
         
         UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kThumbFooterID forIndexPath:indexPath];
         
-        if ([self shouldShowFooter]) {
+        if ([self displayLoadMore]) {
             
             if (!_loadButton && footer.subviews.count == 0) {
                 [footer addSubview:self.loadButton];
