@@ -16,11 +16,15 @@
  */
 @interface DZNPhotoDisplayViewCell : UICollectionViewCell
 
+/** The cell's collection view. */
+@property (nonatomic, weak) UICollectionView *superCollectionView;
 /** The image view of the cell. (read-only). */
-@property (nonatomic, readonly, retain) UIImageView *imageView;
+@property (nonatomic, readonly, strong) UIImageView *imageView;
 /** The title label of the table cell. (read-only). */
-@property (nonatomic, readonly, retain) UILabel *titleLabel;
+@property (nonatomic, readonly, strong) UILabel *titleLabel;
 /** The detail label of the cell. (read-only). */
-@property (nonatomic, readonly, retain) UILabel *detailLabel;
+@property (nonatomic, readonly, strong) UILabel *detailLabel;
+
+- (void)setEmptyDataSetVisible:(BOOL)display;
 
 @end

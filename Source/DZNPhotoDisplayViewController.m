@@ -298,9 +298,9 @@ static NSString *kTagCellID = @"kTagCellID";
 }
 
 /*
- * Checks if an additional footer for loading more content should be displayed.
+ * Checks if an additional footer view for loading more content should be displayed.
  */
-- (BOOL)displayLoadMore
+- (BOOL)canDisplayFooterView
 {
     if (_photoMetadatas.count > 0) {
         return (_photoMetadatas.count%self.resultPerPage == 0) ? YES : NO;
@@ -311,7 +311,7 @@ static NSString *kTagCellID = @"kTagCellID";
 /*
  * Checks if an empty data set for informing about empty results should be displayed.
  */
-- (BOOL)displayEmptyDataSet
+- (BOOL)canDisplayEmptyDataSet
 {
     if (_photoMetadatas && _photoMetadatas.count == 0 && !_loading) {
         return YES;
@@ -334,7 +334,7 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)setPhotoSearchList:(NSArray *)list
 {
-    [self showActivityIndicators:NO];
+    [self setActivityIndicatorsVisible:NO];
     
     if (!_photoMetadatas) _photoMetadatas = [NSMutableArray new];
     
@@ -373,7 +373,7 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)setSearchError:(NSError *)error
 {
-    [self showActivityIndicators:NO];
+    [self setActivityIndicatorsVisible:NO];
     
     if (error.code == NSURLErrorCancelled || error.code == NSURLErrorUnknown) {
         return;
@@ -391,7 +391,7 @@ static NSString *kTagCellID = @"kTagCellID";
 /*
  * Toggles the status bar & footer activity indicators.
  */
-- (void)showActivityIndicators:(BOOL)visible
+- (void)setActivityIndicatorsVisible:(BOOL)visible
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = visible;
     
@@ -430,7 +430,7 @@ static NSString *kTagCellID = @"kTagCellID";
     }
     else {
         
-        [self showActivityIndicators:YES];
+        [self setActivityIndicatorsVisible:YES];
 
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:metadata.sourceURL
                                                               options:SDWebImageCacheMemoryOnly|SDWebImageRetryFailed
@@ -448,7 +448,7 @@ static NSString *kTagCellID = @"kTagCellID";
                                                      [self setSearchError:error];
                                                  }
                                                  
-                                                 [self showActivityIndicators:NO];
+                                                 [self setActivityIndicatorsVisible:NO];
                                              }];
     }
     
@@ -507,7 +507,7 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)searchPhotosWithKeyword:(NSString *)keyword
 {
-    [self showActivityIndicators:YES];
+    [self setActivityIndicatorsVisible:YES];
     _searchTerm = keyword;
 
     id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
@@ -525,7 +525,7 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     if (self.loading) {
         
-        [self showActivityIndicators:NO];
+        [self setActivityIndicatorsVisible:NO];
         
         id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
         [client cancelRequest];
@@ -571,12 +571,13 @@ static NSString *kTagCellID = @"kTagCellID";
     if (_photoMetadatas.count > 0) {
         return _photoMetadatas.count;
     }
-    return [self displayEmptyDataSet];
+    return [self canDisplayEmptyDataSet];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DZNPhotoDisplayViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kThumbCellID forIndexPath:indexPath];
+    cell.superCollectionView = collectionView;
     cell.tag = indexPath.row;
     
     if (_photoMetadatas.count > 0) {
@@ -587,10 +588,7 @@ static NSString *kTagCellID = @"kTagCellID";
                                 options:SDWebImageCacheMemoryOnly completed:NULL];
     }
     
-    cell.titleLabel.text = [self displayEmptyDataSet] ? NSLocalizedString(@"No Photos Found", nil) : nil;
-    cell.detailLabel.text = [self displayEmptyDataSet] ? NSLocalizedString(@"Make sure that all words are spelled correctly.", nil) : nil;
-    
-    [cell layoutSubviews];
+    [cell setEmptyDataSetVisible:[self canDisplayEmptyDataSet]];
     
     return cell;
 }
@@ -601,7 +599,7 @@ static NSString *kTagCellID = @"kTagCellID";
         
         UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kThumbFooterID forIndexPath:indexPath];
         
-        if ([self displayLoadMore]) {
+        if ([self canDisplayFooterView]) {
             
             if (!_loadButton && footer.subviews.count == 0) {
                 [footer addSubview:self.loadButton];
@@ -643,7 +641,7 @@ static NSString *kTagCellID = @"kTagCellID";
     if ([[UIMenuController sharedMenuController] isMenuVisible]) {
         return NO;
     }
-    return ![self displayEmptyDataSet];
+    return ![self canDisplayEmptyDataSet];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -667,7 +665,7 @@ static NSString *kTagCellID = @"kTagCellID";
     if ([[UIMenuController sharedMenuController] isMenuVisible]) {
         return NO;
     }
-    return ![self displayEmptyDataSet];
+    return ![self canDisplayEmptyDataSet];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath;

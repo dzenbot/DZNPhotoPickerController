@@ -10,6 +10,8 @@
 
 #import "DZNPhotoDisplayViewCell.h"
 
+#define kDZNCellMargin 30.0
+
 @implementation DZNPhotoDisplayViewCell
 @synthesize imageView = _imageView;
 @synthesize titleLabel = _titleLabel;
@@ -21,7 +23,8 @@
     if (self) {
         
         self.backgroundView = self.imageView;
-        
+        self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+
         self.selectedBackgroundView = [UIView new];
         self.selectedBackgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
     }
@@ -47,7 +50,7 @@
 {
     if (!_titleLabel)
     {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30.0, 170.0, [UIScreen mainScreen].bounds.size.width-(30.0*2), 30.0)];
+        _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:27.0];
         _titleLabel.textColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -62,31 +65,55 @@
 {
     if (!_detailLabel)
     {
-        _detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(30.0, _titleLabel.frame.origin.y+_titleLabel.frame.size.height+12.0, [UIScreen mainScreen].bounds.size.width-(30.0*2), 44.0)];
+        _detailLabel = [[UILabel alloc] init];
         _detailLabel.font = [UIFont systemFontOfSize:17.0];
         _detailLabel.textColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0];
         _detailLabel.textAlignment = NSTextAlignmentCenter;
         _detailLabel.numberOfLines = 2;
         
         [self.contentView addSubview:_detailLabel];
+        [self layoutLabels];
     }
     return _detailLabel;
 }
 
-- (BOOL)usedForEmptyDataSet
+
+#pragma mark - DZNPhotoDisplayViewCell methods
+
+- (void)setEmptyDataSetVisible:(BOOL)visible
 {
-    return (self.tag == 0 && _titleLabel.text) ? YES : NO;
+    if (visible) [self displayEmptyDataSet];
+    else [self clearEmptyDataSet];
 }
 
-
-#pragma mark - Setter methods
-
-- (void)setTag:(NSInteger)tag
+- (void)displayEmptyDataSet
 {
-    [super setTag:tag];
+    if (self.imageView.hidden) {
+        return;
+    }
     
-    if (!_titleLabel) [self.contentView addSubview:self.titleLabel];
-    if (!_detailLabel) [self.contentView addSubview:self.detailLabel];
+    self.titleLabel.text = NSLocalizedString(@"No Photos Found", nil);
+    self.detailLabel.text = NSLocalizedString(@"Make sure that all words are spelled correctly.", nil);
+    self.titleLabel.hidden = NO;
+    self.detailLabel.hidden = NO;
+    self.imageView.hidden = YES;
+    self.superCollectionView.scrollEnabled = NO;
+    self.backgroundView.backgroundColor = [UIColor clearColor];
+}
+
+- (void)clearEmptyDataSet
+{
+    if (!self.imageView.hidden) {
+        return;
+    }
+    
+    self.titleLabel.text = nil;
+    self.detailLabel.text = nil;
+    self.titleLabel.hidden = YES;
+    self.detailLabel.hidden = YES;
+    self.imageView.hidden = NO;
+    self.superCollectionView.scrollEnabled = YES;
+    self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
 }
 
 
@@ -116,11 +143,20 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+}
 
-    self.titleLabel.hidden = [self usedForEmptyDataSet] ? NO : YES;
-    self.detailLabel.hidden = [self usedForEmptyDataSet] ? NO : YES;
-    self.imageView.hidden = [self usedForEmptyDataSet] ? YES : NO;
-    self.backgroundView.backgroundColor = [self usedForEmptyDataSet] ? [UIColor clearColor] : [UIColor colorWithWhite:0.9 alpha:1.0];
+- (void)layoutLabels
+{
+    CGFloat dataSetHeight = _titleLabel.frame.size.height + _detailLabel.frame.size.height + kDZNCellMargin/2;
+    CGFloat superviewHeight = _superCollectionView.bounds.size.height + _superCollectionView.bounds.origin.y;
+    
+    CGRect titleRect = CGRectMake(kDZNCellMargin, 0, _superCollectionView.frame.size.width-(kDZNCellMargin*2), kDZNCellMargin);
+    titleRect.origin.y = roundf((superviewHeight-dataSetHeight)/2)-10.0;
+    _titleLabel.frame = titleRect;
+    
+    CGRect detailRect = CGRectMake(kDZNCellMargin, 0, _superCollectionView.frame.size.width-(kDZNCellMargin*2), 44.0);
+    detailRect.origin.y = roundf(_titleLabel.frame.origin.y+_titleLabel.frame.size.height+kDZNCellMargin/2);
+    _detailLabel.frame = detailRect;
 }
 
 
