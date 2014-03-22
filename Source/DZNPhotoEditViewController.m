@@ -84,6 +84,9 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     
     [self.view addSubview:self.scrollView];
     [self.view addSubview:self.bottomView];
+    
+    UIImageView *maskImageView = [[UIImageView alloc] initWithImage:[self overlayMask]];
+    [self.view insertSubview:maskImageView aboveSubview:_scrollView];
 }
 
 - (void)viewDidLoad
@@ -96,9 +99,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     [super viewWillAppear:animated];
     
     [self setBarsHidden:YES];
-
-    UIImageView *maskImageView = [[UIImageView alloc] initWithImage:[self overlayMask]];
-    [self.view insertSubview:maskImageView aboveSubview:_scrollView];
     
     if (!_imageView.image) {
         
