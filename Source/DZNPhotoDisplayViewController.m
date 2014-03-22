@@ -147,6 +147,11 @@ static NSString *kTagCellID = @"kTagCellID";
     return flowLayout;
 }
 
+- (id<DZNPhotoServiceClientProtocol>)selectedServiceClient
+{
+    return [[DZNPhotoServiceFactory defaultFactory] clientForService:self.selectedService];
+}
+
 - (DZNPhotoPickerController *)navigationController
 {
     return (DZNPhotoPickerController *)[super navigationController];
@@ -280,14 +285,14 @@ static NSString *kTagCellID = @"kTagCellID";
     
     NSInteger count = (int)(contentSize.height/cellHeight);
     
-    id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
-    if (client.service == DZNPhotoPickerControllerServiceGoogleImages &&
-        client.subscription == DZNPhotoPickerControllerSubscriptionFree) {
+    if (self.selectedServiceClient.service == DZNPhotoPickerControllerServiceGoogleImages &&
+        self.selectedServiceClient.subscription == DZNPhotoPickerControllerSubscriptionFree) {
         count = count/2;
     }
     
     return count;
 }
+
 
 /*
  * Returns the appropriate number of result per page.
@@ -484,10 +489,11 @@ static NSString *kTagCellID = @"kTagCellID";
     
     id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
     
-    [client searchTagsWithKeyword:keyword completion:^(NSArray *list, NSError *error) {
-        if (error) [self handleLoadingError:error];
-        else [self setTagSearchList:list];
-    }];
+    [client searchTagsWithKeyword:keyword
+                       completion:^(NSArray *list, NSError *error) {
+                           if (error) [self handleLoadingError:error];
+                           else [self setTagSearchList:list];
+                       }];
 }
 
 /*
@@ -513,12 +519,13 @@ static NSString *kTagCellID = @"kTagCellID";
     [self setActivityIndicatorsVisible:YES];
     _searchTerm = keyword;
 
-    id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
-    
-    [client searchPhotosWithKeyword:keyword page:_currentPage resultPerPage:self.resultPerPage completion:^(NSArray *list, NSError *error) {
-        if (error) [self handleLoadingError:error];
-        else [self setPhotoSearchList:list];
-    }];
+    [self.selectedServiceClient searchPhotosWithKeyword:keyword
+                                                   page:_currentPage
+                                          resultPerPage:self.resultPerPage
+                                             completion:^(NSArray *list, NSError *error) {
+                                                 if (error) [self handleLoadingError:error];
+                                                 else [self setPhotoSearchList:list];
+                                             }];
 }
 
 /*
@@ -529,9 +536,7 @@ static NSString *kTagCellID = @"kTagCellID";
     if (self.loading) {
         
         [self setActivityIndicatorsVisible:NO];
-        
-        id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
-        [client cancelRequest];
+        [self.selectedServiceClient cancelRequest];
     }
     
 //    for (DZNPhotoDisplayViewCell *cell in [self.collectionView visibleCells]) {
