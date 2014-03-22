@@ -423,18 +423,18 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     DZNPhotoMetadata *metadata = [_photoMetadatas objectAtIndex:indexPath.row];
     
-    if (self.navigationController.allowsEditing) {
-        
-        DZNPhotoEditViewController *photoEditViewController = [[DZNPhotoEditViewController alloc] initWithPhotoMetadata:metadata cropMode:self.navigationController.editingMode];
-        [self.navigationController pushViewController:photoEditViewController animated:YES];
-    }
-    else if (!self.navigationController.enablePhotoDownload) {
+    if (!self.navigationController.enablePhotoDownload) {
         
         [DZNPhotoEditViewController didFinishPickingOriginalImage:nil
                                                       editedImage:nil
                                                          cropRect:CGRectZero
                                                          cropMode:DZNPhotoEditViewControllerCropModeNone
                                                     photoMetadata:metadata];
+    }
+    else if (self.navigationController.allowsEditing) {
+        
+        DZNPhotoEditViewController *controller = [[DZNPhotoEditViewController alloc] initWithPhotoMetadata:metadata cropMode:self.navigationController.editingMode];
+        [self.navigationController pushViewController:controller animated:YES];
     }
     else {
         
@@ -443,21 +443,21 @@ static NSString *kTagCellID = @"kTagCellID";
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:metadata.sourceURL
                                                               options:SDWebImageCacheMemoryOnly|SDWebImageRetryFailed
                                                              progress:NULL
-                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
-                                                 
-                                                 if (image) {
-                                                     [DZNPhotoEditViewController didFinishPickingOriginalImage:image editedImage:nil
-                                                                                                      cropRect:CGRectZero
-                                                                                                      cropMode:DZNPhotoEditViewControllerCropModeNone
-                                                                                                 photoMetadata:metadata];
-                
-                                                 }
-                                                 else {
-                                                     [self handleLoadingError:error];
-                                                 }
-                                                 
-                                                 [self setActivityIndicatorsVisible:NO];
-                                             }];
+                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
+                                                                if (image) {
+                                                                    [DZNPhotoEditViewController didFinishPickingOriginalImage:image
+                                                                                                                  editedImage:nil
+                                                                                                                     cropRect:CGRectZero
+                                                                                                                     cropMode:DZNPhotoEditViewControllerCropModeNone
+                                                                                                                photoMetadata:metadata];
+                                                                    
+                                                                }
+                                                                else {
+                                                                    [self handleLoadingError:error];
+                                                                }
+                                                                
+                                                                [self setActivityIndicatorsVisible:NO];
+                                                            }];
     }
     
     [self.collectionView deselectItemAtIndexPath:indexPath animated:YES];

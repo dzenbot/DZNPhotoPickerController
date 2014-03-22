@@ -112,7 +112,7 @@
 - (void)presentPhotoPicker
 {
     DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];
-    picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceInstagram;
+    picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages;
     picker.allowsEditing = YES;
     picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     picker.delegate = self;

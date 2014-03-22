@@ -95,8 +95,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 {
     [super viewWillAppear:animated];
     
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    [self setBarsHidden:YES];
 
     UIImageView *maskImageView = [[UIImageView alloc] initWithImage:[self overlayMask]];
     [self.view insertSubview:maskImageView aboveSubview:_scrollView];
@@ -137,8 +136,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 {
 	[super viewWillDisappear:animated];
     
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+    [self setBarsHidden:NO];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -441,6 +439,15 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     CGSize viewSize = self.view.bounds.size;
     CGFloat cropHeight = roundf((cropSize.height * viewSize.width) / cropSize.width);
     _cropSize = CGSizeMake(cropSize.width, cropHeight);
+}
+
+- (void)setBarsHidden:(BOOL)hidden
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        [[UIApplication sharedApplication] setStatusBarHidden:hidden withAnimation:UIStatusBarAnimationFade];
+    }
+    
+    [self.navigationController setNavigationBarHidden:hidden animated:!hidden];
 }
 
 
