@@ -93,10 +93,14 @@
     }
     
     self.titleLabel.text = NSLocalizedString(@"No Photos Found", nil);
-    self.detailLabel.text = NSLocalizedString(@"Make sure that all words are spelled correctly.", nil);
     self.titleLabel.hidden = NO;
+
+    self.detailLabel.text = NSLocalizedString(@"Make sure that all words are spelled correctly.", nil);
     self.detailLabel.hidden = NO;
+    
+    self.imageView.image = nil;
     self.imageView.hidden = YES;
+    
     self.superCollectionView.scrollEnabled = NO;
     self.backgroundView.backgroundColor = [UIColor clearColor];
 }
@@ -108,10 +112,13 @@
     }
     
     self.titleLabel.text = nil;
-    self.detailLabel.text = nil;
     self.titleLabel.hidden = YES;
+
+    self.detailLabel.text = nil;
     self.detailLabel.hidden = YES;
+    
     self.imageView.hidden = NO;
+    
     self.superCollectionView.scrollEnabled = YES;
     self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
 }
@@ -166,6 +173,8 @@
 {
     _imageView.image = nil;
     _imageView = nil;
+    _titleLabel = nil;
+    _detailLabel = nil;
 }
 
 @end

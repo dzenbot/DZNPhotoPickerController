@@ -587,7 +587,7 @@ static NSString *kTagCellID = @"kTagCellID";
         [cell.imageView setImageWithURL:metadata.thumbURL placeholderImage:nil
                                 options:SDWebImageCacheMemoryOnly completed:NULL];
     }
-    
+
     [cell setEmptyDataSetVisible:[self canDisplayEmptyDataSet]];
     
     return cell;
