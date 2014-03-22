@@ -203,6 +203,8 @@ static NSString *kTagCellID = @"kTagCellID";
         _activityIndicator = [[UIActivityIndicatorView alloc] init];
         _activityIndicator.hidesWhenStopped = YES;
         _activityIndicator.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+        
+        [_activityIndicator sizeToFit];
     }
     return _activityIndicator;
 }
@@ -310,7 +312,7 @@ static NSString *kTagCellID = @"kTagCellID";
     if (_photoMetadatas.count > 0) {
         return (_photoMetadatas.count%self.resultPerPage == 0) ? YES : NO;
     }
-    return NO;
+    return self.loading;
 }
 
 /*
@@ -378,8 +380,6 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)handleLoadingError:(NSError *)error
 {
-    [self setActivityIndicatorsVisible:NO];
-    
     switch (error.code) {
         case NSURLErrorTimedOut:
         case NSURLErrorUnknown:
@@ -387,10 +387,10 @@ static NSString *kTagCellID = @"kTagCellID";
             return;
     }
     
+    [self setActivityIndicatorsVisible:NO];
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
     [alert show];
-    
-    NSLog(@"error : %@", error);
 }
 
 
@@ -505,7 +505,6 @@ static NSString *kTagCellID = @"kTagCellID";
         
         _previousService = _selectedService;
         [self resetPhotos];
-        
         [self searchPhotosWithKeyword:keyword];
     }
 }
@@ -615,7 +614,7 @@ static NSString *kTagCellID = @"kTagCellID";
             
             _loadButton.frame = footer.bounds;
             
-            if (_photoMetadatas.count > 0) {
+            if (_photoMetadatas.count > 0 && !self.loading) {
                 _loadButton.enabled = YES;
                 [_loadButton setTitleColor:self.view.window.tintColor forState:UIControlStateNormal];
 
@@ -631,10 +630,12 @@ static NSString *kTagCellID = @"kTagCellID";
             }
         }
         else {
-            [self.activityIndicator stopAnimating];
-            
             [_loadButton removeFromSuperview];
             [self setLoadButton:nil];
+            
+            [_activityIndicator stopAnimating];
+            [_activityIndicator removeFromSuperview];
+            [self setActivityIndicator:nil];
         }
         return footer;
     }
