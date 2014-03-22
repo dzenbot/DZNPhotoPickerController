@@ -371,12 +371,15 @@ static NSString *kTagCellID = @"kTagCellID";
 /*
  * Sets the request errors with an alert view.
  */
-- (void)setSearchError:(NSError *)error
+- (void)handleLoadingError:(NSError *)error
 {
     [self setActivityIndicatorsVisible:NO];
     
-    if (error.code == NSURLErrorCancelled || error.code == NSURLErrorUnknown) {
-        return;
+    switch (error.code) {
+        case NSURLErrorTimedOut:
+        case NSURLErrorUnknown:
+        case NSURLErrorCancelled:
+            return;
     }
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
@@ -445,7 +448,7 @@ static NSString *kTagCellID = @"kTagCellID";
                 
                                                  }
                                                  else {
-                                                     [self setSearchError:error];
+                                                     [self handleLoadingError:error];
                                                  }
                                                  
                                                  [self setActivityIndicatorsVisible:NO];
@@ -482,7 +485,7 @@ static NSString *kTagCellID = @"kTagCellID";
     id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
     
     [client searchTagsWithKeyword:keyword completion:^(NSArray *list, NSError *error) {
-        if (error) [self setSearchError:error];
+        if (error) [self handleLoadingError:error];
         else [self setTagSearchList:list];
     }];
 }
@@ -513,7 +516,7 @@ static NSString *kTagCellID = @"kTagCellID";
     id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:_selectedService];
     
     [client searchPhotosWithKeyword:keyword page:_currentPage resultPerPage:self.resultPerPage completion:^(NSArray *list, NSError *error) {
-        if (error) [self setSearchError:error];
+        if (error) [self handleLoadingError:error];
         else [self setPhotoSearchList:list];
     }];
 }

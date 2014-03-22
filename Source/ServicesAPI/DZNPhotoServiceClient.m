@@ -172,7 +172,7 @@
 - (void)searchTagsWithKeyword:(NSString *)keyword completion:(DZNHTTPRequestCompletion)completion
 {
     _loadingPath = tagSearchUrlPathForService(_service);
-
+    
     NSDictionary *params = [self tagsParamsWithKeyword:keyword];
     [self getObject:[DZNPhotoTag name] path:_loadingPath params:params completion:completion];
 }
@@ -187,8 +187,6 @@
 
 - (void)getObject:(NSString *)objectName path:(NSString *)path params:(NSDictionary *)params completion:(DZNHTTPRequestCompletion)completion
 {
-//    NSLog(@"%s\nobjectName : %@ \npath : %@\nparams: %@\n\n",__FUNCTION__, objectName, path, params);
-    
     if (_service == DZNPhotoPickerControllerServiceFlickr) {
         path = @"";
     }
@@ -197,7 +195,7 @@
         NSString *keyword = [params objectForKey:keyForSearchTerm(_service)];
         path = [path stringByReplacingOccurrencesOfString:@"%@" withString:keyword];
     }
-
+    
     [self getPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
         
         NSData *data = [self processData:response];
@@ -216,10 +214,7 @@
 - (void)cancelRequest
 {
     if (_loadingPath) {
-        
-        if (_service == DZNPhotoPickerControllerServiceFlickr) _loadingPath = @"";
         [self cancelAllHTTPOperationsWithMethod:@"GET" path:_loadingPath];
-        
         _loadingPath = nil;
     }
 }
