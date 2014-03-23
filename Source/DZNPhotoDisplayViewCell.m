@@ -9,6 +9,7 @@
 //
 
 #import "DZNPhotoDisplayViewCell.h"
+#import "UIImageView+WebCache.h"
 
 #define kDZNCellMargin 30.0
 
@@ -78,13 +79,26 @@
 }
 
 
-#pragma mark - DZNPhotoDisplayViewCell methods
+#pragma mark - Getter methods
+
+- (void)setThumbURL:(NSURL *)URL
+{
+    [self.imageView cancelCurrentImageLoad];
+    
+    [self.imageView setImageWithURL:URL
+                   placeholderImage:nil
+                            options:SDWebImageCacheMemoryOnly
+                          completed:NULL];
+}
 
 - (void)setEmptyDataSetVisible:(BOOL)visible
 {
     if (visible) [self displayEmptyDataSet];
     else [self clearEmptyDataSet];
 }
+
+
+#pragma mark - DZNPhotoDisplayViewCell methods
 
 - (void)displayEmptyDataSet
 {

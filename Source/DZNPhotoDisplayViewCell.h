@@ -9,7 +9,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIImageView+WebCache.h"
 
 /**
  * The collection view cell to be displayed on search results, with photo thumbnail.
@@ -25,6 +24,7 @@
 /** The detail label of the cell. (read-only). */
 @property (nonatomic, readonly, strong) UILabel *detailLabel;
 
+- (void)setThumbURL:(NSURL *)URL;
 - (void)setEmptyDataSetVisible:(BOOL)display;
 
 @end

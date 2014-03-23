@@ -589,10 +589,7 @@ static NSString *kTagCellID = @"kTagCellID";
     
     if (_photoMetadatas.count > 0) {
         DZNPhotoMetadata *metadata = [_photoMetadatas objectAtIndex:indexPath.row];
-        
-        [cell.imageView cancelCurrentImageLoad];
-        [cell.imageView setImageWithURL:metadata.thumbURL placeholderImage:nil
-                                options:SDWebImageCacheMemoryOnly completed:NULL];
+        [cell setThumbURL:metadata.thumbURL];
     }
 
     [cell setEmptyDataSetVisible:[self canDisplayEmptyDataSet]];
