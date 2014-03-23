@@ -10,12 +10,13 @@
 
 #import "DZNPhotoDisplayViewController.h"
 #import "DZNPhotoPickerController.h"
+#import "DZNPhotoServiceFactory.h"
 
 #import "DZNPhotoDisplayViewCell.h"
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 
-#import "DZNPhotoServiceFactory.h"
+#import "SDWebImageManager.h"
 
 #define  kDZNPhotoMinimumBarHeight 44.0
 
@@ -139,6 +140,9 @@ static NSString *kTagCellID = @"kTagCellID";
 
 #pragma mark - Getter methods
 
+/*
+ * Returns the custom collection view layout.
+ */
 + (UICollectionViewFlowLayout *)flowLayout
 {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -147,16 +151,25 @@ static NSString *kTagCellID = @"kTagCellID";
     return flowLayout;
 }
 
+/*
+ * Returns the selected service client.
+ */
 - (id<DZNPhotoServiceClientProtocol>)selectedServiceClient
 {
     return [[DZNPhotoServiceFactory defaultFactory] clientForService:self.selectedService];
 }
 
+/*
+ * Returns the navigation controller casted to DZNPhotoPickerController.
+ */
 - (DZNPhotoPickerController *)navigationController
 {
     return (DZNPhotoPickerController *)[super navigationController];
 }
 
+/*
+ * Returns the search bar.
+ */
 - (UISearchBar *)searchBar
 {
     if (!_searchBar)
@@ -180,6 +193,9 @@ static NSString *kTagCellID = @"kTagCellID";
     return _searchBar;
 }
 
+/*
+ * Returns the 'Load More' footer button.
+ */
 - (UIButton *)loadButton
 {
     if (!_loadButton)
@@ -196,6 +212,9 @@ static NSString *kTagCellID = @"kTagCellID";
     return _loadButton;
 }
 
+/*
+ * Returns the activity indicator.
+ */
 - (UIActivityIndicatorView *)activityIndicator
 {
     if (!_activityIndicator)
@@ -209,6 +228,9 @@ static NSString *kTagCellID = @"kTagCellID";
     return _activityIndicator;
 }
 
+/*
+ * Returns the appropriate cell view's size.
+ */
 - (CGSize)cellSize
 {
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
@@ -216,13 +238,16 @@ static NSString *kTagCellID = @"kTagCellID";
     return CGSizeMake(size, size);
 }
 
+/*
+ * Returns the appropriate footer view's size.
+ */
 - (CGSize)footerSize
 {
     return CGSizeMake(0, (self.navigationController.view.frame.size.height > 480.0) ? 60.0 : 50.0);
 }
 
 /*
- * The collectionView's content size calculation.
+ * Returns the collectionView's content size.
  */
 - (CGSize)topBarsSize
 {
@@ -294,7 +319,6 @@ static NSString *kTagCellID = @"kTagCellID";
     
     return count;
 }
-
 
 /*
  * Returns the appropriate number of result per page.
@@ -378,7 +402,7 @@ static NSString *kTagCellID = @"kTagCellID";
 /*
  * Sets the request errors with an alert view.
  */
-- (void)handleLoadingError:(NSError *)error
+- (void)setLoadingError:(NSError *)error
 {
     switch (error.code) {
         case NSURLErrorTimedOut:
@@ -397,7 +421,7 @@ static NSString *kTagCellID = @"kTagCellID";
 #pragma mark - DZNPhotoDisplayController methods
 
 /*
- * Toggles the status bar & footer activity indicators.
+ * Toggles the activity indicators on the status bar & footer view.
  */
 - (void)setActivityIndicatorsVisible:(BOOL)visible
 {
@@ -416,10 +440,14 @@ static NSString *kTagCellID = @"kTagCellID";
 }
 
 /*
- * Handles a thumbnail selection.
- * It either downloads the image directly or shows the edit controller.
+ * Handles the thumbnail selection.
+ *
+ * Depending on configuration, the selection might result in the following action:
+ * - Return only the photo metadata and dismiss the controller
+ * - Push into the edit controller for cropping
+ * - Download the full size photo and dismiss the controller
  */
-- (void)handleSelectionAtIndexPath:(NSIndexPath *)indexPath
+- (void)selectedItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DZNPhotoMetadata *metadata = [_photoMetadatas objectAtIndex:indexPath.row];
     
@@ -453,7 +481,7 @@ static NSString *kTagCellID = @"kTagCellID";
                                                                     
                                                                 }
                                                                 else {
-                                                                    [self handleLoadingError:error];
+                                                                    [self setLoadingError:error];
                                                                 }
                                                                 
                                                                 [self setActivityIndicatorsVisible:NO];
@@ -491,7 +519,7 @@ static NSString *kTagCellID = @"kTagCellID";
     
     [client searchTagsWithKeyword:keyword
                        completion:^(NSArray *list, NSError *error) {
-                           if (error) [self handleLoadingError:error];
+                           if (error) [self setLoadingError:error];
                            else [self setTagSearchList:list];
                        }];
 }
@@ -522,7 +550,7 @@ static NSString *kTagCellID = @"kTagCellID";
                                                    page:_currentPage
                                           resultPerPage:self.resultPerPage
                                              completion:^(NSArray *list, NSError *error) {
-                                                 if (error) [self handleLoadingError:error];
+                                                 if (error) [self setLoadingError:error];
                                                  else [self setPhotoSearchList:list];
                                              }];
 }
@@ -656,9 +684,9 @@ static NSString *kTagCellID = @"kTagCellID";
 
     if ([_searchBar isFirstResponder]) {
         [_searchBar resignFirstResponder];
-        [self performSelector:@selector(handleSelectionAtIndexPath:) withObject:indexPath afterDelay:0.3];
+        [self performSelector:@selector(selectedItemAtIndexPath:) withObject:indexPath afterDelay:0.3];
     }
-    else [self handleSelectionAtIndexPath:indexPath];
+    else [self selectedItemAtIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
