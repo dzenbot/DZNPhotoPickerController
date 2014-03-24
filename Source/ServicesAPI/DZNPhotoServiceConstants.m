@@ -12,14 +12,16 @@
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 
-NSString *const DZNPhotoServiceClientConsumerKey = @"DZNPhotoServiceClientConsumerKey";
-NSString *const DZNPhotoServiceClientConsumerSecret = @"DZNPhotoServiceClientConsumerSecret";
-NSString *const DZNPhotoServiceClientSubscription = @"DZNPhotoServiceClientSubscription";
+NSString *const DZNPhotoServiceClientIndentifier =      @"com.dzn.DZNPhotoServiceClient";
+
+NSString *const DZNPhotoServiceClientConsumerKey =      @"DZNPhotoServiceClientConsumerKey";
+NSString *const DZNPhotoServiceClientConsumerSecret =   @"DZNPhotoServiceClientConsumerSecret";
+NSString *const DZNPhotoServiceClientSubscription =     @"DZNPhotoServiceClientSubscription";
 
 
 NSString *NSUserDefaultsUniqueKey(NSUInteger type, NSString *key)
 {
-    return [NSString stringWithFormat:@"%@_%@", NSStringFromService(type), key];
+    return [NSString stringWithFormat:@"%@.%@_%@", DZNPhotoServiceClientIndentifier, NSStringFromService(type), key];
 }
 
 NSURL *baseURLForService(DZNPhotoPickerControllerService service)

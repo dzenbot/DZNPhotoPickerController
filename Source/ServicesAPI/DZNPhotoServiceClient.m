@@ -165,7 +165,6 @@
     _loadingPath = photoSearchUrlPathForService(_service);
 
     NSDictionary *params = [self photosParamsWithKeyword:keyword page:page resultPerPage:resultPerPage];
-    NSLog(@"params : %@", params);
     [self getObject:[DZNPhotoMetadata name] path:_loadingPath params:params completion:completion];
 }
 
@@ -181,8 +180,6 @@
         path = [path stringByReplacingOccurrencesOfString:@"%@" withString:keyword];
     }
     
-    NSLog(@"path : %@", path);
-
     [self getPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
         
         NSData *data = [self processData:response];
