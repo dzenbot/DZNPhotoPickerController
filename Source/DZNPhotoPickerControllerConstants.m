@@ -23,7 +23,6 @@ NSString *NSStringFromService(DZNPhotoPickerControllerService service)
         case DZNPhotoPickerControllerServiceFlickr:         return @"Flickr";
         case DZNPhotoPickerControllerServiceInstagram:      return @"Instagram";
         case DZNPhotoPickerControllerServiceGoogleImages:   return @"Google";
-        case DZNPhotoPickerControllerServiceBingImages:     return @"Bing";
         default:                                            return nil;
     }
 }
@@ -34,7 +33,6 @@ DZNPhotoPickerControllerService DZNPhotoServiceFromName(NSString *name)
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceFlickr)])        return DZNPhotoPickerControllerServiceFlickr;
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceInstagram)])     return DZNPhotoPickerControllerServiceInstagram;
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceGoogleImages)])  return DZNPhotoPickerControllerServiceGoogleImages;
-    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceBingImages)])    return DZNPhotoPickerControllerServiceBingImages;
     return -1;
 }
 
@@ -51,9 +49,6 @@ DZNPhotoPickerControllerService DZNFirstPhotoServiceFromPhotoServices(DZNPhotoPi
     }
     if ((services & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
         return DZNPhotoPickerControllerServiceGoogleImages;
-    }
-    if ((services & DZNPhotoPickerControllerServiceBingImages) > 0) {
-        return DZNPhotoPickerControllerServiceBingImages;
     }
     return 0;
 }
@@ -73,9 +68,6 @@ NSArray *NSArrayFromServices(DZNPhotoPickerControllerService services)
     }
     if ((services & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
         [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceGoogleImages)];
-    }
-    if ((services & DZNPhotoPickerControllerServiceBingImages) > 0) {
-        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceBingImages)];
     }
     return [NSArray arrayWithArray:titles];
 }

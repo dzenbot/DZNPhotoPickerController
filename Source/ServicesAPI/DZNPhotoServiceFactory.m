@@ -55,7 +55,6 @@
 {
     NSAssert(key, @"\"key\" cannot be nil");
     NSAssert(secret, @"\"secret\" cannot be nil");
-    NSAssert((service != DZNPhotoPickerControllerServiceBingImages), @"Bing Images Search is yet not supported.");
 
     [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerKey)];
     [[NSUserDefaults standardUserDefaults] setObject:secret forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerSecret)];
