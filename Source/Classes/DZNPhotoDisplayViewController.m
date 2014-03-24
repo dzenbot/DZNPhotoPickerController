@@ -37,6 +37,8 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 @property (nonatomic) NSInteger resultPerPage;
 @property (nonatomic) NSInteger currentPage;
 
+@property (nonatomic, strong) NSTimer *searchTimer;
+
 @end
 
 @implementation DZNPhotoDisplayViewController
@@ -397,6 +399,25 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
+ * Toggles the activity indicators on the status bar & footer view.
+ */
+- (void)setActivityIndicatorsVisible:(BOOL)visible
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = visible;
+    
+    if (visible) {
+        [self.activityIndicator startAnimating];
+        [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
+    }
+    else {
+        [self.activityIndicator stopAnimating];
+    }
+    
+    _loading = visible;
+    self.collectionView.userInteractionEnabled = !visible;
+}
+
+/*
  * Sets the request errors with an alert view.
  */
 - (void)setLoadingError:(NSError *)error
@@ -416,25 +437,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 
 #pragma mark - DZNPhotoDisplayController methods
-
-/*
- * Toggles the activity indicators on the status bar & footer view.
- */
-- (void)setActivityIndicatorsVisible:(BOOL)visible
-{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = visible;
-    
-    if (visible) {
-        [self.activityIndicator startAnimating];
-        [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
-    }
-    else {
-        [self.activityIndicator stopAnimating];
-    }
-    
-    _loading = visible;
-    self.collectionView.userInteractionEnabled = !visible;
-}
 
 /*
  * Handles the thumbnail selection.
@@ -494,7 +496,12 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 - (BOOL)canSearchTag:(NSString *)term
 {
     if ([self.searchDisplayController.searchBar isFirstResponder] && term.length > 2) {
-        [self searchTags:term];
+        
+        [self resetSearchTimer];
+        
+        _searchTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(searchTag:) userInfo:@{@"term": term} repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:_searchTimer forMode:NSDefaultRunLoopMode];
+
         return YES;
     }
     else {
@@ -504,21 +511,34 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     }
 }
 
+
 /*
  * Triggers a tag search when typing more than 2 characters in the search bar.
  * This allows auto-completion and related tags to what the user wants to search.
  */
-- (void)searchTags:(NSString *)keyword
+- (void)searchTag:(NSTimer *)timer
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    NSLog(@"%s : %@",__FUNCTION__, timer);
+    
+    NSString *term = [timer.userInfo objectForKey:@"term"];
+    [self resetSearchTimer];
     
     id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
-    
-    [client searchTagsWithKeyword:keyword
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+    [client searchTagsWithKeyword:term
                        completion:^(NSArray *list, NSError *error) {
                            if (error) [self setLoadingError:error];
                            else [self setTagSearchList:list];
                        }];
+}
+
+- (void)resetSearchTimer
+{
+    if (_searchTimer) {
+        [_searchTimer invalidate];
+        _searchTimer = nil;
+    }
 }
 
 /*
