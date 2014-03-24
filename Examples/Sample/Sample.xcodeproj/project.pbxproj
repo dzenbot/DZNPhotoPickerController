@@ -22,10 +22,10 @@
 /* Begin PBXBuildFile section */
 		09545463FFA2473F9F223361 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81CB7D6B303A4384A940032C /* libPods.a */; };
 		4F29052C18759967005E9F39 /* UIImagePickerController+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */; };
+		4F484DBF18E061A900A37BC3 /* Localization.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F484DBD18E061A900A37BC3 /* Localization.strings */; };
 		4F570141180E5D0E00E12444 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570140180E5D0E00E12444 /* Foundation.framework */; };
 		4F570143180E5D0E00E12444 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570142180E5D0E00E12444 /* CoreGraphics.framework */; };
 		4F570145180E5D0E00E12444 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570144180E5D0E00E12444 /* UIKit.framework */; };
-		4F57014B180E5D0E00E12444 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F570149180E5D0E00E12444 /* InfoPlist.strings */; };
 		4F57014D180E5D0E00E12444 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57014C180E5D0E00E12444 /* main.m */; };
 		4F570151180E5D0E00E12444 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570150180E5D0E00E12444 /* AppDelegate.m */; };
 		4F570154180E5D0E00E12444 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F570152180E5D0E00E12444 /* Main_iPhone.storyboard */; };
@@ -68,12 +68,12 @@
 /* Begin PBXFileReference section */
 		4F29052A18759967005E9F39 /* UIImagePickerController+Edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+Edit.h"; sourceTree = "<group>"; };
 		4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+Edit.m"; sourceTree = "<group>"; };
+		4F484DBE18E061A900A37BC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localization.strings; sourceTree = "<group>"; };
 		4F57013D180E5D0E00E12444 /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F570140180E5D0E00E12444 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4F570142180E5D0E00E12444 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		4F570144180E5D0E00E12444 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4F570148180E5D0E00E12444 /* Sample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sample-Info.plist"; sourceTree = "<group>"; };
-		4F57014A180E5D0E00E12444 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4F57014C180E5D0E00E12444 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F57014E180E5D0E00E12444 /* Sample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sample-Prefix.pch"; sourceTree = "<group>"; };
 		4F57014F180E5D0E00E12444 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -147,6 +147,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F484DB818E060FC00A37BC3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4F484DBC18E061A900A37BC3 /* en.lproj */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4F484DBC18E061A900A37BC3 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				4F484DBD18E061A900A37BC3 /* Localization.strings */,
+			);
+			path = en.lproj;
+			sourceTree = "<group>";
+		};
 		4F570134180E5D0E00E12444 = {
 			isa = PBXGroup;
 			children = (
@@ -200,7 +216,6 @@
 				4F570152180E5D0E00E12444 /* Main_iPhone.storyboard */,
 				4F570155180E5D0E00E12444 /* Main_iPad.storyboard */,
 				4F570148180E5D0E00E12444 /* Sample-Info.plist */,
-				4F570149180E5D0E00E12444 /* InfoPlist.strings */,
 				4F57014C180E5D0E00E12444 /* main.m */,
 				4F57014E180E5D0E00E12444 /* Sample-Prefix.pch */,
 				880742B9C52B4EC59B669AE3 /* Pods.xcconfig */,
@@ -227,6 +242,7 @@
 				4F97B28D18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.m */,
 				4F29052A18759967005E9F39 /* UIImagePickerController+Edit.h */,
 				4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */,
+				4F484DB818E060FC00A37BC3 /* Resources */,
 				4F97B28018AFDC4200DED8C0 /* ServicesAPI */,
 			);
 			name = Source;
@@ -354,9 +370,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F570157180E5D0E00E12444 /* Main_iPad.storyboard in Resources */,
+				4F484DBF18E061A900A37BC3 /* Localization.strings in Resources */,
 				4F57015C180E5D0E00E12444 /* Images.xcassets in Resources */,
 				4F570154180E5D0E00E12444 /* Main_iPhone.storyboard in Resources */,
-				4F57014B180E5D0E00E12444 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,12 +466,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		4F570149180E5D0E00E12444 /* InfoPlist.strings */ = {
+		4F484DBD18E061A900A37BC3 /* Localization.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4F57014A180E5D0E00E12444 /* en */,
+				4F484DBE18E061A900A37BC3 /* en */,
 			);
-			name = InfoPlist.strings;
+			name = Localization.strings;
 			sourceTree = "<group>";
 		};
 		4F570152180E5D0E00E12444 /* Main_iPhone.storyboard */ = {
