@@ -435,6 +435,28 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     [alert show];
 }
 
+/*
+ * Invalidates and nullifys the search timer.
+ */
+- (void)resetSearchTimer
+{
+    if (_searchTimer) {
+        [_searchTimer invalidate];
+        _searchTimer = nil;
+    }
+}
+
+/*
+ * Removes all photo metadata from the array and cleans the collection view from photo thumbnails.
+ */
+- (void)resetPhotos
+{
+    [_photoMetadatas removeAllObjects];
+    _currentPage = 1;
+    
+    [self.collectionView reloadData];
+}
+
 
 #pragma mark - DZNPhotoDisplayController methods
 
@@ -518,8 +540,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
  */
 - (void)searchTag:(NSTimer *)timer
 {
-    NSLog(@"%s : %@",__FUNCTION__, timer);
-    
     NSString *term = [timer.userInfo objectForKey:@"term"];
     [self resetSearchTimer];
     
@@ -531,14 +551,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
                            if (error) [self setLoadingError:error];
                            else [self setTagSearchList:list];
                        }];
-}
-
-- (void)resetSearchTimer
-{
-    if (_searchTimer) {
-        [_searchTimer invalidate];
-        _searchTimer = nil;
-    }
 }
 
 /*
@@ -597,17 +609,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     
     _currentPage++;
     [self searchPhotosWithKeyword:_searchTerm];
-}
-
-/*
- * Removes all photo metadata from the array and cleans the collection view from photo thumbnails.
- */
-- (void)resetPhotos
-{
-    [_photoMetadatas removeAllObjects];
-    _currentPage = 1;
-    
-    [self.collectionView reloadData];
 }
 
 
