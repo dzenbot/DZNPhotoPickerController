@@ -21,8 +21,18 @@
 
 /* Begin PBXBuildFile section */
 		09545463FFA2473F9F223361 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81CB7D6B303A4384A940032C /* libPods.a */; };
-		4F29052C18759967005E9F39 /* UIImagePickerController+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */; };
-		4F484DBF18E061A900A37BC3 /* Localization.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F484DBD18E061A900A37BC3 /* Localization.strings */; };
+		4F484DDE18E078A900A37BC3 /* DZNPhotoDisplayViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F484DC318E078A900A37BC3 /* DZNPhotoDisplayViewCell.m */; };
+		4F484DDF18E078A900A37BC3 /* DZNPhotoDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F484DC518E078A900A37BC3 /* DZNPhotoDisplayViewController.m */; };
+		4F484DE018E078A900A37BC3 /* DZNPhotoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F484DC718E078A900A37BC3 /* DZNPhotoEditViewController.m */; };
+		4F484DE118E078A900A37BC3 /* DZNPhotoMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F484DC918E078A900A37BC3 /* DZNPhotoMetadata.m */; };
+		4F484DE218E078A900A37BC3 /* DZNPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F484DCB18E078A900A37BC3 /* DZNPhotoPickerController.m */; };
+		4F484DE318E078A900A37BC3 /* DZNPhotoPickerControllerConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F484DCD18E078A900A37BC3 /* DZNPhotoPickerControllerConstants.m */; };
+		4F484DE418E078A900A37BC3 /* DZNPhotoTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F484DCF18E078A900A37BC3 /* DZNPhotoTag.m */; };
+		4F484DE518E078A900A37BC3 /* DZNPhotoServiceClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F484DD218E078A900A37BC3 /* DZNPhotoServiceClient.m */; };
+		4F484DE618E078A900A37BC3 /* DZNPhotoServiceConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F484DD518E078A900A37BC3 /* DZNPhotoServiceConstants.m */; };
+		4F484DE718E078A900A37BC3 /* DZNPhotoServiceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F484DD718E078A900A37BC3 /* DZNPhotoServiceFactory.m */; };
+		4F484DE818E078A900A37BC3 /* UIImagePickerController+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F484DD918E078A900A37BC3 /* UIImagePickerController+Edit.m */; };
+		4F484DE918E078A900A37BC3 /* DZNPhotoPickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F484DDB18E078A900A37BC3 /* DZNPhotoPickerController.strings */; };
 		4F570141180E5D0E00E12444 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570140180E5D0E00E12444 /* Foundation.framework */; };
 		4F570143180E5D0E00E12444 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570142180E5D0E00E12444 /* CoreGraphics.framework */; };
 		4F570145180E5D0E00E12444 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570144180E5D0E00E12444 /* UIKit.framework */; };
@@ -32,19 +42,9 @@
 		4F570157180E5D0E00E12444 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F570155180E5D0E00E12444 /* Main_iPad.storyboard */; };
 		4F57015A180E5D0E00E12444 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570159180E5D0E00E12444 /* RootViewController.m */; };
 		4F57015C180E5D0E00E12444 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F57015B180E5D0E00E12444 /* Images.xcassets */; };
-		4F570184180E5E6D00E12444 /* DZNPhotoMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57017B180E5E6D00E12444 /* DZNPhotoMetadata.m */; };
-		4F570185180E5E6D00E12444 /* DZNPhotoDisplayViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57017D180E5E6D00E12444 /* DZNPhotoDisplayViewCell.m */; };
-		4F570186180E5E6D00E12444 /* DZNPhotoDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F57017F180E5E6D00E12444 /* DZNPhotoDisplayViewController.m */; };
-		4F570187180E5E6D00E12444 /* DZNPhotoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570181180E5E6D00E12444 /* DZNPhotoEditViewController.m */; };
-		4F570188180E5E6D00E12444 /* DZNPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570183180E5E6D00E12444 /* DZNPhotoPickerController.m */; };
 		4F64C15918A53D9C00FBEE9A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570162180E5D0E00E12444 /* XCTest.framework */; };
 		4F64C15A18A53D9C00FBEE9A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570140180E5D0E00E12444 /* Foundation.framework */; };
 		4F64C15B18A53D9C00FBEE9A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570144180E5D0E00E12444 /* UIKit.framework */; };
-		4F97B28818AFDC4200DED8C0 /* DZNPhotoServiceClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B28218AFDC4200DED8C0 /* DZNPhotoServiceClient.m */; };
-		4F97B28918AFDC4200DED8C0 /* DZNPhotoServiceConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B28518AFDC4200DED8C0 /* DZNPhotoServiceConstants.m */; };
-		4F97B28A18AFDC4200DED8C0 /* DZNPhotoServiceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B28718AFDC4200DED8C0 /* DZNPhotoServiceFactory.m */; };
-		4F97B28E18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B28D18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.m */; };
-		4F9C251A18ACF3F800940B3F /* DZNPhotoTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C251918ACF3F800940B3F /* DZNPhotoTag.m */; };
 		4FA4987918B866C600764406 /* DZNPhotoParsingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA4986E18B866C600764406 /* DZNPhotoParsingTests.m */; };
 		4FA4987B18B866C600764406 /* DZNPhotoPickerControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA4987118B866C600764406 /* DZNPhotoPickerControllerTests.m */; };
 		4FA4987C18B866C600764406 /* 500px.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FA4987318B866C600764406 /* 500px.json */; };
@@ -66,9 +66,31 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4F29052A18759967005E9F39 /* UIImagePickerController+Edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+Edit.h"; sourceTree = "<group>"; };
-		4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+Edit.m"; sourceTree = "<group>"; };
-		4F484DBE18E061A900A37BC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localization.strings; sourceTree = "<group>"; };
+		4F484DC218E078A900A37BC3 /* DZNPhotoDisplayViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoDisplayViewCell.h; sourceTree = "<group>"; };
+		4F484DC318E078A900A37BC3 /* DZNPhotoDisplayViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoDisplayViewCell.m; sourceTree = "<group>"; };
+		4F484DC418E078A900A37BC3 /* DZNPhotoDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoDisplayViewController.h; sourceTree = "<group>"; };
+		4F484DC518E078A900A37BC3 /* DZNPhotoDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoDisplayViewController.m; sourceTree = "<group>"; };
+		4F484DC618E078A900A37BC3 /* DZNPhotoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoEditViewController.h; sourceTree = "<group>"; };
+		4F484DC718E078A900A37BC3 /* DZNPhotoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoEditViewController.m; sourceTree = "<group>"; };
+		4F484DC818E078A900A37BC3 /* DZNPhotoMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoMetadata.h; sourceTree = "<group>"; };
+		4F484DC918E078A900A37BC3 /* DZNPhotoMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoMetadata.m; sourceTree = "<group>"; };
+		4F484DCA18E078A900A37BC3 /* DZNPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerController.h; sourceTree = "<group>"; };
+		4F484DCB18E078A900A37BC3 /* DZNPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerController.m; sourceTree = "<group>"; };
+		4F484DCC18E078A900A37BC3 /* DZNPhotoPickerControllerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerControllerConstants.h; sourceTree = "<group>"; };
+		4F484DCD18E078A900A37BC3 /* DZNPhotoPickerControllerConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerControllerConstants.m; sourceTree = "<group>"; };
+		4F484DCE18E078A900A37BC3 /* DZNPhotoTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoTag.h; sourceTree = "<group>"; };
+		4F484DCF18E078A900A37BC3 /* DZNPhotoTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoTag.m; sourceTree = "<group>"; };
+		4F484DD118E078A900A37BC3 /* DZNPhotoServiceClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceClient.h; sourceTree = "<group>"; };
+		4F484DD218E078A900A37BC3 /* DZNPhotoServiceClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoServiceClient.m; sourceTree = "<group>"; };
+		4F484DD318E078A900A37BC3 /* DZNPhotoServiceClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceClientProtocol.h; sourceTree = "<group>"; };
+		4F484DD418E078A900A37BC3 /* DZNPhotoServiceConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceConstants.h; sourceTree = "<group>"; };
+		4F484DD518E078A900A37BC3 /* DZNPhotoServiceConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoServiceConstants.m; sourceTree = "<group>"; };
+		4F484DD618E078A900A37BC3 /* DZNPhotoServiceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceFactory.h; sourceTree = "<group>"; };
+		4F484DD718E078A900A37BC3 /* DZNPhotoServiceFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoServiceFactory.m; sourceTree = "<group>"; };
+		4F484DD818E078A900A37BC3 /* UIImagePickerController+Edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+Edit.h"; sourceTree = "<group>"; };
+		4F484DD918E078A900A37BC3 /* UIImagePickerController+Edit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+Edit.m"; sourceTree = "<group>"; };
+		4F484DDC18E078A900A37BC3 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/DZNPhotoPickerController.strings"; sourceTree = "<group>"; };
+		4F484DDD18E078A900A37BC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DZNPhotoPickerController.strings; sourceTree = "<group>"; };
 		4F57013D180E5D0E00E12444 /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F570140180E5D0E00E12444 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4F570142180E5D0E00E12444 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -84,29 +106,8 @@
 		4F570159180E5D0E00E12444 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		4F57015B180E5D0E00E12444 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4F570162180E5D0E00E12444 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		4F57017A180E5E6D00E12444 /* DZNPhotoMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoMetadata.h; sourceTree = "<group>"; };
-		4F57017B180E5E6D00E12444 /* DZNPhotoMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoMetadata.m; sourceTree = "<group>"; };
-		4F57017C180E5E6D00E12444 /* DZNPhotoDisplayViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoDisplayViewCell.h; sourceTree = "<group>"; };
-		4F57017D180E5E6D00E12444 /* DZNPhotoDisplayViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoDisplayViewCell.m; sourceTree = "<group>"; };
-		4F57017E180E5E6D00E12444 /* DZNPhotoDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoDisplayViewController.h; sourceTree = "<group>"; };
-		4F57017F180E5E6D00E12444 /* DZNPhotoDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoDisplayViewController.m; sourceTree = "<group>"; };
-		4F570180180E5E6D00E12444 /* DZNPhotoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoEditViewController.h; sourceTree = "<group>"; };
-		4F570181180E5E6D00E12444 /* DZNPhotoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoEditViewController.m; sourceTree = "<group>"; };
-		4F570182180E5E6D00E12444 /* DZNPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerController.h; sourceTree = "<group>"; };
-		4F570183180E5E6D00E12444 /* DZNPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerController.m; sourceTree = "<group>"; };
 		4F64C15818A53D9C00FBEE9A /* Test.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F97B28118AFDC4200DED8C0 /* DZNPhotoServiceClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceClient.h; sourceTree = "<group>"; };
-		4F97B28218AFDC4200DED8C0 /* DZNPhotoServiceClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoServiceClient.m; sourceTree = "<group>"; };
-		4F97B28318AFDC4200DED8C0 /* DZNPhotoServiceClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceClientProtocol.h; sourceTree = "<group>"; };
-		4F97B28418AFDC4200DED8C0 /* DZNPhotoServiceConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceConstants.h; sourceTree = "<group>"; };
-		4F97B28518AFDC4200DED8C0 /* DZNPhotoServiceConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoServiceConstants.m; sourceTree = "<group>"; };
-		4F97B28618AFDC4200DED8C0 /* DZNPhotoServiceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoServiceFactory.h; sourceTree = "<group>"; };
-		4F97B28718AFDC4200DED8C0 /* DZNPhotoServiceFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoServiceFactory.m; sourceTree = "<group>"; };
-		4F97B28C18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerControllerConstants.h; sourceTree = "<group>"; };
-		4F97B28D18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerControllerConstants.m; sourceTree = "<group>"; };
 		4F97B28F18B066E500DED8C0 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
-		4F9C251818ACF3F800940B3F /* DZNPhotoTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoTag.h; sourceTree = "<group>"; };
-		4F9C251918ACF3F800940B3F /* DZNPhotoTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoTag.m; sourceTree = "<group>"; };
 		4FA4986E18B866C600764406 /* DZNPhotoParsingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoParsingTests.m; sourceTree = "<group>"; };
 		4FA4986F18B866C600764406 /* DZNPhotoPickerControllerTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DZNPhotoPickerControllerTests-Info.plist"; sourceTree = "<group>"; };
 		4FA4987018B866C600764406 /* DZNPhotoPickerControllerTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DZNPhotoPickerControllerTests-Prefix.pch"; sourceTree = "<group>"; };
@@ -147,27 +148,67 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4F484DB818E060FC00A37BC3 /* Resources */ = {
+		4F484DC018E078A900A37BC3 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4F484DBC18E061A900A37BC3 /* en.lproj */,
+				4F484DC118E078A900A37BC3 /* Classes */,
+				4F484DDA18E078A900A37BC3 /* Resources */,
 			);
-			path = Resources;
+			name = Source;
+			path = ../../Source;
 			sourceTree = "<group>";
 		};
-		4F484DBC18E061A900A37BC3 /* en.lproj */ = {
+		4F484DC118E078A900A37BC3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4F484DBD18E061A900A37BC3 /* Localization.strings */,
+				4F484DC218E078A900A37BC3 /* DZNPhotoDisplayViewCell.h */,
+				4F484DC318E078A900A37BC3 /* DZNPhotoDisplayViewCell.m */,
+				4F484DC418E078A900A37BC3 /* DZNPhotoDisplayViewController.h */,
+				4F484DC518E078A900A37BC3 /* DZNPhotoDisplayViewController.m */,
+				4F484DC618E078A900A37BC3 /* DZNPhotoEditViewController.h */,
+				4F484DC718E078A900A37BC3 /* DZNPhotoEditViewController.m */,
+				4F484DC818E078A900A37BC3 /* DZNPhotoMetadata.h */,
+				4F484DC918E078A900A37BC3 /* DZNPhotoMetadata.m */,
+				4F484DCA18E078A900A37BC3 /* DZNPhotoPickerController.h */,
+				4F484DCB18E078A900A37BC3 /* DZNPhotoPickerController.m */,
+				4F484DCC18E078A900A37BC3 /* DZNPhotoPickerControllerConstants.h */,
+				4F484DCD18E078A900A37BC3 /* DZNPhotoPickerControllerConstants.m */,
+				4F484DCE18E078A900A37BC3 /* DZNPhotoTag.h */,
+				4F484DCF18E078A900A37BC3 /* DZNPhotoTag.m */,
+				4F484DD018E078A900A37BC3 /* ServicesAPI */,
+				4F484DD818E078A900A37BC3 /* UIImagePickerController+Edit.h */,
+				4F484DD918E078A900A37BC3 /* UIImagePickerController+Edit.m */,
 			);
-			path = en.lproj;
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		4F484DD018E078A900A37BC3 /* ServicesAPI */ = {
+			isa = PBXGroup;
+			children = (
+				4F484DD118E078A900A37BC3 /* DZNPhotoServiceClient.h */,
+				4F484DD218E078A900A37BC3 /* DZNPhotoServiceClient.m */,
+				4F484DD318E078A900A37BC3 /* DZNPhotoServiceClientProtocol.h */,
+				4F484DD418E078A900A37BC3 /* DZNPhotoServiceConstants.h */,
+				4F484DD518E078A900A37BC3 /* DZNPhotoServiceConstants.m */,
+				4F484DD618E078A900A37BC3 /* DZNPhotoServiceFactory.h */,
+				4F484DD718E078A900A37BC3 /* DZNPhotoServiceFactory.m */,
+			);
+			path = ServicesAPI;
+			sourceTree = "<group>";
+		};
+		4F484DDA18E078A900A37BC3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4F484DDB18E078A900A37BC3 /* DZNPhotoPickerController.strings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		4F570134180E5D0E00E12444 = {
 			isa = PBXGroup;
 			children = (
+				4F484DC018E078A900A37BC3 /* Source */,
 				4F570146180E5D0E00E12444 /* Sample */,
-				4F570179180E5E6D00E12444 /* Source */,
 				4FA4986D18B866C600764406 /* Test */,
 				4F57013F180E5D0E00E12444 /* Frameworks */,
 				4F57013E180E5D0E00E12444 /* Products */,
@@ -221,46 +262,6 @@
 				880742B9C52B4EC59B669AE3 /* Pods.xcconfig */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		4F570179180E5E6D00E12444 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				4F570182180E5E6D00E12444 /* DZNPhotoPickerController.h */,
-				4F570183180E5E6D00E12444 /* DZNPhotoPickerController.m */,
-				4F57017E180E5E6D00E12444 /* DZNPhotoDisplayViewController.h */,
-				4F57017F180E5E6D00E12444 /* DZNPhotoDisplayViewController.m */,
-				4F570180180E5E6D00E12444 /* DZNPhotoEditViewController.h */,
-				4F570181180E5E6D00E12444 /* DZNPhotoEditViewController.m */,
-				4F57017C180E5E6D00E12444 /* DZNPhotoDisplayViewCell.h */,
-				4F57017D180E5E6D00E12444 /* DZNPhotoDisplayViewCell.m */,
-				4F57017A180E5E6D00E12444 /* DZNPhotoMetadata.h */,
-				4F57017B180E5E6D00E12444 /* DZNPhotoMetadata.m */,
-				4F9C251818ACF3F800940B3F /* DZNPhotoTag.h */,
-				4F9C251918ACF3F800940B3F /* DZNPhotoTag.m */,
-				4F97B28C18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.h */,
-				4F97B28D18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.m */,
-				4F29052A18759967005E9F39 /* UIImagePickerController+Edit.h */,
-				4F29052B18759967005E9F39 /* UIImagePickerController+Edit.m */,
-				4F484DB818E060FC00A37BC3 /* Resources */,
-				4F97B28018AFDC4200DED8C0 /* ServicesAPI */,
-			);
-			name = Source;
-			path = ../../Source;
-			sourceTree = "<group>";
-		};
-		4F97B28018AFDC4200DED8C0 /* ServicesAPI */ = {
-			isa = PBXGroup;
-			children = (
-				4F97B28618AFDC4200DED8C0 /* DZNPhotoServiceFactory.h */,
-				4F97B28718AFDC4200DED8C0 /* DZNPhotoServiceFactory.m */,
-				4F97B28118AFDC4200DED8C0 /* DZNPhotoServiceClient.h */,
-				4F97B28218AFDC4200DED8C0 /* DZNPhotoServiceClient.m */,
-				4F97B28318AFDC4200DED8C0 /* DZNPhotoServiceClientProtocol.h */,
-				4F97B28418AFDC4200DED8C0 /* DZNPhotoServiceConstants.h */,
-				4F97B28518AFDC4200DED8C0 /* DZNPhotoServiceConstants.m */,
-			);
-			path = ServicesAPI;
 			sourceTree = "<group>";
 		};
 		4FA4986D18B866C600764406 /* Test */ = {
@@ -351,6 +352,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"en-GB",
 			);
 			mainGroup = 4F570134180E5D0E00E12444;
 			productRefGroup = 4F57013E180E5D0E00E12444 /* Products */;
@@ -369,8 +371,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F484DE918E078A900A37BC3 /* DZNPhotoPickerController.strings in Resources */,
 				4F570157180E5D0E00E12444 /* Main_iPad.storyboard in Resources */,
-				4F484DBF18E061A900A37BC3 /* Localization.strings in Resources */,
 				4F57015C180E5D0E00E12444 /* Images.xcassets in Resources */,
 				4F570154180E5D0E00E12444 /* Main_iPhone.storyboard in Resources */,
 			);
@@ -429,20 +431,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F97B28918AFDC4200DED8C0 /* DZNPhotoServiceConstants.m in Sources */,
-				4F97B28A18AFDC4200DED8C0 /* DZNPhotoServiceFactory.m in Sources */,
-				4F570187180E5E6D00E12444 /* DZNPhotoEditViewController.m in Sources */,
-				4F570185180E5E6D00E12444 /* DZNPhotoDisplayViewCell.m in Sources */,
-				4F570186180E5E6D00E12444 /* DZNPhotoDisplayViewController.m in Sources */,
-				4F570184180E5E6D00E12444 /* DZNPhotoMetadata.m in Sources */,
 				4F570151180E5D0E00E12444 /* AppDelegate.m in Sources */,
-				4F97B28818AFDC4200DED8C0 /* DZNPhotoServiceClient.m in Sources */,
-				4F9C251A18ACF3F800940B3F /* DZNPhotoTag.m in Sources */,
+				4F484DE718E078A900A37BC3 /* DZNPhotoServiceFactory.m in Sources */,
+				4F484DE118E078A900A37BC3 /* DZNPhotoMetadata.m in Sources */,
+				4F484DDF18E078A900A37BC3 /* DZNPhotoDisplayViewController.m in Sources */,
 				4F57015A180E5D0E00E12444 /* RootViewController.m in Sources */,
-				4F570188180E5E6D00E12444 /* DZNPhotoPickerController.m in Sources */,
-				4F97B28E18AFE10700DED8C0 /* DZNPhotoPickerControllerConstants.m in Sources */,
+				4F484DE818E078A900A37BC3 /* UIImagePickerController+Edit.m in Sources */,
 				4F57014D180E5D0E00E12444 /* main.m in Sources */,
-				4F29052C18759967005E9F39 /* UIImagePickerController+Edit.m in Sources */,
+				4F484DE518E078A900A37BC3 /* DZNPhotoServiceClient.m in Sources */,
+				4F484DE318E078A900A37BC3 /* DZNPhotoPickerControllerConstants.m in Sources */,
+				4F484DE218E078A900A37BC3 /* DZNPhotoPickerController.m in Sources */,
+				4F484DE018E078A900A37BC3 /* DZNPhotoEditViewController.m in Sources */,
+				4F484DE618E078A900A37BC3 /* DZNPhotoServiceConstants.m in Sources */,
+				4F484DE418E078A900A37BC3 /* DZNPhotoTag.m in Sources */,
+				4F484DDE18E078A900A37BC3 /* DZNPhotoDisplayViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,12 +468,13 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		4F484DBD18E061A900A37BC3 /* Localization.strings */ = {
+		4F484DDB18E078A900A37BC3 /* DZNPhotoPickerController.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4F484DBE18E061A900A37BC3 /* en */,
+				4F484DDC18E078A900A37BC3 /* en-GB */,
+				4F484DDD18E078A900A37BC3 /* en */,
 			);
-			name = Localization.strings;
+			name = DZNPhotoPickerController.strings;
 			sourceTree = "<group>";
 		};
 		4F570152180E5D0E00E12444 /* Main_iPhone.storyboard */ = {
