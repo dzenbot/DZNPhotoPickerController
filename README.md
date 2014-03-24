@@ -3,7 +3,7 @@ DZNPhotoPickerController
 
 [![Screencast Vimeo Video](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_video_placeholder.png)](http://vimeo.com/user3409970/dznphotopickercontroller)
 
-A photo search/picker for iOS using popular providers like 500px, Flickr, Intagram, Google Images, etc. This control tries to mimic as close as possible UIKit's UIImagePickerController in terms of features, appearance and behaviour.
+A photo search/picker for iOS using popular providers like 500px, Flickr, Instagram, Google Images, etc. This control tries to mimic as close as possible UIKit's UIImagePickerController in terms of features, appearance and behaviour.
 
 ### Features
 * Search photos on mutiple service providers (500px, Flickr, Intagram & Google Images)
