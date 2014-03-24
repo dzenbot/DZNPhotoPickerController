@@ -118,9 +118,3 @@ UIKIT_EXTERN NSString *keyForSearchTagContent(DZNPhotoPickerControllerService se
  */
 UIKIT_EXTERN NSString *keyPathForObjectName(DZNPhotoPickerControllerService service, NSString *objectName);
 
-/**
- * Creates and returns a HMAC-SHA1 string, to be used for some services that requieres oauth (work in progress).
- * @returns The HMAC-SHA1 string.
- */
-UIKIT_EXTERN NSString *HMACSHA1(NSString *text, NSString *secret);
-

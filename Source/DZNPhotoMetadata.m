@@ -75,9 +75,6 @@
             metadata.thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"image.thumbnailLink"]];
             metadata.sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"link"]];
         }
-        else if ((service & DZNPhotoPickerControllerServiceYahooImages) > 0) {
-            
-        }
         
         [result addObject:metadata];
     }

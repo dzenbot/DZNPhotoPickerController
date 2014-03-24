@@ -55,9 +55,7 @@
 {
     NSAssert(key, @"\"key\" cannot be nil");
     NSAssert(secret, @"\"secret\" cannot be nil");
-    NSAssert((service != DZNPhotoPickerControllerServiceBingImages &&
-              service != DZNPhotoPickerControllerServicePanoramio &&
-              service != DZNPhotoPickerControllerServiceDribbble), @"Only 500px, Flickr, Instagram, Google Images & Yahoo Images are supported at this moment.");
+    NSAssert((service != DZNPhotoPickerControllerServiceBingImages), @"Bing Images Search is yet not supported.");
 
     [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerKey)];
     [[NSUserDefaults standardUserDefaults] setObject:secret forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerSecret)];

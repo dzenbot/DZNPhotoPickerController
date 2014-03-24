@@ -24,9 +24,6 @@ NSString *NSStringFromService(DZNPhotoPickerControllerService service)
         case DZNPhotoPickerControllerServiceInstagram:      return @"Instagram";
         case DZNPhotoPickerControllerServiceGoogleImages:   return @"Google";
         case DZNPhotoPickerControllerServiceBingImages:     return @"Bing";
-        case DZNPhotoPickerControllerServiceYahooImages:    return @"Yahoo";
-        case DZNPhotoPickerControllerServicePanoramio:      return @"Panoramio";
-        case DZNPhotoPickerControllerServiceDribbble:       return @"Dribbble";
         default:                                            return nil;
     }
 }
@@ -38,9 +35,6 @@ DZNPhotoPickerControllerService DZNPhotoServiceFromName(NSString *name)
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceInstagram)])     return DZNPhotoPickerControllerServiceInstagram;
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceGoogleImages)])  return DZNPhotoPickerControllerServiceGoogleImages;
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceBingImages)])    return DZNPhotoPickerControllerServiceBingImages;
-    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceYahooImages)])   return DZNPhotoPickerControllerServiceYahooImages;
-    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServicePanoramio)])     return DZNPhotoPickerControllerServicePanoramio;
-    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceDribbble)])      return DZNPhotoPickerControllerServiceDribbble;
     return -1;
 }
 
@@ -60,15 +54,6 @@ DZNPhotoPickerControllerService DZNFirstPhotoServiceFromPhotoServices(DZNPhotoPi
     }
     if ((services & DZNPhotoPickerControllerServiceBingImages) > 0) {
         return DZNPhotoPickerControllerServiceBingImages;
-    }
-    if ((services & DZNPhotoPickerControllerServiceYahooImages) > 0) {
-        return DZNPhotoPickerControllerServiceYahooImages;
-    }
-    if ((services & DZNPhotoPickerControllerServicePanoramio) > 0) {
-        return DZNPhotoPickerControllerServicePanoramio;
-    }
-    if ((services & DZNPhotoPickerControllerServiceDribbble) > 0) {
-        return DZNPhotoPickerControllerServiceDribbble;
     }
     return 0;
 }
@@ -92,15 +77,5 @@ NSArray *NSArrayFromServices(DZNPhotoPickerControllerService services)
     if ((services & DZNPhotoPickerControllerServiceBingImages) > 0) {
         [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceBingImages)];
     }
-    if ((services & DZNPhotoPickerControllerServiceYahooImages) > 0) {
-        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceYahooImages)];
-    }
-    if ((services & DZNPhotoPickerControllerServicePanoramio) > 0) {
-        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServicePanoramio)];
-    }
-    if ((services & DZNPhotoPickerControllerServiceDribbble) > 0) {
-        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceDribbble)];
-    }
-    
     return [NSArray arrayWithArray:titles];
 }

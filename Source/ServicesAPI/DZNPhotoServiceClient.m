@@ -89,9 +89,6 @@
     if (_service == DZNPhotoPickerControllerService500px || _service == DZNPhotoPickerControllerServiceFlickr) {
         [params setObject:@(page) forKey:@"page"];
     }
-    if (_service == DZNPhotoPickerControllerServiceGoogleImages || _service == DZNPhotoPickerControllerServiceYahooImages) {
-        [params setObject:@(resultPerPage*page) forKey:@"start"];
-    }
     
     if (_service == DZNPhotoPickerControllerService500px)
     {
@@ -112,20 +109,6 @@
         [params setObject:@"image" forKey:@"searchType"];
         [params setObject:@"medium" forKey:@"safe"];
     }
-    else if (_service == DZNPhotoPickerControllerServiceYahooImages)
-    {
-        NSString *hmac = HMACSHA1(keyForAPIConsumerSecret(_service), [self consumerSecret]);
-        NSLog(@"hmac : %@",hmac);
-        
-        [params setObject:@"1.0" forKey:@"oauth_version"];
-        [params setObject:@"HMAC-SHA1" forKey:@"oauth_signature_method"];
-        [params setObject:hmac forKey:@"oauth_signature"];
-        [params setObject:@([[NSDate date] timeIntervalSince1970]) forKey:@"oauth_nonce"];
-        [params setObject:@([[NSDate date] timeIntervalSince1970]) forKey:@"oauth_timestamp"];
-        [params setObject:@"json" forKey:@"format"];
-        [params setObject:@"-porn" forKey:@"filter"];
-    }
-
     return params;
 }
 
@@ -182,6 +165,7 @@
     _loadingPath = photoSearchUrlPathForService(_service);
 
     NSDictionary *params = [self photosParamsWithKeyword:keyword page:page resultPerPage:resultPerPage];
+    NSLog(@"params : %@", params);
     [self getObject:[DZNPhotoMetadata name] path:_loadingPath params:params completion:completion];
 }
 
@@ -192,11 +176,12 @@
     if (_service == DZNPhotoPickerControllerServiceFlickr) {
         path = @"";
     }
-    if (_service == DZNPhotoPickerControllerServiceInstagram)
-    {
+    if (_service == DZNPhotoPickerControllerServiceInstagram) {
         NSString *keyword = [params objectForKey:keyForSearchTerm(_service)];
         path = [path stringByReplacingOccurrencesOfString:@"%@" withString:keyword];
     }
+    
+    NSLog(@"path : %@", path);
 
     [self getPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
         
