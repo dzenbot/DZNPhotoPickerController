@@ -9,6 +9,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SDWebImage/SDWebImageManager.h>
 
 @class DZNPhotoPickerController;
 

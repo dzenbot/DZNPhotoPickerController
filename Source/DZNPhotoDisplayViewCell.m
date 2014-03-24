@@ -9,9 +9,9 @@
 //
 
 #import "DZNPhotoDisplayViewCell.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
-#define kDZNCellMargin 30.0
+#define kDZNPhotoCellViewMargin 30.0
 
 @implementation DZNPhotoDisplayViewCell
 @synthesize imageView = _imageView;
@@ -168,15 +168,15 @@
 
 - (void)layoutLabels
 {
-    CGFloat dataSetHeight = _titleLabel.frame.size.height + _detailLabel.frame.size.height + kDZNCellMargin/2;
+    CGFloat dataSetHeight = _titleLabel.frame.size.height + _detailLabel.frame.size.height + kDZNPhotoCellViewMargin/2;
     CGFloat superviewHeight = _superCollectionView.bounds.size.height + _superCollectionView.bounds.origin.y;
     
-    CGRect titleRect = CGRectMake(kDZNCellMargin, 0, _superCollectionView.frame.size.width-(kDZNCellMargin*2), kDZNCellMargin);
+    CGRect titleRect = CGRectMake(kDZNPhotoCellViewMargin, 0, _superCollectionView.frame.size.width-(kDZNPhotoCellViewMargin*2), kDZNPhotoCellViewMargin);
     titleRect.origin.y = roundf((superviewHeight-dataSetHeight)/2)-10.0;
     _titleLabel.frame = titleRect;
     
-    CGRect detailRect = CGRectMake(kDZNCellMargin, 0, _superCollectionView.frame.size.width-(kDZNCellMargin*2), 44.0);
-    detailRect.origin.y = roundf(_titleLabel.frame.origin.y+_titleLabel.frame.size.height+kDZNCellMargin/2);
+    CGRect detailRect = CGRectMake(kDZNPhotoCellViewMargin, 0, _superCollectionView.frame.size.width-(kDZNPhotoCellViewMargin*2), 44.0);
+    detailRect.origin.y = roundf(_titleLabel.frame.origin.y+_titleLabel.frame.size.height+kDZNPhotoCellViewMargin/2);
     _detailLabel.frame = detailRect;
 }
 

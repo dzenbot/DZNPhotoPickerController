@@ -16,13 +16,10 @@
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 
-#import "SDWebImageManager.h"
-
-#define  kDZNPhotoMinimumBarHeight 44.0
-
-static NSString *kThumbCellID = @"kThumbCellID";
-static NSString *kThumbFooterID = @"kThumbFooterID";
-static NSString *kTagCellID = @"kTagCellID";
+static NSString *kDZNPhotoCellViewIdentifier = @"kDZNPhotoCellViewIdentifier";
+static NSString *kDZNPhotoFooterViewIdentifier = @"kDZNPhotoFooterViewIdentifier";
+static NSString *kDZNTagCellViewIdentifier = @"kDZNTagCellViewIdentifier";
+static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 @interface DZNPhotoDisplayViewController () <UISearchDisplayDelegate, UISearchBarDelegate,
                                             UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate>
@@ -86,8 +83,8 @@ static NSString *kTagCellID = @"kTagCellID";
     self.collectionView.contentInset = UIEdgeInsetsMake(self.searchBar.frame.size.height+8.0, 0, 0, 0);
     self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(self.searchBar.frame.size.height, 0, 0, 0);
     
-    [self.collectionView registerClass:[DZNPhotoDisplayViewCell class] forCellWithReuseIdentifier:kThumbCellID];
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kThumbFooterID];
+    [self.collectionView registerClass:[DZNPhotoDisplayViewCell class] forCellWithReuseIdentifier:kDZNPhotoCellViewIdentifier];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kDZNPhotoFooterViewIdentifier];
 }
 
 - (void)viewDidLoad
@@ -105,7 +102,7 @@ static NSString *kTagCellID = @"kTagCellID";
     _searchController.searchResultsDelegate = self;
     _searchController.delegate = self;
     
-    [_searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kTagCellID];
+    [_searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kDZNTagCellViewIdentifier];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -285,12 +282,12 @@ static NSString *kTagCellID = @"kTagCellID";
     
     CGFloat statusHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? [UIApplication sharedApplication].statusBarFrame.size.height : 0.0;
     
-    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width,  kDZNPhotoMinimumBarHeight);
-    frame.size.height = shouldShift ?  kDZNPhotoMinimumBarHeight*2 :  kDZNPhotoMinimumBarHeight;
+    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width,  kDZNPhotoDisplayMinimumBarHeight);
+    frame.size.height = shouldShift ?  kDZNPhotoDisplayMinimumBarHeight*2 :  kDZNPhotoDisplayMinimumBarHeight;
     frame.origin.y = shouldShift ? statusHeight : 0.0;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && !shouldShift) {
-        frame.origin.y += statusHeight+ kDZNPhotoMinimumBarHeight;
+        frame.origin.y += statusHeight+ kDZNPhotoDisplayMinimumBarHeight;
     }
     
     return frame;
@@ -611,7 +608,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    DZNPhotoDisplayViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kThumbCellID forIndexPath:indexPath];
+    DZNPhotoDisplayViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDZNPhotoCellViewIdentifier forIndexPath:indexPath];
     cell.superCollectionView = collectionView;
     cell.tag = indexPath.row;
     
@@ -629,7 +626,7 @@ static NSString *kTagCellID = @"kTagCellID";
 {
     if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
         
-        UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kThumbFooterID forIndexPath:indexPath];
+        UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kDZNPhotoFooterViewIdentifier forIndexPath:indexPath];
         
         if ([self canDisplayFooterView]) {
             
@@ -769,7 +766,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTagCellID];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDZNTagCellViewIdentifier];
     
     DZNPhotoTag *tag = [_photoTags objectAtIndex:indexPath.row];
     
@@ -785,7 +782,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return  kDZNPhotoMinimumBarHeight;
+    return  kDZNPhotoDisplayMinimumBarHeight;
 }
 
 
