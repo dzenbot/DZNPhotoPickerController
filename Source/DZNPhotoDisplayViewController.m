@@ -115,7 +115,7 @@ static NSString *kTagCellID = @"kTagCellID";
     if (!_photoMetadatas) {
 
         if (_searchTerm.length == 0) {
-            [self.searchController setActive:YES];
+            [self.searchDisplayController setActive:YES];
             [_searchBar becomeFirstResponder];
         }
         else [self searchPhotosWithKeyword:_searchTerm];
@@ -357,7 +357,7 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (void)setSearchBarText:(NSString *)text
 {
-    self.searchController.searchBar.text = text;
+    self.searchDisplayController.searchBar.text = text;
 }
 
 /*
@@ -396,7 +396,7 @@ static NSString *kTagCellID = @"kTagCellID";
         [_photoTags addObject:tag];
     }
     
-    [_searchController.searchResultsTableView reloadData];
+    [self.searchDisplayController.searchResultsTableView reloadData];
 }
 
 /*
@@ -496,13 +496,13 @@ static NSString *kTagCellID = @"kTagCellID";
  */
 - (BOOL)canSearchTag:(NSString *)term
 {
-    if ([_searchController.searchBar isFirstResponder] && term.length > 2) {
+    if ([self.searchDisplayController.searchBar isFirstResponder] && term.length > 2) {
         [self searchTags:term];
         return YES;
     }
     else {
         [_photoTags removeAllObjects];
-        [_searchController.searchResultsTableView reloadData];
+        [self.searchDisplayController.searchResultsTableView reloadData];
         return NO;
     }
 }
@@ -796,7 +796,7 @@ static NSString *kTagCellID = @"kTagCellID";
     DZNPhotoTag *tag = [_photoTags objectAtIndex:indexPath.row];
     
     [self shouldSearchPhotos:tag.text];
-    [self.searchController setActive:NO animated:YES];
+    [self.searchDisplayController setActive:NO animated:YES];
     [self setSearchBarText:tag.text];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -838,7 +838,7 @@ static NSString *kTagCellID = @"kTagCellID";
     [UIView animateWithDuration:0.25
                      animations:^{
                          [self.searchBar setFrame:[self searchBarFrame]];
-                         [self.searchController setActive:shift];
+                         [self.searchDisplayController setActive:shift];
                      }
                      completion:NULL];
 }
@@ -929,7 +929,7 @@ static NSString *kTagCellID = @"kTagCellID";
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-    UITableView *tableView = [self.searchController searchResultsTableView];
+    UITableView *tableView = [self.searchDisplayController searchResultsTableView];
     [tableView setContentInset:UIEdgeInsetsZero];
     [tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
 }
