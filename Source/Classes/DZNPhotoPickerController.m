@@ -106,6 +106,15 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     _supportedServices = services;
 }
 
+- (void)setEditingMode:(DZNPhotoEditViewControllerCropMode)mode
+{
+    if (mode != DZNPhotoEditViewControllerCropModeNone) {
+        _allowsEditing = YES;
+    }
+    
+    _editingMode = mode;
+}
+
 - (void)setFinalizationBlock:(DZNPhotoPickerControllerFinalizationBlock)block
 {
     _finalizationBlock = [block copy];
