@@ -14,6 +14,9 @@
 
 #import <MobileCoreServices/UTCoreTypes.h>
 
+static DZNPhotoPickerControllerFinalizationBlock _finalizationBlock;
+static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
+
 @interface DZNPhotoPickerController ()
 @property (nonatomic, getter = isEditing) BOOL editing;
 @property (nonatomic, assign) UIImage *editingImage;
@@ -103,6 +106,16 @@
     _supportedServices = services;
 }
 
+- (void)setFinalizationBlock:(DZNPhotoPickerControllerFinalizationBlock)block
+{
+    _finalizationBlock = [block copy];
+}
+
+- (void)setCancellationBlock:(DZNPhotoPickerControllerCancellationBlock)block
+{
+    _cancellationBlock = [block copy];
+}
+
 + (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret subscription:(DZNPhotoPickerControllerSubscription)subscription
 {
     [DZNPhotoServiceFactory setConsumerKey:key consumerSecret:secret service:service subscription:subscription];
@@ -145,6 +158,11 @@
  */
 - (void)didPickPhoto:(NSNotification *)notification
 {
+    if (self.finalizationBlock) {
+        self.finalizationBlock(self, notification.userInfo);
+        return;
+    }
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerController:didFinishPickingPhotoWithInfo:)]){
         [self.delegate photoPickerController:self didFinishPickingPhotoWithInfo:notification.userInfo];
     }
@@ -158,6 +176,11 @@
     DZNPhotoDisplayViewController *controller = (DZNPhotoDisplayViewController *)[self.viewControllers objectAtIndex:0];
     if ([controller respondsToSelector:@selector(stopLoadingRequest)]) {
         [controller stopLoadingRequest];
+    }
+    
+    if (self.cancellationBlock) {
+        self.cancellationBlock(self);
+        return;
     }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerControllerDidCancel:)]) {
@@ -184,6 +207,8 @@
     
     _editingImage = nil;
     _initialSearchTerm = nil;
+    _finalizationBlock = nil;
+    _cancellationBlock = nil;
 }
 
 

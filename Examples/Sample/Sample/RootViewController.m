@@ -94,88 +94,95 @@
     picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     picker.delegate = self;
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        _popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
-        _popoverController.popoverContentSize = CGSizeMake(320.0, 548.0);
-        [_popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-    }
-    else {
-        [self presentViewController:picker animated:YES completion:NULL];
-    }
+    [self presentController:picker];
 }
 
 - (void)presentPhotoPicker
 {
-    DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];
-    picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages;
-    picker.allowsEditing = YES;
-    picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
-    picker.delegate = self;
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        _popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
-        _popoverController.popoverContentSize = CGSizeMake(320.0, 548.0);
-        [_popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-    }
-    else {
-        [self presentViewController:picker animated:YES completion:NULL];
-    }
+    [self presentPhotoPickerWithImage:nil];
 }
 
 - (void)presentPhotoEditor
 {
     UIImage *image = [_photoPayload objectForKey:UIImagePickerControllerOriginalImage];
+    [self presentPhotoPickerWithImage:image];
+}
+
+- (void)presentPhotoPickerWithImage:(UIImage *)image
+{
+    DZNPhotoPickerController *picker = nil;
     
-    DZNPhotoPickerController *editor = [[DZNPhotoPickerController alloc] initWithEditableImage:image];
-    editor.editingMode = [[_photoPayload objectForKey:DZNPhotoPickerControllerCropMode] integerValue];
-    editor.delegate = self;
+    if (image) {
+        picker = [[DZNPhotoPickerController alloc] initWithEditableImage:image];
+        picker.editingMode = [[_photoPayload objectForKey:DZNPhotoPickerControllerCropMode] integerValue];
+    }
+    else {
+        picker = [DZNPhotoPickerController new];
+        picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages;
+        picker.allowsEditing = YES;
+        picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
+    }
     
+    picker.delegate = self;
+    
+    picker.finalizationBlock = ^(DZNPhotoPickerController *picker, NSDictionary *info) {
+        [self updateImage:info];
+        [self dismissController:picker];
+    };
+    
+    picker.cancellationBlock = ^(DZNPhotoPickerController *picker) {
+        [self dismissController:picker];
+    };
+    
+    
+    [self presentController:picker];
+}
+
+- (void)updateImage:(NSDictionary *)info
+{
+    _photoPayload = info;
+    
+    NSLog(@"OriginalImage : %@",[info objectForKey:UIImagePickerControllerOriginalImage]);
+    NSLog(@"EditedImage : %@",[info objectForKey:UIImagePickerControllerEditedImage]);
+    NSLog(@"MediaType : %@",[info objectForKey:UIImagePickerControllerMediaType]);
+    NSLog(@"CropRect : %@", NSStringFromCGRect([[info objectForKey:UIImagePickerControllerCropRect] CGRectValue]));
+    NSLog(@"CropMode : %@", [info objectForKey:DZNPhotoPickerControllerCropMode]);
+    NSLog(@"PhotoAttributes : %@",[info objectForKey:DZNPhotoPickerControllerPhotoMetadata]);
+    
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    if (!image) image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    _imageView.image = image;
+    [_button setTitle:nil forState:UIControlStateNormal];
+    
+    [self saveImage:image];
+}
+
+- (void)saveImage:(UIImage *)image
+{
+    UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
+}
+
+- (void)presentController:(UIViewController *)controller
+{
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        _popoverController = [[UIPopoverController alloc] initWithContentViewController:editor];
+        _popoverController = [[UIPopoverController alloc] initWithContentViewController:controller];
         _popoverController.popoverContentSize = CGSizeMake(320.0, 548.0);
         
         [_popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else {
-        [self presentViewController:editor animated:YES completion:NULL];
+        [self presentViewController:controller animated:YES completion:NULL];
     }
 }
 
-- (void)updateImage:(NSDictionary *)userInfo
+- (void)dismissController:(UIViewController *)controller
 {
-    _photoPayload = userInfo;
-    
-    NSLog(@"OriginalImage : %@",[userInfo objectForKey:UIImagePickerControllerOriginalImage]);
-    NSLog(@"EditedImage : %@",[userInfo objectForKey:UIImagePickerControllerEditedImage]);
-    NSLog(@"MediaType : %@",[userInfo objectForKey:UIImagePickerControllerMediaType]);
-    NSLog(@"CropRect : %@", NSStringFromCGRect([[userInfo objectForKey:UIImagePickerControllerCropRect] CGRectValue]));
-    NSLog(@"CropMode : %@", [userInfo objectForKey:DZNPhotoPickerControllerCropMode]);
-    NSLog(@"PhotoAttributes : %@",[userInfo objectForKey:DZNPhotoPickerControllerPhotoMetadata]);
-    
-    UIImage *image = [userInfo objectForKey:UIImagePickerControllerEditedImage];
-    if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];
-    
-    _imageView.image = image;
-    [_button setTitle:nil forState:UIControlStateNormal];
-}
-
-- (void)saveImage:(NSDictionary *)userInfo
-{
-    UIImage *image = [userInfo objectForKey:UIImagePickerControllerEditedImage];
-    if (!image) image = [userInfo objectForKey:UIImagePickerControllerOriginalImage];
-    
-    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-}
-
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
-    if (error) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
-                                                        message:error.localizedDescription
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                              otherButtonTitles:nil];
-        [alert show];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [_popoverController dismissPopoverAnimated:YES];
+    }
+    else {
+        [controller dismissViewControllerAnimated:YES completion:NULL];
     }
 }
 
@@ -217,24 +224,13 @@
     }
     else {
         [self updateImage:info];
-        
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            [_popoverController dismissPopoverAnimated:YES];
-        }
-        else {
-            [picker dismissViewControllerAnimated:YES completion:NULL];
-        }
+        [self dismissController:picker];
     }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [_popoverController dismissPopoverAnimated:YES];
-    }
-    else {
-        [picker dismissViewControllerAnimated:YES completion:NULL];
-    }
+    [self dismissController:picker];
 }
 
 
@@ -243,24 +239,12 @@
 - (void)photoPickerController:(DZNPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)info
 {
     [self updateImage:info];
-    [self saveImage:info];
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [_popoverController dismissPopoverAnimated:YES];
-    }
-    else {
-        [picker dismissViewControllerAnimated:YES completion:NULL];
-    }
+    [self dismissController:picker];
 }
 
 - (void)photoPickerControllerDidCancel:(DZNPhotoPickerController *)picker
 {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [_popoverController dismissPopoverAnimated:YES];
-    }
-    else {
-        [picker dismissViewControllerAnimated:YES completion:NULL];
-    }
+    [self dismissController:picker];
 }
 
 

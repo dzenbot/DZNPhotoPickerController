@@ -21,6 +21,9 @@
  */
 @interface DZNPhotoPickerController : UINavigationController
 
+typedef void (^DZNPhotoPickerControllerFinalizationBlock)(DZNPhotoPickerController *picker, NSDictionary *info);
+typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerController *picker);
+
 /** The photo picker's delegate object. */
 @property (nonatomic, assign) id <UINavigationControllerDelegate, DZNPhotoPickerControllerDelegate> delegate;
 /** The photo services to be supported by the controller. Default values are 500px & Flickr. */
@@ -35,6 +38,10 @@
 @property (nonatomic) DZNPhotoPickerControllerCCLicense supportedLicenses;
 /** A Boolean value indicating whether the picker should download the photo after selecting it when allowsEditing is NO. Default value is YES. */
 @property (nonatomic) BOOL enablePhotoDownload;
+/** A block to be executed whenever the user pickes a new photo. Use this block to replace delegate method photoPickerController:didFinishPickingPhotoWithInfo: */
+@property (nonatomic, strong) DZNPhotoPickerControllerFinalizationBlock finalizationBlock;
+/** A block to be executed whenever the user cancels the pick operation. Use this block to replace delegate method photoPickerControllerDidCancel: */
+@property (nonatomic, strong) DZNPhotoPickerControllerCancellationBlock cancellationBlock;
 
 /**
  * Initializes and returns a newly created picker controller, on edit mode only.
@@ -71,6 +78,7 @@
 
 
 @protocol DZNPhotoPickerControllerDelegate <NSObject>
+
 @required
 
 /**
