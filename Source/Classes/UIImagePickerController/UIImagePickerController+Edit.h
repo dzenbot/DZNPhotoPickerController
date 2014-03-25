@@ -12,8 +12,7 @@
 #import "DZNPhotoPickerControllerConstants.h"
 
 /** 
- * An informal protocol (category) for allowing custom edition modes on UIImagePickerController,
- * specially crop for circular avatars like the Contacts app on iOS7.
+ * A category class allowing custom edition modes on UIImagePickerController with specially crop for circular avatars like the Contacts app on iOS7.
  */
 @interface UIImagePickerController (Edit)
 
