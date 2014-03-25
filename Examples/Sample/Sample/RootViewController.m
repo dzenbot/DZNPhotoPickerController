@@ -8,7 +8,9 @@
 
 #import "RootViewController.h"
 #import "DZNPhotoPickerController.h"
+
 #import "UIImagePickerController+Edit.h"
+#import "UIImagePickerController+Block.h"
 
 #import "Private.h"
 
@@ -91,8 +93,16 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = sourceType;
     picker.allowsEditing = YES;
-    picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
+    picker.editingMode = DZNPhotoEditViewControllerCropModeCircular;
     picker.delegate = self;
+    
+    picker.finalizationBlock = ^(UIImagePickerController *picker, NSDictionary *info) {
+        [self handleImagePicker:picker withMediaInfo:info];
+    };
+    
+    picker.cancellationBlock = ^(UIImagePickerController *picker) {
+        [self dismissController:picker];
+    };
     
     [self presentController:picker];
 }
@@ -134,8 +144,21 @@
         [self dismissController:picker];
     };
     
-    
     [self presentController:picker];
+}
+
+- (void)handleImagePicker:(UIImagePickerController *)picker withMediaInfo:(NSDictionary *)info
+{
+    if (picker.editingMode == DZNPhotoEditViewControllerCropModeCircular ||
+        picker.editingMode == DZNPhotoEditViewControllerCropModeSquare) {
+        
+        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        [DZNPhotoEditViewController editImage:image cropMode:picker.editingMode inNavigationController:picker];
+    }
+    else {
+        [self updateImage:info];
+        [self dismissController:picker];
+    }
 }
 
 - (void)updateImage:(NSDictionary *)info
@@ -212,20 +235,12 @@
     }
 }
 
+
 #pragma mark - UIImagePickerControllerDelegate methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    if (picker.editingMode == DZNPhotoEditViewControllerCropModeCircular ||
-        picker.editingMode == DZNPhotoEditViewControllerCropModeSquare) {
-        
-        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-        [DZNPhotoEditViewController editImage:image cropMode:picker.editingMode inNavigationController:picker];
-    }
-    else {
-        [self updateImage:info];
-        [self dismissController:picker];
-    }
+    [self handleImagePicker:picker withMediaInfo:info];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

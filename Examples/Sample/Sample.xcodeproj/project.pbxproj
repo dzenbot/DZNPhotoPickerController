@@ -42,6 +42,7 @@
 		4F570157180E5D0E00E12444 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F570155180E5D0E00E12444 /* Main_iPad.storyboard */; };
 		4F57015A180E5D0E00E12444 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F570159180E5D0E00E12444 /* RootViewController.m */; };
 		4F57015C180E5D0E00E12444 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F57015B180E5D0E00E12444 /* Images.xcassets */; };
+		4F5B1D4118E1CE8200148EA0 /* UIImagePickerController+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5B1D4018E1CE8200148EA0 /* UIImagePickerController+Block.m */; };
 		4F64C15918A53D9C00FBEE9A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570162180E5D0E00E12444 /* XCTest.framework */; };
 		4F64C15A18A53D9C00FBEE9A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570140180E5D0E00E12444 /* Foundation.framework */; };
 		4F64C15B18A53D9C00FBEE9A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F570144180E5D0E00E12444 /* UIKit.framework */; };
@@ -106,6 +107,8 @@
 		4F570159180E5D0E00E12444 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		4F57015B180E5D0E00E12444 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4F570162180E5D0E00E12444 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		4F5B1D3F18E1CE8200148EA0 /* UIImagePickerController+Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+Block.h"; sourceTree = "<group>"; };
+		4F5B1D4018E1CE8200148EA0 /* UIImagePickerController+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+Block.m"; sourceTree = "<group>"; };
 		4F64C15818A53D9C00FBEE9A /* Test.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F97B28F18B066E500DED8C0 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
 		4FA4986E18B866C600764406 /* DZNPhotoParsingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoParsingTests.m; sourceTree = "<group>"; };
@@ -178,6 +181,8 @@
 				4F484DD018E078A900A37BC3 /* ServicesAPI */,
 				4F484DD818E078A900A37BC3 /* UIImagePickerController+Edit.h */,
 				4F484DD918E078A900A37BC3 /* UIImagePickerController+Edit.m */,
+				4F5B1D3F18E1CE8200148EA0 /* UIImagePickerController+Block.h */,
+				4F5B1D4018E1CE8200148EA0 /* UIImagePickerController+Block.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -432,6 +437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F570151180E5D0E00E12444 /* AppDelegate.m in Sources */,
+				4F5B1D4118E1CE8200148EA0 /* UIImagePickerController+Block.m in Sources */,
 				4F484DE718E078A900A37BC3 /* DZNPhotoServiceFactory.m in Sources */,
 				4F484DE118E078A900A37BC3 /* DZNPhotoMetadata.m in Sources */,
 				4F484DDF18E078A900A37BC3 /* DZNPhotoDisplayViewController.m in Sources */,

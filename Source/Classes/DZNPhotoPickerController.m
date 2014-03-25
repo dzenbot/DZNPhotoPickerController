@@ -117,12 +117,16 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 
 - (void)setFinalizationBlock:(DZNPhotoPickerControllerFinalizationBlock)block
 {
-    _finalizationBlock = [block copy];
+    if (block) {
+        _finalizationBlock = [block copy];
+    }
 }
 
 - (void)setCancellationBlock:(DZNPhotoPickerControllerCancellationBlock)block
 {
-    _cancellationBlock = [block copy];
+    if (block) {
+        _cancellationBlock = [block copy];
+    }
 }
 
 + (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret subscription:(DZNPhotoPickerControllerSubscription)subscription
