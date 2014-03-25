@@ -73,11 +73,24 @@ picker.initialSearchTerm = @"Surf";
 picker.editingMode = DZNPhotoEditViewControllerCropModeCircular;
 picker.enablePhotoDownload = YES;
 picker.supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
-````
+```
 
-### UIImagePickerController extension
+You can opt-in for block methods instead of using delegation pattern:
+```
+picker.finalizationBlock = ^(DZNPhotoPickerController *picker, NSDictionary *info) {
+        //Your implementation here
+    };
+    
+picker.cancellationBlock = ^(DZNPhotoPickerController *picker) {
+        //Your implementation here
+    };
+```
+
+## UIImagePickerController extensions
+
+## Circular mode edition
 Another great feature of DZNPhotoPickerController is to allow circular edit mode when using UIImagePickerController, just like the Contact app when editing a user's avatar image.<br>
-Its use is really straightforward: on the delegate's method -imagePickerController:didFinishPickingMediaWithInfo: just call DZNPhotoEditViewController's class method +editImage:cropMode:inNavigationController. This will push the controller to the edit mode, and will then call -imagePickerController:didFinishPickingMediaWithInfo: once more, after user's interaction, but with a different editingMode value.
+Its use is really straightforward:
 
 ```
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -89,6 +102,19 @@ Its use is really straightforward: on the delegate's method -imagePickerControll
     }
 }
 ```
+
+## Block support
+As in DZNPhotoPickerController's API, there is block support for UIImagePickerController too! It replaces the 2 traditional delegate methods with 2 block properties instead:
+```
+picker.finalizationBlock = ^(UIImagePickerController *picker, NSDictionary *info) {
+        //Your implementation here
+    };
+    
+picker.cancellationBlock = ^(UIImagePickerController *picker) {
+        //Your implementation here
+    };
+```
+
 
 ### Sample project
 Take a look into the sample project. Everything is there.<br>
