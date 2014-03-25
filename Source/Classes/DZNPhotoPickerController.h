@@ -78,7 +78,6 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 
 
 @protocol DZNPhotoPickerControllerDelegate <NSObject>
-
 @required
 
 /**

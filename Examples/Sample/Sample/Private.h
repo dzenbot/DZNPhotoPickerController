@@ -8,7 +8,7 @@
 
 /*
  * IMPORTANT: These tokens are here for example purpose only. If you intend to use DZNPhotoPickerController on one of your projects, please generate new key and secret tokens on every photo services that you will requiere.
- * For more information about where to generate this token, please refere to DZNPhotoPickerController header documentation.
+ * For more information about where to generate this token, please refere to DZNPhotoPickerControllerConstants.h documentation.
  */
 
 #define k500pxConsumerKey               @"9sUVdra51AYawcQwQjFaQA7ueUqpaXLEZQJT7Pzy"

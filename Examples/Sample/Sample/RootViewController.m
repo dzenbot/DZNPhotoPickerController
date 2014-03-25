@@ -88,25 +88,6 @@
     [actionSheet showFromRect:rect inView:self.view animated:YES];
 }
 
-- (void)presentImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
-{
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.sourceType = sourceType;
-    picker.allowsEditing = YES;
-    picker.editingMode = DZNPhotoEditViewControllerCropModeCircular;
-    picker.delegate = self;
-    
-    picker.finalizationBlock = ^(UIImagePickerController *picker, NSDictionary *info) {
-        [self handleImagePicker:picker withMediaInfo:info];
-    };
-    
-    picker.cancellationBlock = ^(UIImagePickerController *picker) {
-        [self dismissController:picker];
-    };
-    
-    [self presentController:picker];
-}
-
 - (void)presentPhotoPicker
 {
     [self presentPhotoPickerWithImage:nil];
@@ -141,6 +122,25 @@
     };
     
     picker.cancellationBlock = ^(DZNPhotoPickerController *picker) {
+        [self dismissController:picker];
+    };
+    
+    [self presentController:picker];
+}
+
+- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.sourceType = sourceType;
+    picker.allowsEditing = YES;
+    picker.delegate = self;
+    picker.editingMode = DZNPhotoEditViewControllerCropModeCircular;
+    
+    picker.finalizationBlock = ^(UIImagePickerController *picker, NSDictionary *info) {
+        [self handleImagePicker:picker withMediaInfo:info];
+    };
+    
+    picker.cancellationBlock = ^(UIImagePickerController *picker) {
         [self dismissController:picker];
     };
     
@@ -217,10 +217,10 @@
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
     
     if ([buttonTitle isEqualToString:NSLocalizedString(@"Take Photo", nil)]) {
-        [self presentImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"Choose Photo", nil)]) {
-        [self presentImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"Search Photo",nil)]) {
         [self presentPhotoPicker];

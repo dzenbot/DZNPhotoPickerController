@@ -207,9 +207,9 @@
 			children = (
 				4F57014F180E5D0E00E12444 /* AppDelegate.h */,
 				4F570150180E5D0E00E12444 /* AppDelegate.m */,
-				4FD61C0618759E0D0048DC0C /* Private.h */,
 				4F570158180E5D0E00E12444 /* RootViewController.h */,
 				4F570159180E5D0E00E12444 /* RootViewController.m */,
+				4FD61C0618759E0D0048DC0C /* Private.h */,
 				4F570147180E5D0E00E12444 /* Supporting Files */,
 			);
 			path = Sample;
