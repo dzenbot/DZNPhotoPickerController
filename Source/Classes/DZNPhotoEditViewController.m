@@ -14,7 +14,7 @@
 
 #import "UIImageView+WebCache.h"
 
-#define kInnerEdgeInset 15.0
+#define kDZNPhotoEditViewControllerInnerEdgeInset 15.0
 
 static CGFloat _lastZoomScale;
 
@@ -352,7 +352,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     CGFloat width = rect.size.width;
     CGFloat height = rect.size.height;
     
-    CGFloat diameter = width-(kInnerEdgeInset*2);
+    CGFloat diameter = width-(kDZNPhotoEditViewControllerInnerEdgeInset*2);
     CGFloat radius = diameter/2;
     CGPoint center = CGPointMake(width/2, height/2);
     UIColor *fillColor = [UIColor colorWithWhite:0 alpha:0.5];
@@ -404,16 +404,16 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     
     if (_cropMode == DZNPhotoEditViewControllerCropModeCircular) {
         
-        CGFloat diameter = bounds.size.width-(kInnerEdgeInset*2);
+        CGFloat diameter = bounds.size.width-(kDZNPhotoEditViewControllerInnerEdgeInset*2);
         CGRect circulatRect = CGRectMake(0, 0, diameter, diameter);
         
-        CGFloat increment = 1.0/(((kInnerEdgeInset*2)*100.0)/bounds.size.width);
+        CGFloat increment = 1.0/(((kDZNPhotoEditViewControllerInnerEdgeInset*2)*100.0)/bounds.size.width);
         CGFloat scale = 1.0 + round(increment * 10) / 10.0;
         
         UIGraphicsBeginImageContextWithOptions(circulatRect.size, NO, 0.0);{
 
             CGContextRef context = UIGraphicsGetCurrentContext();
-            CGContextTranslateCTM(context, -kInnerEdgeInset, -kInnerEdgeInset);
+            CGContextTranslateCTM(context, -kDZNPhotoEditViewControllerInnerEdgeInset, -kDZNPhotoEditViewControllerInnerEdgeInset);
             CGContextScaleCTM(context, scale, scale);
 
             [_image drawInRect:circulatRect];
@@ -459,10 +459,10 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
  */
 - (void)updateScrollViewContentInset
 {
-    CGFloat maskHeight = (_cropMode == DZNPhotoEditViewControllerCropModeCircular) ? [self cropSize].width-(kInnerEdgeInset*2) : [self cropSize].height;
+    CGFloat maskHeight = (_cropMode == DZNPhotoEditViewControllerCropModeCircular) ? [self cropSize].width-(kDZNPhotoEditViewControllerInnerEdgeInset*2) : [self cropSize].height;
     CGSize imageSize = [self imageSize];
     
-    CGFloat hInset = (_cropMode == DZNPhotoEditViewControllerCropModeCircular) ? kInnerEdgeInset : 0.0;
+    CGFloat hInset = (_cropMode == DZNPhotoEditViewControllerCropModeCircular) ? kDZNPhotoEditViewControllerInnerEdgeInset : 0.0;
     CGFloat vInset = fabs((maskHeight-imageSize.height)/2);
     
     if (vInset == 0) vInset = 0.5;
