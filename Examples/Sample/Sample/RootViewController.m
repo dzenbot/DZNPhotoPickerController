@@ -49,12 +49,7 @@
 {
     [super viewDidLoad];
     
-    UIGraphicsBeginImageContextWithOptions(_button.frame.size, NO, 0);
-    UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, _button.frame.size.width, _button.frame.size.height)];
-    [[UIColor colorWithWhite:0 alpha:0.25] setFill];
-    [clipPath fill];
-    [_button setBackgroundImage:UIGraphicsGetImageFromCurrentImageContext() forState:UIControlStateHighlighted];
-    UIGraphicsEndImageContext();
+    [self startupConfig];
 }
 
 
@@ -134,7 +129,7 @@
     picker.sourceType = sourceType;
     picker.allowsEditing = YES;
     picker.delegate = self;
-    picker.editingMode = DZNPhotoEditViewControllerCropModeCircular;
+    picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
     
     picker.finalizationBlock = ^(UIImagePickerController *picker, NSDictionary *info) {
         [self handleImagePicker:picker withMediaInfo:info];
@@ -178,12 +173,28 @@
     _imageView.image = image;
     [_button setTitle:nil forState:UIControlStateNormal];
     
+    UIGraphicsBeginImageContextWithOptions(_button.frame.size, NO, 0);
+    UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, (_button.frame.size.height-image.size.height)/2, image.size.width, image.size.height)];
+    [[UIColor colorWithWhite:0 alpha:0.75] setFill];
+    [clipPath fill];
+    [_button setBackgroundImage:UIGraphicsGetImageFromCurrentImageContext() forState:UIControlStateHighlighted];
+    UIGraphicsEndImageContext();
+    
     [self saveImage:image];
 }
 
 - (void)saveImage:(UIImage *)image
 {
     UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
+}
+
+- (void)startupConfig
+{
+    [_button setTitle:@"Tap Here to Start" forState:UIControlStateNormal];
+    [_button setBackgroundImage:nil forState:UIControlStateHighlighted];
+
+    _imageView.image = nil;
+    _photoPayload = nil;
 }
 
 - (void)presentController:(UIViewController *)controller
@@ -229,9 +240,7 @@
         [self presentPhotoEditor];
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"Delete Photo",nil)]) {
-        [_button setTitle:@"Tap Here" forState:UIControlStateNormal];
-        _imageView.image = nil;
-        _photoPayload = nil;
+        [self startupConfig];
     }
 }
 
