@@ -28,7 +28,7 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @property (nonatomic, assign) id <UINavigationControllerDelegate, DZNPhotoPickerControllerDelegate> delegate;
 /** The photo services to be supported by the controller. Default values are 500px & Flickr. */
 @property (nonatomic) DZNPhotoPickerControllerService supportedServices;
-/** A Boolean value indicating whether the user is allowed to edit a selected image. Default value is NO. */
+/** YES if the user is allowed to edit a selected image. Default value is NO. */
 @property (nonatomic) BOOL allowsEditing;
 /** An optional string term for auto-starting the photo search, as soon as the picker is presented. */
 @property (nonatomic, copy) NSString *initialSearchTerm;
@@ -36,7 +36,7 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @property (nonatomic) DZNPhotoEditViewControllerCropMode editingMode;
 /** The supported licenses of photos to search. Default value is "All CC Reserved Attributions". Pending implementation. */
 @property (nonatomic) DZNPhotoPickerControllerCCLicense supportedLicenses;
-/** A Boolean value indicating whether the picker should download the photo after selecting it when allowsEditing is NO. Default value is YES. */
+/** YES if the picker should download the full size photo after selecting its thumbnail, when allowsEditing is NO. Default value is YES. */
 @property (nonatomic) BOOL enablePhotoDownload;
 /** A block to be executed whenever the user pickes a new photo. Use this block to replace delegate method photoPickerController:didFinishPickingPhotoWithInfo: */
 @property (nonatomic, strong) DZNPhotoPickerControllerFinalizationBlock finalizationBlock;
