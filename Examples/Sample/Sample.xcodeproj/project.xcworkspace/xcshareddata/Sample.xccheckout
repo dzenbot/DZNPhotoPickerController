@@ -5,48 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>2B49CB06-C210-48AC-BE01-C815DCC7D1AB</string>
+	<string>63FE4F45-547A-45B7-B79A-6DA5180DD12D</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Sample</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>3058127B-D2B9-4B93-BA83-1EDD5FC3752D</key>
-		<string>https://github.com/dzenbot/UIPhotoPickerController.git</string>
-		<key>6A58C0FE-4989-4664-9D6B-B15B3F136E4E</key>
-		<string>https://github.com/dzenbot/NRGramKit.git</string>
+		<key>0F3E29BA-EE23-4B32-86A6-8AA93FB89265</key>
+		<string>https://github.com/dzenbot/DZNPhotoPickerController.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Examples/Sample/Sample.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>3058127B-D2B9-4B93-BA83-1EDD5FC3752D</key>
+		<key>0F3E29BA-EE23-4B32-86A6-8AA93FB89265</key>
 		<string>../../../..</string>
-		<key>6A58C0FE-4989-4664-9D6B-B15B3F136E4E</key>
-		<string>../../../../../_Forks/NRGramKit</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/dzenbot/UIPhotoPickerController.git</string>
+	<string>https://github.com/dzenbot/DZNPhotoPickerController.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>3058127B-D2B9-4B93-BA83-1EDD5FC3752D</string>
+	<string>0F3E29BA-EE23-4B32-86A6-8AA93FB89265</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>6A58C0FE-4989-4664-9D6B-B15B3F136E4E</string>
+			<string>0F3E29BA-EE23-4B32-86A6-8AA93FB89265</string>
 			<key>IDESourceControlWCCName</key>
-			<string>NRGramKit</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>3058127B-D2B9-4B93-BA83-1EDD5FC3752D</string>
-			<key>IDESourceControlWCCName</key>
-			<string>UIPhotoPickerController</string>
+			<string>DZNPhotoPickerController</string>
 		</dict>
 	</array>
 </dict>

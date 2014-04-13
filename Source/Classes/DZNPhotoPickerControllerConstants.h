@@ -8,7 +8,7 @@
 //  Licence: MIT-Licence
 //
 
-UIKIT_EXTERN NSString *const DZNPhotoPickerControllerCropMode;              // An NSString (i.e. square, circular)
+UIKIT_EXTERN NSString *const DZNPhotoPickerControllerCroppingMode;              // An NSString (i.e. square, circular)
 UIKIT_EXTERN NSString *const DZNPhotoPickerControllerPhotoMetadata;         // an NSDictionary containing metadata from a captured photo
 
 UIKIT_EXTERN NSString *const DZNPhotoPickerDidFinishPickingNotification;    // The notification key used when photo picked.
@@ -44,12 +44,13 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerCCLicense) {
 };
 
 /**
- * Types of supported cropping modes.
+ * Types of supported crop modes.
  */
-typedef NS_ENUM(NSInteger, DZNPhotoEditViewControllerCropMode) {
-    DZNPhotoEditViewControllerCropModeNone = -1,
-    DZNPhotoEditViewControllerCropModeSquare = 0,
-    DZNPhotoEditViewControllerCropModeCircular
+typedef NS_ENUM(NSInteger, DZNPhotoPickerControllerCropMode) {
+    DZNPhotoPickerControllerCropModeNone = -1,
+    DZNPhotoPickerControllerCropModeSquare = 0,
+    DZNPhotoPickerControllerCropModeCircular,
+    DZNPhotoPickerControllerCropModeCustom
 };
 
 /**

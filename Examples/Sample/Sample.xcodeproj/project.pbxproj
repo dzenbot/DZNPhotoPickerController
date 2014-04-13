@@ -33,7 +33,7 @@
 		4F57015C180E5D0E00E12444 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F57015B180E5D0E00E12444 /* Images.xcassets */; };
 		4F5B1D5E18E1D8F400148EA0 /* DZNPhotoDisplayViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5B1D4418E1D8F400148EA0 /* DZNPhotoDisplayViewCell.m */; };
 		4F5B1D5F18E1D8F400148EA0 /* DZNPhotoDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5B1D4618E1D8F400148EA0 /* DZNPhotoDisplayViewController.m */; };
-		4F5B1D6018E1D8F400148EA0 /* DZNPhotoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5B1D4818E1D8F400148EA0 /* DZNPhotoEditViewController.m */; };
+		4F5B1D6018E1D8F400148EA0 /* DZNPhotoEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5B1D4818E1D8F400148EA0 /* DZNPhotoEditorViewController.m */; };
 		4F5B1D6118E1D8F400148EA0 /* DZNPhotoMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5B1D4A18E1D8F400148EA0 /* DZNPhotoMetadata.m */; };
 		4F5B1D6218E1D8F400148EA0 /* DZNPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5B1D4C18E1D8F400148EA0 /* DZNPhotoPickerController.m */; };
 		4F5B1D6318E1D8F400148EA0 /* DZNPhotoPickerControllerConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5B1D4E18E1D8F400148EA0 /* DZNPhotoPickerControllerConstants.m */; };
@@ -88,8 +88,8 @@
 		4F5B1D4418E1D8F400148EA0 /* DZNPhotoDisplayViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoDisplayViewCell.m; sourceTree = "<group>"; };
 		4F5B1D4518E1D8F400148EA0 /* DZNPhotoDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoDisplayViewController.h; sourceTree = "<group>"; };
 		4F5B1D4618E1D8F400148EA0 /* DZNPhotoDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoDisplayViewController.m; sourceTree = "<group>"; };
-		4F5B1D4718E1D8F400148EA0 /* DZNPhotoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoEditViewController.h; sourceTree = "<group>"; };
-		4F5B1D4818E1D8F400148EA0 /* DZNPhotoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoEditViewController.m; sourceTree = "<group>"; };
+		4F5B1D4718E1D8F400148EA0 /* DZNPhotoEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoEditorViewController.h; sourceTree = "<group>"; };
+		4F5B1D4818E1D8F400148EA0 /* DZNPhotoEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoEditorViewController.m; sourceTree = "<group>"; };
 		4F5B1D4918E1D8F400148EA0 /* DZNPhotoMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoMetadata.h; sourceTree = "<group>"; };
 		4F5B1D4A18E1D8F400148EA0 /* DZNPhotoMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoMetadata.m; sourceTree = "<group>"; };
 		4F5B1D4B18E1D8F400148EA0 /* DZNPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerController.h; sourceTree = "<group>"; };
@@ -232,18 +232,18 @@
 		4F5B1D4218E1D8F400148EA0 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4F5B1D4318E1D8F400148EA0 /* DZNPhotoDisplayViewCell.h */,
-				4F5B1D4418E1D8F400148EA0 /* DZNPhotoDisplayViewCell.m */,
-				4F5B1D4518E1D8F400148EA0 /* DZNPhotoDisplayViewController.h */,
-				4F5B1D4618E1D8F400148EA0 /* DZNPhotoDisplayViewController.m */,
-				4F5B1D4718E1D8F400148EA0 /* DZNPhotoEditViewController.h */,
-				4F5B1D4818E1D8F400148EA0 /* DZNPhotoEditViewController.m */,
-				4F5B1D4918E1D8F400148EA0 /* DZNPhotoMetadata.h */,
-				4F5B1D4A18E1D8F400148EA0 /* DZNPhotoMetadata.m */,
 				4F5B1D4B18E1D8F400148EA0 /* DZNPhotoPickerController.h */,
 				4F5B1D4C18E1D8F400148EA0 /* DZNPhotoPickerController.m */,
+				4F5B1D4518E1D8F400148EA0 /* DZNPhotoDisplayViewController.h */,
+				4F5B1D4618E1D8F400148EA0 /* DZNPhotoDisplayViewController.m */,
+				4F5B1D4718E1D8F400148EA0 /* DZNPhotoEditorViewController.h */,
+				4F5B1D4818E1D8F400148EA0 /* DZNPhotoEditorViewController.m */,
+				4F5B1D4318E1D8F400148EA0 /* DZNPhotoDisplayViewCell.h */,
+				4F5B1D4418E1D8F400148EA0 /* DZNPhotoDisplayViewCell.m */,
 				4F5B1D4D18E1D8F400148EA0 /* DZNPhotoPickerControllerConstants.h */,
 				4F5B1D4E18E1D8F400148EA0 /* DZNPhotoPickerControllerConstants.m */,
+				4F5B1D4918E1D8F400148EA0 /* DZNPhotoMetadata.h */,
+				4F5B1D4A18E1D8F400148EA0 /* DZNPhotoMetadata.m */,
 				4F5B1D4F18E1D8F400148EA0 /* DZNPhotoTag.h */,
 				4F5B1D5018E1D8F400148EA0 /* DZNPhotoTag.m */,
 				4F5B1D5118E1D8F400148EA0 /* ServicesAPI */,
@@ -455,7 +455,7 @@
 				4F5B1D6318E1D8F400148EA0 /* DZNPhotoPickerControllerConstants.m in Sources */,
 				4F5B1D6218E1D8F400148EA0 /* DZNPhotoPickerController.m in Sources */,
 				4F5B1D6818E1D8F400148EA0 /* UIImagePickerController+Block.m in Sources */,
-				4F5B1D6018E1D8F400148EA0 /* DZNPhotoEditViewController.m in Sources */,
+				4F5B1D6018E1D8F400148EA0 /* DZNPhotoEditorViewController.m in Sources */,
 				4F5B1D6618E1D8F400148EA0 /* DZNPhotoServiceConstants.m in Sources */,
 				4F5B1D6418E1D8F400148EA0 /* DZNPhotoTag.m in Sources */,
 				4F5B1D5E18E1D8F400148EA0 /* DZNPhotoDisplayViewCell.m in Sources */,

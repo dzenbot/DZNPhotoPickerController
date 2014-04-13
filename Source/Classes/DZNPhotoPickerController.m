@@ -29,21 +29,25 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     self = [super init];
     if (self) {
         
-        _allowsEditing = NO;
-        _enablePhotoDownload = YES;
-        _supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
-        _supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
+        self.allowsEditing = NO;
+        self.enablePhotoDownload = YES;
+        self.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
+        self.supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
+        
+        self.cropMode = DZNPhotoPickerControllerCropModeSquare;
     }
     return self;
 }
 
 - (instancetype)initWithEditableImage:(UIImage *)image
 {
+    NSAssert(image, @"Expecting a non-nil image for using the editor.");
+    
     self = [super init];
     if (self) {
         
-        _editingImage = image;
-        _editing = YES;
+        self.editingImage = image;
+        self.editing = YES;
     }
     return self;
 }
@@ -74,21 +78,6 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     else [self showPhotoDisplayController];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
-}
-
 
 #pragma mark - Getter methods
 
@@ -102,17 +91,21 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 
 - (void)setSupportedServices:(DZNPhotoPickerControllerService)services
 {
-    NSAssert(services > 0, @"You must set at least 1 service to be supported.");
+    NSAssert(services > 0, @"You must support at least 1 service.");
     _supportedServices = services;
 }
 
-- (void)setEditingMode:(DZNPhotoEditViewControllerCropMode)mode
+- (void)setCropMode:(DZNPhotoPickerControllerCropMode)mode
 {
-    if (mode != DZNPhotoEditViewControllerCropModeNone) {
+    if (mode != DZNPhotoPickerControllerCropModeNone) {
         _allowsEditing = YES;
     }
     
-    _editingMode = mode;
+    _cropMode = mode;
+    
+    if (mode == DZNPhotoPickerControllerCropModeSquare || mode == DZNPhotoPickerControllerCropModeCircular) {
+        _cropSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.width);
+    }
 }
 
 - (void)setFinalizationBlock:(DZNPhotoPickerControllerFinalizationBlock)block
@@ -127,6 +120,14 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     if (block) {
         _cancellationBlock = [block copy];
     }
+}
+
+- (void)setCropSize:(CGSize)size
+{
+    NSAssert(!CGSizeEqualToSize(size, CGSizeZero), @"\"cropSize\" cannot be zero.");
+    
+    _cropSize = size;
+    _cropMode = DZNPhotoPickerControllerCropModeCustom;
 }
 
 + (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret subscription:(DZNPhotoPickerControllerSubscription)subscription
@@ -162,8 +163,8 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 {
     [self setViewControllers:nil];
     
-    DZNPhotoEditViewController *controller = [[DZNPhotoEditViewController alloc] initWithImage:_editingImage cropMode:self.editingMode];
-    [self setViewControllers:@[controller]];
+    DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:_editingImage cropMode:_cropMode cropSize:_cropSize];
+    [self pushViewController:controller animated:NO];
 }
 
 /*

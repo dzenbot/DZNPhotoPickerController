@@ -17,6 +17,6 @@
 @interface UIImagePickerController (Edit)
 
 /** The editing mode to be used after selecting an image. */
-@property (nonatomic) DZNPhotoEditViewControllerCropMode editingMode;
+@property (nonatomic) DZNPhotoPickerControllerCropMode editingMode;
 
 @end

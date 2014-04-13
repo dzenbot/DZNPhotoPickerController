@@ -10,9 +10,7 @@
 
 #import "DZNPhotoPickerController.h"
 
-@interface RootViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate,
-                                                UIImagePickerControllerDelegate, DZNPhotoPickerControllerDelegate,
-                                                UIPopoverControllerDelegate>
+@interface RootViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIPopoverControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
 @property (nonatomic, weak) IBOutlet UIButton *button;

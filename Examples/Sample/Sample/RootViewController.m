@@ -100,19 +100,17 @@
     
     if (image) {
         picker = [[DZNPhotoPickerController alloc] initWithEditableImage:image];
-        picker.editingMode = [[_photoPayload objectForKey:DZNPhotoPickerControllerCropMode] integerValue];
+        picker.cropMode = [[_photoPayload objectForKey:DZNPhotoPickerControllerCroppingMode] integerValue];
     }
     else {
         picker = [DZNPhotoPickerController new];
         picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages;
         picker.allowsEditing = YES;
-        picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
+        picker.cropMode = DZNPhotoPickerControllerCropModeSquare;
     }
     
-    picker.delegate = self;
-    
     picker.finalizationBlock = ^(DZNPhotoPickerController *picker, NSDictionary *info) {
-        [self updateImage:info];
+        [self updateImageWithPayload:info];
         [self dismissController:picker];
     };
     
@@ -128,8 +126,7 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = sourceType;
     picker.allowsEditing = YES;
-    picker.delegate = self;
-    picker.editingMode = DZNPhotoEditViewControllerCropModeSquare;
+    picker.editingMode = DZNPhotoPickerControllerCropModeSquare;
     
     picker.finalizationBlock = ^(UIImagePickerController *picker, NSDictionary *info) {
         [self handleImagePicker:picker withMediaInfo:info];
@@ -144,31 +141,32 @@
 
 - (void)handleImagePicker:(UIImagePickerController *)picker withMediaInfo:(NSDictionary *)info
 {
-    if (picker.editingMode == DZNPhotoEditViewControllerCropModeCircular ||
-        picker.editingMode == DZNPhotoEditViewControllerCropModeSquare) {
+    if (picker.editingMode != DZNPhotoPickerControllerCropModeNone) {
         
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-        [DZNPhotoEditViewController editImage:image cropMode:picker.editingMode inNavigationController:picker];
+
+        DZNPhotoEditorViewController *editor = [[DZNPhotoEditorViewController alloc] initWithImage:image cropMode:DZNPhotoPickerControllerCropModeCircular];
+        [picker pushViewController:editor animated:YES];
     }
     else {
-        [self updateImage:info];
+        [self updateImageWithPayload:info];
         [self dismissController:picker];
     }
 }
 
-- (void)updateImage:(NSDictionary *)info
+- (void)updateImageWithPayload:(NSDictionary *)payload
 {
-    _photoPayload = info;
+    _photoPayload = payload;
     
-    NSLog(@"OriginalImage : %@",[info objectForKey:UIImagePickerControllerOriginalImage]);
-    NSLog(@"EditedImage : %@",[info objectForKey:UIImagePickerControllerEditedImage]);
-    NSLog(@"MediaType : %@",[info objectForKey:UIImagePickerControllerMediaType]);
-    NSLog(@"CropRect : %@", NSStringFromCGRect([[info objectForKey:UIImagePickerControllerCropRect] CGRectValue]));
-    NSLog(@"CropMode : %@", [info objectForKey:DZNPhotoPickerControllerCropMode]);
-    NSLog(@"PhotoAttributes : %@",[info objectForKey:DZNPhotoPickerControllerPhotoMetadata]);
+    NSLog(@"OriginalImage : %@",[payload objectForKey:UIImagePickerControllerOriginalImage]);
+    NSLog(@"EditedImage : %@",[payload objectForKey:UIImagePickerControllerEditedImage]);
+    NSLog(@"MediaType : %@",[payload objectForKey:UIImagePickerControllerMediaType]);
+    NSLog(@"CropRect : %@", NSStringFromCGRect([[payload objectForKey:UIImagePickerControllerCropRect] CGRectValue]));
+    NSLog(@"CropMode : %@", [payload objectForKey:DZNPhotoPickerControllerCroppingMode]);
+    NSLog(@"PhotoAttributes : %@",[payload objectForKey:DZNPhotoPickerControllerPhotoMetadata]);
     
-    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-    if (!image) image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    UIImage *image = [payload objectForKey:UIImagePickerControllerEditedImage];
+    if (!image) image = [payload objectForKey:UIImagePickerControllerOriginalImage];
     
     _imageView.image = image;
     [_button setTitle:nil forState:UIControlStateNormal];
@@ -242,33 +240,6 @@
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"Delete Photo",nil)]) {
         [self startupConfig];
     }
-}
-
-
-#pragma mark - UIImagePickerControllerDelegate methods
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    [self handleImagePicker:picker withMediaInfo:info];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [self dismissController:picker];
-}
-
-
-#pragma mark - DZNPhotoPickerControllerDelegate methods
-
-- (void)photoPickerController:(DZNPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)info
-{
-    [self updateImage:info];
-    [self dismissController:picker];
-}
-
-- (void)photoPickerControllerDidCancel:(DZNPhotoPickerController *)picker
-{
-    [self dismissController:picker];
 }
 
 

@@ -9,7 +9,7 @@
 //
 
 #import "DZNPhotoDisplayViewCell.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "UIImageView+WebCache.h"
 
 #define DZNPhotoDisplayViewCellMargin 30.0
 
