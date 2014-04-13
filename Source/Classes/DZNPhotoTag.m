@@ -18,7 +18,7 @@
     return NSStringFromClass([DZNPhotoTag class]);
 }
 
-+ (instancetype)photoTagFromService:(DZNPhotoPickerControllerService)service
++ (instancetype)photoTagFromService:(DZNPhotoPickerControllerServices)service
 {
     if (service != 0) {
         DZNPhotoTag *tag = [DZNPhotoTag new];
@@ -28,7 +28,7 @@
     return nil;
 }
 
-+ (NSArray *)photoTagListFromService:(DZNPhotoPickerControllerService)service withResponse:(NSArray *)reponse
++ (NSArray *)photoTagListFromService:(DZNPhotoPickerControllerServices)service withResponse:(NSArray *)reponse
 {
     NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:reponse.count];
     

@@ -32,8 +32,8 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 @property (nonatomic, strong) NSMutableArray *photoMetadatas;
 @property (nonatomic, strong) NSMutableArray *photoTags;
 @property (nonatomic, strong) NSArray *segmentedControlTitles;
-@property (nonatomic) DZNPhotoPickerControllerService selectedService;
-@property (nonatomic) DZNPhotoPickerControllerService previousService;
+@property (nonatomic) DZNPhotoPickerControllerServices selectedService;
+@property (nonatomic) DZNPhotoPickerControllerServices previousService;
 @property (nonatomic) NSInteger resultPerPage;
 @property (nonatomic) NSInteger currentPage;
 

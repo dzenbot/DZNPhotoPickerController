@@ -24,7 +24,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     DZNPhotoAspectHorizontalRectangle
 };
 
-
 @interface DZNPhotoEditorViewController () <UIScrollViewDelegate>
 {
     UIImageView *_imageView;
@@ -488,8 +487,9 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
  */
 - (void)updateScrollViewContentInset
 {
-    CGFloat maskHeight = (_cropMode == DZNPhotoPickerControllerCropModeCircular) ? [self cropSize].width-(kDZNPhotoEditorViewControllerInnerEdgeInset*2) : [self cropSize].height;
     CGSize imageSize = [self imageSize];
+    
+    CGFloat maskHeight = (_cropMode == DZNPhotoPickerControllerCropModeCircular) ? _cropSize.width-(kDZNPhotoEditorViewControllerInnerEdgeInset*2) : _cropSize.height;
     
     CGFloat hInset = (_cropMode == DZNPhotoPickerControllerCropModeCircular) ? kDZNPhotoEditorViewControllerInnerEdgeInset : 0.0;
     CGFloat vInset = fabs((maskHeight-imageSize.height)/2);
@@ -508,8 +508,8 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     dispatch_queue_t exampleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
     dispatch_async(exampleQueue, ^{
         
-        UIImage *photo = [self editedPhoto];
         CGRect rect = [self cropRect];
+        UIImage *photo = [self editedPhoto];
         
         dispatch_queue_t queue = dispatch_get_main_queue();
         dispatch_async(queue, ^{

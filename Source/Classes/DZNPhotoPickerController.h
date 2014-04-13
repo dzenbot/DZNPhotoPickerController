@@ -27,7 +27,7 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 /** The photo picker's delegate object. */
 @property (nonatomic, assign) id <UINavigationControllerDelegate, DZNPhotoPickerControllerDelegate> delegate;
 /** The photo services to be supported by the controller. Default values are 500px & Flickr. */
-@property (nonatomic) DZNPhotoPickerControllerService supportedServices;
+@property (nonatomic) DZNPhotoPickerControllerServices supportedServices;
 /** YES if the user is allowed to edit a selected image. Default value is NO. */
 @property (nonatomic) BOOL allowsEditing;
 /** An optional string term for auto-starting the photo search, as soon as the picker is presented. */
@@ -37,7 +37,7 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 /** The cropping size (i.e. 320,320). When setting this property manuallt, the cropMode is overidden to DZNPhotoPickerControllerCropModeCustom. */
 @property (nonatomic, assign) CGSize cropSize;
 /** The supported licenses of photos to search. Default value is "All CC Reserved Attributions". Pending implementation. */
-@property (nonatomic) DZNPhotoPickerControllerCCLicense supportedLicenses;
+@property (nonatomic) DZNPhotoPickerControllerCCLicenses supportedLicenses;
 /** YES if the picker should download the full size photo after selecting its thumbnail, when allowsEditing is NO. Default value is YES. */
 @property (nonatomic) BOOL enablePhotoDownload;
 /** A block to be executed whenever the user pickes a new photo. Use this block to replace delegate method photoPickerController:didFinishPickingPhotoWithInfo: */
@@ -63,7 +63,7 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
  * @param services The specified supported services.
  * @return An array whose elements identify the available media types for the supported services.
  */
-+ (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerService)services;
++ (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerServices)services;
 
 /**
  * Registers a specified photo service.
@@ -74,7 +74,7 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
  * @param secret The API consumer secret token.
  * @param subscription The photo service subscription type (i.e. Free & Paid). This param only affects Google Images API for now.
  */
-+ (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret subscription:(DZNPhotoPickerControllerSubscription)subscription;
++ (void)registerService:(DZNPhotoPickerControllerServices)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret subscription:(DZNPhotoPickerControllerSubscription)subscription;
 
 @end
 

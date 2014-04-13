@@ -17,7 +17,7 @@
     return NSStringFromClass([DZNPhotoMetadata class]);
 }
 
-+ (instancetype)photoMetadataFromService:(DZNPhotoPickerControllerService)service
++ (instancetype)photoMetadataFromService:(DZNPhotoPickerControllerServices)service
 {
     if (service != 0) {
         DZNPhotoMetadata *metadata = [DZNPhotoMetadata new];
@@ -27,7 +27,7 @@
     return nil;
 }
 
-+ (NSArray *)photoMetadataListFromService:(DZNPhotoPickerControllerService)service withResponse:(NSArray *)reponse
++ (NSArray *)photoMetadataListFromService:(DZNPhotoPickerControllerServices)service withResponse:(NSArray *)reponse
 {
     NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:reponse.count];
     

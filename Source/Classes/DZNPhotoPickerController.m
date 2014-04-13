@@ -81,7 +81,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 
 #pragma mark - Getter methods
 
-+ (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerService)supportedServices
++ (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerServices)services
 {
     return @[(NSString *)kUTTypeImage];
 }
@@ -89,7 +89,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 
 #pragma mark - Setter methods
 
-- (void)setSupportedServices:(DZNPhotoPickerControllerService)services
+- (void)setSupportedServices:(DZNPhotoPickerControllerServices)services
 {
     NSAssert(services > 0, @"You must support at least 1 service.");
     _supportedServices = services;
@@ -130,7 +130,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     _cropMode = DZNPhotoPickerControllerCropModeCustom;
 }
 
-+ (void)registerService:(DZNPhotoPickerControllerService)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret subscription:(DZNPhotoPickerControllerSubscription)subscription
++ (void)registerService:(DZNPhotoPickerControllerServices)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret subscription:(DZNPhotoPickerControllerSubscription)subscription
 {
     [DZNPhotoServiceFactory setConsumerKey:key consumerSecret:secret service:service subscription:subscription];
 }

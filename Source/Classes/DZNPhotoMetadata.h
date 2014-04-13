@@ -46,7 +46,7 @@
  * @param service The specific photo search service.
  * @return A new allocated instance DZNPhotoMetadata.
  */
-+ (instancetype)photoMetadataFromService:(DZNPhotoPickerControllerService)service;
++ (instancetype)photoMetadataFromService:(DZNPhotoPickerControllerServices)service;
 
 /**
  * Parses and returns a list of photo metadata from a request response.
@@ -55,6 +55,6 @@
  * @param reponse The response with already parsed JSON.
  * @returns A list of photo metadata.
  */
-+ (NSArray *)photoMetadataListFromService:(DZNPhotoPickerControllerService)service withResponse:(NSArray *)reponse;
++ (NSArray *)photoMetadataListFromService:(DZNPhotoPickerControllerServices)service withResponse:(NSArray *)reponse;
 
 @end

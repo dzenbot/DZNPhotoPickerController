@@ -22,7 +22,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+
         self.backgroundView = self.imageView;
         self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
 

@@ -28,6 +28,6 @@ UIKIT_EXTERN NSString *const DZNPhotoServiceClientSubscription;
  * @param subscription The photo search service subscription.
  * @return A new instance of an HTTP service client.
  */
-- (instancetype)initWithService:(DZNPhotoPickerControllerService)service subscription:(DZNPhotoPickerControllerSubscription)subscription;
+- (instancetype)initWithService:(DZNPhotoPickerControllerServices)service subscription:(DZNPhotoPickerControllerSubscription)subscription;
 
 @end

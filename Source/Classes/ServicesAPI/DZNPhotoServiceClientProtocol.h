@@ -18,7 +18,7 @@ typedef void (^DZNHTTPRequestCompletion)(NSArray *list, NSError *error);
 @protocol DZNPhotoServiceClientProtocol <NSObject>
 
 /** The current photo service. */
-@property (nonatomic) DZNPhotoPickerControllerService service;
+@property (nonatomic) DZNPhotoPickerControllerServices service;
 /** The current photo service subscription. */
 @property (nonatomic) DZNPhotoPickerControllerSubscription subscription;
 /** YES if the HTTP client is loading. */

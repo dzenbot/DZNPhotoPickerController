@@ -16,7 +16,7 @@ NSString *const DZNPhotoPickerControllerPhotoMetadata = @"DZNPhotoPickerControll
 NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDidFinishPickingNotification";
 
 
-NSString *NSStringFromService(DZNPhotoPickerControllerService service)
+NSString *NSStringFromService(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
         case DZNPhotoPickerControllerService500px:          return @"500px";
@@ -27,7 +27,7 @@ NSString *NSStringFromService(DZNPhotoPickerControllerService service)
     }
 }
 
-DZNPhotoPickerControllerService DZNPhotoServiceFromName(NSString *name)
+DZNPhotoPickerControllerServices DZNPhotoServiceFromName(NSString *name)
 {
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerService500px)])         return DZNPhotoPickerControllerService500px;
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceFlickr)])        return DZNPhotoPickerControllerServiceFlickr;
@@ -36,7 +36,7 @@ DZNPhotoPickerControllerService DZNPhotoServiceFromName(NSString *name)
     return -1;
 }
 
-DZNPhotoPickerControllerService DZNFirstPhotoServiceFromPhotoServices(DZNPhotoPickerControllerService services)
+DZNPhotoPickerControllerServices DZNFirstPhotoServiceFromPhotoServices(DZNPhotoPickerControllerServices services)
 {
     if ((services & DZNPhotoPickerControllerService500px) > 0) {
         return DZNPhotoPickerControllerService500px;
@@ -53,7 +53,7 @@ DZNPhotoPickerControllerService DZNFirstPhotoServiceFromPhotoServices(DZNPhotoPi
     return 0;
 }
 
-NSArray *NSArrayFromServices(DZNPhotoPickerControllerService services)
+NSArray *NSArrayFromServices(DZNPhotoPickerControllerServices services)
 {
     NSMutableArray *titles = [NSMutableArray array];
     

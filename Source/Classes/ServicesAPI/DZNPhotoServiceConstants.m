@@ -24,7 +24,7 @@ NSString *NSUserDefaultsUniqueKey(NSUInteger type, NSString *key)
     return [NSString stringWithFormat:@"%@.%@_%@", DZNPhotoServiceClientIndentifier, NSStringFromService(type), key];
 }
 
-NSURL *baseURLForService(DZNPhotoPickerControllerService service)
+NSURL *baseURLForService(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
         case DZNPhotoPickerControllerService500px:              return [NSURL URLWithString:@"https://api.500px.com/v1"];
@@ -35,7 +35,7 @@ NSURL *baseURLForService(DZNPhotoPickerControllerService service)
     }
 }
 
-NSString *tagsResourceKeyPathForService(DZNPhotoPickerControllerService service)
+NSString *tagsResourceKeyPathForService(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
         case DZNPhotoPickerControllerService500px:
@@ -45,7 +45,7 @@ NSString *tagsResourceKeyPathForService(DZNPhotoPickerControllerService service)
     }
 }
 
-NSString *tagSearchUrlPathForService(DZNPhotoPickerControllerService service)
+NSString *tagSearchUrlPathForService(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
         case DZNPhotoPickerControllerServiceFlickr:             return @"flickr.tags.getRelated";
@@ -54,7 +54,7 @@ NSString *tagSearchUrlPathForService(DZNPhotoPickerControllerService service)
     }
 }
 
-NSString *photosResourceKeyPathForService(DZNPhotoPickerControllerService service)
+NSString *photosResourceKeyPathForService(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
         case DZNPhotoPickerControllerService500px:              return @"photos";
@@ -65,7 +65,7 @@ NSString *photosResourceKeyPathForService(DZNPhotoPickerControllerService servic
     }
 }
 
-NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerService service)
+NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
         case DZNPhotoPickerControllerService500px:              return @"photos/search";
@@ -76,7 +76,7 @@ NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerService service)
     }
 }
 
-NSString *keyForAPIConsumerKey(DZNPhotoPickerControllerService service)
+NSString *keyForAPIConsumerKey(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
         case DZNPhotoPickerControllerService500px:              return @"consumer_key";
@@ -87,7 +87,7 @@ NSString *keyForAPIConsumerKey(DZNPhotoPickerControllerService service)
     }
 }
 
-NSString *keyForAPIConsumerSecret(DZNPhotoPickerControllerService service)
+NSString *keyForAPIConsumerSecret(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
             
@@ -96,7 +96,7 @@ NSString *keyForAPIConsumerSecret(DZNPhotoPickerControllerService service)
     }
 }
 
-NSString *keyForSearchTerm(DZNPhotoPickerControllerService service)
+NSString *keyForSearchTerm(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
         case DZNPhotoPickerControllerService500px:              return @"term";
@@ -107,7 +107,7 @@ NSString *keyForSearchTerm(DZNPhotoPickerControllerService service)
     }
 }
 
-NSString *keyForSearchTag(DZNPhotoPickerControllerService service)
+NSString *keyForSearchTag(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
         case DZNPhotoPickerControllerService500px:
@@ -118,7 +118,7 @@ NSString *keyForSearchTag(DZNPhotoPickerControllerService service)
     }
 }
 
-NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService service)
+NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
         case DZNPhotoPickerControllerService500px:              return @"rpp";
@@ -128,7 +128,7 @@ NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService service)
     }
 }
 
-NSString *keyForSearchTagContent(DZNPhotoPickerControllerService service)
+NSString *keyForSearchTagContent(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
         case DZNPhotoPickerControllerService500px:
@@ -138,7 +138,7 @@ NSString *keyForSearchTagContent(DZNPhotoPickerControllerService service)
     }
 }
 
-NSString *keyPathForObjectName(DZNPhotoPickerControllerService service, NSString *objectName)
+NSString *keyPathForObjectName(DZNPhotoPickerControllerServices service, NSString *objectName)
 {
     if ([objectName isEqualToString:[DZNPhotoTag name]]) {
         return tagsResourceKeyPathForService(service);

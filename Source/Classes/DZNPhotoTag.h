@@ -31,7 +31,7 @@
  * @param service The specific photo search service.
  * @return A new allocated instance DZNPhotoTag.
  */
-+ (instancetype)photoTagFromService:(DZNPhotoPickerControllerService)service;
++ (instancetype)photoTagFromService:(DZNPhotoPickerControllerServices)service;
 
 /**
  * Parses and returns a list of photo tags from a request response.
@@ -40,6 +40,6 @@
  * @param reponse The response with already parsed JSON.
  * @returns A list of photo tags.
  */
-+ (NSArray *)photoTagListFromService:(DZNPhotoPickerControllerService)service withResponse:(NSArray *)reponse;
++ (NSArray *)photoTagListFromService:(DZNPhotoPickerControllerServices)service withResponse:(NSArray *)reponse;
 
 @end

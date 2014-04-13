@@ -27,7 +27,7 @@ UIKIT_EXTERN NSString *NSUserDefaultsUniqueKey(NSUInteger type, NSString *key);
  * @param service The specified service type.
  * @returns The base URL.
  */
-UIKIT_EXTERN NSURL *baseURLForService(DZNPhotoPickerControllerService service);
+UIKIT_EXTERN NSURL *baseURLForService(DZNPhotoPickerControllerServices service);
 
 /**
  * Returns a key path for tags, to retrieve them from a JSON structure, for a specified service.
@@ -35,7 +35,7 @@ UIKIT_EXTERN NSURL *baseURLForService(DZNPhotoPickerControllerService service);
  * @param service The specified service type.
  * @returns The key path for tags.
  */
-UIKIT_EXTERN NSString *tagsResourceKeyPathForService(DZNPhotoPickerControllerService service);
+UIKIT_EXTERN NSString *tagsResourceKeyPathForService(DZNPhotoPickerControllerServices service);
 
 /**
  * Returns the url path for tag search, for a specified service..
@@ -43,7 +43,7 @@ UIKIT_EXTERN NSString *tagsResourceKeyPathForService(DZNPhotoPickerControllerSer
  * @param service The specified service type.
  * @returns The url path to be append to the client's base URL.
  */
-UIKIT_EXTERN NSString *tagSearchUrlPathForService(DZNPhotoPickerControllerService service);
+UIKIT_EXTERN NSString *tagSearchUrlPathForService(DZNPhotoPickerControllerServices service);
 
 /**
  * Returns a key path for photos, to retrieve them from a JSON structure, for a specified service.
@@ -51,7 +51,7 @@ UIKIT_EXTERN NSString *tagSearchUrlPathForService(DZNPhotoPickerControllerServic
  * @param service The specified service type.
  * @returns The key path for photos.
  */
-UIKIT_EXTERN NSString *photosResourceKeyPathForService(DZNPhotoPickerControllerService service);
+UIKIT_EXTERN NSString *photosResourceKeyPathForService(DZNPhotoPickerControllerServices service);
 
 /**
  * Returns the url path for photo search, for a specified service..
@@ -59,7 +59,7 @@ UIKIT_EXTERN NSString *photosResourceKeyPathForService(DZNPhotoPickerControllerS
  * @param service The specified service type.
  * @returns The url path to be append to the client's base URL.
  */
-UIKIT_EXTERN NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerService service);
+UIKIT_EXTERN NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerServices service);
 
 /**
  * Returns a key to be used for setting a consumer acces key value, for a specified service.
@@ -67,7 +67,7 @@ UIKIT_EXTERN NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerServ
  * @param service The specified service type.
  * @returns The key for consumer consumer acces key.
  */
-UIKIT_EXTERN NSString *keyForAPIConsumerKey(DZNPhotoPickerControllerService service);
+UIKIT_EXTERN NSString *keyForAPIConsumerKey(DZNPhotoPickerControllerServices service);
 
 /**
  * Returns a key to be used for setting a consumer acces secret value, for a specified service.
@@ -75,7 +75,7 @@ UIKIT_EXTERN NSString *keyForAPIConsumerKey(DZNPhotoPickerControllerService serv
  * @param service The specified service type.
  * @returns The key for consumer consumer acces secret.
  */
-UIKIT_EXTERN NSString *keyForAPIConsumerSecret(DZNPhotoPickerControllerService service);
+UIKIT_EXTERN NSString *keyForAPIConsumerSecret(DZNPhotoPickerControllerServices service);
 
 /**
  * Returns a key to be used for setting a photo search term value, for a specified service.
@@ -83,7 +83,7 @@ UIKIT_EXTERN NSString *keyForAPIConsumerSecret(DZNPhotoPickerControllerService s
  * @param service The specified service type.
  * @returns The key for photo search term.
  */
-UIKIT_EXTERN NSString *keyForSearchTerm(DZNPhotoPickerControllerService service);
+UIKIT_EXTERN NSString *keyForSearchTerm(DZNPhotoPickerControllerServices service);
 
 /**
  * Returns a key to be used for setting a tag search term value, for a specified service.
@@ -91,7 +91,7 @@ UIKIT_EXTERN NSString *keyForSearchTerm(DZNPhotoPickerControllerService service)
  * @param service The specified service type.
  * @returns The key for tag search term.
  */
-UIKIT_EXTERN NSString *keyForSearchTag(DZNPhotoPickerControllerService service);
+UIKIT_EXTERN NSString *keyForSearchTag(DZNPhotoPickerControllerServices service);
 
 /**
  * Returns a key to be used for setting a search result value per page, for a specified service.
@@ -99,7 +99,7 @@ UIKIT_EXTERN NSString *keyForSearchTag(DZNPhotoPickerControllerService service);
  * @param service The specified service type.
  * @returns The key for search result per page.
  */
-UIKIT_EXTERN NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService service);
+UIKIT_EXTERN NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerServices service);
 
 /**
  * Returns a key to be used for retrieving search tag content, for a specified service.
@@ -107,7 +107,7 @@ UIKIT_EXTERN NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerService
  * @param service The specified service type.
  * @returns The key for tag search term.
  */
-UIKIT_EXTERN NSString *keyForSearchTagContent(DZNPhotoPickerControllerService service);
+UIKIT_EXTERN NSString *keyForSearchTagContent(DZNPhotoPickerControllerServices service);
 
 /**
  * Returns a key path for photos or tags, to retrieve them from a JSON structure, for a specified service and object name.
@@ -116,5 +116,5 @@ UIKIT_EXTERN NSString *keyForSearchTagContent(DZNPhotoPickerControllerService se
  * @param objectName The object name.
  * @returns The key path for photos or tags.
  */
-UIKIT_EXTERN NSString *keyPathForObjectName(DZNPhotoPickerControllerService service, NSString *objectName);
+UIKIT_EXTERN NSString *keyPathForObjectName(DZNPhotoPickerControllerServices service, NSString *objectName);
 

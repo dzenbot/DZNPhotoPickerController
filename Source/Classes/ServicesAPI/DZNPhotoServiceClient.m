@@ -24,7 +24,7 @@
 @synthesize subscription = _subscription;
 @synthesize loading = _loading;
 
-- (instancetype)initWithService:(DZNPhotoPickerControllerService)service subscription:(DZNPhotoPickerControllerSubscription)subscription
+- (instancetype)initWithService:(DZNPhotoPickerControllerServices)service subscription:(DZNPhotoPickerControllerSubscription)subscription
 {
     self = [super initWithBaseURL:baseURLForService(service)];
     if (self) {

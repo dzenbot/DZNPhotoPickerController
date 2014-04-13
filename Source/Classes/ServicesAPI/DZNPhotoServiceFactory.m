@@ -32,7 +32,7 @@
 
 #pragma mark - Getter methods
 
-- (id<DZNPhotoServiceClientProtocol>)clientForService:(DZNPhotoPickerControllerService)service
+- (id<DZNPhotoServiceClientProtocol>)clientForService:(DZNPhotoPickerControllerServices)service
 {
     for (DZNPhotoServiceClient *client in self.clients) {
         if (client.service == service) {
@@ -51,7 +51,7 @@
 
 #pragma mark - Setter methods
 
-+ (void)setConsumerKey:(NSString *)key consumerSecret:(NSString *)secret service:(DZNPhotoPickerControllerService)service subscription:(DZNPhotoPickerControllerSubscription)subscription
++ (void)setConsumerKey:(NSString *)key consumerSecret:(NSString *)secret service:(DZNPhotoPickerControllerServices)service subscription:(DZNPhotoPickerControllerSubscription)subscription
 {
     NSAssert(key, @"\"key\" cannot be nil");
     NSAssert(secret, @"\"secret\" cannot be nil");
