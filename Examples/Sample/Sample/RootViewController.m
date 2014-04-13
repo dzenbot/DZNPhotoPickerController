@@ -100,13 +100,13 @@
     
     if (image) {
         picker = [[DZNPhotoPickerController alloc] initWithEditableImage:image];
-        picker.cropMode = [[_photoPayload objectForKey:DZNPhotoPickerControllerCroppingMode] integerValue];
+        picker.cropMode = [[_photoPayload objectForKey:DZNPhotoPickerControllerCropMode] integerValue];
     }
     else {
         picker = [DZNPhotoPickerController new];
         picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages;
         picker.allowsEditing = YES;
-        picker.cropMode = DZNPhotoPickerControllerCropModeSquare;
+        picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
     }
     
     picker.finalizationBlock = ^(DZNPhotoPickerController *picker, NSDictionary *info) {
@@ -126,7 +126,7 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = sourceType;
     picker.allowsEditing = YES;
-    picker.editingMode = DZNPhotoPickerControllerCropModeSquare;
+    picker.editingMode = DZNPhotoEditorViewControllerCropModeSquare;
     
     picker.finalizationBlock = ^(UIImagePickerController *picker, NSDictionary *info) {
         [self handleImagePicker:picker withMediaInfo:info];
@@ -141,11 +141,11 @@
 
 - (void)handleImagePicker:(UIImagePickerController *)picker withMediaInfo:(NSDictionary *)info
 {
-    if (picker.editingMode != DZNPhotoPickerControllerCropModeNone) {
+    if (picker.editingMode != DZNPhotoEditorViewControllerCropModeNone) {
         
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
 
-        DZNPhotoEditorViewController *editor = [[DZNPhotoEditorViewController alloc] initWithImage:image cropMode:DZNPhotoPickerControllerCropModeCircular];
+        DZNPhotoEditorViewController *editor = [[DZNPhotoEditorViewController alloc] initWithImage:image cropMode:DZNPhotoEditorViewControllerCropModeCircular];
         [picker pushViewController:editor animated:YES];
     }
     else {
@@ -162,7 +162,9 @@
     NSLog(@"EditedImage : %@",[payload objectForKey:UIImagePickerControllerEditedImage]);
     NSLog(@"MediaType : %@",[payload objectForKey:UIImagePickerControllerMediaType]);
     NSLog(@"CropRect : %@", NSStringFromCGRect([[payload objectForKey:UIImagePickerControllerCropRect] CGRectValue]));
-    NSLog(@"CropMode : %@", [payload objectForKey:DZNPhotoPickerControllerCroppingMode]);
+    NSLog(@"ZoomScale : %f", [[payload objectForKey:DZNPhotoPickerControllerCropZoomScale] floatValue]);
+
+    NSLog(@"CropMode : %@", [payload objectForKey:DZNPhotoPickerControllerCropMode]);
     NSLog(@"PhotoAttributes : %@",[payload objectForKey:DZNPhotoPickerControllerPhotoMetadata]);
     
     UIImage *image = [payload objectForKey:UIImagePickerControllerEditedImage];

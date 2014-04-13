@@ -10,7 +10,8 @@
 
 #import "DZNPhotoPickerControllerConstants.h"
 
-NSString *const DZNPhotoPickerControllerCroppingMode = @"DZNPhotoPickerControllerCroppingMode";
+NSString *const DZNPhotoPickerControllerCropMode = @"DZNPhotoPickerControllerCropMode";
+NSString *const DZNPhotoPickerControllerCropZoomScale = @"DZNPhotoPickerControllerCropZoomScale";
 NSString *const DZNPhotoPickerControllerPhotoMetadata = @"DZNPhotoPickerControllerPhotoMetadata";
 
 NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDidFinishPickingNotification";

@@ -475,10 +475,11 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     if (!self.navigationController.enablePhotoDownload) {
         
         [DZNPhotoEditorViewController didFinishPickingOriginalImage:nil
-                                                      editedImage:nil
-                                                         cropRect:CGRectZero
-                                                         cropMode:DZNPhotoPickerControllerCropModeNone
-                                                    photoMetadata:metadata];
+                                                        editedImage:nil
+                                                           cropRect:CGRectZero
+                                                          zoomScale:1.0
+                                                           cropMode:DZNPhotoEditorViewControllerCropModeNone
+                                                      photoMetadata:metadata];
     }
     else if (self.navigationController.allowsEditing) {
         
@@ -495,10 +496,11 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
                                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
                                                                 if (image) {
                                                                     [DZNPhotoEditorViewController didFinishPickingOriginalImage:image
-                                                                                                                  editedImage:nil
-                                                                                                                     cropRect:CGRectZero
-                                                                                                                     cropMode:DZNPhotoPickerControllerCropModeNone
-                                                                                                                photoMetadata:metadata];
+                                                                                                                    editedImage:nil
+                                                                                                                       cropRect:CGRectZero
+                                                                                                                      zoomScale:1.0
+                                                                                                                       cropMode:DZNPhotoEditorViewControllerCropModeNone
+                                                                                                                  photoMetadata:metadata];
                                                                     
                                                                 }
                                                                 else {

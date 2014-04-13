@@ -33,8 +33,8 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 /** An optional string term for auto-starting the photo search, as soon as the picker is presented. */
 @property (nonatomic, copy) NSString *initialSearchTerm;
 /** The cropping mode (ie: Square, Circular or Custom). Default is Square. */
-@property (nonatomic, assign) DZNPhotoPickerControllerCropMode cropMode;
-/** The cropping size (i.e. 320,320). When setting this property manuallt, the cropMode is overidden to DZNPhotoPickerControllerCropModeCustom. */
+@property (nonatomic, assign) DZNPhotoEditorViewControllerCropMode cropMode;
+/** The cropping size (i.e. 320,320). When setting this property manuallt, the cropMode is overidden to DZNPhotoEditorViewControllerCropModeCustom. */
 @property (nonatomic, assign) CGSize cropSize;
 /** The supported licenses of photos to search. Default value is "All CC Reserved Attributions". Pending implementation. */
 @property (nonatomic) DZNPhotoPickerControllerCCLicenses supportedLicenses;

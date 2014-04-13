@@ -10,17 +10,17 @@
 
 #import "UIImagePickerController+Edit.h"
 
-static DZNPhotoPickerControllerCropMode _editingMode;
+static DZNPhotoEditorViewControllerCropMode _editingMode;
 
 @implementation UIImagePickerController (Edit)
 
-- (void)setEditingMode:(DZNPhotoPickerControllerCropMode)mode
+- (void)setEditingMode:(DZNPhotoEditorViewControllerCropMode)mode
 {
     _editingMode = mode;
     self.allowsEditing = NO;
 
     switch (mode) {
-        case DZNPhotoPickerControllerCropModeNone:
+        case DZNPhotoEditorViewControllerCropModeNone:
             [[NSNotificationCenter defaultCenter] removeObserver:self name:DZNPhotoPickerDidFinishPickingNotification object:nil];
             break;
             
@@ -30,7 +30,7 @@ static DZNPhotoPickerControllerCropMode _editingMode;
     }
 }
 
-- (DZNPhotoPickerControllerCropMode)editingMode
+- (DZNPhotoEditorViewControllerCropMode)editingMode
 {
     return _editingMode;
 }
@@ -40,7 +40,7 @@ static DZNPhotoPickerControllerCropMode _editingMode;
     if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]){
         
         if ([[notification.userInfo allKeys] containsObject:UIImagePickerControllerEditedImage]) {
-            self.editingMode = DZNPhotoPickerControllerCropModeNone;
+            self.editingMode = DZNPhotoEditorViewControllerCropModeNone;
         }
         
         [self.delegate imagePickerController:self didFinishPickingMediaWithInfo:notification.userInfo];

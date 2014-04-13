@@ -34,7 +34,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
         self.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
         self.supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
         
-        self.cropMode = DZNPhotoPickerControllerCropModeSquare;
+        self.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
     }
     return self;
 }
@@ -95,15 +95,15 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     _supportedServices = services;
 }
 
-- (void)setCropMode:(DZNPhotoPickerControllerCropMode)mode
+- (void)setCropMode:(DZNPhotoEditorViewControllerCropMode)mode
 {
-    if (mode != DZNPhotoPickerControllerCropModeNone) {
+    if (mode != DZNPhotoEditorViewControllerCropModeNone) {
         _allowsEditing = YES;
     }
     
     _cropMode = mode;
     
-    if (mode == DZNPhotoPickerControllerCropModeSquare || mode == DZNPhotoPickerControllerCropModeCircular) {
+    if (mode == DZNPhotoEditorViewControllerCropModeSquare || mode == DZNPhotoEditorViewControllerCropModeCircular) {
         _cropSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.width);
     }
 }
@@ -127,7 +127,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     NSAssert(!CGSizeEqualToSize(size, CGSizeZero), @"\"cropSize\" cannot be zero.");
     
     _cropSize = size;
-    _cropMode = DZNPhotoPickerControllerCropModeCustom;
+    _cropMode = DZNPhotoEditorViewControllerCropModeCustom;
 }
 
 + (void)registerService:(DZNPhotoPickerControllerServices)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret subscription:(DZNPhotoPickerControllerSubscription)subscription

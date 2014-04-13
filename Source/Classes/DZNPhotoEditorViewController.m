@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 /** The view layed out at the bottom for displaying action buttons and activity indicator. */
 @property (nonatomic, strong) UIView *bottomView;
 /** The cropping mode (ie: Square, Circular or Custom). Default is Square. */
-@property (nonatomic) DZNPhotoPickerControllerCropMode cropMode;
+@property (nonatomic) DZNPhotoEditorViewControllerCropMode cropMode;
 /** The cropping size. Default is view's size.width,size.width (most of the cases 320,320). */
 @property (nonatomic) CGSize cropSize;
 
@@ -58,14 +58,14 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     return nil;
 }
 
-- (instancetype)initWithMetadata:(DZNPhotoMetadata *)metadata cropMode:(DZNPhotoPickerControllerCropMode)mode
+- (instancetype)initWithMetadata:(DZNPhotoMetadata *)metadata cropMode:(DZNPhotoEditorViewControllerCropMode)mode
 {
-    NSAssert(mode != DZNPhotoPickerControllerCropModeCustom, @"Expecting other cropMode than 'custom' for edition. Instead, use initWithMetadata:cropMode:cropSize:");
+    NSAssert(mode != DZNPhotoEditorViewControllerCropModeCustom, @"Expecting other cropMode than 'custom' for edition. Instead, use initWithMetadata:cropMode:cropSize:");
     
     return [self initWithMetadata:metadata cropMode:mode cropSize:CGSizeZero];
 }
 
-- (instancetype)initWithMetadata:(DZNPhotoMetadata *)metadata cropMode:(DZNPhotoPickerControllerCropMode)mode cropSize:(CGSize)size
+- (instancetype)initWithMetadata:(DZNPhotoMetadata *)metadata cropMode:(DZNPhotoEditorViewControllerCropMode)mode cropSize:(CGSize)size
 {
     self = [super init];
     if (self) {
@@ -76,14 +76,14 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     return self;
 }
 
-- (instancetype)initWithImage:(UIImage *)image cropMode:(DZNPhotoPickerControllerCropMode)mode
+- (instancetype)initWithImage:(UIImage *)image cropMode:(DZNPhotoEditorViewControllerCropMode)mode
 {
-    NSAssert(mode != DZNPhotoPickerControllerCropModeCustom, @"Expecting other cropMode than 'custom' for edition. Instead, use initWithImage:cropMode:cropSize:");
+    NSAssert(mode != DZNPhotoEditorViewControllerCropModeCustom, @"Expecting other cropMode than 'custom' for edition. Instead, use initWithImage:cropMode:cropSize:");
     
     return [self initWithImage:image cropMode:mode cropSize:CGSizeZero];
 }
 
-- (instancetype)initWithImage:(UIImage *)image cropMode:(DZNPhotoPickerControllerCropMode)mode cropSize:(CGSize)size
+- (instancetype)initWithImage:(UIImage *)image cropMode:(DZNPhotoEditorViewControllerCropMode)mode cropSize:(CGSize)size
 {
     self = [super init];
     if (self) {
@@ -188,7 +188,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         rect.origin = CGPointMake(roundf(_bottomView.frame.size.width-_acceptButton.frame.size.width-15.0), roundf(_bottomView.frame.size.height/2-_acceptButton.frame.size.height/2));
         [_acceptButton setFrame:rect];
         
-        if (_cropMode == DZNPhotoPickerControllerCropModeCircular) {
+        if (_cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
             
             UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectZero];
             topLabel.text = NSLocalizedString(@"Move and Scale", nil);
@@ -261,10 +261,10 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 - (UIImage *)overlayMask
 {
     switch (_cropMode) {
-        case DZNPhotoPickerControllerCropModeCircular:      return [self circularOverlayMask];
-        case DZNPhotoPickerControllerCropModeSquare:
-        case DZNPhotoPickerControllerCropModeCustom:        return [self squareOverlayMask];
-        case DZNPhotoPickerControllerCropModeNone:          return nil;
+        case DZNPhotoEditorViewControllerCropModeCircular:      return [self circularOverlayMask];
+        case DZNPhotoEditorViewControllerCropModeSquare:
+        case DZNPhotoEditorViewControllerCropModeCustom:        return [self squareOverlayMask];
+        case DZNPhotoEditorViewControllerCropModeNone:          return nil;
     }
 }
 
@@ -377,7 +377,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
         UIGraphicsEndImageContext();
     }
     
-    if (_cropMode == DZNPhotoPickerControllerCropModeCircular) {
+    if (_cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
         
         CGFloat diameter = bounds.size.width-(kDZNPhotoEditorViewControllerInnerEdgeInset*2);
         CGRect circulatRect = CGRectMake(0, 0, diameter, diameter);
@@ -404,9 +404,9 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 #pragma mark - Setter methods
 
-- (void)setCropMode:(DZNPhotoPickerControllerCropMode)mode
+- (void)setCropMode:(DZNPhotoEditorViewControllerCropMode)mode
 {
-    NSAssert(mode > DZNPhotoPickerControllerCropModeNone, @"Expecting other cropMode than 'None' for edition.");
+    NSAssert(mode > DZNPhotoEditorViewControllerCropModeNone, @"Expecting other cropMode than 'None' for edition.");
     
     _cropMode = mode;
 }
@@ -418,13 +418,13 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
  */
 - (void)setCropSize:(CGSize)size
 {
-    if (_cropMode == DZNPhotoPickerControllerCropModeCustom) {
+    if (_cropMode == DZNPhotoEditorViewControllerCropModeCustom) {
         NSAssert(!CGSizeEqualToSize(size, CGSizeZero) , @"Expecting a non-zero CGSize for cropMode 'Custom'.");
     }
     
     CGSize viewSize = self.view.bounds.size;
     
-    if (_cropMode == DZNPhotoPickerControllerCropModeCircular || _cropMode == DZNPhotoPickerControllerCropModeSquare) {
+    if (_cropMode == DZNPhotoEditorViewControllerCropModeCircular || _cropMode == DZNPhotoEditorViewControllerCropModeSquare) {
         _cropSize = CGSizeMake(viewSize.width, viewSize.width);
     }
     else {
@@ -489,9 +489,9 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 {
     CGSize imageSize = [self imageSize];
     
-    CGFloat maskHeight = (_cropMode == DZNPhotoPickerControllerCropModeCircular) ? _cropSize.width-(kDZNPhotoEditorViewControllerInnerEdgeInset*2) : _cropSize.height;
+    CGFloat maskHeight = (_cropMode == DZNPhotoEditorViewControllerCropModeCircular) ? _cropSize.width-(kDZNPhotoEditorViewControllerInnerEdgeInset*2) : _cropSize.height;
     
-    CGFloat hInset = (_cropMode == DZNPhotoPickerControllerCropModeCircular) ? kDZNPhotoEditorViewControllerInnerEdgeInset : 0.0;
+    CGFloat hInset = (_cropMode == DZNPhotoEditorViewControllerCropModeCircular) ? kDZNPhotoEditorViewControllerInnerEdgeInset : 0.0;
     CGFloat vInset = fabs((maskHeight-imageSize.height)/2);
     
     if (vInset == 0) vInset = 0.5;
@@ -517,10 +517,11 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
             if (photo && !CGRectEqualToRect(rect, CGRectZero)) {
                 
                 [DZNPhotoEditorViewController didFinishPickingOriginalImage:_imageView.image
-                                                              editedImage:photo
-                                                                 cropRect:rect
-                                                                 cropMode:_cropMode
-                                                            photoMetadata:_photoMetadata];
+                                                                editedImage:photo
+                                                                   cropRect:rect
+                                                                  zoomScale:_scrollView.zoomScale
+                                                                   cropMode:_cropMode
+                                                              photoMetadata:_photoMetadata];
             }
         });
     });
@@ -543,13 +544,15 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 + (void)didFinishPickingOriginalImage:(UIImage *)originalImage
                           editedImage:(UIImage *)editedImage
                              cropRect:(CGRect)cropRect
-                             cropMode:(DZNPhotoPickerControllerCropMode)cropMode
+                            zoomScale:(CGFloat)zoomScale
+                             cropMode:(DZNPhotoEditorViewControllerCropMode)cropMode
                         photoMetadata:(DZNPhotoMetadata *)metadata;
 {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                      [NSValue valueWithCGRect:cropRect], UIImagePickerControllerCropRect,
                                      @"public.image", UIImagePickerControllerMediaType,
-                                     @(cropMode), DZNPhotoPickerControllerCroppingMode,
+                                     @(cropMode), DZNPhotoPickerControllerCropMode,
+                                     @(zoomScale), DZNPhotoPickerControllerCropZoomScale,
                                      nil];
     
     if (originalImage) [userInfo setObject:originalImage forKey:UIImagePickerControllerOriginalImage];
