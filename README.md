@@ -44,15 +44,15 @@ Before even creating a new instance of DZNPhotoPickerController, it is recommend
 ```
 + (void)initialize
 {
-    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerService500px
-                                    withConsumerKey:YOUR_500px_KEY
-                                  andConsumerSecret:YOUR_500px_SECRET
-                                  subscription:DZNPhotoPickerControllerSubscriptionFree];
+    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerService500px
+                                  consumerKey:YOUR_500px_KEY
+                               consumerSecret:YOUR_500px_SECRET
+                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
     
-    [DZNPhotoPickerController registerForServiceType:DZNPhotoPickerControllerServiceFlickr
-                                    withConsumerKey:YOUR_Flickr_KEY
-                                  andConsumerSecret:YOUR_Flickr_SECRET
-                                  subscription:DZNPhotoPickerControllerSubscriptionFree];
+    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceFlickr
+                                  consumerKey:YOUR_Flickr_KEY
+                               consumerSecret:YOUR_Flickr_SECRET
+                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
 }
 ```
 
