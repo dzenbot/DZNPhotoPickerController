@@ -16,7 +16,7 @@
  */
 @interface UIImagePickerController (Edit)
 
-/** The editing mode to be used after selecting an image. */
-@property (nonatomic) DZNPhotoEditorViewControllerCropMode editingMode;
+/** The cropping mode (ie: Square, Circular or Custom). Default is Square. */
+@property (nonatomic, assign) DZNPhotoEditorViewControllerCropMode cropMode;
 
 @end
