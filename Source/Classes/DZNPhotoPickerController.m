@@ -102,10 +102,6 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     }
     
     _cropMode = mode;
-    
-    if (mode == DZNPhotoEditorViewControllerCropModeSquare || mode == DZNPhotoEditorViewControllerCropModeCircular) {
-        _cropSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.width);
-    }
 }
 
 - (void)setFinalizationBlock:(DZNPhotoPickerControllerFinalizationBlock)block
@@ -124,7 +120,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 
 - (void)setCropSize:(CGSize)size
 {
-    NSAssert(!CGSizeEqualToSize(size, CGSizeZero), @"\"cropSize\" cannot be zero.");
+    NSAssert(!CGSizeEqualToSize(size, CGSizeZero), @"'cropSize' cannot be zero.");
     
     _cropSize = size;
     _cropMode = DZNPhotoEditorViewControllerCropModeCustom;

@@ -55,9 +55,9 @@
 
 - (NSDictionary *)tagsParamsWithKeyword:(NSString *)keyword
 {
-    NSAssert(keyword, @"\"keyword\" cannot be nil for %@", NSStringFromService(_service));
-    NSAssert([self consumerKey], @"\"consumerKey\" cannot be nil for %@", NSStringFromService(_service));
-    NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil for %@", NSStringFromService(_service));
+    NSAssert(keyword, @"'keyword' cannot be nil for %@", NSStringFromService(_service));
+    NSAssert([self consumerKey], @"'consumerKey' cannot be nil for %@", NSStringFromService(_service));
+    NSAssert([self consumerSecret], @"'consumerSecret' cannot be nil for %@", NSStringFromService(_service));
     
     
     NSMutableDictionary *params = [NSMutableDictionary new];
@@ -74,10 +74,10 @@
 
 - (NSDictionary *)photosParamsWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage
 {
-    NSAssert(keyword, @"\"keyword\" cannot be nil for %@", NSStringFromService(_service));
-    NSAssert((resultPerPage > 0), @"\"result per page\" must be higher than 0 for %@", NSStringFromService(_service));
-    NSAssert([self consumerKey], @"\"consumerKey\" cannot be nil for %@", NSStringFromService(_service));
-    NSAssert([self consumerSecret], @"\"consumerSecret\" cannot be nil for %@", NSStringFromService(_service));
+    NSAssert(keyword, @"'keyword' cannot be nil for %@", NSStringFromService(_service));
+    NSAssert((resultPerPage > 0), @"'result per page' must be higher than 0 for %@", NSStringFromService(_service));
+    NSAssert([self consumerKey], @"'consumerKey' cannot be nil for %@", NSStringFromService(_service));
+    NSAssert([self consumerSecret], @"'consumerSecret' cannot be nil for %@", NSStringFromService(_service));
 
     NSMutableDictionary *params = [NSMutableDictionary new];
     [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(_service)];

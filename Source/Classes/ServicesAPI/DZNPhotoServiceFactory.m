@@ -53,8 +53,8 @@
 
 + (void)setConsumerKey:(NSString *)key consumerSecret:(NSString *)secret service:(DZNPhotoPickerControllerServices)service subscription:(DZNPhotoPickerControllerSubscription)subscription
 {
-    NSAssert(key, @"\"key\" cannot be nil");
-    NSAssert(secret, @"\"secret\" cannot be nil");
+    NSAssert(key, @"'key' cannot be nil");
+    NSAssert(secret, @"'secret' cannot be nil");
 
     [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerKey)];
     [[NSUserDefaults standardUserDefaults] setObject:secret forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerSecret)];
