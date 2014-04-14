@@ -98,7 +98,7 @@
 {
     DZNPhotoPickerController *picker = nil;
     
-    if (image) {
+    if (image && _photoPayload) {
         picker = [[DZNPhotoPickerController alloc] initWithEditableImage:image];
         picker.cropMode = [[_photoPayload objectForKey:DZNPhotoPickerControllerCropMode] integerValue];
     }
@@ -170,16 +170,7 @@
     UIImage *image = [payload objectForKey:UIImagePickerControllerEditedImage];
     if (!image) image = [payload objectForKey:UIImagePickerControllerOriginalImage];
     
-    _imageView.image = image;
-    [_button setTitle:nil forState:UIControlStateNormal];
-    
-    UIGraphicsBeginImageContextWithOptions(_button.frame.size, NO, 0);
-    UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, (_button.frame.size.height-image.size.height)/2, image.size.width, image.size.height)];
-    [[UIColor colorWithWhite:0 alpha:0.75] setFill];
-    [clipPath fill];
-    [_button setBackgroundImage:UIGraphicsGetImageFromCurrentImageContext() forState:UIControlStateHighlighted];
-    UIGraphicsEndImageContext();
-    
+    [self setButtonImage:image];
     [self saveImage:image];
 }
 
@@ -195,6 +186,24 @@
 
     _imageView.image = nil;
     _photoPayload = nil;
+}
+
+- (void)setButtonImage:(UIImage *)image
+{
+    _imageView.image = image;
+    [_button setTitle:nil forState:UIControlStateNormal];
+    
+    
+    UIGraphicsBeginImageContextWithOptions(_button.frame.size, NO, 0);
+    
+    CGSize imageSize = CGSizeMake(self.view.frame.size.width, (image.size.height*self.view.frame.size.width)/image.size.width);
+    UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, (_button.frame.size.height-imageSize.height)/2, imageSize.width, imageSize.height)];
+    [[UIColor colorWithWhite:0 alpha:0.75] setFill];
+    [clipPath fill];
+    
+    [_button setBackgroundImage:UIGraphicsGetImageFromCurrentImageContext() forState:UIControlStateHighlighted];
+    
+    UIGraphicsEndImageContext();
 }
 
 - (void)presentController:(UIViewController *)controller
