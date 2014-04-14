@@ -219,9 +219,20 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 
 - (CGRect)cropRect
 {
-    CGSize size = _cropSize;
-    CGFloat margin = (self.navigationController.view.bounds.size.height-size.height)/2;
-    return CGRectMake(0.0, margin, size.width, size.height);
+    CGFloat density = [UIScreen mainScreen].scale;
+    CGFloat zoomScale = _scrollView.zoomScale;
+    
+    CGFloat margin = (self.navigationController.view.bounds.size.height-_cropSize.height)/2;
+    
+    CGRect guideRect = [self guideRect];
+    
+    return CGRectZero;
+}
+
+- (CGRect)guideRect
+{
+    CGFloat margin = (self.navigationController.view.bounds.size.height-_cropSize.height)/2;
+    return CGRectMake(0.0, margin, _cropSize.width, _cropSize.height);
 }
 
 - (CGSize)imageSize
@@ -359,18 +370,18 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 {
     UIImage *_image = nil;
     
-    CGRect bounds = self.navigationController.view.bounds;
-    CGRect cropRect = [self cropRect];
+    CGRect viewRect = self.navigationController.view.bounds;
+    CGRect guideRect = [self guideRect];
     
-    CGFloat verticalMargin = (bounds.size.height-cropRect.size.height)/2;
+    CGFloat verticalMargin = (viewRect.size.height-guideRect.size.height)/2;
 
-    cropRect.origin.x = -_scrollView.contentOffset.x;
-    cropRect.origin.y = -_scrollView.contentOffset.y - verticalMargin;
+    guideRect.origin.x = -_scrollView.contentOffset.x;
+    guideRect.origin.y = -_scrollView.contentOffset.y - verticalMargin;
     
-    UIGraphicsBeginImageContextWithOptions(cropRect.size, NO, 0);{
+    UIGraphicsBeginImageContextWithOptions(guideRect.size, NO, 0);{
         CGContextRef context = UIGraphicsGetCurrentContext();
         
-        CGContextTranslateCTM(context, cropRect.origin.x, cropRect.origin.y);
+        CGContextTranslateCTM(context, guideRect.origin.x, guideRect.origin.y);
         [_scrollView.layer renderInContext:context];
         
         _image = UIGraphicsGetImageFromCurrentImageContext();
@@ -379,19 +390,19 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     
     if (_cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
         
-        CGFloat diameter = bounds.size.width-(kDZNPhotoEditorViewControllerInnerEdgeInset*2);
-        CGRect circulatRect = CGRectMake(0, 0, diameter, diameter);
+        CGFloat diameter = viewRect.size.width-(kDZNPhotoEditorViewControllerInnerEdgeInset*2);
+        CGRect circularRect = CGRectMake(0, 0, diameter, diameter);
         
-        CGFloat increment = 1.0/(((kDZNPhotoEditorViewControllerInnerEdgeInset*2)*100.0)/bounds.size.width);
+        CGFloat increment = 1.0/(((kDZNPhotoEditorViewControllerInnerEdgeInset*2)*100.0)/viewRect.size.width);
         CGFloat scale = 1.0 + round(increment * 10) / 10.0;
         
-        UIGraphicsBeginImageContextWithOptions(circulatRect.size, NO, 0.0);{
+        UIGraphicsBeginImageContextWithOptions(circularRect.size, NO, 0.0);{
 
             CGContextRef context = UIGraphicsGetCurrentContext();
             CGContextTranslateCTM(context, -kDZNPhotoEditorViewControllerInnerEdgeInset, -kDZNPhotoEditorViewControllerInnerEdgeInset);
             CGContextScaleCTM(context, scale, scale);
 
-            [_image drawInRect:circulatRect];
+            [_image drawInRect:circularRect];
             
             _image = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
@@ -508,17 +519,15 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     dispatch_queue_t exampleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
     dispatch_async(exampleQueue, ^{
         
-        CGRect rect = [self cropRect];
         UIImage *photo = [self editedPhoto];
         
         dispatch_queue_t queue = dispatch_get_main_queue();
         dispatch_async(queue, ^{
             
-            if (photo && !CGRectEqualToRect(rect, CGRectZero)) {
-                
+            if (photo) {
                 [DZNPhotoEditorViewController didFinishPickingOriginalImage:_imageView.image
                                                                 editedImage:photo
-                                                                   cropRect:rect
+                                                                   cropRect:[self cropRect]
                                                                   zoomScale:_scrollView.zoomScale
                                                                    cropMode:_cropMode
                                                               photoMetadata:_photoMetadata];

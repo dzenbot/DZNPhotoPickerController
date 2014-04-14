@@ -7,10 +7,9 @@
 //
 
 #import "RootViewController.h"
-#import "DZNPhotoPickerController.h"
 
-#import "UIImagePickerController+Edit.h"
-#import "UIImagePickerController+Block.h"
+#import "DZNPhotoPickerController.h"
+#import "UIImagePickerControllerExtended.h"
 
 #import "Private.h"
 

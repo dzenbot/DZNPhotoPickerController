@@ -67,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F234C3E18FC7680009F536E /* UIImagePickerControllerExtended.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIImagePickerControllerExtended.h; sourceTree = "<group>"; };
 		4F484DDC18E078A900A37BC3 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/DZNPhotoPickerController.strings"; sourceTree = "<group>"; };
 		4F484DDD18E078A900A37BC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DZNPhotoPickerController.strings; sourceTree = "<group>"; };
 		4F57013D180E5D0E00E12444 /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -269,6 +270,7 @@
 		4F5B1D5918E1D8F400148EA0 /* UIImagePickerController */ = {
 			isa = PBXGroup;
 			children = (
+				4F234C3E18FC7680009F536E /* UIImagePickerControllerExtended.h */,
 				4F5B1D5C18E1D8F400148EA0 /* UIImagePickerController+Edit.h */,
 				4F5B1D5D18E1D8F400148EA0 /* UIImagePickerController+Edit.m */,
 				4F5B1D5A18E1D8F400148EA0 /* UIImagePickerController+Block.h */,
