@@ -16,6 +16,8 @@
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 
+#import "SDWebImageManager.h"
+
 static NSString *kDZNPhotoCellViewIdentifier = @"kDZNPhotoCellViewIdentifier";
 static NSString *kDZNPhotoFooterViewIdentifier = @"kDZNPhotoFooterViewIdentifier";
 static NSString *kDZNTagCellViewIdentifier = @"kDZNTagCellViewIdentifier";
