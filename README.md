@@ -10,11 +10,11 @@ A photo search/picker for iOS using popular providers like 500px, Flickr, Instag
 * Auto-completed typing for easier search (using Flickr's API as a common denominator).
 * Present the photo picker with a pre-defined search term to automatically start searching.
 * Exact same UI layouts and behaviours than UIImagePickerController.
-* Edit photo selections with cropping guides (square and circular, like the Contacts app).
+* Edit photo selections with cropping guides : square, circular (like the Contacts app) and custom size.
 * Circular cropping mode for using with UIImagePickerController (check on UIImagePickerController+Edit).
 * Creative Commons licences optional filtering.
 * App Store safe. Innapropriate content disabled for all services.
-* Disable photo selection downloads and retrieve metadata instead.
+* Option for disabling full sized photo download and retrieving metadata only.
 * iPhone (3.5" & 4") and iPad support.
 * ARC & 64bits support.
 <br>
@@ -70,12 +70,12 @@ picker.delegate = self;
 You can additionally set more properties:
 ```
 picker.initialSearchTerm = @"Surf";
-picker.editingMode = DZNPhotoEditViewControllerCropModeCircular;
+picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
 picker.enablePhotoDownload = YES;
 picker.supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
 ```
 
-You can opt-in for block methods instead of using delegation pattern:
+You can opt-in for block methods instead of using the delegate's methods:
 ```
 picker.finalizationBlock = ^(DZNPhotoPickerController *picker, NSDictionary *info) {
         //Your implementation here
@@ -95,10 +95,10 @@ Its use is really straightforward:
 ```
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    if (picker.editingMode == DZNPhotoEditViewControllerCropModeCircular) {
+    if (picker.cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
         
-        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-        [DZNPhotoEditViewController editImage:image cropMode:picker.editingMode inNavigationController:picker];
+        DZNPhotoEditorViewController *editor = [[DZNPhotoEditorViewController alloc] initWithImage:image cropMode:DZNPhotoEditorViewControllerCropModeCircular];
+        [picker pushViewController:editor animated:YES];
     }
 }
 ```
