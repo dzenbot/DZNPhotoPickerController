@@ -219,12 +219,10 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 
 - (CGRect)cropRect
 {
-    CGFloat density = [UIScreen mainScreen].scale;
-    CGFloat zoomScale = _scrollView.zoomScale;
-    
-    CGFloat margin = (self.navigationController.view.bounds.size.height-_cropSize.height)/2;
-    
-    CGRect guideRect = [self guideRect];
+//    CGFloat density = [UIScreen mainScreen].scale;
+//    CGFloat zoomScale = _scrollView.zoomScale;
+//    CGFloat margin = (self.navigationController.view.bounds.size.height-_cropSize.height)/2;
+//    CGRect guideRect = [self guideRect];
     
     return CGRectZero;
 }
@@ -527,7 +525,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
             if (photo) {
                 [DZNPhotoEditorViewController didFinishPickingOriginalImage:_imageView.image
                                                                 editedImage:photo
-                                                                   cropRect:[self cropRect]
+                                                                   cropRect:[self guideRect]
                                                                   zoomScale:_scrollView.zoomScale
                                                                    cropMode:_cropMode
                                                               photoMetadata:_photoMetadata];
