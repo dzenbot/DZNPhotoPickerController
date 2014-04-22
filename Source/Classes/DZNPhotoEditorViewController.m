@@ -28,8 +28,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 {
     UIImageView *_imageView;
     UIImageView *_maskView;
-    UIButton *_cancelButton;
-    UIButton *_acceptButton;
 }
 
 /** An optional . */
@@ -37,9 +35,9 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 /** An optional UIImage assigned when starting the editor with an already existing full size image. */
 @property (nonatomic, assign) UIImage *editingImage;
 /** The scrollview containing the image for allowing panning and zooming. */
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, readonly) UIScrollView *scrollView;
 /** The view layed out at the bottom for displaying action buttons and activity indicator. */
-@property (nonatomic, strong) UIView *bottomView;
+@property (nonatomic, readonly) UIView *bottomView;
 /** The cropping mode (ie: Square, Circular or Custom). Default is Square. */
 @property (nonatomic) DZNPhotoEditorViewControllerCropMode cropMode;
 /** The cropping size. Default is view's size.width,size.width (most of the cases 320,320). */
@@ -48,6 +46,8 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 @end
 
 @implementation DZNPhotoEditorViewController
+@synthesize scrollView = _scrollView;
+@synthesize bottomView = _bottomView;
 
 - (instancetype)init
 {
@@ -111,8 +111,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 {
     [super viewDidLoad];
     
-    [self.view addSubview:self.scrollView];
-    [self.view addSubview:self.bottomView];
+    [self layoutSubviews];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -147,7 +146,8 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 {
     if (!_scrollView)
     {
-        _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+        _scrollView = [UIScrollView new];
+        _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
         _scrollView.backgroundColor = [UIColor clearColor];
         _scrollView.minimumZoomScale = 1.0;
         _scrollView.maximumZoomScale = 2.0;
@@ -157,10 +157,10 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         
         _imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
-        _imageView.image = _editingImage;
-        
+        _imageView.image = self.editingImage;
         [_scrollView addSubview:_imageView];
-        [_scrollView setZoomScale:_scrollView.minimumZoomScale];
+        
+        _scrollView.zoomScale = _scrollView.minimumZoomScale;
     }
     return _scrollView;
 }
@@ -169,37 +169,40 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 {
     if (!_bottomView)
     {
-        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height-72.0, self.view.bounds.size.width, 72.0)];
+        _bottomView = [UIView new];
+        _bottomView.translatesAutoresizingMaskIntoConstraints = NO;
         
-        _cancelButton = [self buttonWithTitle:NSLocalizedString(@"Cancel", nil)];
-        [_cancelButton addTarget:self action:@selector(cancelEdition:) forControlEvents:UIControlEventTouchUpInside];
-        [_bottomView addSubview:_cancelButton];
+        UIButton *cancelButton = [self buttonWithTitle:NSLocalizedString(@"Cancel", nil)];
+        [cancelButton addTarget:self action:@selector(cancelEdition:) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView addSubview:cancelButton];
         
-        _acceptButton = [self buttonWithTitle:NSLocalizedString(@"Choose", nil)];
-        [_acceptButton addTarget:self action:@selector(acceptEdition:) forControlEvents:UIControlEventTouchUpInside];
-        [_acceptButton setTitleColor:[UIColor colorWithWhite:1 alpha:0.5] forState:UIControlStateDisabled];
-        [_bottomView addSubview:_acceptButton];
+        UIButton *chooseButton = [self buttonWithTitle:NSLocalizedString(@"Choose", nil)];
+        [chooseButton addTarget:self action:@selector(acceptEdition:) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView addSubview:chooseButton];
         
-        CGRect rect = _cancelButton.frame;
-        rect.origin = CGPointMake(15.0, roundf(_bottomView.frame.size.height/2-_cancelButton.frame.size.height/2));
-        [_cancelButton setFrame:rect];
+        NSDictionary *views = @{@"cancelButton" : cancelButton, @"chooseButton" : chooseButton};
         
-        rect = _acceptButton.frame;
-        rect.origin = CGPointMake(roundf(_bottomView.frame.size.width-_acceptButton.frame.size.width-15.0), roundf(_bottomView.frame.size.height/2-_acceptButton.frame.size.height/2));
-        [_acceptButton setFrame:rect];
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[cancelButton]" options:0 metrics:nil views:views]];
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cancelButton]-|" options:0 metrics:nil views:views]];
+        
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[chooseButton]-15-|" options:0 metrics:nil views:views]];
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[chooseButton]-|" options:0 metrics:nil views:views]];
+        
         
         if (_cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
             
-            UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-            topLabel.text = NSLocalizedString(@"Move and Scale", nil);
+            UILabel *topLabel = [UILabel new];
+            topLabel.translatesAutoresizingMaskIntoConstraints = NO;
             topLabel.textColor = [UIColor whiteColor];
+            topLabel.textAlignment = NSTextAlignmentCenter;
             topLabel.font = [UIFont systemFontOfSize:18.0];
-            [topLabel sizeToFit];
-            
-            rect = topLabel.frame;
-            rect.origin = CGPointMake(self.view.bounds.size.width/2-rect.size.width/2, 64.0);
-            topLabel.frame = rect;
+            topLabel.text = NSLocalizedString(@"Move and Scale", nil);
             [self.view addSubview:topLabel];
+            
+            NSDictionary *labels = @{@"label" : topLabel};
+            
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label]-|" options:0 metrics:nil views:labels]];
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-64-[label]" options:0 metrics:nil views:labels]];
         }
     }
     return _bottomView;
@@ -207,13 +210,12 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 
 - (UIButton *)buttonWithTitle:(NSString *)title
 {
-    UIButton *button = [[UIButton alloc] init];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [button setTitleEdgeInsets:UIEdgeInsetsMake(-1.0, 0.0, 0.0, 0.0)];
-    [button.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
-    [button sizeToFit];
+    [button setTranslatesAutoresizingMaskIntoConstraints:NO];
     return button;
 }
 
@@ -231,11 +233,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 {
     CGFloat margin = (self.navigationController.view.bounds.size.height-_cropSize.height)/2;
     return CGRectMake(0.0, margin, _cropSize.width, _cropSize.height);
-}
-
-- (CGSize)imageSize
-{
-    return CGSizeAspectFit(_imageView.image.size,_imageView.frame.size);
 }
 
 CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
@@ -457,26 +454,39 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 #pragma mark - DZNPhotoEditorViewController methods
 
+- (void)layoutSubviews
+{
+    [self.view addSubview:self.scrollView];
+    [self.view addSubview:self.bottomView];
+    
+    NSDictionary *views = @{@"scrollView" : _scrollView, @"bottomView" : _bottomView};
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics:nil views:views]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(72)]|" options:0 metrics:nil views:views]];
+}
+
 - (void)prepareLayout
 {
     if (!_imageView.image) {
         
-        __weak UIButton *_button = _acceptButton;
-        _button.enabled = NO;
-        
         __weak DZNPhotoEditorViewController *_self = self;
         
-        UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        activityIndicatorView.center = CGPointMake(roundf(_bottomView.frame.size.width/2), roundf(_bottomView.frame.size.height/2));
-        [activityIndicatorView startAnimating];
-        [_bottomView addSubview:activityIndicatorView];
+        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        indicator.translatesAutoresizingMaskIntoConstraints = NO;
+        [_bottomView addSubview:indicator];
+        
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[view]-|" options:0 metrics:nil views:@{@"view" : indicator}]];
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[view]-|" options:0 metrics:nil views:@{@"view" : indicator}]];
+
+        [indicator startAnimating];
         
         [_imageView setImageWithURL:_photoMetadata.sourceURL placeholderImage:nil
                             options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
                           completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-                              if (!error) _button.enabled = YES;
-                              [activityIndicatorView removeFromSuperview];
-                              
+                              [indicator removeFromSuperview];
                               [_self updateScrollViewContentInset];
                           }];
     }
@@ -496,7 +506,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
  */
 - (void)updateScrollViewContentInset
 {
-    CGSize imageSize = [self imageSize];
+    CGSize imageSize = CGSizeAspectFit(_imageView.image.size, _imageView.frame.size);
     
     CGFloat maskHeight = (_cropMode == DZNPhotoEditorViewControllerCropModeCircular) ? _cropSize.width-(kDZNPhotoEditorViewControllerInnerEdgeInset*2) : _cropSize.height;
     
@@ -510,7 +520,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 - (void)acceptEdition:(id)sender
 {
-    if (_scrollView.zoomScale > _scrollView.maximumZoomScale) {
+    if (_scrollView.zoomScale > _scrollView.maximumZoomScale || !_imageView.image) {
         return;
     }
     
@@ -623,8 +633,6 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     _imageView = nil;
     _scrollView = nil;
     _editingImage = nil;
-    _cancelButton = nil;
-    _acceptButton = nil;
     _bottomView = nil;
 }
 
