@@ -8,9 +8,9 @@
 //  Licence: MIT-Licence
 //
 
-#import <AFNetworking.h>
-#import "DZNPhotoPickerControllerConstants.h"
+#import <AFNetworking/AFNetworking.h>
 #import "DZNPhotoServiceClientProtocol.h"
+#import "DZNPhotoPickerControllerConstants.h"
 
 UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerKey;
 UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerSecret;

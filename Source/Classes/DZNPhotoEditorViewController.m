@@ -32,9 +32,9 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     UIButton *_acceptButton;
 }
 
-/** An optional . */
+/** An optional DZNPhotoMetadata use for downloading the image. */
 @property (nonatomic, weak) DZNPhotoMetadata *photoMetadata;
-/** An optional UIImage assigned when starting the editor with an already existing full size image. */
+/** An optional UIImage use for displaying the already existing full size image. */
 @property (nonatomic, assign) UIImage *editingImage;
 /** The scrollview containing the image for allowing panning and zooming. */
 @property (nonatomic, strong) UIScrollView *scrollView;
