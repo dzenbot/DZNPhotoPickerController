@@ -55,6 +55,9 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     self = [super initWithCollectionViewLayout:layout];
     if (self) {
         self.title = NSLocalizedString(@"Internet Photos", nil);
+        
+        _currentPage = 1;
+        _columnCount = 4;
     }
     return self;
 }
@@ -65,9 +68,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 - (void)loadView
 {
     [super loadView];
-    
-    _currentPage = 1;
-    _columnCount = 4;
     
     _segmentedControlTitles = NSArrayFromServices(self.navigationController.supportedServices);
     NSAssert((_segmentedControlTitles.count < 4), @"DZNPhotoPickerController doesn't support more than 4 photo service providers");
@@ -89,24 +89,13 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     
     [self.collectionView registerClass:[DZNPhotoDisplayViewCell class] forCellWithReuseIdentifier:kDZNPhotoCellViewIdentifier];
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kDZNPhotoFooterViewIdentifier];
+    
+    [self.searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kDZNTagCellViewIdentifier];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    _searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-    _searchController.searchResultsTableView.backgroundColor = [UIColor whiteColor];
-    _searchController.searchResultsTableView.tableHeaderView = [UIView new];
-    _searchController.searchResultsTableView.tableFooterView = [UIView new];
-    _searchController.searchResultsTableView.backgroundView = [UIView new];
-    _searchController.searchResultsTableView.backgroundView.backgroundColor = [UIColor whiteColor];
-    _searchController.searchResultsTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
-    _searchController.searchResultsDataSource = self;
-    _searchController.searchResultsDelegate = self;
-    _searchController.delegate = self;
-    
-    [_searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kDZNTagCellViewIdentifier];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -115,11 +104,13 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     
     if (!_photoMetadatas) {
 
-        if (_searchTerm.length == 0) {
+        if (_searchBar.text.length > 0) {
+            [self searchPhotosWithKeyword:_searchBar.text];
+        }
+        else {
             [self.searchDisplayController setActive:YES];
             [_searchBar becomeFirstResponder];
         }
-        else [self searchPhotosWithKeyword:_searchTerm];
     }
 }
 
@@ -169,7 +160,28 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Returns the search bar.
+ * Returns the custom search display controller.
+ */
+- (UISearchDisplayController *)searchController
+{
+    if (!_searchController)
+    {
+        _searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+        _searchController.searchResultsTableView.backgroundColor = [UIColor whiteColor];
+        _searchController.searchResultsTableView.tableHeaderView = [UIView new];
+        _searchController.searchResultsTableView.tableFooterView = [UIView new];
+        _searchController.searchResultsTableView.backgroundView = [UIView new];
+        _searchController.searchResultsTableView.backgroundView.backgroundColor = [UIColor whiteColor];
+        _searchController.searchResultsTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
+        _searchController.searchResultsDataSource = self;
+        _searchController.searchResultsDelegate = self;
+        _searchController.delegate = self;
+    }
+    return _searchController;
+}
+
+/*
+ * Returns the custom search bar.
  */
 - (UISearchBar *)searchBar
 {
@@ -183,7 +195,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
         _searchBar.barTintColor = [UIColor colorWithRed:202.0/255.0 green:202.0/255.0 blue:207.0/255.0 alpha:1.0];
         _searchBar.tintColor = self.view.window.tintColor;
         _searchBar.keyboardType = UIKeyboardAppearanceDark;
-        _searchBar.text = _searchTerm;
+        _searchBar.text = self.navigationController.initialSearchTerm;
         _searchBar.delegate = self;
         
         _searchBar.scopeButtonTitles = [self segmentedControlTitles];
@@ -562,7 +574,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
  */
 - (void)shouldSearchPhotos:(NSString *)keyword
 {
-    if ((_previousService != _selectedService || _searchTerm != keyword) && keyword.length > 1) {
+    if ((_previousService != _selectedService || _searchBar.text != keyword) && keyword.length > 1) {
         
         _previousService = _selectedService;
         [self resetPhotos];
@@ -577,7 +589,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 - (void)searchPhotosWithKeyword:(NSString *)keyword
 {
     [self setActivityIndicatorsVisible:YES];
-    _searchTerm = keyword;
+    _searchBar.text = keyword;
 
     [self.selectedServiceClient searchPhotosWithKeyword:keyword
                                                    page:_currentPage
@@ -612,7 +624,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     _loadButton.enabled = NO;
     
     _currentPage++;
-    [self searchPhotosWithKeyword:_searchTerm];
+    [self searchPhotosWithKeyword:_searchBar.text];
 }
 
 
@@ -975,7 +987,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     
     _searchBar = nil;
     _searchController = nil;
-    _searchTerm = nil;
     _loadButton = nil;
     _activityIndicator = nil;
     _photoMetadatas = nil;
