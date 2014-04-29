@@ -106,6 +106,7 @@
         picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages;
         picker.allowsEditing = YES;
         picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
+        picker.initialSearchTerm = @"Chile";
     }
     
     picker.finalizationBlock = ^(DZNPhotoPickerController *picker, NSDictionary *info) {
