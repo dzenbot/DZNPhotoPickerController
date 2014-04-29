@@ -28,7 +28,9 @@
 {
     self = [super initWithBaseURL:baseURLForService(service)];
     if (self) {
-        self.parameterEncoding = AFJSONParameterEncoding;
+        self.requestSerializer = [AFJSONRequestSerializer serializer];
+        self.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
         _service = service;
         _subscription = subscription;
     }
@@ -179,8 +181,8 @@
         NSString *keyword = [params objectForKey:keyForSearchTerm(_service)];
         path = [path stringByReplacingOccurrencesOfString:@"%@" withString:keyword];
     }
-    
-    [self getPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
+
+    [self GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
         
         NSData *data = [self processData:response];
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves | NSJSONReadingAllowFragments error:nil];
@@ -200,7 +202,7 @@
     if (_loadingPath) {
         
         if (_service == DZNPhotoPickerControllerServiceFlickr) _loadingPath = @"";
-        [self cancelAllHTTPOperationsWithMethod:@"GET" path:_loadingPath];
+        [self.operationQueue cancelAllOperations];
         
         _loadingPath = nil;
     }
