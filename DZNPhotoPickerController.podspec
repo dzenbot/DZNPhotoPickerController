@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.license     	= { :type => 'MIT', :file => 'LICENSE' }
   s.author       	= { "Ignacio Romero Z." => "iromero@dzen.cl" }
   s.platform    	= :ios, '7.0'
-  s.source       	= { :git => "https://github.com/dzenbot/UIPhotoPickerController.git", :tag => "v1.4.0" }
+  s.source       	= { :git => "https://github.com/dzenbot/UIPhotoPickerController.git", :tag => "v#{s.version}" }
   s.source_files  = 'Classes', 'Source/Classes/**/*.{h,m}'
   s.resources     = 'Resources', 'Source/Resources/**/*.*'
   s.requires_arc 	= true
