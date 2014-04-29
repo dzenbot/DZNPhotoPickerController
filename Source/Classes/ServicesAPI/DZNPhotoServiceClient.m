@@ -16,7 +16,6 @@
 
 @interface DZNPhotoServiceClient ()
 @property (nonatomic, copy) DZNHTTPRequestCompletion completion;
-@property (nonatomic, copy) NSString *loadingPath;
 @end
 
 @implementation DZNPhotoServiceClient
@@ -39,11 +38,6 @@
 
 
 #pragma mark - Getter methods
-
-- (BOOL)loading
-{
-    return (_loadingPath) ? YES : NO;
-}
 
 - (NSString *)consumerKey
 {
@@ -156,30 +150,30 @@
 
 - (void)searchTagsWithKeyword:(NSString *)keyword completion:(DZNHTTPRequestCompletion)completion
 {
-    _loadingPath = tagSearchUrlPathForService(_service);
+    NSString *path = tagSearchUrlPathForService(_service);
     
     NSDictionary *params = [self tagsParamsWithKeyword:keyword];
-    [self getObject:[DZNPhotoTag name] path:_loadingPath params:params completion:completion];
+    [self getObject:[DZNPhotoTag name] path:path params:params completion:completion];
 }
 
 - (void)searchPhotosWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage completion:(DZNHTTPRequestCompletion)completion
 {
-    _loadingPath = photoSearchUrlPathForService(_service);
+    NSString *path = photoSearchUrlPathForService(_service);
 
     NSDictionary *params = [self photosParamsWithKeyword:keyword page:page resultPerPage:resultPerPage];
-    [self getObject:[DZNPhotoMetadata name] path:_loadingPath params:params completion:completion];
+    [self getObject:[DZNPhotoMetadata name] path:path params:params completion:completion];
 }
 
 - (void)getObject:(NSString *)objectName path:(NSString *)path params:(NSDictionary *)params completion:(DZNHTTPRequestCompletion)completion
 {
-//    NSLog(@"%s\nobjectName : %@ \npath : %@\nparams: %@\n\n",__FUNCTION__, objectName, path, params);
+    _loading = YES;
     
-    if (_service == DZNPhotoPickerControllerServiceFlickr) {
-        path = @"";
-    }
     if (_service == DZNPhotoPickerControllerServiceInstagram) {
         NSString *keyword = [params objectForKey:keyForSearchTerm(_service)];
         path = [path stringByReplacingOccurrencesOfString:@"%@" withString:keyword];
+    }
+    else if (_service == DZNPhotoPickerControllerServiceFlickr) {
+        path = @"";
     }
 
     [self GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
@@ -187,25 +181,19 @@
         NSData *data = [self processData:response];
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves | NSJSONReadingAllowFragments error:nil];
         
+        _loading = NO;
         if (completion) completion([self objectListForObject:objectName withJSON:json], nil);
-        _loadingPath = nil;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
+        _loading = NO;
         if (completion) completion(nil, error);
-        _loadingPath = nil;
     }];
 }
 
 - (void)cancelRequest
 {
-    if (_loadingPath) {
-        
-        if (_service == DZNPhotoPickerControllerServiceFlickr) _loadingPath = @"";
-        [self.operationQueue cancelAllOperations];
-        
-        _loadingPath = nil;
-    }
+    [self.operationQueue cancelAllOperations];
 }
 
 @end

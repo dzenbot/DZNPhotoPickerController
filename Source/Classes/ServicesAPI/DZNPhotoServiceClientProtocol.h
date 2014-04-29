@@ -9,6 +9,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DZNPhotoPickerControllerConstants.h"
 
 typedef void (^DZNHTTPRequestCompletion)(NSArray *list, NSError *error);
 
