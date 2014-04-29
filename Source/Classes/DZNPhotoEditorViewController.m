@@ -25,10 +25,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 };
 
 @interface DZNPhotoEditorViewController () <UIScrollViewDelegate>
-{
-    UIImageView *_imageView;
-    UIImageView *_maskView;
-}
 
 /** An optional . */
 @property (nonatomic, weak) DZNPhotoMetadata *photoMetadata;
@@ -36,6 +32,10 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 @property (nonatomic, assign) UIImage *editingImage;
 /** The scrollview containing the image for allowing panning and zooming. */
 @property (nonatomic, readonly) UIScrollView *scrollView;
+/** The container for the edited image. */
+@property (nonatomic, readonly) UIImageView *imageView;
+/** The container for the mask guide image. */
+@property (nonatomic, readonly) UIImageView *maskView;
 /** The view layed out at the bottom for displaying action buttons and activity indicator. */
 @property (nonatomic, readonly) UIView *bottomView;
 /** The cropping mode (ie: Square, Circular or Custom). Default is Square. */
@@ -47,6 +47,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 
 @implementation DZNPhotoEditorViewController
 @synthesize scrollView = _scrollView;
+@synthesize imageView = _imageView;
 @synthesize bottomView = _bottomView;
 
 - (instancetype)init
@@ -150,15 +151,25 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.showsVerticalScrollIndicator = NO;
         _scrollView.delegate = self;
+
+        [_scrollView addSubview:self.imageView];
         
-        _imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-        _imageView.contentMode = UIViewContentModeScaleAspectFit;
-        _imageView.image = self.editingImage;
-        [_scrollView addSubview:_imageView];
-        
+        // Calling this line before adding a subview to the scrollview
+        // creates some weird behaviour on the scrollview's zooming/panning gestures
         _scrollView.zoomScale = _scrollView.minimumZoomScale;
     }
     return _scrollView;
+}
+
+- (UIImageView *)imageView
+{
+    if (!_imageView)
+    {
+        _imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+        _imageView.image = self.editingImage;
+        _imageView.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    return _imageView;
 }
 
 - (UIView *)bottomView
