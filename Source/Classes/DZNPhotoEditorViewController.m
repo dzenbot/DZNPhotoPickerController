@@ -105,21 +105,17 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.view.backgroundColor = [UIColor blackColor];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
     
-    [self layoutSubviews];
+    [self.view addSubview:self.scrollView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
+    [self layoutSubviews];
+    
     [self setBarsHidden:YES];
-    [self prepareLayout];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -172,22 +168,22 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         _bottomView = [UIView new];
         _bottomView.translatesAutoresizingMaskIntoConstraints = NO;
         
-        UIButton *cancelButton = [self buttonWithTitle:NSLocalizedString(@"Cancel", nil)];
-        [cancelButton addTarget:self action:@selector(cancelEdition:) forControlEvents:UIControlEventTouchUpInside];
-        [_bottomView addSubview:cancelButton];
+        UIButton *leftButton = [self buttonWithTitle:NSLocalizedString(@"Cancel", nil)];
+        [leftButton addTarget:self action:@selector(cancelEdition:) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView addSubview:leftButton];
         
-        UIButton *chooseButton = [self buttonWithTitle:NSLocalizedString(@"Choose", nil)];
-        [chooseButton addTarget:self action:@selector(acceptEdition:) forControlEvents:UIControlEventTouchUpInside];
-        [_bottomView addSubview:chooseButton];
+        UIButton *rightButton = [self buttonWithTitle:NSLocalizedString(@"Choose", nil)];
+        [rightButton addTarget:self action:@selector(acceptEdition:) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView addSubview:rightButton];
         
-        NSDictionary *views = @{@"cancelButton" : cancelButton, @"chooseButton" : chooseButton};
+        NSDictionary *views = @{@"leftButton" : leftButton, @"rightButton" : rightButton};
+        NSDictionary *metrics = @{@"margin" : @(15), @"barsHeight": @([UIApplication sharedApplication].statusBarFrame.size.height+self.navigationController.navigationBar.frame.size.height)};
         
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[cancelButton]" options:0 metrics:nil views:views]];
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cancelButton]-|" options:0 metrics:nil views:views]];
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[leftButton]" options:0 metrics:metrics views:views]];
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[leftButton]-|" options:0 metrics:nil views:views]];
         
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[chooseButton]-15-|" options:0 metrics:nil views:views]];
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[chooseButton]-|" options:0 metrics:nil views:views]];
-        
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[rightButton]-margin-|" options:0 metrics:metrics views:views]];
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[rightButton]-|" options:0 metrics:nil views:views]];
         
         if (_cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
             
@@ -202,7 +198,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
             NSDictionary *labels = @{@"label" : topLabel};
             
             [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label]-|" options:0 metrics:nil views:labels]];
-            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-64-[label]" options:0 metrics:nil views:labels]];
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-barsHeight-[label]" options:0 metrics:metrics views:labels]];
         }
     }
     return _bottomView;
@@ -456,20 +452,19 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 - (void)layoutSubviews
 {
-    [self.view addSubview:self.scrollView];
-    [self.view addSubview:self.bottomView];
+    if (!_bottomView) {
+        
+        [self.view addSubview:self.bottomView];
+        
+        NSDictionary *views = @{@"scrollView" : _scrollView, @"bottomView" : _bottomView};
+        
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:views]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics:nil views:views]];
+        
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:nil views:views]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(72)]|" options:0 metrics:nil views:views]];
+    }
     
-    NSDictionary *views = @{@"scrollView" : _scrollView, @"bottomView" : _bottomView};
-    
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics:nil views:views]];
-    
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(72)]|" options:0 metrics:nil views:views]];
-}
-
-- (void)prepareLayout
-{
     if (!_imageView.image) {
         
         __weak DZNPhotoEditorViewController *_self = self;

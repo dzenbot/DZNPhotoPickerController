@@ -142,7 +142,6 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     [self setViewControllers:nil];
     
     DZNPhotoDisplayViewController *controller = [[DZNPhotoDisplayViewController alloc] init];
-    controller.searchTerm = _initialSearchTerm;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelPicker:)];
