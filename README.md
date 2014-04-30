@@ -17,6 +17,7 @@ A photo search/picker for iOS using popular providers like 500px, Flickr, Instag
 * Option for disabling full sized photo download and retrieving metadata only.
 * iPhone (3.5" & 4") and iPad support.
 * ARC & 64bits support.
+* Localization support (UI strings use NSLocalizedString but it's up to you to localize them on your app)
 <br>
 <br>
 ![screenshots](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_screenshots.png)
