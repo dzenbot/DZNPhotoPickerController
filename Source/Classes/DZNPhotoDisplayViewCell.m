@@ -9,15 +9,12 @@
 //
 
 #import "DZNPhotoDisplayViewCell.h"
-
 #import "UIImageView+WebCache.h"
 
 #define DZNPhotoDisplayViewCellMargin 30.0
 
 @implementation DZNPhotoDisplayViewCell
 @synthesize imageView = _imageView;
-//@synthesize titleLabel = _titleLabel;
-//@synthesize detailLabel = _detailLabel;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -61,52 +58,6 @@
                           completed:NULL];
 }
 
-//- (void)setEmptyDataSetVisible:(BOOL)visible
-//{
-//    if (visible) [self displayEmptyDataSet];
-//    else [self clearEmptyDataSet];
-//}
-
-
-#pragma mark - DZNPhotoDisplayViewCell methods
-
-//- (void)displayEmptyDataSet
-//{
-//    if (self.imageView.hidden) {
-//        return;
-//    }
-//    
-//    self.titleLabel.text = NSLocalizedString(@"No Photos Found", nil);
-//    self.titleLabel.hidden = NO;
-//
-//    self.detailLabel.text = NSLocalizedString(@"Make sure that all words are spelled correctly.", nil);
-//    self.detailLabel.hidden = NO;
-//    
-//    self.imageView.image = nil;
-//    self.imageView.hidden = YES;
-//    
-//    self.superCollectionView.scrollEnabled = NO;
-//    self.backgroundView.backgroundColor = [UIColor clearColor];
-//}
-//
-//- (void)clearEmptyDataSet
-//{
-//    if (!self.imageView.hidden) {
-//        return;
-//    }
-//    
-//    self.titleLabel.text = nil;
-//    self.titleLabel.hidden = YES;
-//
-//    self.detailLabel.text = nil;
-//    self.detailLabel.hidden = YES;
-//    
-//    self.imageView.hidden = NO;
-//    
-//    self.superCollectionView.scrollEnabled = YES;
-//    self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-//}
-
 
 #pragma mark - UIView methods
 
@@ -136,20 +87,6 @@
     [super layoutSubviews];
 }
 
-//- (void)layoutLabels
-//{
-//    CGFloat dataSetHeight = _titleLabel.frame.size.height + _detailLabel.frame.size.height + DZNPhotoDisplayViewCellMargin/2;
-//    CGFloat superviewHeight = _superCollectionView.bounds.size.height + _superCollectionView.bounds.origin.y;
-//    
-//    CGRect titleRect = CGRectMake(DZNPhotoDisplayViewCellMargin, 0, _superCollectionView.frame.size.width-(DZNPhotoDisplayViewCellMargin*2), DZNPhotoDisplayViewCellMargin);
-//    titleRect.origin.y = roundf((superviewHeight-dataSetHeight)/2)-10.0;
-//    _titleLabel.frame = titleRect;
-//    
-//    CGRect detailRect = CGRectMake(DZNPhotoDisplayViewCellMargin, 0, _superCollectionView.frame.size.width-(DZNPhotoDisplayViewCellMargin*2), 44.0);
-//    detailRect.origin.y = roundf(_titleLabel.frame.origin.y+_titleLabel.frame.size.height+DZNPhotoDisplayViewCellMargin/2);
-//    _detailLabel.frame = detailRect;
-//}
-
 
 #pragma mark - View lifeterm
 
@@ -157,8 +94,6 @@
 {
     _imageView.image = nil;
     _imageView = nil;
-//    _titleLabel = nil;
-//    _detailLabel = nil;
 }
 
 @end

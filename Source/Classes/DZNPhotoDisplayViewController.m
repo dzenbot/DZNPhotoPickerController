@@ -381,17 +381,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     return self.loading;
 }
 
-///*
-// * Checks if an empty data set for informing about empty results should be displayed.
-// */
-//- (BOOL)canDisplayEmptyDataSet
-//{
-//    if (_photoMetadatas && _photoMetadatas.count == 0 && !_loading) {
-//        return YES;
-//    }
-//    return NO;
-//}
-
 
 #pragma mark - Setter methods
 
@@ -669,10 +658,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
         [self setActivityIndicatorsVisible:NO];
         [self.selectedServiceClient cancelRequest];
     }
-    
-//    for (DZNPhotoDisplayViewCell *cell in [self.collectionView visibleCells]) {
-//        [cell.imageView cancelCurrentImageLoad];
-//    }
 }
 
 /*
@@ -702,7 +687,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DZNPhotoDisplayViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDZNPhotoCellViewIdentifier forIndexPath:indexPath];
-//    cell.superCollectionView = collectionView;
     cell.tag = indexPath.row;
     
     if (_photoMetadatas.count > 0) {
@@ -710,8 +694,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
         [cell setThumbURL:metadata.thumbURL];
     }
 
-//    [cell setEmptyDataSetVisible:[self canDisplayEmptyDataSet]];
-    
     return cell;
 }
 
@@ -984,12 +966,12 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
 {
-    NSLog(@"%s",__FUNCTION__);
+
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView
 {
-    NSLog(@"%s",__FUNCTION__);
+
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView

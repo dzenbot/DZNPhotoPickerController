@@ -15,8 +15,6 @@
  */
 @interface DZNPhotoDisplayViewCell : UICollectionViewCell
 
-///** The cell's collection view. */
-//@property (nonatomic, weak) UICollectionView *superCollectionView;
 /** The image view of the cell. (read-only). */
 @property (nonatomic, readonly, strong) UIImageView *imageView;
 
@@ -25,11 +23,5 @@
  * @param URL The image url.
  */
 - (void)setThumbURL:(NSURL *)URL;
-
-///** Toggles the cell to be used for displaying an empty data set.
-// *
-// * @param display YES if the data set should be visible.
-// */
-//- (void)setEmptyDataSetVisible:(BOOL)display;
 
 @end
