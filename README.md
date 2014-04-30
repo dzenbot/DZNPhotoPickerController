@@ -123,7 +123,7 @@ Take a look into the sample project. Everything is there.<br>
 Feel free to collaborate with this project! Big thanks to:
 - [SJ Singh](https://github.com/SJApps): Google Images search support.
 - [Felipe Saint-Jean](https://github.com/fsaint): 64bits fix of the editing guides.
-
+- [Adar Porat](https://github.com/aporat) & [Ryan Fitzgerald](https://github.com/ryanfitz): AFNetworking 2.0 upgrade
 
 ## Apps using DZNPhotoPickerController
 Are you using this control in your apps? Let me know at [iromero@dzen.cl](mailto:iromero@dzen.cl).<br>
