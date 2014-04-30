@@ -39,6 +39,9 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 @property (nonatomic) NSInteger resultPerPage;
 @property (nonatomic) NSInteger currentPage;
 
+@property (nonatomic, strong) UILabel *titleSetLabel;
+@property (nonatomic, strong) UILabel *detailSetLabel;
+
 @property (nonatomic, strong) NSTimer *searchTimer;
 
 @end
@@ -185,7 +188,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
         _searchBar = [[UISearchBar alloc] initWithFrame:[self searchBarFrame]];
         _searchBar.placeholder = NSLocalizedString(@"Search", nil);
         _searchBar.barStyle = UIBarStyleDefault;
-        _searchBar.searchBarStyle = UISearchBarStyleProminent;
+        _searchBar.searchBarStyle = UISearchBarStyleDefault;
         _searchBar.backgroundColor = [UIColor whiteColor];
         _searchBar.barTintColor = [UIColor colorWithRed:202.0/255.0 green:202.0/255.0 blue:207.0/255.0 alpha:1.0];
         _searchBar.tintColor = self.view.window.tintColor;
@@ -200,6 +203,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     }
     return _searchBar;
 }
+
 
 /*
  * Returns the 'Load More' footer button.
@@ -234,6 +238,36 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
         [_activityIndicator sizeToFit];
     }
     return _activityIndicator;
+}
+
+- (UILabel *)titleSetLabel
+{
+    if (!_titleSetLabel)
+    {
+        _titleSetLabel = [UILabel new];
+        _titleSetLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        _titleSetLabel.text = NSLocalizedString(@"No Photos Found", nil);
+        _titleSetLabel.font = [UIFont systemFontOfSize:27.0];
+        _titleSetLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
+        _titleSetLabel.textAlignment = NSTextAlignmentCenter;
+        _titleSetLabel.numberOfLines = 1;
+    }
+    return _titleSetLabel;
+}
+
+- (UILabel *)detailSetLabel
+{
+    if (!_detailSetLabel)
+    {
+        _detailSetLabel = [UILabel new];
+        _detailSetLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        _detailSetLabel.text = NSLocalizedString(@"Make sure that all words are spelled correctly.", nil);
+        _detailSetLabel.font = [UIFont systemFontOfSize:17.0];
+        _detailSetLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
+        _detailSetLabel.textAlignment = NSTextAlignmentCenter;
+        _detailSetLabel.numberOfLines = 2;
+    }
+    return _detailSetLabel;
 }
 
 /*
@@ -347,16 +381,16 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     return self.loading;
 }
 
-/*
- * Checks if an empty data set for informing about empty results should be displayed.
- */
-- (BOOL)canDisplayEmptyDataSet
-{
-    if (_photoMetadatas && _photoMetadatas.count == 0 && !_loading) {
-        return YES;
-    }
-    return NO;
-}
+///*
+// * Checks if an empty data set for informing about empty results should be displayed.
+// */
+//- (BOOL)canDisplayEmptyDataSet
+//{
+//    if (_photoMetadatas && _photoMetadatas.count == 0 && !_loading) {
+//        return YES;
+//    }
+//    return NO;
+//}
 
 
 #pragma mark - Setter methods
@@ -379,6 +413,9 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     
     [_photoMetadatas addObjectsFromArray:list];
     [self.collectionView reloadData];
+    
+    BOOL show = (_photoMetadatas.count == 0) ? YES : NO;
+    [self setEmptyDataSetVisible:show];
     
     CGSize contentSize = self.collectionView.contentSize;
     self.collectionView.contentSize = CGSizeMake(contentSize.width, contentSize.height+[self footerSize].height);
@@ -405,6 +442,31 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     }
     
     [self.searchDisplayController.searchResultsTableView reloadData];
+}
+
+- (void)setEmptyDataSetVisible:(BOOL)visible
+{
+    if (visible) {
+        [self.view addSubview:self.titleSetLabel];
+        [self.view addSubview:self.detailSetLabel];
+        
+        NSDictionary *views = NSDictionaryOfVariableBindings(_searchBar, _titleSetLabel, _detailSetLabel);
+        
+        CGFloat bottomMargin = (((self.view.frame.size.height-[self topBarsSize].height-8.0)/2)-40.0);
+        CGFloat topMargin = bottomMargin+[self topBarsSize].height;
+        NSDictionary *metrics = @{@"topMargin": @(topMargin), @"bottomMargin": @(bottomMargin)};
+        
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[_titleSetLabel][_detailSetLabel(==_titleSetLabel)]-bottomMargin-|" options:0 metrics:metrics views:views]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_titleSetLabel]-|" options:0 metrics:nil views:views]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_detailSetLabel]-|" options:0 metrics:nil views:views]];
+    }
+    else if (_titleSetLabel && _detailSetLabel) {
+        [_titleSetLabel removeFromSuperview];
+        _titleSetLabel = nil;
+        
+        [_detailSetLabel removeFromSuperview];
+        _detailSetLabel = nil;
+    }
 }
 
 /*
@@ -584,6 +646,8 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 - (void)searchPhotosWithKeyword:(NSString *)keyword
 {
     [self setActivityIndicatorsVisible:YES];
+    [self setEmptyDataSetVisible:NO];
+    
     _searchBar.text = keyword;
 
     [self.selectedServiceClient searchPhotosWithKeyword:keyword
@@ -632,16 +696,13 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (_photoMetadatas.count > 0) {
-        return _photoMetadatas.count;
-    }
-    return [self canDisplayEmptyDataSet];
+    return _photoMetadatas.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DZNPhotoDisplayViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDZNPhotoCellViewIdentifier forIndexPath:indexPath];
-    cell.superCollectionView = collectionView;
+//    cell.superCollectionView = collectionView;
     cell.tag = indexPath.row;
     
     if (_photoMetadatas.count > 0) {
@@ -649,7 +710,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
         [cell setThumbURL:metadata.thumbURL];
     }
 
-    [cell setEmptyDataSetVisible:[self canDisplayEmptyDataSet]];
+//    [cell setEmptyDataSetVisible:[self canDisplayEmptyDataSet]];
     
     return cell;
 }
@@ -704,7 +765,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     if ([[UIMenuController sharedMenuController] isMenuVisible]) {
         return NO;
     }
-    return ![self canDisplayEmptyDataSet];
+    return YES;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -728,7 +789,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     if ([[UIMenuController sharedMenuController] isMenuVisible]) {
         return NO;
     }
-    return ![self canDisplayEmptyDataSet];
+    return YES;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath;

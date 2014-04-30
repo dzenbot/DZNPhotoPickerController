@@ -187,7 +187,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         [rightButton addTarget:self action:@selector(acceptEdition:) forControlEvents:UIControlEventTouchUpInside];
         [_bottomView addSubview:rightButton];
         
-        NSDictionary *views = @{@"leftButton" : leftButton, @"rightButton" : rightButton};
+        NSDictionary *views = NSDictionaryOfVariableBindings(leftButton, rightButton);
         NSDictionary *metrics = @{@"margin" : @(15), @"barsHeight": @([UIApplication sharedApplication].statusBarFrame.size.height+self.navigationController.navigationBar.frame.size.height)};
         
         [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[leftButton]" options:0 metrics:metrics views:views]];
