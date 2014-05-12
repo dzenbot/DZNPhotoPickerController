@@ -188,13 +188,13 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         [_bottomView addSubview:rightButton];
         
         NSDictionary *views = NSDictionaryOfVariableBindings(leftButton, rightButton);
-        NSDictionary *metrics = @{@"margin" : @(15), @"barsHeight": @([UIApplication sharedApplication].statusBarFrame.size.height+self.navigationController.navigationBar.frame.size.height)};
+        NSDictionary *metrics = @{@"hmargin" : @(13), @"vmargin" : @(21), @"barsHeight": @([UIApplication sharedApplication].statusBarFrame.size.height+self.navigationController.navigationBar.frame.size.height)};
         
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[leftButton]" options:0 metrics:metrics views:views]];
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[leftButton]-|" options:0 metrics:nil views:views]];
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-hmargin-[leftButton]" options:0 metrics:metrics views:views]];
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[rightButton]-hmargin-|" options:0 metrics:metrics views:views]];
         
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[rightButton]-margin-|" options:0 metrics:metrics views:views]];
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[rightButton]-|" options:0 metrics:nil views:views]];
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[leftButton]-vmargin-|" options:0 metrics:metrics views:views]];
+        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[rightButton]-vmargin-|" options:0 metrics:metrics views:views]];
         
         if (_cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
             
@@ -218,6 +218,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 - (UIButton *)buttonWithTitle:(NSString *)title
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    [button.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
