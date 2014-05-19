@@ -36,8 +36,10 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 @property (nonatomic, readonly) UIImageView *imageView;
 /** The container for the mask guide image. */
 @property (nonatomic, readonly) UIImageView *maskView;
-/** The view layed out at the bottom for displaying action buttons and activity indicator. */
+/** The view layed out at the bottom for displaying action buttons. */
 @property (nonatomic, readonly) UIView *bottomView;
+/** The activity indicator to be used for notifying when image is being downloaded. */
+@property (nonatomic, readonly) UIActivityIndicatorView *activityIndicator;
 /** The cropping mode (ie: Square, Circular or Custom). Default is Square. */
 @property (nonatomic) DZNPhotoEditorViewControllerCropMode cropMode;
 /** The cropping size. Default is view's size.width,size.width (most of the cases 320,320). */
@@ -49,6 +51,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 @synthesize scrollView = _scrollView;
 @synthesize imageView = _imageView;
 @synthesize bottomView = _bottomView;
+@synthesize activityIndicator = _activityIndicator;
 
 - (instancetype)init
 {
@@ -108,16 +111,14 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     self.view.backgroundColor = [UIColor blackColor];
     
     [self.view addSubview:self.scrollView];
-    
-    NSLog(@"_scrollView : %@", _scrollView);
-    NSLog(@"_imageView : %@", _imageView);
+    [self.view addSubview:self.bottomView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    [self layoutSubviews];
+    [self prepareSubviews];
     
     [self setBarsHidden:YES];
 }
@@ -153,8 +154,10 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.showsVerticalScrollIndicator = NO;
         _scrollView.delegate = self;
-
+        
         [_scrollView addSubview:self.imageView];
+        
+        [_scrollView setZoomScale:_scrollView.minimumZoomScale];
     }
     return _scrollView;
 }
@@ -163,9 +166,9 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 {
     if (!_imageView)
     {        
-        _imageView = [[UIImageView alloc] init];
-        _imageView.image = self.editingImage;
+        _imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        _imageView.image = _editingImage;
     }
     return _imageView;
 }
@@ -185,7 +188,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         [rightButton addTarget:self action:@selector(acceptEdition:) forControlEvents:UIControlEventTouchUpInside];
         [_bottomView addSubview:rightButton];
         
-        NSDictionary *views = NSDictionaryOfVariableBindings(leftButton, rightButton);
+        NSMutableDictionary *views = [[NSMutableDictionary alloc] initWithDictionary:NSDictionaryOfVariableBindings(leftButton, rightButton)];
         NSDictionary *metrics = @{@"hmargin" : @(13), @"vmargin" : @(21), @"barsHeight": @([UIApplication sharedApplication].statusBarFrame.size.height+self.navigationController.navigationBar.frame.size.height)};
         
         [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-hmargin-[leftButton]" options:0 metrics:metrics views:views]];
@@ -194,8 +197,8 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[leftButton]-vmargin-|" options:0 metrics:metrics views:views]];
         [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[rightButton]-vmargin-|" options:0 metrics:metrics views:views]];
         
-        if (_cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
-            
+        if (_cropMode == DZNPhotoEditorViewControllerCropModeCircular)
+        {
             UILabel *topLabel = [UILabel new];
             topLabel.translatesAutoresizingMaskIntoConstraints = NO;
             topLabel.textColor = [UIColor whiteColor];
@@ -209,8 +212,29 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
             [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label]-|" options:0 metrics:nil views:labels]];
             [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-barsHeight-[label]" options:0 metrics:metrics views:labels]];
         }
+        
+        if (!_imageView.image)
+        {
+            [_bottomView addSubview:self.activityIndicator];
+            
+            [views setObject:_activityIndicator forKey:@"activityIndicator"];
+            
+            [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[activityIndicator]-|" options:0 metrics:nil views:views]];
+            [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[activityIndicator]-|" options:0 metrics:nil views:views]];
+        }
     }
     return _bottomView;
+}
+    
+- (UIActivityIndicatorView *)activityIndicator
+{
+    if (!_activityIndicator)
+    {
+        _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _activityIndicator.translatesAutoresizingMaskIntoConstraints = NO;
+        _activityIndicator.color = [UIColor whiteColor];
+    }
+    return _activityIndicator;
 }
 
 - (UIButton *)buttonWithTitle:(NSString *)title
@@ -225,13 +249,9 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     return button;
 }
 
-- (CGRect)cropRect
+// TODO: Implement this rectangle calculation, considering the guideRect, zoomScale and offset positioning.
+- (CGRect)croppingRect
 {
-//    CGFloat density = [UIScreen mainScreen].scale;
-//    CGFloat zoomScale = _scrollView.zoomScale;
-//    CGFloat margin = (self.navigationController.view.bounds.size.height-_cropSize.height)/2;
-//    CGRect guideRect = [self guideRect];
-    
     return CGRectZero;
 }
 
@@ -457,39 +477,32 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     [self.navigationController setNavigationBarHidden:hidden animated:!hidden];
 }
 
+- (void)updateViewConstraints
+{
+    [super updateViewConstraints];
+    
+    NSDictionary *views = [[NSMutableDictionary alloc] initWithDictionary:@{@"bottomView": _bottomView}];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(72)]|" options:0 metrics:nil views:views]];
+}
+
 
 #pragma mark - DZNPhotoEditorViewController methods
 
-- (void)layoutSubviews
+- (void)prepareSubviews
 {
-    if (!_bottomView) {
+    if (!_imageView.image)
+    {
+        __weak DZNPhotoEditorViewController *weakSelf = self;
         
-        [self.view addSubview:self.bottomView];
-        
-        NSDictionary *views = @{@"bottomView" : _bottomView};
-        
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:nil views:views]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(72)]|" options:0 metrics:nil views:views]];
-    }
-    
-    if (!_imageView.image) {
-        
-        __weak DZNPhotoEditorViewController *_self = self;
-        
-        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        indicator.translatesAutoresizingMaskIntoConstraints = NO;
-        [_bottomView addSubview:indicator];
-        
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[view]-|" options:0 metrics:nil views:@{@"view" : indicator}]];
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[view]-|" options:0 metrics:nil views:@{@"view" : indicator}]];
-
-        [indicator startAnimating];
+        [_activityIndicator startAnimating];
         
         [_imageView setImageWithURL:_photoMetadata.sourceURL placeholderImage:nil
                             options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
                           completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-                              [indicator removeFromSuperview];
-                              [_self updateScrollViewContentInset];
+                              [[weakSelf activityIndicator] removeFromSuperview];
+                              [weakSelf updateScrollViewContentInset];
                           }];
     }
     else {
@@ -636,6 +649,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     _scrollView = nil;
     _editingImage = nil;
     _bottomView = nil;
+    _activityIndicator = nil;
 }
 
 
