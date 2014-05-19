@@ -108,6 +108,9 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     self.view.backgroundColor = [UIColor blackColor];
     
     [self.view addSubview:self.scrollView];
+    
+    NSLog(@"_scrollView : %@", _scrollView);
+    NSLog(@"_imageView : %@", _imageView);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -143,8 +146,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 {
     if (!_scrollView)
     {
-        _scrollView = [UIScrollView new];
-        _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+        _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
         _scrollView.backgroundColor = [UIColor clearColor];
         _scrollView.minimumZoomScale = 1.0;
         _scrollView.maximumZoomScale = 2.0;
@@ -153,10 +155,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         _scrollView.delegate = self;
 
         [_scrollView addSubview:self.imageView];
-        
-        // Calling this line before adding a subview to the scrollview
-        // creates some weird behaviour on the scrollview's zooming/panning gestures
-        _scrollView.zoomScale = _scrollView.minimumZoomScale;
     }
     return _scrollView;
 }
@@ -164,8 +162,8 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 - (UIImageView *)imageView
 {
     if (!_imageView)
-    {
-        _imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    {        
+        _imageView = [[UIImageView alloc] init];
         _imageView.image = self.editingImage;
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
     }
@@ -468,10 +466,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
         
         [self.view addSubview:self.bottomView];
         
-        NSDictionary *views = @{@"scrollView" : _scrollView, @"bottomView" : _bottomView};
-        
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:views]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics:nil views:views]];
+        NSDictionary *views = @{@"bottomView" : _bottomView};
         
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:nil views:views]];
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(72)]|" options:0 metrics:nil views:views]];

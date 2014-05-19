@@ -126,7 +126,7 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = sourceType;
     picker.allowsEditing = YES;
-    picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
+    picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
     
     picker.finalizationBlock = ^(UIImagePickerController *picker, NSDictionary *info) {
         [self handleImagePicker:picker withMediaInfo:info];
@@ -145,7 +145,7 @@
         
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
 
-        DZNPhotoEditorViewController *editor = [[DZNPhotoEditorViewController alloc] initWithImage:image cropMode:DZNPhotoEditorViewControllerCropModeCircular];
+        DZNPhotoEditorViewController *editor = [[DZNPhotoEditorViewController alloc] initWithImage:image cropMode:picker.cropMode];
         [picker pushViewController:editor animated:YES];
     }
     else {
