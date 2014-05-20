@@ -174,6 +174,8 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
         _searchController.searchResultsDataSource = self;
         _searchController.searchResultsDelegate = self;
         _searchController.delegate = self;
+        
+        [_searchController setValue:@"" forKey:@"noResultsMessage"];
     }
     return _searchController;
 }
@@ -368,6 +370,31 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 - (NSInteger)resultPerPage
 {
     return self.columnCount * self.rowCount;
+}
+
+/*
+ * Checks if the search string is long enough to perfom a tag search.
+ */
+- (BOOL)canSearchTag:(NSString *)term
+{
+    if (!self.navigationController.enableTagSearch) {
+        return NO;
+    }
+    
+    if ([self.searchDisplayController.searchBar isFirstResponder] && term.length > 2) {
+        
+        [self resetSearchTimer];
+        
+        _searchTimer = [NSTimer timerWithTimeInterval:0.25 target:self selector:@selector(searchTag:) userInfo:@{@"term": term} repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:_searchTimer forMode:NSDefaultRunLoopMode];
+        
+        return YES;
+    }
+    else {
+        [_photoTags removeAllObjects];
+        [self.searchDisplayController.searchResultsTableView reloadData];
+        return NO;
+    }
 }
 
 /*
@@ -575,28 +602,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Checks if the search string is long enough to perfom a tag search.
- */
-- (BOOL)canSearchTag:(NSString *)term
-{
-    if ([self.searchDisplayController.searchBar isFirstResponder] && term.length > 2) {
-        
-        [self resetSearchTimer];
-        
-        _searchTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(searchTag:) userInfo:@{@"term": term} repeats:YES];
-        [[NSRunLoop currentRunLoop] addTimer:_searchTimer forMode:NSDefaultRunLoopMode];
-
-        return YES;
-    }
-    else {
-        [_photoTags removeAllObjects];
-        [self.searchDisplayController.searchResultsTableView reloadData];
-        return NO;
-    }
-}
-
-
-/*
  * Triggers a tag search when typing more than 2 characters in the search bar.
  * This allows auto-completion and related tags to what the user wants to search.
  */
@@ -605,7 +610,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     NSString *term = [timer.userInfo objectForKey:@"term"];
     [self resetSearchTimer];
     
-    id <DZNPhotoServiceClientProtocol> client =  [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
+    id <DZNPhotoServiceClientProtocol> client = [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     [client searchTagsWithKeyword:term

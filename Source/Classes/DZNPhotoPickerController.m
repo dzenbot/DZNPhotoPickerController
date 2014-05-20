@@ -32,9 +32,10 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
         
         self.allowsEditing = NO;
         self.enablePhotoDownload = YES;
+        self.enableTagSearch = YES;
+        
         self.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
         self.supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
-        
         self.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
     }
     return self;

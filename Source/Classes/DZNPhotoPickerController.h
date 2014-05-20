@@ -47,6 +47,8 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @property (nonatomic, strong) DZNPhotoPickerControllerFailureBlock failureBlock;
 /** A block to be executed whenever the user cancels the pick operation. Use this block to replace delegate method photoPickerControllerDidCancel: */
 @property (nonatomic, strong) DZNPhotoPickerControllerCancellationBlock cancellationBlock;
+/** YES if autocompletion tag search is available while the user is typing. Default YES. */
+@property (nonatomic, assign) BOOL enableTagSearch;
 
 /**
  * Initializes and returns a newly created picker controller, on edit mode only.

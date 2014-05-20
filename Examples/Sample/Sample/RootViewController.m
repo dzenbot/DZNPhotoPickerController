@@ -106,7 +106,9 @@
         picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages;
         picker.allowsEditing = YES;
         picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
-        picker.initialSearchTerm = @"Chile";
+        picker.initialSearchTerm = @"California";
+        picker.enablePhotoDownload = YES;
+        picker.enableTagSearch = YES;
     }
     
     picker.finalizationBlock = ^(DZNPhotoPickerController *picker, NSDictionary *info) {
@@ -119,7 +121,7 @@
                                                         message:error.localizedDescription
                                                        delegate:nil
                                               cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                              otherButtonTitles: nil];
+                                              otherButtonTitles:nil];
         [alert show];
     };
     
