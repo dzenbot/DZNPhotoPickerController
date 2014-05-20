@@ -89,6 +89,15 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 
 #pragma mark - Setter methods
 
+- (void)setTitle:(NSString *)title
+{
+    UIViewController *controller = [self.viewControllers firstObject];
+    
+    if ([controller isKindOfClass:[DZNPhotoDisplayViewController class]]) {
+        controller.title = title;
+    }
+}
+
 - (void)setSupportedServices:(DZNPhotoPickerControllerServices)services
 {
     NSAssert(services > 0, @"You must support at least 1 service.");
