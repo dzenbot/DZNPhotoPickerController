@@ -17,6 +17,7 @@ A photo search/picker for iOS using popular providers like 500px, Flickr, Instag
 * Option for disabling full sized photo download and retrieving metadata only.
 * iPhone (3.5" & 4") and iPad support.
 * ARC & 64bits support.
+* Localization support (UI strings use NSLocalizedString but it's up to you to localize them on your app)
 <br>
 <br>
 ![screenshots](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_screenshots.png)
@@ -29,6 +30,10 @@ Available in [Cocoa Pods](http://cocoapods.org/?q=DZNPhotoPickerController)
 ```
 pod 'DZNPhotoPickerController'
 ```
+
+When installing, the following dependencies will be automatically installed:
+- AFNetworking (~> 2.2)
+- SDWebImage (~> 3.5.4)
 
 ## How to use
 For complete documentation, [visit CocoaPods' auto-generated doc](http://cocoadocs.org/docsets/DZNPhotoPickerController/1.2.3/)
@@ -118,6 +123,10 @@ picker.cancellationBlock = ^(UIImagePickerController *picker) {
 
 ### Sample project
 Take a look into the sample project. Everything is there.<br>
+The pod dependencies are not being versioned, so before running the project be sure to call:
+```
+pod install
+```
 
 ### Collaboration
 Feel free to collaborate with this project! Big thanks to:
