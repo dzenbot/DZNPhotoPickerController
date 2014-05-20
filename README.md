@@ -86,6 +86,10 @@ picker.finalizationBlock = ^(DZNPhotoPickerController *picker, NSDictionary *inf
         //Your implementation here
     };
     
+picker.failureBlock = ^(DZNPhotoPickerController *picker, NSError *error) {
+        //Your implementation here
+    };
+    
 picker.cancellationBlock = ^(DZNPhotoPickerController *picker) {
         //Your implementation here
     };
@@ -133,6 +137,8 @@ Feel free to collaborate with this project! Big thanks to:
 - [SJ Singh](https://github.com/SJApps): Google Images search support.
 - [Felipe Saint-Jean](https://github.com/fsaint): 64bits fix of the editing guides.
 - [Adar Porat](https://github.com/aporat) & [Ryan Fitzgerald](https://github.com/ryanfitz): AFNetworking 2.0 upgrade
+- [Felipe Saint-Jean](https://github.com/fsaint): 64bits fix of the editing guides.
+- [NikDude](https://github.com/nikdude) & [Rob Phillips](https://github.com/iwasrobbed): cool add-ons
 
 ## Apps using DZNPhotoPickerController
 Are you using this control in your apps? Let me know at [iromero@dzen.cl](mailto:iromero@dzen.cl).<br>
