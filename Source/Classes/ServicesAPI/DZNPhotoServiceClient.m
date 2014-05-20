@@ -89,6 +89,7 @@
     if (_service == DZNPhotoPickerControllerService500px)
     {
         [params setObject:@[@(2),@(4)] forKey:@"image_size"];
+        [params setObject:@"Nude" forKey:@"exclude"];
     }
     else if (_service == DZNPhotoPickerControllerServiceFlickr)
     {
