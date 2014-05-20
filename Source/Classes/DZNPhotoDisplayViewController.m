@@ -765,8 +765,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
-
     if ([_searchBar isFirstResponder]) {
         [_searchBar resignFirstResponder];
         [self performSelector:@selector(selectedItemAtIndexPath:) withObject:indexPath afterDelay:0.3];
