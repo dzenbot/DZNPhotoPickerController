@@ -144,7 +144,7 @@ Feel free to collaborate with this project! Big thanks to:
 Are you using this control in your apps? Let me know at [iromero@dzen.cl](mailto:iromero@dzen.cl).<br>
 
 - [Epiclist](https://itunes.apple.com/us/app/id789778193/)
-
+- [Everest](https://itunes.apple.com/us/app/id581016826/)
 
 ## License
 (The MIT License)
