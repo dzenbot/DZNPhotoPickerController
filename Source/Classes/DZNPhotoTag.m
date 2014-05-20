@@ -13,9 +13,14 @@
 
 @implementation DZNPhotoTag
 
-+ (NSString *)name
+- (instancetype)initWithTerm:(NSString *)term service:(DZNPhotoPickerControllerServices)service
 {
-    return NSStringFromClass([DZNPhotoTag class]);
+    self = [super init];
+    if (self) {
+        _term = term;
+        _serviceName = [NSStringFromService(service) lowercaseString];
+    }
+    return self;
 }
 
 + (instancetype)newTagWithTerm:(NSString *)term service:(DZNPhotoPickerControllerServices)service
@@ -25,16 +30,6 @@
         return tag;
     }
     return nil;
-}
-
-- (instancetype)initWithTerm:(NSString *)term service:(DZNPhotoPickerControllerServices)service
-{
-    self = [super init];
-    if (self) {
-        _term = term;
-        _serviceName = [NSStringFromService(service) lowercaseString];
-    }
-    return self;
 }
 
 + (NSArray *)photoTagListFromService:(DZNPhotoPickerControllerServices)service withResponse:(NSArray *)reponse
@@ -50,6 +45,11 @@
     }
     
     return result;
+}
+
++ (NSString *)name
+{
+    return NSStringFromClass([DZNPhotoTag class]);
 }
 
 - (NSString *)description

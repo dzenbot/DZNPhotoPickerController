@@ -59,7 +59,7 @@ static NSBundle *_testTargetBundle;
 {
     NSDictionary *object = [self JSONObjectForService:service];
     
-    NSArray *result = [DZNPhotoMetadata photoMetadataListFromService:service withResponse:@[object]];
+    NSArray *result = [DZNPhotoMetadata metadataListWithResponse:@[object] service:service];
     XCTAssertNotNil(result, @"The parsing result cannot be nil.");
     
     DZNPhotoMetadata *metadata = [result firstObject];

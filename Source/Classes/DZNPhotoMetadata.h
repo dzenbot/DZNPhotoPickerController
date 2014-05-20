@@ -17,21 +17,30 @@
 @interface DZNPhotoMetadata : NSObject
 
 /** The id of the photo. */
-@property (nonatomic, copy) id Id;
+@property (nonatomic, readonly) id Id;
 /** The url of the thumb version of the photo. */
-@property (nonatomic, copy) NSURL *thumbURL;
+@property (nonatomic, readonly) NSURL *thumbURL;
 /** The url of the full size version of the photo. */
-@property (nonatomic, copy) NSURL *sourceURL;
+@property (nonatomic, readonly) NSURL *sourceURL;
 /** The url of the photo's source page. */
-@property (nonatomic, copy) NSURL *detailURL;
+@property (nonatomic, readonly) NSURL *detailURL;
 /** The author's full name. */
-@property (nonatomic, copy) NSString *authorName;
+@property (nonatomic, readonly) NSString *authorName;
 /** The author's user name. */
-@property (nonatomic, copy) NSString *authorUsername;
+@property (nonatomic, readonly) NSString *authorUsername;
 /** The url of the author's profile. */
-@property (nonatomic, copy) NSURL *authorProfileURL;
+@property (nonatomic, readonly) NSURL *authorProfileURL;
 /** The name of the photo service. */
-@property (nonatomic, copy) NSString *serviceName;
+@property (nonatomic, readonly) NSString *serviceName;
+
+/**
+ * Parses and returns a list of photo metadata from a request response.
+ *
+ * @param reponse The response with already parsed JSON.
+ * @param service The photo service of the response.
+ * @returns A list of photo metadata.
+ */
++ (NSArray *)metadataListWithResponse:(NSArray *)reponse service:(DZNPhotoPickerControllerServices)service;
 
 /**
  * Returns the name of the class. It is as good as calling NSStringFromClass().
@@ -39,22 +48,5 @@
  * @return A the name of the class.
  */
 + (NSString *)name;
-
-/**
- * Allocates a new instance of DZNPhotoMetadata, initialized with a supported photo service type.
- *
- * @param service The specific photo search service.
- * @return A new allocated instance DZNPhotoMetadata.
- */
-+ (instancetype)photoMetadataFromService:(DZNPhotoPickerControllerServices)service;
-
-/**
- * Parses and returns a list of photo metadata from a request response.
- *
- * @param service The photo service of the response.
- * @param reponse The response with already parsed JSON.
- * @returns A list of photo metadata.
- */
-+ (NSArray *)photoMetadataListFromService:(DZNPhotoPickerControllerServices)service withResponse:(NSArray *)reponse;
 
 @end

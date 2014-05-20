@@ -31,8 +31,8 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 @property (nonatomic, readonly) UIButton *loadButton;
 @property (nonatomic, readonly) UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic, strong) NSMutableArray *photoMetadatas;
-@property (nonatomic, strong) NSMutableArray *photoTags;
+@property (nonatomic, strong) NSMutableArray *metadataList;
+@property (nonatomic, strong) NSMutableArray *tagList;
 @property (nonatomic, strong) NSArray *segmentedControlTitles;
 @property (nonatomic) DZNPhotoPickerControllerServices selectedService;
 @property (nonatomic) DZNPhotoPickerControllerServices previousService;
@@ -107,7 +107,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 {
     [super viewWillAppear:animated];
     
-    if (!_photoMetadatas) {
+    if (!_metadataList) {
 
         if (_searchBar.text.length > 0) {
             [self searchPhotosWithKeyword:_searchBar.text];
@@ -401,7 +401,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
         return YES;
     }
     else {
-        [_photoTags removeAllObjects];
+        [_tagList removeAllObjects];
         [self.searchDisplayController.searchResultsTableView reloadData];
         return NO;
     }
@@ -412,8 +412,8 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
  */
 - (BOOL)canDisplayFooterView
 {
-    if (_photoMetadatas.count > 0) {
-        return (_photoMetadatas.count%self.resultPerPage == 0) ? YES : NO;
+    if (_metadataList.count > 0) {
+        return (_metadataList.count%self.resultPerPage == 0) ? YES : NO;
     }
     return self.loading;
 }
@@ -435,12 +435,12 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 {
     [self setActivityIndicatorsVisible:NO];
     
-    if (!_photoMetadatas) _photoMetadatas = [NSMutableArray new];
+    if (!_metadataList) _metadataList = [NSMutableArray new];
     
-    [_photoMetadatas addObjectsFromArray:list];
+    [_metadataList addObjectsFromArray:list];
     [self.collectionView reloadData];
     
-    BOOL show = (_photoMetadatas.count == 0) ? YES : NO;
+    BOOL show = (_metadataList.count == 0) ? YES : NO;
     [self setEmptyDataSetVisible:show];
     
     CGSize contentSize = self.collectionView.contentSize;
@@ -454,16 +454,16 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
-    if (!_photoTags) _photoTags = [NSMutableArray new];
-    else [_photoTags removeAllObjects];
+    if (!_tagList) _tagList = [NSMutableArray new];
+    else [_tagList removeAllObjects];
     
-    [_photoTags addObjectsFromArray:list];
+    [_tagList addObjectsFromArray:list];
     
-    if (_photoTags.count == 1) {
-        [_photoTags removeAllObjects];
+    if (_tagList.count == 1) {
+        [_tagList removeAllObjects];
         
         DZNPhotoTag *tag = [DZNPhotoTag newTagWithTerm:_searchBar.text service:_selectedService];
-        [_photoTags addObject:tag];
+        [_tagList addObject:tag];
     }
     
     [self.searchDisplayController.searchResultsTableView reloadData];
@@ -547,7 +547,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
  */
 - (void)resetPhotos
 {
-    [_photoMetadatas removeAllObjects];
+    [_metadataList removeAllObjects];
     _currentPage = 1;
     
     [self.collectionView reloadData];
@@ -566,7 +566,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
  */
 - (void)selectedItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    DZNPhotoMetadata *metadata = [_photoMetadatas objectAtIndex:indexPath.row];
+    DZNPhotoMetadata *metadata = [_metadataList objectAtIndex:indexPath.row];
     
     if (!self.navigationController.enablePhotoDownload) {
         
@@ -700,7 +700,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _photoMetadatas.count;
+    return _metadataList.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -708,8 +708,8 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     DZNPhotoDisplayViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDZNPhotoCellViewIdentifier forIndexPath:indexPath];
     cell.tag = indexPath.row;
     
-    if (_photoMetadatas.count > 0) {
-        DZNPhotoMetadata *metadata = [_photoMetadatas objectAtIndex:indexPath.row];
+    if (_metadataList.count > 0) {
+        DZNPhotoMetadata *metadata = [_metadataList objectAtIndex:indexPath.row];
         [cell setThumbURL:metadata.thumbURL];
     }
 
@@ -730,7 +730,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
             
             _loadButton.frame = footer.bounds;
             
-            if (_photoMetadatas.count > 0 && !self.loading) {
+            if (_metadataList.count > 0 && !self.loading) {
                 _loadButton.enabled = YES;
                 [_loadButton setTitleColor:self.view.window.tintColor forState:UIControlStateNormal];
 
@@ -808,7 +808,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    if (_photoMetadatas.count == 0) {
+    if (_metadataList.count == 0) {
         return [self contentSize];
     }
     else return [self footerSize];
@@ -853,16 +853,16 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _photoTags.count;
+    return _tagList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDZNTagCellViewIdentifier];
     
-    DZNPhotoTag *tag = [_photoTags objectAtIndex:indexPath.row];
+    DZNPhotoTag *tag = [_tagList objectAtIndex:indexPath.row];
     
-    if (_photoTags.count == 1) {
+    if (_tagList.count == 1) {
         cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Search for \"%@\"", nil), tag.term];
     }
     else {
@@ -882,7 +882,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DZNPhotoTag *tag = [_photoTags objectAtIndex:indexPath.row];
+    DZNPhotoTag *tag = [_tagList objectAtIndex:indexPath.row];
     
     [self shouldSearchPhotos:tag.term];
     [self.searchDisplayController setActive:NO animated:YES];
@@ -917,7 +917,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
-    [_photoTags removeAllObjects];
+    [_tagList removeAllObjects];
 }
 
 - (void)searchBarShouldShift:(BOOL)shift
@@ -978,7 +978,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 {
     [self searchBarShouldShift:NO];
     
-    [_photoTags removeAllObjects];
+    [_tagList removeAllObjects];
     [controller.searchResultsTableView reloadData];
 }
 
@@ -1046,8 +1046,8 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    _photoMetadatas = nil;
-    _photoTags = nil;
+    _metadataList = nil;
+    _tagList = nil;
     
     _searchBar = nil;
     _searchController = nil;

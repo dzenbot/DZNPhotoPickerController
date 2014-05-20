@@ -12,79 +12,77 @@
 
 @implementation DZNPhotoMetadata
 
-+ (NSString *)name
+- (instancetype)initWithObject:(NSDictionary *)object service:(DZNPhotoPickerControllerServices)service
 {
-    return NSStringFromClass([DZNPhotoMetadata class]);
-}
-
-+ (instancetype)photoMetadataFromService:(DZNPhotoPickerControllerServices)service
-{
-    if (service != 0) {
-        DZNPhotoMetadata *metadata = [DZNPhotoMetadata new];
-        metadata.serviceName = [NSStringFromService(service) lowercaseString];
-        return metadata;
+    self = [super init];
+    if (self && object) {
+        
+        _serviceName = [NSStringFromService(service) lowercaseString];
+        
+        if ((service & DZNPhotoPickerControllerService500px) > 0)
+        {
+            _Id = [object valueForKey:@"id"];
+            _authorName = [[object valueForKeyPath:@"user.fullname"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            _authorUsername = [object valueForKeyPath:@"user.username"];
+            _authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/%@", _authorUsername]];
+            _detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/photo/%@", _Id]];
+            
+            _thumbURL = [NSURL URLWithString:[[[object objectForKey:@"images"] objectAtIndex:0] objectForKey:@"url"]];
+            _sourceURL = [NSURL URLWithString:[[[object objectForKey:@"images"] objectAtIndex:1] objectForKey:@"url"]];
+        }
+        else if ((service & DZNPhotoPickerControllerServiceFlickr) > 0)
+        {
+            _Id = [object objectForKey:@"id"];
+            _authorName = nil;
+            _authorUsername = [object objectForKey:@"owner"];
+            _authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.flickr.com/photos/%@", _authorUsername]];
+            _detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.flickr.com/photos/%@/%@", _authorUsername, _Id]];
+            
+            NSMutableString *url = [NSMutableString stringWithFormat:@"http://farm%@.static.flickr.com/%@/%@_%@", [[object objectForKey:@"farm"] stringValue], [object objectForKey:@"server"], [object objectForKey:@"id"], [object objectForKey:@"secret"]];
+            _thumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@_q.jpg", url]];
+            _sourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@_b.jpg", url]];
+        }
+        else if ((service & DZNPhotoPickerControllerServiceInstagram) > 0)
+        {
+            _Id = [object objectForKey:@"id"];
+            _authorName = [object valueForKeyPath:@"user.full_name"];
+            _authorUsername = [object valueForKeyPath:@"user.username"];
+            _authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://instagram.com/%@", _authorUsername]];
+            _detailURL = [NSURL URLWithString:[object objectForKey:@"link"]];
+            
+            _thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"images.thumbnail.url"]];
+            _sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"images.standard_resolution.url"]];
+        }
+        else if ((service & DZNPhotoPickerControllerServiceGoogleImages) > 0)
+        {
+            _detailURL = [NSURL URLWithString:[object valueForKeyPath:@"image.contextLink"]];
+            _thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"image.thumbnailLink"]];
+            _sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"link"]];
+        }
     }
-    return nil;
+    return self;
 }
 
-+ (NSArray *)photoMetadataListFromService:(DZNPhotoPickerControllerServices)service withResponse:(NSArray *)reponse
++ (NSArray *)metadataListWithResponse:(NSArray *)reponse service:(DZNPhotoPickerControllerServices)service
 {
     NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:reponse.count];
     
     for (NSDictionary *object in reponse) {
-        
-        DZNPhotoMetadata *metadata = [DZNPhotoMetadata photoMetadataFromService:service];
-        
-        if ((service & DZNPhotoPickerControllerService500px) > 0)
-        {
-            metadata.id = [object valueForKey:@"id"];
-            metadata.authorName = [[object valueForKeyPath:@"user.fullname"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            metadata.authorUsername = [object valueForKeyPath:@"user.username"];
-            metadata.authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/%@", metadata.authorUsername]];
-            metadata.detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/photo/%@", metadata.Id]];
-            
-            metadata.thumbURL = [NSURL URLWithString:[[[object objectForKey:@"images"] objectAtIndex:0] objectForKey:@"url"]];
-            metadata.sourceURL = [NSURL URLWithString:[[[object objectForKey:@"images"] objectAtIndex:1] objectForKey:@"url"]];
-        }
-        else if ((service & DZNPhotoPickerControllerServiceFlickr) > 0)
-        {
-            metadata.id = [object objectForKey:@"id"];
-            metadata.authorName = nil;
-            metadata.authorUsername = [object objectForKey:@"owner"];
-            metadata.authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.flickr.com/photos/%@", metadata.authorUsername]];
-            metadata.detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.flickr.com/photos/%@/%@", metadata.authorUsername, metadata.Id]];
-
-            NSMutableString *url = [NSMutableString stringWithFormat:@"http://farm%@.static.flickr.com/%@/%@_%@", [[object objectForKey:@"farm"] stringValue], [object objectForKey:@"server"], [object objectForKey:@"id"], [object objectForKey:@"secret"]];
-            metadata.thumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@_q.jpg", url]];
-            metadata.sourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@_b.jpg", url]];
-        }
-        else if ((service & DZNPhotoPickerControllerServiceInstagram) > 0)
-        {
-            metadata.id = [object objectForKey:@"id"];
-            metadata.authorName = [object valueForKeyPath:@"user.full_name"];
-            metadata.authorUsername = [object valueForKeyPath:@"user.username"];
-            metadata.authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://instagram.com/%@", metadata.authorUsername]];
-            metadata.detailURL = [NSURL URLWithString:[object objectForKey:@"link"]];
-            
-            metadata.thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"images.thumbnail.url"]];
-            metadata.sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"images.standard_resolution.url"]];
-        }
-        else if ((service & DZNPhotoPickerControllerServiceGoogleImages) > 0)
-        {
-            metadata.detailURL = [NSURL URLWithString:[object valueForKeyPath:@"image.contextLink"]];
-            metadata.thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"image.thumbnailLink"]];
-            metadata.sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"link"]];
-        }
-        
+        DZNPhotoMetadata *metadata = [[DZNPhotoMetadata alloc] initWithObject:object service:service];
         [result addObject:metadata];
     }
     
     return result;
 }
 
++ (NSString *)name
+{
+    return NSStringFromClass([DZNPhotoMetadata class]);
+}
+
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"serviceName = %@; id = %@; authorName = %@; authorUsername = %@; authorProfileURL = %@; detailURL = %@; thumbURL = %@; sourceURL = %@;", self.serviceName, self.Id, self.authorName, self.authorUsername, self.authorProfileURL, self.detailURL, self.thumbURL, self.sourceURL];
+    return [NSString stringWithFormat:@"serviceName = %@; id = %@; authorName = %@; authorUsername = %@; authorProfileURL = %@; detailURL = %@; thumbURL = %@; sourceURL = %@;", _serviceName, _Id, _authorName, _authorUsername, _authorProfileURL, _detailURL, _thumbURL, _sourceURL];
 }
 
 

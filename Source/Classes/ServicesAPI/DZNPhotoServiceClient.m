@@ -141,7 +141,7 @@
         return [DZNPhotoTag photoTagListFromService:_service withResponse:objects];
     }
     else if ([objectName isEqualToString:[DZNPhotoMetadata name]]) {
-        return [DZNPhotoMetadata photoMetadataListFromService:_service withResponse:objects];
+        return [DZNPhotoMetadata metadataListWithResponse:objects service:_service];
     }
     
     return nil;
