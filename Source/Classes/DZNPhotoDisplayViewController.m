@@ -198,7 +198,10 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
         _searchBar.text = self.navigationController.initialSearchTerm;
         _searchBar.delegate = self;
         
-        _searchBar.scopeButtonTitles = [self segmentedControlTitles];
+        if (self.segmentedControlTitles.count > 1) {
+            _searchBar.scopeButtonTitles = [self segmentedControlTitles];
+        }
+        
         _searchBar.selectedScopeButtonIndex = 0;
         
         [self.view addSubview:_searchBar];
@@ -915,9 +918,15 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 - (void)searchBarShouldShift:(BOOL)shift
 {
+    [self searchBarShouldShift:shift animated:YES];
+}
+
+- (void)searchBarShouldShift:(BOOL)shift animated:(BOOL)animated
+{
     _searchBar.showsScopeBar = shift;
+    NSTimeInterval duration = animated ? 0.25 : 0.0;
     
-    [UIView animateWithDuration:0.25
+    [UIView animateWithDuration:duration
                      animations:^{
                          [self.searchBar setFrame:[self searchBarFrame]];
                          [self.searchDisplayController setActive:shift];
