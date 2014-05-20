@@ -26,10 +26,10 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 @interface DZNPhotoDisplayViewController () <UISearchDisplayDelegate, UISearchBarDelegate,
                                             UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) UISearchBar *searchBar;
-@property (nonatomic, strong) UISearchDisplayController *searchController;
-@property (nonatomic, readwrite) UIButton *loadButton;
-@property (nonatomic, readwrite) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, readonly) UISearchBar *searchBar;
+@property (nonatomic, readonly) UISearchDisplayController *searchController;
+@property (nonatomic, readonly) UIButton *loadButton;
+@property (nonatomic, readonly) UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic, strong) NSMutableArray *photoMetadatas;
 @property (nonatomic, strong) NSMutableArray *photoTags;
@@ -39,14 +39,21 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 @property (nonatomic) NSInteger resultPerPage;
 @property (nonatomic) NSInteger currentPage;
 
-@property (nonatomic, strong) UILabel *titleSetLabel;
-@property (nonatomic, strong) UILabel *detailSetLabel;
+@property (nonatomic, readonly) UILabel *titleSetLabel;
+@property (nonatomic, readonly) UILabel *detailSetLabel;
 
-@property (nonatomic, strong) NSTimer *searchTimer;
+@property (nonatomic, readonly) NSTimer *searchTimer;
 
 @end
 
 @implementation DZNPhotoDisplayViewController
+@synthesize searchBar = _searchBar;
+@synthesize searchController = _searchController;
+@synthesize loadButton = _loadButton;
+@synthesize activityIndicator = _activityIndicator;
+@synthesize titleSetLabel = _titleSetLabel;
+@synthesize detailSetLabel = _detailSetLabel;
+@synthesize searchTimer = _searchTimer;
 
 - (instancetype)init
 {
@@ -740,11 +747,11 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
         }
         else {
             [_loadButton removeFromSuperview];
-            [self setLoadButton:nil];
+            _loadButton = nil;
             
             [_activityIndicator stopAnimating];
             [_activityIndicator removeFromSuperview];
-            [self setActivityIndicator:nil];
+            _activityIndicator = nil;
         }
         return footer;
     }
@@ -1039,12 +1046,13 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    _photoMetadatas = nil;
+    _photoTags = nil;
+    
     _searchBar = nil;
     _searchController = nil;
     _loadButton = nil;
     _activityIndicator = nil;
-    _photoMetadatas = nil;
-    _photoTags = nil;
     _segmentedControlTitles = nil;
 }
 
