@@ -9,8 +9,7 @@
 
 #import <XCTest/XCTest.h>
 #import "DZNPhotoMetadata.h"
-
-static NSBundle *_testTargetBundle;
+#import "DZNPhotoPickerControllerConstants.h"
 
 @interface DZNPhotoParsingTests : XCTestCase
 @end
@@ -20,9 +19,6 @@ static NSBundle *_testTargetBundle;
 - (void)setUp
 {
     [super setUp];
-    
-    NSString *bundleIdentifier = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
-    _testTargetBundle = [NSBundle bundleWithIdentifier:bundleIdentifier];
 }
 
 - (void)tearDown
@@ -30,13 +26,13 @@ static NSBundle *_testTargetBundle;
     [super tearDown];
 }
 
-- (NSDictionary *)JSONObjectForService:(DZNPhotoPickerControllerService)service
+- (NSDictionary *)JSONObjectForService:(DZNPhotoPickerControllerServices)service
 {
-    XCTAssertNotNil(_testTargetBundle, @"path : %@", _testTargetBundle);
-    XCTAssertNotNil(_testTargetBundle, @"The target bundle cannot be nil");
-    
-    NSString *path = [_testTargetBundle pathForResource:[NSStringFromService(service) lowercaseString] ofType:@"json"];
-    XCTAssertNotNil(path, @"The path to the file cannot be nil.");
+    NSBundle *testBundle = [NSBundle bundleForClass:[self class]];
+    XCTAssertNotNil(testBundle, @"path : %@", testBundle);
+
+    NSString *path = [testBundle pathForResource:[NSStringFromService(service) lowercaseString] ofType:@"json"];
+    XCTAssertNotNil(path, @"The path (%@) to the file cannot be nil.", path);
     
     NSData *data = [NSData dataWithContentsOfFile:path];
     XCTAssertNotNil(data, @"The NSData representation of the JSON content cannot be nil");
@@ -55,7 +51,7 @@ static NSBundle *_testTargetBundle;
     [self testParsingForService:DZNPhotoPickerControllerServiceGoogleImages];
 }
 
-- (void)testParsingForService:(DZNPhotoPickerControllerService)service
+- (void)testParsingForService:(DZNPhotoPickerControllerServices)service
 {
     NSDictionary *object = [self JSONObjectForService:service];
     

@@ -49,11 +49,9 @@
 		4FA4987918B866C600764406 /* DZNPhotoParsingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA4986E18B866C600764406 /* DZNPhotoParsingTests.m */; };
 		4FA4987B18B866C600764406 /* DZNPhotoPickerControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA4987118B866C600764406 /* DZNPhotoPickerControllerTests.m */; };
 		4FA4987C18B866C600764406 /* 500px.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FA4987318B866C600764406 /* 500px.json */; };
-		4FA4987D18B866C600764406 /* bing.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FA4987418B866C600764406 /* bing.json */; };
 		4FA4987E18B866C600764406 /* flickr.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FA4987518B866C600764406 /* flickr.json */; };
 		4FA4987F18B866C600764406 /* google.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FA4987618B866C600764406 /* google.json */; };
 		4FA4988018B866C600764406 /* instagram.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FA4987718B866C600764406 /* instagram.json */; };
-		4FA4988118B866C600764406 /* yahoo.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FA4987818B866C600764406 /* yahoo.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,11 +115,9 @@
 		4FA4987018B866C600764406 /* DZNPhotoPickerControllerTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DZNPhotoPickerControllerTests-Prefix.pch"; sourceTree = "<group>"; };
 		4FA4987118B866C600764406 /* DZNPhotoPickerControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerControllerTests.m; sourceTree = "<group>"; };
 		4FA4987318B866C600764406 /* 500px.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 500px.json; sourceTree = "<group>"; };
-		4FA4987418B866C600764406 /* bing.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bing.json; sourceTree = "<group>"; };
 		4FA4987518B866C600764406 /* flickr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = flickr.json; sourceTree = "<group>"; };
 		4FA4987618B866C600764406 /* google.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = google.json; sourceTree = "<group>"; };
 		4FA4987718B866C600764406 /* instagram.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = instagram.json; sourceTree = "<group>"; };
-		4FA4987818B866C600764406 /* yahoo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yahoo.json; sourceTree = "<group>"; };
 		4FD61C0618759E0D0048DC0C /* Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
 		81CB7D6B303A4384A940032C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		880742B9C52B4EC59B669AE3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -296,11 +292,9 @@
 			isa = PBXGroup;
 			children = (
 				4FA4987318B866C600764406 /* 500px.json */,
-				4FA4987418B866C600764406 /* bing.json */,
 				4FA4987518B866C600764406 /* flickr.json */,
 				4FA4987618B866C600764406 /* google.json */,
 				4FA4987718B866C600764406 /* instagram.json */,
-				4FA4987818B866C600764406 /* yahoo.json */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -401,8 +395,6 @@
 				4FA4988018B866C600764406 /* instagram.json in Resources */,
 				4FA4987C18B866C600764406 /* 500px.json in Resources */,
 				4FA4987E18B866C600764406 /* flickr.json in Resources */,
-				4FA4987D18B866C600764406 /* bing.json in Resources */,
-				4FA4988118B866C600764406 /* yahoo.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
