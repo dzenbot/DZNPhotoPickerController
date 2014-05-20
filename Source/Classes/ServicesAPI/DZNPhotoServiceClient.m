@@ -104,6 +104,7 @@
         [params setObject:[self consumerSecret] forKey:keyForAPIConsumerSecret(_service)];
         [params setObject:@"image" forKey:@"searchType"];
         [params setObject:@"medium" forKey:@"safe"];
+        if (page > 1) [params setObject:@((page - 1) * resultPerPage + 1) forKey:@"start"];
     }
     return params;
 }
