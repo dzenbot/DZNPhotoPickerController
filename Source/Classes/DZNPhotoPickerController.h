@@ -22,6 +22,7 @@
 @interface DZNPhotoPickerController : UINavigationController
 
 typedef void (^DZNPhotoPickerControllerFinalizationBlock)(DZNPhotoPickerController *picker, NSDictionary *info);
+typedef void (^DZNPhotoPickerControllerFailureBlock)(DZNPhotoPickerController *picker, NSError *error);
 typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerController *picker);
 
 /** The photo picker's delegate object. */
@@ -42,6 +43,8 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @property (nonatomic) BOOL enablePhotoDownload;
 /** A block to be executed whenever the user pickes a new photo. Use this block to replace delegate method photoPickerController:didFinishPickingPhotoWithInfo: */
 @property (nonatomic, strong) DZNPhotoPickerControllerFinalizationBlock finalizationBlock;
+/** A block to be executed whenever an error occurs while picking a photo. Use this block to replace delegate method photoPickerController:didFailedPickingPhotoWithError: */
+@property (nonatomic, strong) DZNPhotoPickerControllerFailureBlock failureBlock;
 /** A block to be executed whenever the user cancels the pick operation. Use this block to replace delegate method photoPickerControllerDidCancel: */
 @property (nonatomic, strong) DZNPhotoPickerControllerCancellationBlock cancellationBlock;
 
@@ -94,12 +97,21 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
  */
 - (void)photoPickerController:(DZNPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)userInfo;
 
+
+/**
+ * Tells the delegate that picking a photo has failed.
+ *
+ * @param picker The controller object managing the photo search picker interface.
+ * @param error The error
+ */
+- (void)photoPickerController:(DZNPhotoPickerController *)picker didFailedPickingPhotoWithError:(NSError *)error;
+
 /**
  * Tells the delegate that the user cancelled the pick operation.
  * Your delegate’s implementation of this method should dismiss the picker view by calling the dismissModalViewControllerAnimated: method of the parent view controller.
  * Implementation of this method is optional, but expected.
  *
- * @param picker The controller object managing the image picker interfac
+ * @param picker The controller object managing the image picker interface.
  */
 - (void)photoPickerControllerDidCancel:(DZNPhotoPickerController *)picker;
 

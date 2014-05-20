@@ -114,6 +114,15 @@
         [self dismissController:picker];
     };
     
+    picker.failureBlock = ^(DZNPhotoPickerController *picker, NSError *error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                        message:error.localizedDescription
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                              otherButtonTitles: nil];
+        [alert show];
+    };
+    
     picker.cancellationBlock = ^(DZNPhotoPickerController *picker) {
         [self dismissController:picker];
     };

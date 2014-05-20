@@ -38,6 +38,10 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 @property (nonatomic, readonly) UIImageView *maskView;
 /** The view layed out at the bottom for displaying action buttons. */
 @property (nonatomic, readonly) UIView *bottomView;
+/** The left acion button. */
+@property (nonatomic, readonly) UIButton *leftButton;
+/** The right acion button. */
+@property (nonatomic, readonly) UIButton *rightButton;
 /** The activity indicator to be used for notifying when image is being downloaded. */
 @property (nonatomic, readonly) UIActivityIndicatorView *activityIndicator;
 /** The cropping mode (ie: Square, Circular or Custom). Default is Square. */
@@ -180,15 +184,15 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         _bottomView = [UIView new];
         _bottomView.translatesAutoresizingMaskIntoConstraints = NO;
         
-        UIButton *leftButton = [self buttonWithTitle:NSLocalizedString(@"Cancel", nil)];
-        [leftButton addTarget:self action:@selector(cancelEdition:) forControlEvents:UIControlEventTouchUpInside];
-        [_bottomView addSubview:leftButton];
+        _leftButton = [self buttonWithTitle:NSLocalizedString(@"Cancel", nil)];
+        [_leftButton addTarget:self action:@selector(cancelEdition:) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView addSubview:_leftButton];
         
-        UIButton *rightButton = [self buttonWithTitle:NSLocalizedString(@"Choose", nil)];
-        [rightButton addTarget:self action:@selector(acceptEdition:) forControlEvents:UIControlEventTouchUpInside];
-        [_bottomView addSubview:rightButton];
+        _rightButton = [self buttonWithTitle:NSLocalizedString(@"Choose", nil)];
+        [_rightButton addTarget:self action:@selector(acceptEdition:) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView addSubview:_rightButton];
         
-        NSMutableDictionary *views = [[NSMutableDictionary alloc] initWithDictionary:NSDictionaryOfVariableBindings(leftButton, rightButton)];
+        NSMutableDictionary *views = [[NSMutableDictionary alloc] initWithDictionary:@{@"leftButton": _leftButton, @"rightButton": _rightButton}];
         NSDictionary *metrics = @{@"hmargin" : @(13), @"vmargin" : @(21), @"barsHeight": @([UIApplication sharedApplication].statusBarFrame.size.height+self.navigationController.navigationBar.frame.size.height)};
         
         [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-hmargin-[leftButton]" options:0 metrics:metrics views:views]];
@@ -495,12 +499,23 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     if (!_imageView.image)
     {
         __weak DZNPhotoEditorViewController *weakSelf = self;
+        __weak UIButton *_button = _rightButton;
+        _button.enabled = NO;
         
         [_activityIndicator startAnimating];
         
         [_imageView setImageWithURL:_photoMetadata.sourceURL placeholderImage:nil
                             options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
-                          completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
+                          completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                              if (!error) {
+                                  _button.enabled = YES;
+                              }
+                              else {
+                                  [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFailPickingNotification
+                                                                                      object:nil
+                                                                                    userInfo:@{@"error": error}];
+                              }
+                              
                               [[weakSelf activityIndicator] removeFromSuperview];
                               [weakSelf updateScrollViewContentInset];
                           }];

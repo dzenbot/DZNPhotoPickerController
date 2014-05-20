@@ -13,6 +13,7 @@ UIKIT_EXTERN NSString *const DZNPhotoPickerControllerCropZoomScale;         // A
 UIKIT_EXTERN NSString *const DZNPhotoPickerControllerPhotoMetadata;         // An NSDictionary containing metadata from a captured photo
 
 UIKIT_EXTERN NSString *const DZNPhotoPickerDidFinishPickingNotification;    // The notification key used when photo picked.
+UIKIT_EXTERN NSString *const DZNPhotoPickerDidFailPickingNotification;       // The notification key used when photo picked.
 
 /**
  * Types of supported photo services

@@ -15,6 +15,7 @@ NSString *const DZNPhotoPickerControllerCropZoomScale = @"DZNPhotoPickerControll
 NSString *const DZNPhotoPickerControllerPhotoMetadata = @"DZNPhotoPickerControllerPhotoMetadata";
 
 NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDidFinishPickingNotification";
+NSString *const DZNPhotoPickerDidFailPickingNotification = @"DZNPhotoPickerDidFinishPickingWithErrorNotification";
 
 
 NSString *NSStringFromService(DZNPhotoPickerControllerServices service)

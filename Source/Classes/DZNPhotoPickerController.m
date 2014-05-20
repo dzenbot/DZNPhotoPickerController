@@ -15,6 +15,7 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 
 static DZNPhotoPickerControllerFinalizationBlock _finalizationBlock;
+static DZNPhotoPickerControllerFailureBlock _failureBlock;
 static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 
 @interface DZNPhotoPickerController ()
@@ -67,7 +68,8 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickPhoto:) name:DZNPhotoPickerDidFinishPickingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFinishPickingPhoto:) name:DZNPhotoPickerDidFinishPickingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFailPickingPhoto:) name:DZNPhotoPickerDidFailPickingNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -174,7 +176,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 /*
  * Called by a notification whenever the user picks a photo.
  */
-- (void)didPickPhoto:(NSNotification *)notification
+- (void)didFinishPickingPhoto:(NSNotification *)notification
 {
     if (self.finalizationBlock) {
         self.finalizationBlock(self, notification.userInfo);
@@ -185,6 +187,22 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
         [self.delegate photoPickerController:self didFinishPickingPhotoWithInfo:notification.userInfo];
     }
 }
+
+/*
+ * Called by a notification whenever the picking a photo fails.
+ */
+- (void)didFailPickingPhoto:(NSNotification *)notification
+{
+    if (self.failureBlock) {
+        self.failureBlock(self, notification.userInfo[@"error"]);
+        return;
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerController:didFailedPickingPhotoWithError:)]){
+        [self.delegate photoPickerController:self didFailedPickingPhotoWithError:notification.userInfo[@"error"]];
+    }
+}
+
 
 /*
  * Called whenever the user cancels the picker.
