@@ -36,7 +36,7 @@ When installing, the following dependencies will be automatically installed:
 - SDWebImage (~> 3.5.4)
 
 ## How to use
-For complete documentation, [visit CocoaPods' auto-generated doc](http://cocoadocs.org/docsets/DZNPhotoPickerController/1.2.3/)
+For complete documentation, [visit CocoaPods' auto-generated doc](http://cocoadocs.org/docsets/DZNPhotoPickerController/)
 
 ### Step 1
 
@@ -83,6 +83,10 @@ picker.supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
 You can opt-in for block methods instead of using the delegate's methods:
 ```
 picker.finalizationBlock = ^(DZNPhotoPickerController *picker, NSDictionary *info) {
+        //Your implementation here
+    };
+    
+picker.failureBlock = ^(DZNPhotoPickerController *picker, NSError *error) {
         //Your implementation here
     };
     
@@ -133,6 +137,8 @@ Feel free to collaborate with this project! Big thanks to:
 - [SJ Singh](https://github.com/SJApps): Google Images search support.
 - [Felipe Saint-Jean](https://github.com/fsaint): 64bits fix of the editing guides.
 - [Adar Porat](https://github.com/aporat) & [Ryan Fitzgerald](https://github.com/ryanfitz): AFNetworking 2.0 upgrade
+- [Felipe Saint-Jean](https://github.com/fsaint): 64bits fix of the editing guides.
+- [NikDude](https://github.com/nikdude) & [Rob Phillips](https://github.com/iwasrobbed): cool add-ons
 
 ## Apps using DZNPhotoPickerController
 Are you using this control in your apps? Let me know at [iromero@dzen.cl](mailto:iromero@dzen.cl).<br>
