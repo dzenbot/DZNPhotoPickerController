@@ -611,6 +611,11 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     [self resetSearchTimer];
     
     id <DZNPhotoServiceClientProtocol> client = [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
+    
+    if (!client) {
+        return;
+    }
+    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     [client searchTagsWithKeyword:term

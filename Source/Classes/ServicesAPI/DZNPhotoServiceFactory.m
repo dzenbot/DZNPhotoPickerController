@@ -40,6 +40,12 @@
         }
     }
     
+    NSString *consumerKey = [[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerKey)];
+    
+    if (!consumerKey) {
+        return nil;
+    }
+    
     DZNPhotoPickerControllerSubscription subscription = [[[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientSubscription)] integerValue];
         
     DZNPhotoServiceClient *client = [[DZNPhotoServiceClient alloc] initWithService:service subscription:subscription];
