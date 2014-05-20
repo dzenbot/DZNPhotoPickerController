@@ -18,14 +18,23 @@
     return NSStringFromClass([DZNPhotoTag class]);
 }
 
-+ (instancetype)photoTagFromService:(DZNPhotoPickerControllerServices)service
++ (instancetype)newTagWithTerm:(NSString *)term service:(DZNPhotoPickerControllerServices)service
 {
-    if (service != 0) {
-        DZNPhotoTag *tag = [DZNPhotoTag new];
-        tag.serviceName = [NSStringFromService(service) lowercaseString];
+    if ([term isKindOfClass:[NSString class]] && service > 0) {
+        DZNPhotoTag *tag = [[DZNPhotoTag alloc] initWithTerm:term service:service];
         return tag;
     }
     return nil;
+}
+
+- (instancetype)initWithTerm:(NSString *)term service:(DZNPhotoPickerControllerServices)service
+{
+    self = [super init];
+    if (self) {
+        _term = term;
+        _serviceName = [NSStringFromService(service) lowercaseString];
+    }
+    return self;
 }
 
 + (NSArray *)photoTagListFromService:(DZNPhotoPickerControllerServices)service withResponse:(NSArray *)reponse
@@ -34,8 +43,8 @@
     
     for (NSDictionary *object in reponse) {
         
-        DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:service];
-        tag.text = [object objectForKey:keyForSearchTagContent(service)];
+        NSString *term = [object objectForKey:keyForSearchTagContent(service)];
+        DZNPhotoTag *tag = [DZNPhotoTag newTagWithTerm:term service:service];
         
         [result addObject:tag];
     }
@@ -45,7 +54,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"serviceName = %@; content = %@;", self.serviceName, self.text];
+    return [NSString stringWithFormat:@"service name = %@; term = %@;", self.serviceName, self.term];
 }
 
 
@@ -53,7 +62,7 @@
 
 - (void)dealloc
 {
-    _text = nil;
+    _term = nil;
     _serviceName = nil;
 }
 

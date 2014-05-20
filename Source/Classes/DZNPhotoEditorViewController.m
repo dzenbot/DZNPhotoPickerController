@@ -29,7 +29,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 /** An optional DZNPhotoMetadata use for downloading the image. */
 @property (nonatomic, weak) DZNPhotoMetadata *photoMetadata;
 /** An optional UIImage use for displaying the already existing full size image. */
-@property (nonatomic, assign) UIImage *editingImage;
+@property (nonatomic, copy) UIImage *editingImage;
 /** The scrollview containing the image for allowing panning and zooming. */
 @property (nonatomic, readonly) UIScrollView *scrollView;
 /** The container for the edited image. */

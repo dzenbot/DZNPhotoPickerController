@@ -16,7 +16,7 @@
 @interface DZNPhotoDisplayViewCell : UICollectionViewCell
 
 /** The image view of the cell. (read-only). */
-@property (nonatomic, readonly, strong) UIImageView *imageView;
+@property (nonatomic, readonly) UIImageView *imageView;
 
 /** Sets the thumbnail URL for download. This also forces cancellation of previous image download.
  *

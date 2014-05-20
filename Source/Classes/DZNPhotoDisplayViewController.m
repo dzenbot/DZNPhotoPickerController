@@ -452,11 +452,10 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     
     [_photoTags addObjectsFromArray:list];
     
-    if (_photoTags.count < 2) {
+    if (_photoTags.count == 1) {
         [_photoTags removeAllObjects];
         
-        DZNPhotoTag *tag = [DZNPhotoTag photoTagFromService:_selectedService];
-        tag.text = _searchBar.text;
+        DZNPhotoTag *tag = [DZNPhotoTag newTagWithTerm:_searchBar.text service:_selectedService];
         [_photoTags addObject:tag];
     }
     
@@ -857,10 +856,10 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     DZNPhotoTag *tag = [_photoTags objectAtIndex:indexPath.row];
     
     if (_photoTags.count == 1) {
-        cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Search for \"%@\"", nil), tag.text];
+        cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Search for \"%@\"", nil), tag.term];
     }
     else {
-        cell.textLabel.text = tag.text;
+        cell.textLabel.text = tag.term;
     }
     
     return cell;
@@ -878,9 +877,9 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 {
     DZNPhotoTag *tag = [_photoTags objectAtIndex:indexPath.row];
     
-    [self shouldSearchPhotos:tag.text];
+    [self shouldSearchPhotos:tag.term];
     [self.searchDisplayController setActive:NO animated:YES];
-    [self setSearchBarText:tag.text];
+    [self setSearchBarText:tag.term];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
