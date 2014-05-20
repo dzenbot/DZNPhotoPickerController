@@ -36,7 +36,7 @@ When installing, the following dependencies will be automatically installed:
 - SDWebImage (~> 3.5.4)
 
 ## How to use
-For complete documentation, [visit CocoaPods' auto-generated doc](http://cocoadocs.org/docsets/DZNPhotoPickerController/1.2.3/)
+For complete documentation, [visit CocoaPods' auto-generated doc](http://cocoadocs.org/docsets/DZNPhotoPickerController/)
 
 ### Step 1
 
