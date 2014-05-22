@@ -859,15 +859,17 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDZNTagCellViewIdentifier];
+    NSString *text = @"";
     
-    DZNPhotoTag *tag = [_tagList objectAtIndex:indexPath.row];
+    if (indexPath.row < _tagList.count) {
+        
+        DZNPhotoTag *tag = [_tagList objectAtIndex:indexPath.row];
+        
+        if (_tagList.count == 1) text = [NSString stringWithFormat:NSLocalizedString(@"Search for \"%@\"", nil), tag.term];
+        else text = tag.term;
+    }
     
-    if (_tagList.count == 1) {
-        cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Search for \"%@\"", nil), tag.term];
-    }
-    else {
-        cell.textLabel.text = tag.term;
-    }
+    cell.textLabel.text = text;
     
     return cell;
 }
