@@ -27,9 +27,9 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 
 /** The photo picker's delegate object. */
 @property (nonatomic, assign) id <UINavigationControllerDelegate, DZNPhotoPickerControllerDelegate> delegate;
-/** The photo services to be supported by the controller. Default values are 500px & Flickr. */
+/** The photo services to be supported by the controller. Default are 500px & Flickr. */
 @property (nonatomic) DZNPhotoPickerControllerServices supportedServices;
-/** YES if the user is allowed to edit a selected image. Default value is NO. */
+/** YES if the user is allowed to edit a selected image. Default is NO. */
 @property (nonatomic) BOOL allowsEditing;
 /** An optional string term for auto-starting the photo search, as soon as the picker is presented. */
 @property (nonatomic, copy) NSString *initialSearchTerm;
@@ -37,9 +37,9 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @property (nonatomic, assign) DZNPhotoEditorViewControllerCropMode cropMode;
 /** The cropping size (i.e. 320,320). When setting this property manually, the cropMode is overidden to DZNPhotoEditorViewControllerCropModeCustom. */
 @property (nonatomic, assign) CGSize cropSize;
-/** The supported licenses of photos to search. Default value is "All CC Reserved Attributions". Pending implementation. */
+/** The supported licenses of photos to search. Default is "All CC Reserved Attributions". Pending implementation. */
 @property (nonatomic) DZNPhotoPickerControllerCCLicenses supportedLicenses;
-/** YES if the picker should download the full size photo after selecting its thumbnail, when allowsEditing is NO. Default value is YES. */
+/** YES if the picker should download the full size photo after selecting its thumbnail, when allowsEditing is NO. Default is YES. */
 @property (nonatomic) BOOL enablePhotoDownload;
 /** A block to be executed whenever the user pickes a new photo. Use this block to replace delegate method photoPickerController:didFinishPickingPhotoWithInfo: */
 @property (nonatomic, strong) DZNPhotoPickerControllerFinalizationBlock finalizationBlock;
@@ -47,8 +47,8 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @property (nonatomic, strong) DZNPhotoPickerControllerFailureBlock failureBlock;
 /** A block to be executed whenever the user cancels the pick operation. Use this block to replace delegate method photoPickerControllerDidCancel: */
 @property (nonatomic, strong) DZNPhotoPickerControllerCancellationBlock cancellationBlock;
-/** YES if autocompletion tag search is available while the user is typing. Default YES. */
-@property (nonatomic, assign) BOOL enableTagSearch;
+/** YES if auto-completion search is available while the user is typing on the search bar. This data uses Flickr's tag search API. Default is YES. */
+@property (nonatomic, assign) BOOL allowAutoCompletedSearch;
 
 /**
  * Initializes and returns a newly created picker controller, on edit mode only.

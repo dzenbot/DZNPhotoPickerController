@@ -108,7 +108,7 @@
         picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
         picker.initialSearchTerm = @"California";
         picker.enablePhotoDownload = YES;
-        picker.enableTagSearch = YES;
+        picker.allowAutoCompletedSearch = YES;
     }
     
     picker.finalizationBlock = ^(DZNPhotoPickerController *picker, NSDictionary *info) {

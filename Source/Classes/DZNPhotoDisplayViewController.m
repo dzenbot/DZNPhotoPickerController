@@ -387,7 +387,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
  */
 - (BOOL)canSearchTag:(NSString *)term
 {
-    if (!self.navigationController.enableTagSearch) {
+    if (!self.navigationController.allowAutoCompletedSearch) {
         return NO;
     }
     
