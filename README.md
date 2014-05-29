@@ -145,6 +145,7 @@ Are you using this control in your apps? Let me know at [iromero@dzen.cl](mailto
 
 - [Epiclist](https://itunes.apple.com/us/app/id789778193/)
 - [Everest](https://itunes.apple.com/us/app/id581016826/)
+- [Nifti](https://itunes.apple.com/us/app/nifti/id703097357)
 
 ## License
 (The MIT License)
