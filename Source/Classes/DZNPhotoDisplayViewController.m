@@ -216,7 +216,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     return _searchBar;
 }
 
-
 /*
  * Returns the 'Load More' footer button.
  */

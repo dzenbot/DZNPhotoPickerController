@@ -11,8 +11,6 @@
 #import "DZNPhotoDisplayViewCell.h"
 #import "UIImageView+WebCache.h"
 
-#define DZNPhotoDisplayViewCellMargin 30.0
-
 @implementation DZNPhotoDisplayViewCell
 @synthesize imageView = _imageView;
 
@@ -46,7 +44,7 @@
 }
 
 
-#pragma mark - Getter methods
+#pragma mark - Setter methods
 
 - (void)setThumbURL:(NSURL *)URL
 {
