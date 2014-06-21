@@ -12,11 +12,11 @@
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 
-NSString *const DZNPhotoServiceClientIndentifier =      @"com.dzn.DZNPhotoServiceClient";
+NSString *const DZNPhotoServiceClientIndentifier =      @"com.dzn.photoService.clientIndentifier";
 
-NSString *const DZNPhotoServiceClientConsumerKey =      @"DZNPhotoServiceClientConsumerKey";
-NSString *const DZNPhotoServiceClientConsumerSecret =   @"DZNPhotoServiceClientConsumerSecret";
-NSString *const DZNPhotoServiceClientSubscription =     @"DZNPhotoServiceClientSubscription";
+NSString *const DZNPhotoServiceClientConsumerKey =      @"com.dzn.photoService.consumerKey";
+NSString *const DZNPhotoServiceClientConsumerSecret =   @"com.dzn.photoService.consumerSecret";
+NSString *const DZNPhotoServiceClientSubscription =     @"com.dzn.photoService.subscription";
 
 
 NSString *NSUserDefaultsUniqueKey(NSUInteger type, NSString *key)

@@ -10,12 +10,12 @@
 
 #import "DZNPhotoPickerControllerConstants.h"
 
-NSString *const DZNPhotoPickerControllerCropMode = @"DZNPhotoPickerControllerCropMode";
-NSString *const DZNPhotoPickerControllerCropZoomScale = @"DZNPhotoPickerControllerCropZoomScale";
-NSString *const DZNPhotoPickerControllerPhotoMetadata = @"DZNPhotoPickerControllerPhotoMetadata";
+NSString *const DZNPhotoPickerControllerCropMode = @"com.dzn.photoPicker.cropMode";
+NSString *const DZNPhotoPickerControllerCropZoomScale = @"com.dzn.photoPicker.cropZoomScale";
+NSString *const DZNPhotoPickerControllerPhotoMetadata = @"com.dzn.photoPicker.photoMetadata";
 
-NSString *const DZNPhotoPickerDidFinishPickingNotification = @"DZNPhotoPickerDidFinishPickingNotification";
-NSString *const DZNPhotoPickerDidFailPickingNotification = @"DZNPhotoPickerDidFinishPickingWithErrorNotification";
+NSString *const DZNPhotoPickerDidFinishPickingNotification = @"com.dzn.photoPicker.didFinishPickingNotification";
+NSString *const DZNPhotoPickerDidFailPickingNotification = @"com.dzn.photoPicker.idFinishPickingWithErrorNotification";
 
 
 NSString *NSStringFromService(DZNPhotoPickerControllerServices service)
