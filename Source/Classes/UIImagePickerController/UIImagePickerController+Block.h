@@ -14,7 +14,7 @@ typedef void (^UIImagePickerControllerFinalizationBlock)(UIImagePickerController
 typedef void (^UIImagePickerControllerCancellationBlock)(UIImagePickerController *picker);
 
 /**
- * A category class adding block support to UIImagePickerController, replacing delegation implementation.
+ A category class adding block support to UIImagePickerController, replacing delegation implementation.
  */
 @interface UIImagePickerController (Block)
 

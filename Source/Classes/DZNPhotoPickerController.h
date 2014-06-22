@@ -14,10 +14,10 @@
 @protocol DZNPhotoPickerControllerDelegate;
 
 /** 
- * A photo search/picker for iOS 7, similar to UIImagePickerControl, providing photos from popular photography like 500px, Flickr and many others.
- * This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behaviour.
- *
- * @discussion Due to Terms of Use of some photo services, the images can only be cached in memory, but not the device's hard drive.
+ A photo search/picker for iOS 7, similar to UIImagePickerControl, providing photos from popular photography like 500px, Flickr and many others.
+ This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behaviour.
+ 
+ @discussion Due to Terms of Use of some photo services, the images can only be cached in memory, but not the device's hard drive.
  */
 @interface DZNPhotoPickerController : UINavigationController
 
@@ -51,33 +51,31 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @property (nonatomic, assign) BOOL allowAutoCompletedSearch;
 
 /**
- * Initializes and returns a newly created picker controller, on edit mode only.
- *
- * @discussion This is a convenience method for initializing the receiver and pushing a photo edit view controller onto the navigation stack, with a presetted image to edit.
- *
- * @param image The image to be edited.
- * @returns The initialized picker controller.
+ Initializes and returns a newly created picker controller, on edit mode only.
+ @discussion This is a convenience method for initializing the receiver and pushing a photo edit view controller onto the navigation stack, with a presetted image to edit.
+ 
+ @param image The image to be edited.
+ @returns The initialized picker controller.
  */
 - (instancetype)initWithEditableImage:(UIImage *)image;
 
 /**
- * Returns an array of the available media types for the specified service type.
- *
- * @discussion Only kUTTypeImage will be returned for now. Maybe on a future, this library could have video and audio search support.
- * 
- * @param services The specified supported services.
- * @return An array whose elements identify the available media types for the supported services.
+ Returns an array of the available media types for the specified service type.
+ @discussion Only kUTTypeImage will be returned for now. Maybe on a future, this library could have video and audio search support.
+ 
+ @param services The specified supported services.
+ @return An array whose elements identify the available media types for the supported services.
  */
 + (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerServices)services;
 
 /**
- * Registers a specified photo service.
- * @discussion You must create an app for every photo service you'd like to use, and generate a consumer key and secret from their sites. Run this method on when initializing the view controller that will use DZNPhotoPickerController, typically in the +initialize method.
- *
- * @param service The photo service to register (i.e. 500px, Flickr, Google Images, etc.)
- * @param key The API consumer key.
- * @param secret The API consumer secret token.
- * @param subscription The photo service subscription type (i.e. Free & Paid). This param only affects Google Images API for now.
+ Registers a specified photo service.
+ @discussion You must create an app for every photo service you'd like to use, and generate a consumer key and secret from their sites. Run this method on when initializing the view controller that will use DZNPhotoPickerController, typically in the +initialize method.
+ 
+ @param service The photo service to register (i.e. 500px, Flickr, Google Images, etc.)
+ @param key The API consumer key.
+ @param secret The API consumer secret token.
+ @param subscription The photo service subscription type (i.e. Free & Paid). This param only affects Google Images API for now.
  */
 + (void)registerService:(DZNPhotoPickerControllerServices)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret subscription:(DZNPhotoPickerControllerSubscription)subscription;
 
@@ -85,35 +83,35 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 
 
 /**
- * The DZNPhotoPickerControllerDelegate protocol defines methods that your delegate object can implement to interact with the image picker interface. The methods of this protocol notify your delegate when the user either picks a photo, or cancels the picker operation.
- * You can also use the finalizationBlock and cancellationBlock instead of the delegate methods.
+ The DZNPhotoPickerControllerDelegate protocol defines methods that your delegate object can implement to interact with the image picker interface. The methods of this protocol notify your delegate when the user either picks a photo, or cancels the picker operation.
+ You can also use the finalizationBlock and cancellationBlock instead of the delegate methods.
  */
 @protocol DZNPhotoPickerControllerDelegate <NSObject>
 @required
 
 /**
- * Tells the delegate that the user picked a new photo.
- *
- * @param picker The controller object managing the photo search picker interface.
- * @param userInfo A dictionary containing the original image and the edited image. The dictionary also contains any relevant editing information (crop size, crop mode). For exiting keys @see DZNPhotoPickerControllerConstants.h.
+ Tells the delegate that the user picked a new photo.
+ 
+ @param picker The controller object managing the photo search picker interface.
+ @param userInfo A dictionary containing the original image and the edited image. The dictionary also contains any relevant editing information (crop size, crop mode). For exiting keys @see DZNPhotoPickerControllerConstants.h.
  */
 - (void)photoPickerController:(DZNPhotoPickerController *)picker didFinishPickingPhotoWithInfo:(NSDictionary *)userInfo;
 
 
 /**
- * Tells the delegate that picking a photo has failed.
- *
- * @param picker The controller object managing the photo search picker interface.
- * @param error The error
+ Tells the delegate that picking a photo has failed.
+ 
+ @param picker The controller object managing the photo search picker interface.
+ @param error The error
  */
 - (void)photoPickerController:(DZNPhotoPickerController *)picker didFailedPickingPhotoWithError:(NSError *)error;
 
 /**
- * Tells the delegate that the user cancelled the pick operation.
- * Your delegate’s implementation of this method should dismiss the picker view by calling the dismissModalViewControllerAnimated: method of the parent view controller.
- * Implementation of this method is optional, but expected.
- *
- * @param picker The controller object managing the image picker interface.
+ Tells the delegate that the user cancelled the pick operation.
+ @discussion Your delegate’s implementation of this method should dismiss the picker view by calling the dismissModalViewControllerAnimated: method of the parent view controller.
+ Implementation of this method is optional, but expected.
+ 
+ @param picker The controller object managing the image picker interface.
  */
 - (void)photoPickerControllerDidCancel:(DZNPhotoPickerController *)picker;
 

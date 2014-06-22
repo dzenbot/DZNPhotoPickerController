@@ -17,16 +17,16 @@ UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerSecret;
 UIKIT_EXTERN NSString *const DZNPhotoServiceClientSubscription;
 
 /**
- * The HTTP service client used to interact with multiple RESTful APIs for photo search services.
+ The HTTP service client used to interact with multiple RESTful APIs for photo search services.
  */
 @interface DZNPhotoServiceClient : AFHTTPRequestOperationManager <DZNPhotoServiceClientProtocol>
 
 /**
- * Initializes a new HTTP service client.
- *
- * @param service The specific photo search service.
- * @param subscription The photo search service subscription.
- * @return A new instance of an HTTP service client.
+ Initializes a new HTTP service client.
+ 
+ @param service The specific photo search service.
+ @param subscription The photo search service subscription.
+ @return A new instance of an HTTP service client.
  */
 - (instancetype)initWithService:(DZNPhotoPickerControllerServices)service subscription:(DZNPhotoPickerControllerSubscription)subscription;
 

@@ -13,7 +13,7 @@
 @class DZNPhotoPickerController;
 
 /**
- * The collection view controller in charge of displaying the resulting thumb images.
+ The collection view controller in charge of displaying the resulting thumb images.
  */
 @interface DZNPhotoDisplayViewController : UICollectionViewController
 
@@ -27,7 +27,7 @@
 @property (nonatomic, readonly, getter = isLoading) BOOL loading;
 
 /**
- * Stops any loading HTTP request.
+ Stops any loading HTTP request.
  */
 - (void)stopLoadingRequest;
 

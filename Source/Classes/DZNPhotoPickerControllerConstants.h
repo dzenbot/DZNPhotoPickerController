@@ -16,7 +16,7 @@ UIKIT_EXTERN NSString *const DZNPhotoPickerDidFinishPickingNotification;    // T
 UIKIT_EXTERN NSString *const DZNPhotoPickerDidFailPickingNotification;      // The notification key used when photo picked.
 
 /**
- * Types of supported photo services
+ Types of supported photo services
  */
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerServices) {
     DZNPhotoPickerControllerService500px = (1 << 0),            // 500px                                    http://500px.com/developers/
@@ -26,12 +26,12 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerServices) {
 };
 
 /**
- * Types of Creative Commons licences.
- * Defined in http://creativecommons.org/licenses/
- *
- * Additional license info:
- * 500px: http://500px.com/creativecommons/
- * Flickr: http://flickr.com/creativecommons/
+ Types of Creative Commons licences.
+ Defined in http://creativecommons.org/licenses/
+ 
+ Additional license info:
+ 500px: http://500px.com/creativecommons/
+ Flickr: http://flickr.com/creativecommons/
  */
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerCCLicenses) {
     DZNPhotoPickerControllerCCLicenseBY_ZERO = -1,              // No Rights Reserved                       http://creativecommons.org/about/cc0
@@ -45,7 +45,7 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerCCLicenses) {
 };
 
 /**
- * Types of supported crop modes.
+ Types of supported crop modes.
  */
 typedef NS_ENUM(NSInteger, DZNPhotoEditorViewControllerCropMode) {
     DZNPhotoEditorViewControllerCropModeNone = -1,
@@ -55,8 +55,8 @@ typedef NS_ENUM(NSInteger, DZNPhotoEditorViewControllerCropMode) {
 };
 
 /**
- * Types of photo service subscription (i.e. Free, Paid)
- * For a few services, there is a limitation in terms of request per day and results per page (i.e. Google Custom Search API, Yahoo, etc.). You can pay for those services and register them as SubscriptionPaid for getting unlimited requests and results.
+ Types of photo service subscription (i.e. Free, Paid)
+ For a few services, there is a limitation in terms of request per day and results per page (i.e. Google Custom Search API, Yahoo, etc.). You can pay for those services and register them as SubscriptionPaid for getting unlimited requests and results.
  */
 typedef NS_ENUM(NSInteger, DZNPhotoPickerControllerSubscription) {
     DZNPhotoPickerControllerSubscriptionFree,
@@ -64,34 +64,35 @@ typedef NS_ENUM(NSInteger, DZNPhotoPickerControllerSubscription) {
 };
 
 /**
- * Returns a photo service name string.
- *
- * @param service The specified service type.
- * @returns The photo service name.
+ Returns a photo service name string.
+ 
+ @param service The specified service type.
+ @returns The photo service name.
  */
 UIKIT_EXTERN NSString *NSStringFromService(DZNPhotoPickerControllerServices services);
 
 /**
- * Returns a list of photo service name strings.
- *
- * @param services The bitmap of service types.
- * @returns The list of photo service names.
+ Returns a list of photo service name strings.
+ 
+ @param services The bitmap of service types.
+ @returns The list of photo service names.
  */
 UIKIT_EXTERN NSArray *NSArrayFromServices(DZNPhotoPickerControllerServices services);
 
 /**
- * Returns a photo service type from name.
  *
- * @param name The specified service name.
- * @returns The photo service type.
+ Returns a photo service type from name.
+ 
+ @param name The specified service name.
+ @returns The photo service type.
  */
 UIKIT_EXTERN DZNPhotoPickerControllerServices DZNPhotoServiceFromName(NSString *name);
 
 /**
- * Returns the first photo service type from a bitmask of services.
- *
- * @param services The bitmask of services.
- * @returns The photo service type.
+ Returns the first photo service type from a bitmask of services.
+ 
+ @param services The bitmask of services.
+ @returns The photo service type.
  */
 UIKIT_EXTERN DZNPhotoPickerControllerServices DZNFirstPhotoServiceFromPhotoServices(DZNPhotoPickerControllerServices services);
 

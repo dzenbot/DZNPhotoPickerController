@@ -17,6 +17,7 @@
 #import "DZNPhotoTag.h"
 
 #import "SDWebImageManager.h"
+#import "UIScrollView+EmptyDataSet.h"
 
 static NSString *kDZNPhotoCellViewIdentifier = @"kDZNPhotoCellViewIdentifier";
 static NSString *kDZNPhotoFooterViewIdentifier = @"kDZNPhotoFooterViewIdentifier";
@@ -24,7 +25,8 @@ static NSString *kDZNTagCellViewIdentifier = @"kDZNTagCellViewIdentifier";
 static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 @interface DZNPhotoDisplayViewController () <UISearchDisplayDelegate, UISearchBarDelegate,
-                                            UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate>
+                                            UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate,
+                                            DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 
 @property (nonatomic, readonly) UISearchBar *searchBar;
 @property (nonatomic, readonly) UISearchDisplayController *searchController;
@@ -38,10 +40,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 @property (nonatomic) DZNPhotoPickerControllerServices previousService;
 @property (nonatomic) NSInteger resultPerPage;
 @property (nonatomic) NSInteger currentPage;
-
-@property (nonatomic, readonly) UILabel *titleSetLabel;
-@property (nonatomic, readonly) UILabel *detailSetLabel;
-
 @property (nonatomic, readonly) NSTimer *searchTimer;
 
 @end
@@ -51,8 +49,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 @synthesize searchController = _searchController;
 @synthesize loadButton = _loadButton;
 @synthesize activityIndicator = _activityIndicator;
-@synthesize titleSetLabel = _titleSetLabel;
-@synthesize detailSetLabel = _detailSetLabel;
 @synthesize searchTimer = _searchTimer;
 
 - (instancetype)init
@@ -97,6 +93,9 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     self.collectionView.contentInset = UIEdgeInsetsMake(self.searchBar.frame.size.height+8.0, 0, 0, 0);
     self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(self.searchBar.frame.size.height, 0, 0, 0);
     
+    self.collectionView.emptyDataSetSource = self;
+    self.collectionView.emptyDataSetDelegate = self;
+    
     [self.collectionView registerClass:[DZNPhotoDisplayViewCell class] forCellWithReuseIdentifier:kDZNPhotoCellViewIdentifier];
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kDZNPhotoFooterViewIdentifier];
     
@@ -119,26 +118,11 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
-}
-
 
 #pragma mark - Getter methods
 
 /*
- * Returns the custom collection view layout.
+Returns the custom collection view layout.
  */
 + (UICollectionViewFlowLayout *)flowLayout
 {
@@ -149,7 +133,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Returns the selected service client.
+ Returns the selected service client.
  */
 - (id<DZNPhotoServiceClientProtocol>)selectedServiceClient
 {
@@ -157,7 +141,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Returns the navigation controller casted to DZNPhotoPickerController.
+ Returns the navigation controller casted to DZNPhotoPickerController.
  */
 - (DZNPhotoPickerController *)navigationController
 {
@@ -165,7 +149,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Returns the custom search display controller.
+ Returns the custom search display controller.
  */
 - (UISearchDisplayController *)searchController
 {
@@ -188,7 +172,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Returns the custom search bar.
+ Returns the custom search bar.
  */
 - (UISearchBar *)searchBar
 {
@@ -217,7 +201,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Returns the 'Load More' footer button.
+ Returns the 'Load More' footer button.
  */
 - (UIButton *)loadButton
 {
@@ -251,38 +235,8 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     return _activityIndicator;
 }
 
-- (UILabel *)titleSetLabel
-{
-    if (!_titleSetLabel)
-    {
-        _titleSetLabel = [UILabel new];
-        _titleSetLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _titleSetLabel.text = NSLocalizedString(@"No Photos Found", nil);
-        _titleSetLabel.font = [UIFont systemFontOfSize:27.0];
-        _titleSetLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
-        _titleSetLabel.textAlignment = NSTextAlignmentCenter;
-        _titleSetLabel.numberOfLines = 1;
-    }
-    return _titleSetLabel;
-}
-
-- (UILabel *)detailSetLabel
-{
-    if (!_detailSetLabel)
-    {
-        _detailSetLabel = [UILabel new];
-        _detailSetLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _detailSetLabel.text = NSLocalizedString(@"Make sure that all words are spelled correctly.", nil);
-        _detailSetLabel.font = [UIFont systemFontOfSize:17.0];
-        _detailSetLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
-        _detailSetLabel.textAlignment = NSTextAlignmentCenter;
-        _detailSetLabel.numberOfLines = 2;
-    }
-    return _detailSetLabel;
-}
-
 /*
- * Returns the appropriate cell view's size.
+ Returns the appropriate cell view's size.
  */
 - (CGSize)cellSize
 {
@@ -292,7 +246,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Returns the appropriate footer view's size.
+ Returns the appropriate footer view's size.
  */
 - (CGSize)footerSize
 {
@@ -300,7 +254,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Returns the collectionView's content size.
+ Returns the collectionView's content size.
  */
 - (CGSize)topBarsSize
 {
@@ -320,7 +274,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * The collectionView's content size calculation.
+ The collectionView's content size calculation.
  */
 - (CGSize)contentSize
 {
@@ -330,7 +284,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * The search bar appropriate rectangle.
+ The search bar appropriate rectangle.
  */
 - (CGRect)searchBarFrame
 {
@@ -350,8 +304,8 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Calculates the available row count based on the collectionView's content size and the cell height.
- * This allows to easily modify the collectionView layout, for displaying the image thumbs.
+ Calculates the available row count based on the collectionView's content size and the cell height.
+ This allows to easily modify the collectionView layout, for displaying the image thumbs.
  */
 - (NSInteger)rowCount
 {
@@ -374,7 +328,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Returns the appropriate number of result per page.
+ Returns the appropriate number of result per page.
  */
 - (NSInteger)resultPerPage
 {
@@ -382,7 +336,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Checks if the search string is long enough to perfom a tag search.
+ Checks if the search string is long enough to perfom a tag search.
  */
 - (BOOL)canSearchTag:(NSString *)term
 {
@@ -407,7 +361,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Checks if an additional footer view for loading more content should be displayed.
+ Checks if an additional footer view for loading more content should be displayed.
  */
 - (BOOL)canDisplayFooterView
 {
@@ -420,7 +374,8 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 #pragma mark - Setter methods
 
-/* Sets the search bar text, specially when the UISearchDisplayController when dimissing removes the bar's text by default.
+/*
+ Sets the search bar text, specially when the UISearchDisplayController when dimissing removes the bar's text by default.
  */
 - (void)setSearchBarText:(NSString *)text
 {
@@ -428,7 +383,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Sets the current photo search response and refreshs the collection view.
+ Sets the current photo search response and refreshs the collection view.
  */
 - (void)setPhotoSearchList:(NSArray *)list
 {
@@ -437,17 +392,16 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     if (!_metadataList) _metadataList = [NSMutableArray new];
     
     [_metadataList addObjectsFromArray:list];
-    [self.collectionView reloadData];
     
-    BOOL show = (_metadataList.count == 0) ? YES : NO;
-    [self setEmptyDataSetVisible:show];
+    [self.collectionView reloadData];
+    [self.collectionView reloadDataSetIfNeeded];
     
     CGSize contentSize = self.collectionView.contentSize;
     self.collectionView.contentSize = CGSizeMake(contentSize.width, contentSize.height+[self footerSize].height);
 }
 
 /*
- * Sets a tag search response and refreshs the results tableview from the UISearchDisplayController.
+ Sets a tag search response and refreshs the results tableview from the UISearchDisplayController.
  */
 - (void)setTagSearchList:(NSArray *)list
 {
@@ -468,33 +422,8 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     [self.searchDisplayController.searchResultsTableView reloadData];
 }
 
-- (void)setEmptyDataSetVisible:(BOOL)visible
-{
-    if (visible) {
-        [self.view addSubview:self.titleSetLabel];
-        [self.view addSubview:self.detailSetLabel];
-        
-        NSDictionary *views = NSDictionaryOfVariableBindings(_searchBar, _titleSetLabel, _detailSetLabel);
-        
-        CGFloat bottomMargin = (((self.view.frame.size.height-[self topBarsSize].height-8.0)/2)-40.0);
-        CGFloat topMargin = bottomMargin+[self topBarsSize].height;
-        NSDictionary *metrics = @{@"topMargin": @(topMargin), @"bottomMargin": @(bottomMargin)};
-        
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[_titleSetLabel][_detailSetLabel(==_titleSetLabel)]-bottomMargin-|" options:0 metrics:metrics views:views]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_titleSetLabel]-|" options:0 metrics:nil views:views]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_detailSetLabel]-|" options:0 metrics:nil views:views]];
-    }
-    else if (_titleSetLabel && _detailSetLabel) {
-        [_titleSetLabel removeFromSuperview];
-        _titleSetLabel = nil;
-        
-        [_detailSetLabel removeFromSuperview];
-        _detailSetLabel = nil;
-    }
-}
-
 /*
- * Toggles the activity indicators on the status bar & footer view.
+ Toggles the activity indicators on the status bar & footer view.
  */
 - (void)setActivityIndicatorsVisible:(BOOL)visible
 {
@@ -513,7 +442,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Sets the request errors with an alert view.
+ Sets the request errors with an alert view.
  */
 - (void)setLoadingError:(NSError *)error
 {
@@ -531,7 +460,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Invalidates and nullifys the search timer.
+ Invalidates and nullifys the search timer.
  */
 - (void)resetSearchTimer
 {
@@ -542,7 +471,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Removes all photo metadata from the array and cleans the collection view from photo thumbnails.
+ Removes all photo metadata from the array and cleans the collection view from photo thumbnails.
  */
 - (void)resetPhotos
 {
@@ -556,12 +485,12 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 #pragma mark - DZNPhotoDisplayController methods
 
 /*
- * Handles the thumbnail selection.
- *
- * Depending on configuration, the selection might result in one of the following action:
- * - Return only the photo metadata and dismiss the controller
- * - Push into the edit controller for cropping
- * - Download the full size photo and dismiss the controller
+ Handles the thumbnail selection.
+ 
+ Depending on configuration, the selection might result in one of the following action:
+ - Return only the photo metadata and dismiss the controller
+ - Push into the edit controller for cropping
+ - Download the full size photo and dismiss the controller
  */
 - (void)selectedItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -610,8 +539,8 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Triggers a tag search when typing more than 2 characters in the search bar.
- * This allows auto-completion and related tags to what the user wants to search.
+ Triggers a tag search when typing more than 2 characters in the search bar.
+ This allows auto-completion and related tags to what the user wants to search.
  */
 - (void)searchTag:(NSTimer *)timer
 {
@@ -634,7 +563,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Checks if the search string is valid and conditions are ok, for performing a photo search.
+ Checks if the search string is valid and conditions are ok, for performing a photo search.
  */
 - (void)shouldSearchPhotos:(NSString *)keyword
 {
@@ -647,13 +576,13 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Triggers a photo search of the selected photo service.
- * Each photo service API requieres different params.
+ Triggers a photo search of the selected photo service.
+ Each photo service API requieres different params.
  */
 - (void)searchPhotosWithKeyword:(NSString *)keyword
 {
     [self setActivityIndicatorsVisible:YES];
-    [self setEmptyDataSetVisible:NO];
+    [self.collectionView reloadData];
     
     _searchBar.text = keyword;
 
@@ -667,7 +596,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Stops the loading search request of the selected photo service.
+ Stops the loading search request of the selected photo service.
  */
 - (void)stopLoadingRequest
 {
@@ -679,7 +608,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 /*
- * Triggers a photo search for the next page.
+ Triggers a photo search for the next page.
  */
 - (void)downloadData
 {
@@ -735,13 +664,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
                 self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
                 [self.activityIndicator stopAnimating];
-            }
-            else {
-                _loadButton.enabled = NO;
-                [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
-
-                self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-                self.activityIndicator.color = [UIColor grayColor];
             }
         }
         else {
@@ -807,10 +729,10 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    if (_metadataList.count == 0) {
-        return [self contentSize];
+    if (_metadataList.count > 0) {
+        return [self footerSize];
     }
-    else return [self footerSize];
+    else return CGSizeZero;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -1031,6 +953,53 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 }
 
 
+#pragma mark - DZNEmptyDataSetSource Methods
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    if (!self.loading) {
+        NSString *text = NSLocalizedString(@"No Photos Found", nil);
+        return [[NSAttributedString alloc] initWithString:text attributes:nil];
+    }
+    
+    return nil;
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
+{
+    if (!self.loading) {
+        NSString *text = NSLocalizedString(@"Make sure that all words are\nspelled correctly.", nil);
+        return [[NSAttributedString alloc] initWithString:text attributes:nil];
+    }
+    
+    return nil;
+}
+
+- (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView
+{    
+    if (self.loading) {
+        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [indicator startAnimating];
+        return indicator;
+    }
+    
+    return nil;
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIColor whiteColor];
+}
+
+
+#pragma mark - DZNEmptyDataSetDelegate Methods
+
+- (BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView
+{
+    return NO;
+}
+
+
 #pragma mark - View lifeterm
 
 - (void)didReceiveMemoryWarning
@@ -1055,6 +1024,11 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     _loadButton = nil;
     _activityIndicator = nil;
     _segmentedControlTitles = nil;
+    
+    self.collectionView.dataSource = nil;
+    self.collectionView.delegate = nil;
+    self.collectionView.emptyDataSetSource = nil;
+    self.collectionView.emptyDataSetDelegate = nil;
 }
 
 

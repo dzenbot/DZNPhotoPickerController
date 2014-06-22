@@ -12,7 +12,7 @@
 #import "DZNPhotoPickerControllerConstants.h"
 
 /**
- * The data model to encapsulate meta data about a photo, provided by the photo service.
+ The data model to encapsulate meta data about a photo, provided by the photo service.
  */
 @interface DZNPhotoMetadata : NSObject
 
@@ -34,18 +34,18 @@
 @property (nonatomic, readonly) NSString *serviceName;
 
 /**
- * Parses and returns a list of photo metadata from a request response.
- *
- * @param reponse The response with already parsed JSON.
- * @param service The photo service of the response.
- * @returns A list of photo metadata.
+ Parses and returns a list of photo metadata from a request response.
+ 
+ @param reponse The response with already parsed JSON.
+ @param service The photo service of the response.
+ @returns A list of photo metadata.
  */
 + (NSArray *)metadataListWithResponse:(NSArray *)reponse service:(DZNPhotoPickerControllerServices)service;
 
 /**
- * Returns the name of the class. It is as good as calling NSStringFromClass().
- *
- * @return A the name of the class.
+ Returns the name of the class. It is as good as calling NSStringFromClass().
+ 
+ @return A the name of the class.
  */
 + (NSString *)name;
 
