@@ -17,9 +17,9 @@ Pod::Spec.new do |s|
 
   s.header_mappings_dir = 'Source'
   s.dependency 'DZNPhotoPickerController/UIImagePickerControllerExtended'
-  #s.dependency 'AFNetworking', '~> 2.2'
-  #s.dependency 'SDWebImage', '~> 3.5.4'
-  #s.dependency 'DZNEmptyDataSet', '~> 1.2'
+  s.dependency 'AFNetworking', '~> 2.2'
+  s.dependency 'SDWebImage', '~> 3.5.4'
+  s.dependency 'DZNEmptyDataSet', '~> 1.2'
 
   s.subspec 'UIImagePickerControllerExtended' do |ex|
     ex.source_files     = 'Source/Classes/DZNPhotoPickerControllerConstants.h'

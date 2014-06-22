@@ -106,7 +106,7 @@
         picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages;
         picker.allowsEditing = YES;
         picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
-        picker.initialSearchTerm = @"California";
+        picker.initialSearchTerm = @"Calig";
         picker.enablePhotoDownload = YES;
         picker.allowAutoCompletedSearch = YES;
     }

@@ -75,8 +75,6 @@
     NSAssert([self consumerKey], @"'consumerKey' cannot be nil for %@", NSStringFromService(_service));
     NSAssert([self consumerSecret], @"'consumerSecret' cannot be nil for %@", NSStringFromService(_service));
     
-    NSLog(@"resultPerPage : %d", resultPerPage);
-
     NSMutableDictionary *params = [NSMutableDictionary new];
     [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(_service)];
     [params setObject:keyword forKey:keyForSearchTerm(_service)];

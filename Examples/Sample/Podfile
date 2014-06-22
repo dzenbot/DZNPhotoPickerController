@@ -1,7 +1,3 @@
 platform :ios, '7.0'
 
 pod 'DZNPhotoPickerController', :path => '../../'
-pod 'DZNEmptyDataSet', :path => '/Users/ignacio/Desktop/DZN/OSS/DZNEmptyDataSet/'
-
-pod 'AFNetworking', '~> 2.2'
-pod 'SDWebImage', '~> 3.5.4'

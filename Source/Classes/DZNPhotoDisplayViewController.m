@@ -209,12 +209,9 @@ Returns the custom collection view layout.
     {
         _loadButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_loadButton setTitle:NSLocalizedString(@"Load More", nil) forState:UIControlStateNormal];
-        [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
-        [_loadButton addTarget:self action:@selector(downloadData) forControlEvents:UIControlEventTouchUpInside];
+        [_loadButton addTarget:self action:@selector(loadMorePhotos:) forControlEvents:UIControlEventTouchUpInside];
         [_loadButton.titleLabel setFont:[UIFont systemFontOfSize:17.0]];
         [_loadButton setBackgroundColor:self.collectionView.backgroundView.backgroundColor];
-        
-        [_loadButton addSubview:self.activityIndicator];
     }
     return _loadButton;
 }
@@ -227,10 +224,7 @@ Returns the custom collection view layout.
     if (!_activityIndicator)
     {
         _activityIndicator = [[UIActivityIndicatorView alloc] init];
-        _activityIndicator.hidesWhenStopped = YES;
-        _activityIndicator.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-        
-        [_activityIndicator sizeToFit];
+        _activityIndicator.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     }
     return _activityIndicator;
 }
@@ -394,7 +388,7 @@ Returns the custom collection view layout.
     [_metadataList addObjectsFromArray:list];
     
     [self.collectionView reloadData];
-    [self.collectionView reloadDataSetIfNeeded];
+//    [self.collectionView reloadDataSetIfNeeded];
     
     CGSize contentSize = self.collectionView.contentSize;
     self.collectionView.contentSize = CGSizeMake(contentSize.width, contentSize.height+[self footerSize].height);
@@ -430,15 +424,17 @@ Returns the custom collection view layout.
     [UIApplication sharedApplication].networkActivityIndicatorVisible = visible;
     
     if (visible) {
+        self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
         [self.activityIndicator startAnimating];
-        [_loadButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
+        self.loadButton.hidden = YES;
     }
     else {
         [self.activityIndicator stopAnimating];
+        self.loadButton.hidden = NO;
+        self.loadButton.enabled = YES;
     }
     
     _loading = visible;
-    self.collectionView.userInteractionEnabled = !visible;
 }
 
 /*
@@ -583,6 +579,7 @@ Returns the custom collection view layout.
 {
     [self setActivityIndicatorsVisible:YES];
     [self.collectionView reloadData];
+    [self.collectionView reloadDataSetIfNeeded];
     
     _searchBar.text = keyword;
 
@@ -610,9 +607,9 @@ Returns the custom collection view layout.
 /*
  Triggers a photo search for the next page.
  */
-- (void)downloadData
+- (void)loadMorePhotos:(UIButton *)sender
 {
-    _loadButton.enabled = NO;
+    sender.enabled = NO;
     
     _currentPage++;
     [self searchPhotosWithKeyword:_searchBar.text];
@@ -651,29 +648,21 @@ Returns the custom collection view layout.
         UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kDZNPhotoFooterViewIdentifier forIndexPath:indexPath];
         
         if ([self canDisplayFooterView]) {
+            UIView *subview = nil;
             
-            if (!_loadButton && footer.subviews.count == 0) {
-                [footer addSubview:self.loadButton];
-            }
+            if (self.isLoading) subview = self.activityIndicator;
+            else subview = self.loadButton;
             
-            _loadButton.frame = footer.bounds;
+            subview.frame = footer.bounds;
             
-            if (_metadataList.count > 0 && !self.loading) {
-                _loadButton.enabled = YES;
-                [_loadButton setTitleColor:self.view.window.tintColor forState:UIControlStateNormal];
-
-                self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-                [self.activityIndicator stopAnimating];
+            if (!subview.superview) {
+                [footer addSubview:subview];
             }
         }
         else {
-            [_loadButton removeFromSuperview];
-            _loadButton = nil;
-            
-            [_activityIndicator stopAnimating];
-            [_activityIndicator removeFromSuperview];
-            _activityIndicator = nil;
+            [[footer subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
         }
+        
         return footer;
     }
     return nil;
@@ -976,11 +965,13 @@ Returns the custom collection view layout.
 }
 
 - (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView
-{    
+{
     if (self.loading) {
-        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        [indicator startAnimating];
-        return indicator;
+        self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        self.activityIndicator.color = [UIColor grayColor];
+        self.activityIndicator.autoresizingMask = UIViewAutoresizingNone;
+        [self.activityIndicator startAnimating];
+        return self.activityIndicator;
     }
     
     return nil;
