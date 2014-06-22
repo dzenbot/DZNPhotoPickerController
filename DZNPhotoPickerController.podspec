@@ -22,7 +22,6 @@ Pod::Spec.new do |s|
   s.dependency 'DZNEmptyDataSet', '~> 1.2'
 
   s.subspec 'UIImagePickerControllerExtended' do |ex|
-    ex.source_files     = 'Source/Classes/DZNPhotoPickerControllerConstants.h'
-    ex.source_files     = 'Source/Classes/UIImagePickerController/*.{h,m}'
+    ex.source_files     = 'Source/Classes/UIImagePickerController/*.{h,m}', 'Source/Classes/DZNPhotoPickerControllerConstants.h'
   end
 end
