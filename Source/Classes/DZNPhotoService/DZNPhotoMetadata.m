@@ -40,7 +40,7 @@
             
             NSMutableString *url = [NSMutableString stringWithFormat:@"http://farm%@.static.flickr.com/%@/%@_%@", [[object objectForKey:@"farm"] stringValue], [object objectForKey:@"server"], [object objectForKey:@"id"], [object objectForKey:@"secret"]];
             _thumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@_q.jpg", url]];
-            _sourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@_b.jpg", url]];
+            _sourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@_z.jpg", url]];
         }
         else if ((service & DZNPhotoPickerControllerServiceInstagram) > 0)
         {
