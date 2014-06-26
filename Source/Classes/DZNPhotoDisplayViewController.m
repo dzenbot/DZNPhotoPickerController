@@ -579,7 +579,6 @@ Returns the custom collection view layout.
 {
     [self setActivityIndicatorsVisible:YES];
     [self.collectionView reloadData];
-    [self.collectionView reloadDataSetIfNeeded];
     
     _searchBar.text = keyword;
 
