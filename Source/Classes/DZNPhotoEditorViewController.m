@@ -504,9 +504,9 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
         
         [_activityIndicator startAnimating];
         
-        [_imageView setImageWithURL:_photoMetadata.sourceURL placeholderImage:nil
+        [_imageView sd_setImageWithURL:_photoMetadata.sourceURL placeholderImage:nil
                             options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
-                          completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                          completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                               if (!error) {
                                   _button.enabled = YES;
                               }
