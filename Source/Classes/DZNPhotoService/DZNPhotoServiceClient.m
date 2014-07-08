@@ -55,7 +55,6 @@
     NSAssert([self consumerKey], @"'consumerKey' cannot be nil for %@", NSStringFromService(_service));
     NSAssert([self consumerSecret], @"'consumerSecret' cannot be nil for %@", NSStringFromService(_service));
     
-    
     NSMutableDictionary *params = [NSMutableDictionary new];
     [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(_service)];
     [params setObject:keyword forKey:keyForSearchTag(_service)];
@@ -126,15 +125,12 @@
     return data;
 }
 
-- (NSArray *)objectListForObject:(NSString *)objectName withJSON:(NSDictionary *)json
+- (NSArray *)parseObjects:(Class)class withJSON:(NSDictionary *)json
 {
-    NSLog(@"%s",__FUNCTION__);
-    NSLog(@"json : %@", json);
-    
-    NSString *keyPath = keyPathForObjectName(_service, objectName);
+    NSString *keyPath = keyPathForObjectName(_service, [class name]);
     NSMutableArray *objects = [NSMutableArray arrayWithArray:[json valueForKeyPath:keyPath]];
     
-    if ([objectName isEqualToString:[DZNPhotoTag name]]) {
+    if ([[class name] isEqualToString:[DZNPhotoTag name]]) {
         
         if (_service == DZNPhotoPickerControllerServiceFlickr) {
             NSString *keyword = [json valueForKeyPath:@"tags.source"];
@@ -143,7 +139,7 @@
         
         return [DZNPhotoTag photoTagListFromService:_service withResponse:objects];
     }
-    else if ([objectName isEqualToString:[DZNPhotoMetadata name]]) {
+    else if ([[class name] isEqualToString:[DZNPhotoMetadata name]]) {
         return [DZNPhotoMetadata metadataListWithResponse:objects service:_service];
     }
     
@@ -158,7 +154,7 @@
     NSString *path = tagSearchUrlPathForService(_service);
     
     NSDictionary *params = [self tagsParamsWithKeyword:keyword];
-    [self getObject:[DZNPhotoTag name] path:path params:params completion:completion];
+    [self getObject:[DZNPhotoTag class] path:path params:params completion:completion];
 }
 
 - (void)searchPhotosWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage completion:(DZNHTTPRequestCompletion)completion
@@ -166,10 +162,10 @@
     NSString *path = photoSearchUrlPathForService(_service);
 
     NSDictionary *params = [self photosParamsWithKeyword:keyword page:page resultPerPage:resultPerPage];
-    [self getObject:[DZNPhotoMetadata name] path:path params:params completion:completion];
+    [self getObject:[DZNPhotoMetadata class] path:path params:params completion:completion];
 }
 
-- (void)getObject:(NSString *)objectName path:(NSString *)path params:(NSDictionary *)params completion:(DZNHTTPRequestCompletion)completion
+- (void)getObject:(Class)class path:(NSString *)path params:(NSDictionary *)params completion:(DZNHTTPRequestCompletion)completion
 {
     _loading = YES;
     
@@ -188,7 +184,7 @@
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves | NSJSONReadingAllowFragments error:nil];
         
         _loading = NO;
-        if (completion) completion([self objectListForObject:objectName withJSON:json], nil);
+        if (completion) completion([self parseObjects:class withJSON:json], nil);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
