@@ -78,7 +78,7 @@
     NSMutableDictionary *params = [NSMutableDictionary new];
     [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(_service)];
     [params setObject:keyword forKey:keyForSearchTerm(_service)];
-
+    
     if (_service != DZNPhotoPickerControllerServiceInstagram) {
         [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(_service)];
     }
@@ -128,6 +128,9 @@
 
 - (NSArray *)objectListForObject:(NSString *)objectName withJSON:(NSDictionary *)json
 {
+    NSLog(@"%s",__FUNCTION__);
+    NSLog(@"json : %@", json);
+    
     NSString *keyPath = keyPathForObjectName(_service, objectName);
     NSMutableArray *objects = [NSMutableArray arrayWithArray:[json valueForKeyPath:keyPath]];
     
@@ -172,12 +175,13 @@
     
     if (_service == DZNPhotoPickerControllerServiceInstagram) {
         NSString *keyword = [params objectForKey:keyForSearchTerm(_service)];
-        path = [path stringByReplacingOccurrencesOfString:@"%@" withString:keyword];
+        NSString *encodedKeyword = [keyword stringByReplacingOccurrencesOfString:@" " withString:@""];
+        path = [path stringByReplacingOccurrencesOfString:@"%@" withString:encodedKeyword];
     }
     else if (_service == DZNPhotoPickerControllerServiceFlickr) {
         path = @"";
     }
-
+    
     [self GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
         
         NSData *data = [self processData:response];
