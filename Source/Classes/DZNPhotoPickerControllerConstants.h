@@ -23,7 +23,7 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerServices) {
     DZNPhotoPickerControllerServiceFlickr = (1 << 1),           // Flickr                                   http://www.flickr.com/services/api/
     DZNPhotoPickerControllerServiceInstagram = (1 << 2),        // Instagram                                http://instagram.com/developer/
     DZNPhotoPickerControllerServiceGoogleImages = (1 << 3),     // Google Images                            https://developers.google.com/image-search/
-    DZNPhotoPickerControllerServiceBing = (1 << 4),            //Bing                                      http://datamarket.azure.com/dataset/bing/search
+    DZNPhotoPickerControllerServiceBing = (1 << 4),             //Bing                                      http://datamarket.azure.com/dataset/bing/search
 };
 
 /**
@@ -107,7 +107,7 @@ UIKIT_EXTERN BOOL DZNAPISecretRequiredForService(DZNPhotoPickerControllerService
 
 
 /**
- Determinesif the service requires a the key to be posted as part of the request.
+ Determines if the service requires the key to be posted as part of the request.
  
  @param services The bitmask of services.
  @returns yes for services that require keys to be passed as a request parameter and no for services that do not.

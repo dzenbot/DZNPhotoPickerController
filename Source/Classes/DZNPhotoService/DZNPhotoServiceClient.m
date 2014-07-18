@@ -132,6 +132,8 @@
     else if (_service == DZNPhotoPickerControllerServiceBing)
     {
         [params setObject:@"'Moderate'" forKey:@"Adult"];
+        
+        //Default to size medium. Size Large causes some buggy behavior with download times.
         [params setObject:@"'Size:Medium'" forKey:@"ImageFilters"];
     }
     return params;
