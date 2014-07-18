@@ -25,6 +25,7 @@ NSString *NSStringFromService(DZNPhotoPickerControllerServices service)
         case DZNPhotoPickerControllerServiceFlickr:         return @"Flickr";
         case DZNPhotoPickerControllerServiceInstagram:      return @"Instagram";
         case DZNPhotoPickerControllerServiceGoogleImages:   return @"Google";
+        case DZNPhotoPickerControllerServiceBing:          return @"Bing";
         default:                                            return nil;
     }
 }
@@ -52,8 +53,12 @@ DZNPhotoPickerControllerServices DZNFirstPhotoServiceFromPhotoServices(DZNPhotoP
     if ((services & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
         return DZNPhotoPickerControllerServiceGoogleImages;
     }
+    if ((services & DZNPhotoPickerControllerServiceBing) > 0) {
+        return DZNPhotoPickerControllerServiceBing;
+    }
     return 0;
 }
+
 
 NSArray *NSArrayFromServices(DZNPhotoPickerControllerServices services)
 {
@@ -71,5 +76,18 @@ NSArray *NSArrayFromServices(DZNPhotoPickerControllerServices services)
     if ((services & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
         [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceGoogleImages)];
     }
+    if ((services & DZNPhotoPickerControllerServiceBing) > 0) {
+        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceBing)];
+    }
     return [NSArray arrayWithArray:titles];
+}
+
+BOOL DZNAPISecretRequiredForService(DZNPhotoPickerControllerServices services) {
+    if (services == DZNPhotoPickerControllerServiceBing) return NO;
+    return YES;
+}
+
+BOOL DZNAPIRequiresKeyInParametersForService(DZNPhotoPickerControllerServices services) {
+    if (services == DZNPhotoPickerControllerServiceBing) return NO;
+    return YES;
 }

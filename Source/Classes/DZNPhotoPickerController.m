@@ -143,6 +143,10 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     [DZNPhotoServiceFactory setConsumerKey:key consumerSecret:secret service:service subscription:subscription];
 }
 
++ (void)registerService:(DZNPhotoPickerControllerServices)service apiKey:(NSString *)key subscription:(DZNPhotoPickerControllerSubscription)subscription {
+    [DZNPhotoServiceFactory setapiKey:key service:service subscription:subscription];
+}
+
 
 #pragma mark - DZNPhotoPickerController methods
 

@@ -32,7 +32,10 @@
 @property (nonatomic, readonly) NSURL *authorProfileURL;
 /** The name of the photo service. */
 @property (nonatomic, readonly) NSString *serviceName;
-
+/** The height of the photo. */
+@property (nonatomic, strong) NSNumber *height;
+/** The width of the photo. */
+@property (nonatomic, strong) NSNumber *width;
 /**
  Parses and returns a list of photo metadata from a request response.
  

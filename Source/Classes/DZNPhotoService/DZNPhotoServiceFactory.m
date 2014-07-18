@@ -69,6 +69,15 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++ (void)setapiKey:(NSString *)key service:(DZNPhotoPickerControllerServices)service subscription:(DZNPhotoPickerControllerSubscription)subscription {
+    NSAssert(key, @"'key' cannot be nil");
+
+    [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerKey)];
+
+    [[NSUserDefaults standardUserDefaults] setObject:@(subscription) forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientSubscription)];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 #pragma mark - DZNPhotoServiceFactory methods
 
