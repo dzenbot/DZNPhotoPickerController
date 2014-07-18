@@ -80,16 +80,6 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 + (void)registerService:(DZNPhotoPickerControllerServices)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret subscription:(DZNPhotoPickerControllerSubscription)subscription;
 
 
-/**
- Registers a specified photo service that does not have a consumer key and secret. Useful for services like Bing.
- @discussion You must create an app for every photo service you'd like to use, and generate an API key from their sites. Run this method on when initializing the view controller that will use DZNPhotoPickerController, typically in the +initialize method.
- 
- @param service The photo service to register (i.e. 500px, Flickr, Google Images, etc.)
- @param key The API consumer key.
- @param subscription The photo service subscription type (i.e. Free & Paid). This param only affects Google Images API for now.
- */
-+ (void)registerService:(DZNPhotoPickerControllerServices)service apiKey:(NSString *)key subscription:(DZNPhotoPickerControllerSubscription)subscription;
-
 @end
 
 

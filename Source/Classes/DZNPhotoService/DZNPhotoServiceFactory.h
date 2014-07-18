@@ -42,16 +42,6 @@
  */
 + (void)setConsumerKey:(NSString *)key consumerSecret:(NSString *)secret service:(DZNPhotoPickerControllerServices)service subscription:(DZNPhotoPickerControllerSubscription)subscription;
 
-
-/**
- Saves on NSUserDefaults API key;
- 
- @param consumerKey The API consumer key.
- @param consumerSecret The API consumer secret token.
- @param service The photo service to save (i.e. 500px, Flickr, Google Images, etc.)
- */
-+ (void)setapiKey:(NSString *)key service:(DZNPhotoPickerControllerServices)service subscription:(DZNPhotoPickerControllerSubscription)subscription;
-
 /**
  Resets the factory, by releasing all cached HTTP clients.
  */

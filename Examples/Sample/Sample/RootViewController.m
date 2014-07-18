@@ -43,9 +43,11 @@
                                consumerSecret:kGoogleImagesSearchEngineID
                                  subscription:DZNPhotoPickerControllerSubscriptionFree];
     
+    //Bing does not require a secret. Rather just an "Account Key" 
     [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceBing
-                                       apiKey:kBingImagesAPIKey
-                                 subscription:DZNPhotoPickerControllerSubscriptionPaid];
+                                  consumerKey:kBingImagesAccountKey consumerSecret:nil
+                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
+    
 }
 
 - (void)viewDidLoad

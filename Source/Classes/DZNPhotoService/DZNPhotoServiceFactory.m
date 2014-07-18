@@ -60,22 +60,19 @@
 + (void)setConsumerKey:(NSString *)key consumerSecret:(NSString *)secret service:(DZNPhotoPickerControllerServices)service subscription:(DZNPhotoPickerControllerSubscription)subscription
 {
     NSAssert(key, @"'key' cannot be nil");
-    NSAssert(secret, @"'secret' cannot be nil");
-
-    [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerKey)];
-    [[NSUserDefaults standardUserDefaults] setObject:secret forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerSecret)];
-    [[NSUserDefaults standardUserDefaults] setObject:@(subscription) forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientSubscription)];
-
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-+ (void)setapiKey:(NSString *)key service:(DZNPhotoPickerControllerServices)service subscription:(DZNPhotoPickerControllerSubscription)subscription {
-    NSAssert(key, @"'key' cannot be nil");
-
-    [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerKey)];
-
-    [[NSUserDefaults standardUserDefaults] setObject:@(subscription) forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientSubscription)];
     
+    if (DZNAPISecretRequiredForService(service)) {
+        NSAssert(secret, @"'secret' cannot be nil");
+    }
+
+    [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerKey)];
+    
+    if (DZNAPISecretRequiredForService(service)) {
+        [[NSUserDefaults standardUserDefaults] setObject:secret forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerSecret)];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@(subscription) forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientSubscription)];
+
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
