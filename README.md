@@ -32,8 +32,8 @@ pod 'DZNPhotoPickerController'
 ```
 
 When installing, the following dependencies will be automatically installed:
-- AFNetworking (~> 2.2)
-- SDWebImage (~> 3.5.4)
+- AFNetworking (~> 2.3.1)
+- SDWebImage (~> 3.7)
 
 ## How to use
 For complete documentation, [visit CocoaPods' auto-generated doc](http://cocoadocs.org/docsets/DZNPhotoPickerController/)
