@@ -35,7 +35,7 @@
         self.responseSerializer = [AFHTTPResponseSerializer serializer];
         
         //Add basic auth to Bing service.
-        if (_service == DZNPhotoPickerControllerServiceBing) {
+        if (_service == DZNPhotoPickerControllerServiceBingImages) {
             
             NSString *apiKey = [self consumerKey];
             
@@ -83,25 +83,25 @@
     NSAssert(keyword, @"'keyword' cannot be nil for %@", NSStringFromService(_service));
     NSAssert((resultPerPage > 0), @"'result per page' must be higher than 0 for %@", NSStringFromService(_service));
     NSAssert([self consumerKey], @"'consumerKey' cannot be nil for %@", NSStringFromService(_service));
-    if (DZNAPISecretRequiredForService(_service)) {
+    if (isConsumerSecretRequiredForService(_service)) {
         NSAssert([self consumerSecret], @"'consumerSecret' cannot be nil for %@", NSStringFromService(_service));
     }
     
     NSMutableDictionary *params = [NSMutableDictionary new];
     
-    if (DZNAPIRequiresKeyInParametersForService(_service)) {
+    if (isConsumerKeyInParametersRequiredForService(_service)) {
         [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(_service)];
     }
     
     //Bing requires parameters to be wrapped in '' values. If I'm missing something like just choosing a different URLEncoding, or a different way to set parameters please help me understand. @dirtbikerdude.91 Thanks.
-    if (_service == DZNPhotoPickerControllerServiceBing) {
+    if (_service == DZNPhotoPickerControllerServiceBingImages) {
         [params setObject:[NSString stringWithFormat:@"'%@'", keyword] forKey:keyForSearchTerm(_service)];
     } else {
         [params setObject:keyword forKey:keyForSearchTerm(_service)];
     }
 
     
-    if (_service != DZNPhotoPickerControllerServiceInstagram && _service != DZNPhotoPickerControllerServiceBing) {
+    if (_service != DZNPhotoPickerControllerServiceInstagram && _service != DZNPhotoPickerControllerServiceBingImages) {
         [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(_service)];
     }
     if (_service == DZNPhotoPickerControllerService500px || _service == DZNPhotoPickerControllerServiceFlickr) {
@@ -129,13 +129,14 @@
         [params setObject:@"medium" forKey:@"safe"];
         if (page > 1) [params setObject:@((page - 1) * resultPerPage + 1) forKey:@"start"];
     }
-    else if (_service == DZNPhotoPickerControllerServiceBing)
+    else if (_service == DZNPhotoPickerControllerServiceBingImages)
     {
         [params setObject:@"'Moderate'" forKey:@"Adult"];
         
         //Default to size medium. Size Large causes some buggy behavior with download times.
         [params setObject:@"'Size:Medium'" forKey:@"ImageFilters"];
     }
+    
     return params;
 }
 
@@ -207,7 +208,7 @@
     else if (_service == DZNPhotoPickerControllerServiceFlickr) {
         path = @"";
     }
-    
+        
     [self GET:path parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
         
         NSData *data = [self processData:response];

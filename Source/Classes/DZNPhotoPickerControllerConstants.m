@@ -82,12 +82,12 @@ NSArray *NSArrayFromServices(DZNPhotoPickerControllerServices services)
     return [NSArray arrayWithArray:titles];
 }
 
-BOOL DZNAPISecretRequiredForService(DZNPhotoPickerControllerServices services) {
+BOOL isConsumerSecretRequiredForService(DZNPhotoPickerControllerServices services) {
     if (services == DZNPhotoPickerControllerServiceBing) return NO;
     return YES;
 }
 
-BOOL DZNAPIRequiresKeyInParametersForService(DZNPhotoPickerControllerServices services) {
+BOOL isConsumerKeyInParametersRequiredForService(DZNPhotoPickerControllerServices services) {
     if (services == DZNPhotoPickerControllerServiceBing) return NO;
     return YES;
 }

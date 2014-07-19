@@ -44,8 +44,9 @@
                                  subscription:DZNPhotoPickerControllerSubscriptionFree];
     
     //Bing does not require a secret. Rather just an "Account Key" 
-    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceBing
-                                  consumerKey:kBingImagesAccountKey consumerSecret:nil
+    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceBingImages
+                                  consumerKey:kBingImagesAccountKey
+                               consumerSecret:nil
                                  subscription:DZNPhotoPickerControllerSubscriptionFree];
     
 }
@@ -109,7 +110,7 @@
     }
     else {
         picker = [DZNPhotoPickerController new];
-        picker.supportedServices = DZNPhotoPickerControllerServiceBing;
+        picker.supportedServices = DZNPhotoPickerControllerServiceBingImages;
         picker.allowsEditing = YES;
         picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
         picker.initialSearchTerm = @"California";

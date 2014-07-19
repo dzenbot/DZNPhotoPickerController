@@ -61,13 +61,13 @@
 {
     NSAssert(key, @"'key' cannot be nil");
     
-    if (DZNAPISecretRequiredForService(service)) {
+    if (isConsumerSecretRequiredForService(service)) {
         NSAssert(secret, @"'secret' cannot be nil");
     }
 
     [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerKey)];
     
-    if (DZNAPISecretRequiredForService(service)) {
+    if (isConsumerSecretRequiredForService(service)) {
         [[NSUserDefaults standardUserDefaults] setObject:secret forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerSecret)];
     }
     

@@ -23,7 +23,7 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerServices) {
     DZNPhotoPickerControllerServiceFlickr = (1 << 1),           // Flickr                                   http://www.flickr.com/services/api/
     DZNPhotoPickerControllerServiceInstagram = (1 << 2),        // Instagram                                http://instagram.com/developer/
     DZNPhotoPickerControllerServiceGoogleImages = (1 << 3),     // Google Images                            https://developers.google.com/image-search/
-    DZNPhotoPickerControllerServiceBing = (1 << 4),             //Bing                                      http://datamarket.azure.com/dataset/bing/search
+    DZNPhotoPickerControllerServiceBingImages = (1 << 4),       // Bing Images                              http://datamarket.azure.com/dataset/bing/search
 };
 
 /**
@@ -98,18 +98,17 @@ UIKIT_EXTERN DZNPhotoPickerControllerServices DZNPhotoServiceFromName(NSString *
 UIKIT_EXTERN DZNPhotoPickerControllerServices DZNFirstPhotoServiceFromPhotoServices(DZNPhotoPickerControllerServices services);
 
 /**
- Determines if the service requires an api secret.
+ Determines if the service requires a consumer secret.
  
  @param services The bitmask of services.
- @returns yes for services that require secrets and no for services that do not.
+ @returns YES for services that require valid consumer secrets.
  */
-UIKIT_EXTERN BOOL DZNAPISecretRequiredForService(DZNPhotoPickerControllerServices services);
-
+UIKIT_EXTERN BOOL isConsumerSecretRequiredForService(DZNPhotoPickerControllerServices services);
 
 /**
- Determines if the service requires the key to be posted as part of the request.
+ Determines if the service requires the consumer key to be posted as part of the request.
  
  @param services The bitmask of services.
- @returns yes for services that require keys to be passed as a request parameter and no for services that do not.
+ @returns YES for services that require consumer keys to be passed as a request parameter.
  */
-UIKIT_EXTERN BOOL DZNAPIRequiresKeyInParametersForService(DZNPhotoPickerControllerServices services);
+UIKIT_EXTERN BOOL isConsumerKeyInParametersRequiredForService(DZNPhotoPickerControllerServices services);
