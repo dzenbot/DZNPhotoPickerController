@@ -21,14 +21,20 @@
         
         if ((service & DZNPhotoPickerControllerService500px) > 0)
         {
-            _Id = [object valueForKey:@"id"];
+            _Id = [object objectForKey:@"id"];
             _authorName = [[object valueForKeyPath:@"user.fullname"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             _authorUsername = [object valueForKeyPath:@"user.username"];
             _authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/%@", _authorUsername]];
             _detailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://500px.com/photo/%@", _Id]];
-            
             _thumbURL = [NSURL URLWithString:[[[object objectForKey:@"images"] objectAtIndex:0] objectForKey:@"url"]];
             _sourceURL = [NSURL URLWithString:[[[object objectForKey:@"images"] objectAtIndex:1] objectForKey:@"url"]];
+            _width = [object objectForKey:@"width"];
+            _height = [object objectForKey:@"height"];
+            
+            NSString *format = [object objectForKey:@"image_format"];
+            if (format && format.length > 0) {
+                _contentType = [NSString stringWithFormat:@"image/%@",format];
+            }
         }
         else if ((service & DZNPhotoPickerControllerServiceFlickr) > 0)
         {
@@ -41,6 +47,7 @@
             NSMutableString *url = [NSMutableString stringWithFormat:@"http://farm%@.static.flickr.com/%@/%@_%@", [[object objectForKey:@"farm"] stringValue], [object objectForKey:@"server"], [object objectForKey:@"id"], [object objectForKey:@"secret"]];
             _thumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@_q.jpg", url]];
             _sourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@_z.jpg", url]];
+            _contentType = @"image/jpeg";
         }
         else if ((service & DZNPhotoPickerControllerServiceInstagram) > 0)
         {
@@ -49,17 +56,25 @@
             _authorUsername = [object valueForKeyPath:@"user.username"];
             _authorProfileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://instagram.com/%@", _authorUsername]];
             _detailURL = [NSURL URLWithString:[object objectForKey:@"link"]];
-            
             _thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"images.thumbnail.url"]];
             _sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"images.standard_resolution.url"]];
+            _width = [object valueForKeyPath:@"images.standard_resolution.width"];
+            _height = [object valueForKeyPath:@"images.standard_resolution.height"];
+            
+            NSString *format = [[_sourceURL lastPathComponent] pathExtension];
+            if (format && format.length > 0) {
+                _contentType = [NSString stringWithFormat:@"image/%@",format];
+            }
         }
         else if ((service & DZNPhotoPickerControllerServiceGoogleImages) > 0)
         {
+            _Id = @([[object valueForKeyPath:@"link"] hash]);
             _detailURL = [NSURL URLWithString:[object valueForKeyPath:@"image.contextLink"]];
             _thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"image.thumbnailLink"]];
             _sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"link"]];
-            _width = [object objectForKey:@"image.width"];
-            _height = [object objectForKey:@"image.height"];
+            _width = [object valueForKeyPath:@"image.width"];
+            _height = [object valueForKeyPath:@"image.height"];
+            _contentType = [object objectForKey:@"mime"];
         }
         else if ((service & DZNPhotoPickerControllerServiceBingImages) > 0)
         {
@@ -69,6 +84,7 @@
             _sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"MediaUrl"]];
             _width = [object objectForKey:@"Width"];
             _height = [object objectForKey:@"Height"];
+            _contentType = [object objectForKey:@"ContentType"];
         }
     }
     return self;
@@ -93,7 +109,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"serviceName = %@; id = %@; authorName = %@; authorUsername = %@; authorProfileURL = %@; detailURL = %@; thumbURL = %@; sourceURL = %@;", _serviceName, _Id, _authorName, _authorUsername, _authorProfileURL, _detailURL, _thumbURL, _sourceURL];
+    return [NSString stringWithFormat:@"serviceName = %@; id = %@; authorName = %@; authorUsername = %@; authorProfileURL = %@; detailURL = %@; thumbURL = %@; sourceURL = %@; _width : %@; height = %@; contentType = %@", _serviceName, _Id, _authorName, _authorUsername, _authorProfileURL, _detailURL, _thumbURL, _sourceURL, _width, _height, _contentType];
 }
 
 
