@@ -10,12 +10,12 @@
 
 #import "DZNPhotoPickerControllerConstants.h"
 
-NSString *const DZNPhotoPickerControllerCropMode = @"com.dzn.photoPicker.cropMode";
-NSString *const DZNPhotoPickerControllerCropZoomScale = @"com.dzn.photoPicker.cropZoomScale";
-NSString *const DZNPhotoPickerControllerPhotoMetadata = @"com.dzn.photoPicker.photoMetadata";
+NSString *const DZNPhotoPickerControllerCropMode =              @"com.dzn.photoPicker.cropMode";
+NSString *const DZNPhotoPickerControllerCropZoomScale =         @"com.dzn.photoPicker.cropZoomScale";
+NSString *const DZNPhotoPickerControllerPhotoMetadata =         @"com.dzn.photoPicker.photoMetadata";
 
-NSString *const DZNPhotoPickerDidFinishPickingNotification = @"com.dzn.photoPicker.didFinishPickingNotification";
-NSString *const DZNPhotoPickerDidFailPickingNotification = @"com.dzn.photoPicker.idFinishPickingWithErrorNotification";
+NSString *const DZNPhotoPickerDidFinishPickingNotification =    @"com.dzn.photoPicker.didFinishPickingNotification";
+NSString *const DZNPhotoPickerDidFailPickingNotification =      @"com.dzn.photoPicker.didFinishPickingWithErrorNotification";
 
 
 NSString *NSStringFromService(DZNPhotoPickerControllerServices service)
@@ -57,7 +57,7 @@ DZNPhotoPickerControllerServices DZNFirstPhotoServiceFromPhotoServices(DZNPhotoP
     if ((services & DZNPhotoPickerControllerServiceBingImages) > 0) {
         return DZNPhotoPickerControllerServiceBingImages;
     }
-    return 0;
+    return -1;
 }
 
 
@@ -83,12 +83,14 @@ NSArray *NSArrayFromServices(DZNPhotoPickerControllerServices services)
     return [NSArray arrayWithArray:titles];
 }
 
-BOOL isConsumerSecretRequiredForService(DZNPhotoPickerControllerServices services) {
+BOOL isConsumerSecretRequiredForService(DZNPhotoPickerControllerServices services)
+{
     if (services == DZNPhotoPickerControllerServiceBingImages) return NO;
     return YES;
 }
 
-BOOL isConsumerKeyInParametersRequiredForService(DZNPhotoPickerControllerServices services) {
+BOOL isConsumerKeyInParametersRequiredForService(DZNPhotoPickerControllerServices services)
+{
     if (services == DZNPhotoPickerControllerServiceBingImages) return NO;
     return YES;
 }
