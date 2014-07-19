@@ -3,10 +3,10 @@ DZNPhotoPickerController
 
 [![Screencast Vimeo Video](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_video_placeholder.png)](http://vimeo.com/user3409970/dznphotopickercontroller)
 
-A photo search/picker for iOS using popular providers like 500px, Flickr, Instagram, Google Images, etc. This control tries to mimic as close as possible UIKit's UIImagePickerController in terms of features, appearance and behaviour.
+A photo search/picker for iOS using popular providers like 500px, Flickr, Instagram, Google & Bing Images. This control tries to mimic as close as possible UIKit's UIImagePickerController in terms of features, appearance and behaviour.
 
 ### Features
-* Search photos on mutiple service providers (500px, Flickr, Intagram & Google Images)
+* Search photos on mutiple service providers (500px, Flickr, Intagram, Google & Bing Images)
 * Auto-completed typing for easier search (using Flickr's API as a common denominator).
 * Present the photo picker with a pre-defined search term to automatically start searching.
 * Exact same UI layouts and behaviours than UIImagePickerController.
@@ -133,12 +133,14 @@ pod install
 ```
 
 ### Collaboration
-Feel free to collaborate with this project! Big thanks to:
+Feel free to collaborate with this project!
+Big thanks to:
 - [SJ Singh](https://github.com/SJApps): Google Images search support.
 - [Felipe Saint-Jean](https://github.com/fsaint): 64bits fix of the editing guides.
 - [Adar Porat](https://github.com/aporat) & [Ryan Fitzgerald](https://github.com/ryanfitz): AFNetworking 2.0 upgrade
 - [Felipe Saint-Jean](https://github.com/fsaint): 64bits fix of the editing guides.
 - [NikDude](https://github.com/nikdude) & [Rob Phillips](https://github.com/iwasrobbed): cool add-ons
+- [Curtis Thorne](https://github.com/dirtbikerdude91): Bing Images search support.
 
 ## Apps using DZNPhotoPickerController
 Are you using this control in your apps? Let me know at [iromero@dzen.cl](mailto:iromero@dzen.cl).<br>
