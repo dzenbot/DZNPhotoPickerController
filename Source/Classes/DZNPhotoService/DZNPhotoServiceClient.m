@@ -14,6 +14,8 @@
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 
+#import <AFNetworking/AFNetworkActivityIndicatorManager.h>
+
 @interface DZNPhotoServiceClient ()
 @property (nonatomic, copy) DZNHTTPRequestCompletion completion;
 @end
@@ -33,6 +35,8 @@
         
         self.requestSerializer = [AFJSONRequestSerializer serializer];
         self.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
         
         //Add basic auth to Bing service.
         if (_service == DZNPhotoPickerControllerServiceBingImages) {
