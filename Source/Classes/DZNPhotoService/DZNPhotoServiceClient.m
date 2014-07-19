@@ -14,7 +14,7 @@
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 
-#import <AFNetworking/AFNetworkActivityIndicatorManager.h>
+#import "AFNetworkActivityIndicatorManager.h"
 
 @interface DZNPhotoServiceClient ()
 @property (nonatomic, copy) DZNHTTPRequestCompletion completion;

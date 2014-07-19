@@ -8,13 +8,13 @@ Pod::Spec.new do |s|
   s.summary      	= "A photo search/picker for iOS using popular providers like 500px, Flickr, Intagram, Google Images, etc."
   s.description  	= "This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behaviour."
   s.homepage   		= "https://github.com/dzenbot/DZNPhotoPickerController"
-  s.screenshots 	= "https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_screenshots.png"
+  s.screenshots 	= "https://raw.githubusercontent.com/dzenbot/DZNPhotoPickerController/master/Docs/screenshots.png"
   s.license     	= { :type => 'MIT', :file => 'LICENSE' }
   s.author       	= { "Ignacio Romero Z." => "iromero@dzen.cl" }
   s.platform    	= :ios, '7.0'
   s.source       	= { :git => "https://github.com/dzenbot/UIPhotoPickerController.git", :tag => "v#{s.version}" }
   s.source_files  = 'Classes', 'Source/Classes/*.{h,m}'
-  s.exclude_files = 'Source/Classes/UIImagePickerController/*.{h,m}'
+  s.exclude_files = 'Source/Classes/UIImagePickerController/**/*.{h,m}'
   s.resources     = 'Resources', 'Source/Resources/**/*.*'
   s.requires_arc 	= true
   s.prefix_header_contents =  '#import <MobileCoreServices/MobileCoreServices.h>',
@@ -30,7 +30,6 @@ Pod::Spec.new do |s|
   s.subspec 'DZNPhotoService' do |service|
     service.source_files     =  'Source/Classes/DZNPhotoService/*.{h,m}',
                                 'Source/Classes/DZNPhotoPickerControllerConstants.h'
-    service.dependency 'AFNetworking', @afversion
   end
 
   s.subspec 'UIImagePickerControllerExtended' do |extension|
