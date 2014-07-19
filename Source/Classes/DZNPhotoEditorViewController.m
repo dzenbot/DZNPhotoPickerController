@@ -504,21 +504,23 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
         
         [_activityIndicator startAnimating];
         
-        [_imageView setImageWithURL:_photoMetadata.sourceURL placeholderImage:nil
-                            options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
-                          completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                              if (!error) {
-                                  _button.enabled = YES;
-                              }
-                              else {
-                                  [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFailPickingNotification
-                                                                                      object:nil
-                                                                                    userInfo:@{@"error": error}];
-                              }
-                              
-                              [[weakSelf activityIndicator] removeFromSuperview];
-                              [weakSelf updateScrollViewContentInset];
-                          }];
+        [_imageView sd_setImageWithPreviousCachedImageWithURL:_photoMetadata.sourceURL
+                                          andPlaceholderImage:nil
+                                                      options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
+                                                     progress:NULL
+                                                    completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                                        if (!error) {
+                                                            _button.enabled = YES;
+                                                        }
+                                                        else {
+                                                            [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFailPickingNotification
+                                                                                                                object:nil
+                                                                                                              userInfo:@{@"error": error}];
+                                                        }
+                                                        
+                                                        [[weakSelf activityIndicator] removeFromSuperview];
+                                                        [weakSelf updateScrollViewContentInset];
+                                                     }];
     }
     else {
         [self updateScrollViewContentInset];

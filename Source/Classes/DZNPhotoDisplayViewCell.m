@@ -48,12 +48,12 @@
 
 - (void)setThumbURL:(NSURL *)URL
 {
-    [self.imageView cancelCurrentImageLoad];
+    [self.imageView sd_cancelCurrentImageLoad];
     
-    [self.imageView setImageWithURL:URL
-                   placeholderImage:nil
-                            options:SDWebImageCacheMemoryOnly
-                          completed:NULL];
+    [self.imageView sd_setImageWithURL:URL
+                      placeholderImage:nil
+                               options:SDWebImageCacheMemoryOnly
+                             completed:NULL];
 }
 
 
@@ -77,7 +77,7 @@
 {
     [super prepareForReuse];
     
-    [_imageView cancelCurrentImageLoad];
+    [_imageView sd_cancelCurrentImageLoad];
 }
 
 - (void)layoutSubviews
