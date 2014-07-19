@@ -58,9 +58,13 @@
             _detailURL = [NSURL URLWithString:[object valueForKeyPath:@"image.contextLink"]];
             _thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"image.thumbnailLink"]];
             _sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"link"]];
+            _width = [object objectForKey:@"image.width"];
+            _height = [object objectForKey:@"image.height"];
         }
-        else if ((service & DZNPhotoPickerControllerServiceBingImages) > 0) {
-            _detailURL = [NSURL URLWithString:[object valueForKeyPath:@"MediaUrl"]];
+        else if ((service & DZNPhotoPickerControllerServiceBingImages) > 0)
+        {
+            _Id = [object objectForKey:@"ID"];
+            _detailURL = [NSURL URLWithString:[object valueForKeyPath:@"SourceUrl"]];
             _thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"Thumbnail.MediaUrl"]];
             _sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"MediaUrl"]];
             _width = [object objectForKey:@"Width"];
