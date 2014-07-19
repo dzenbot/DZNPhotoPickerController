@@ -20,8 +20,8 @@ A photo search/picker for iOS using popular providers like 500px, Flickr, Instag
 * Localization support (UI strings use NSLocalizedString but it's up to you to localize them on your app)
 <br>
 <br>
-![screenshots](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_screenshots.png)
-![services](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_services.png)
+![screenshots](Docs/screenshots.png)
+![services](Docs/services.png)
 <br>
 
 ## Installation
