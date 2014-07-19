@@ -36,16 +36,15 @@
         self.requestSerializer = [AFJSONRequestSerializer serializer];
         self.responseSerializer = [AFHTTPResponseSerializer serializer];
         
-        [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+        [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
         
-        //Add basic auth to Bing service.
+        // Add basic auth to Bing service
         if (_service == DZNPhotoPickerControllerServiceBingImages) {
             
-            NSString *apiKey = [self consumerKey];
+            NSString *key = [self consumerKey];
             
-            //Bing requires basic auth with password and user name as the api key.
-            [self.requestSerializer setAuthorizationHeaderFieldWithUsername:apiKey password:apiKey];
-            
+            //Bing requires basic auth with password and user name as the consumer key.
+            [self.requestSerializer setAuthorizationHeaderFieldWithUsername:key password:key];
         }
     }
     return self;
