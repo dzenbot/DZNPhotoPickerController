@@ -32,10 +32,11 @@ NSString *NSStringFromService(DZNPhotoPickerControllerServices service)
 
 DZNPhotoPickerControllerServices DZNPhotoServiceFromName(NSString *name)
 {
-    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerService500px)])         return DZNPhotoPickerControllerService500px;
-    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceFlickr)])        return DZNPhotoPickerControllerServiceFlickr;
-    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceInstagram)])     return DZNPhotoPickerControllerServiceInstagram;
-    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceGoogleImages)])  return DZNPhotoPickerControllerServiceGoogleImages;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerService500px)])           return DZNPhotoPickerControllerService500px;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceFlickr)])          return DZNPhotoPickerControllerServiceFlickr;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceInstagram)])       return DZNPhotoPickerControllerServiceInstagram;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceGoogleImages)])    return DZNPhotoPickerControllerServiceGoogleImages;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceBingImages)])      return DZNPhotoPickerControllerServiceBingImages;
     return -1;
 }
 
