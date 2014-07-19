@@ -21,17 +21,17 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - DZNEmptyDataSet (1.3.3)
-  - DZNPhotoPickerController (1.4.5):
-    - AFNetworking (~> 2.2)
+  - DZNPhotoPickerController (1.5):
+    - AFNetworking (~> 2.3.1)
     - DZNEmptyDataSet
     - DZNPhotoPickerController/UIImagePickerControllerExtended
     - DZNPhotoPickerController/UIImagePickerControllerExtended
-    - SDWebImage (~> 3.6)
-  - DZNPhotoPickerController/UIImagePickerControllerExtended (1.4.5):
-    - AFNetworking (~> 2.2)
+    - SDWebImage (~> 3.7)
+  - DZNPhotoPickerController/UIImagePickerControllerExtended (1.5):
+    - AFNetworking (~> 2.3.1)
     - DZNEmptyDataSet
     - DZNPhotoPickerController/UIImagePickerControllerExtended
-    - SDWebImage (~> 3.6)
+    - SDWebImage (~> 3.7)
   - SDWebImage (3.7.0):
     - SDWebImage/Core
   - SDWebImage/Core (3.7.0)
@@ -46,7 +46,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3
   DZNEmptyDataSet: aa20600aff620af3d78edbff4bc47282972e815f
-  DZNPhotoPickerController: bb9070e77201e4b12311f6ea01fa40040e854bea
+  DZNPhotoPickerController: bbea977b6c8a9b27c4a5daa261d96f3887b2f005
   SDWebImage: 791cb0f588046cb0bb7802ae8ae8f5462947b773
 
 COCOAPODS: 0.33.1
