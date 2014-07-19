@@ -8,8 +8,8 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "DZNPhotoMetadata.h"
 #import "DZNPhotoPickerControllerConstants.h"
+#import "DZNPhotoMetadata.h"
 
 @interface DZNPhotoParsingTests : XCTestCase
 @end
@@ -49,6 +49,7 @@
     [self testParsingForService:DZNPhotoPickerControllerServiceFlickr];
     [self testParsingForService:DZNPhotoPickerControllerServiceInstagram];
     [self testParsingForService:DZNPhotoPickerControllerServiceGoogleImages];
+    [self testParsingForService:DZNPhotoPickerControllerServiceBingImages];
 }
 
 - (void)testParsingForService:(DZNPhotoPickerControllerServices)service
