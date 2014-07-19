@@ -25,7 +25,7 @@ NSString *NSStringFromService(DZNPhotoPickerControllerServices service)
         case DZNPhotoPickerControllerServiceFlickr:         return @"Flickr";
         case DZNPhotoPickerControllerServiceInstagram:      return @"Instagram";
         case DZNPhotoPickerControllerServiceGoogleImages:   return @"Google";
-        case DZNPhotoPickerControllerServiceBing:           return @"Bing";
+        case DZNPhotoPickerControllerServiceBingImages:     return @"Bing";
         default:                                            return nil;
     }
 }
@@ -53,8 +53,8 @@ DZNPhotoPickerControllerServices DZNFirstPhotoServiceFromPhotoServices(DZNPhotoP
     if ((services & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
         return DZNPhotoPickerControllerServiceGoogleImages;
     }
-    if ((services & DZNPhotoPickerControllerServiceBing) > 0) {
-        return DZNPhotoPickerControllerServiceBing;
+    if ((services & DZNPhotoPickerControllerServiceBingImages) > 0) {
+        return DZNPhotoPickerControllerServiceBingImages;
     }
     return 0;
 }
@@ -76,18 +76,18 @@ NSArray *NSArrayFromServices(DZNPhotoPickerControllerServices services)
     if ((services & DZNPhotoPickerControllerServiceGoogleImages) > 0) {
         [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceGoogleImages)];
     }
-    if ((services & DZNPhotoPickerControllerServiceBing) > 0) {
-        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceBing)];
+    if ((services & DZNPhotoPickerControllerServiceBingImages) > 0) {
+        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceBingImages)];
     }
     return [NSArray arrayWithArray:titles];
 }
 
 BOOL isConsumerSecretRequiredForService(DZNPhotoPickerControllerServices services) {
-    if (services == DZNPhotoPickerControllerServiceBing) return NO;
+    if (services == DZNPhotoPickerControllerServiceBingImages) return NO;
     return YES;
 }
 
 BOOL isConsumerKeyInParametersRequiredForService(DZNPhotoPickerControllerServices services) {
-    if (services == DZNPhotoPickerControllerServiceBing) return NO;
+    if (services == DZNPhotoPickerControllerServiceBingImages) return NO;
     return YES;
 }
