@@ -110,7 +110,7 @@
     }
     else {
         picker = [DZNPhotoPickerController new];
-        picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceGoogleImages | DZNPhotoPickerControllerServiceBingImages;
+        picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceInstagram;
         picker.allowsEditing = YES;
         picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
         picker.initialSearchTerm = @"California";
