@@ -1,9 +1,8 @@
 DZNPhotoPickerController
 ========================
-
-[![Pod Version - Thanks to https://github.com/badges/cocoapod-badges](https://cocoapod-badges.herokuapp.com/v/DZNPhotoPickerController/badge.png)](https://cocoadocs.org/docsets/DZNPhotoPickerController)
+[![Pod Version](https://betabadges.herokuapp.com/v/DZNPhotoPickerController/badge.svg)](https://cocoadocs.org/docsets/DZNPhotoPickerController)
 [![Gittip](http://img.shields.io/gittip/dzenbot.svg)](https://www.gittip.com/dzenbot/)
-![License MIT](https://go-shields.herokuapp.com/license-MIT-blue.png)
+[![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 [![Screencast Vimeo Video](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_video_placeholder.png)](http://vimeo.com/user3409970/dznphotopickercontroller)
 
