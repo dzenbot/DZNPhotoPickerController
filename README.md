@@ -1,6 +1,10 @@
 DZNPhotoPickerController
 ========================
 
+[![Pod Version - Thanks to https://github.com/badges/cocoapod-badges](https://cocoapod-badges.herokuapp.com/v/DZNPhotoPickerController/badge.png)](https://cocoadocs.org/docsets/DZNPhotoPickerController)
+[![Gittip](http://img.shields.io/gittip/dzenbot.svg)](https://www.gittip.com/dzenbot/)
+![License MIT](https://go-shields.herokuapp.com/license-MIT-blue.png)
+
 [![Screencast Vimeo Video](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_video_placeholder.png)](http://vimeo.com/user3409970/dznphotopickercontroller)
 
 A photo search/picker for iOS using popular providers like 500px, Flickr, Instagram, Google & Bing Images. This control tries to mimic as close as possible UIKit's UIImagePickerController in terms of features, appearance and behaviour.
