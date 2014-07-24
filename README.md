@@ -1,6 +1,6 @@
 DZNPhotoPickerController
 ========================
-[![Pod Version](https://betabadges.herokuapp.com/v/DZNPhotoPickerController/badge.svg)](https://cocoadocs.org/docsets/DZNPhotoPickerController)
+[![Pod Version](http://img.shields.io/cocoapods/v/DZNPhotoPickerController.svg)](https://cocoadocs.org/docsets/DZNPhotoPickerController)
 [![Gittip](http://img.shields.io/gittip/dzenbot.svg)](https://www.gittip.com/dzenbot/)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
