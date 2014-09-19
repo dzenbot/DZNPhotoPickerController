@@ -16,6 +16,7 @@ NSString *const DZNPhotoServiceClientIndentifier =      @"com.dzn.photoService.c
 
 NSString *const DZNPhotoServiceClientConsumerKey =      @"com.dzn.photoService.consumerKey";
 NSString *const DZNPhotoServiceClientConsumerSecret =   @"com.dzn.photoService.consumerSecret";
+NSString *const DZNPhotoServiceClientAccessToken =      @"com.dzn.photoService.accessToken";
 NSString *const DZNPhotoServiceClientSubscription =     @"com.dzn.photoService.subscription";
 
 
@@ -31,7 +32,8 @@ NSURL *baseURLForService(DZNPhotoPickerControllerServices service)
         case DZNPhotoPickerControllerServiceFlickr:             return [NSURL URLWithString:@"https://api.flickr.com/services/rest/"];
         case DZNPhotoPickerControllerServiceInstagram:          return [NSURL URLWithString:@"https://api.instagram.com/v1/"];
         case DZNPhotoPickerControllerServiceGoogleImages:       return [NSURL URLWithString:@"https://www.googleapis.com/customsearch/v1/"];
-        case DZNPhotoPickerControllerServiceBingImages:               return [NSURL URLWithString:@"https://api.datamarket.azure.com/"];
+        case DZNPhotoPickerControllerServiceBingImages:         return [NSURL URLWithString:@"https://api.datamarket.azure.com/"];
+        case DZNPhotoPickerControllerServiceGettyImages:        return [NSURL URLWithString:@"https://connect.gettyimages.com/v3/"];
         default:                                                return nil;
     }
 }
@@ -62,7 +64,8 @@ NSString *photosResourceKeyPathForService(DZNPhotoPickerControllerServices servi
         case DZNPhotoPickerControllerServiceFlickr:             return @"photos.photo";
         case DZNPhotoPickerControllerServiceInstagram:          return @"data";
         case DZNPhotoPickerControllerServiceGoogleImages:       return @"items";
-        case DZNPhotoPickerControllerServiceBingImages:               return @"d.results";
+        case DZNPhotoPickerControllerServiceBingImages:         return @"d.results";
+        case DZNPhotoPickerControllerServiceGettyImages:        return @"images";
         default:                                                return nil;
     }
 }
@@ -74,7 +77,8 @@ NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerServices service)
         case DZNPhotoPickerControllerServiceFlickr:             return @"flickr.photos.search";
         case DZNPhotoPickerControllerServiceInstagram:          return @"tags/%@/media/recent";
         case DZNPhotoPickerControllerServiceGoogleImages:       return @"";
-        case DZNPhotoPickerControllerServiceBingImages:               return @"Bing/Search/Image?$format=json";
+        case DZNPhotoPickerControllerServiceBingImages:         return @"Bing/Search/Image?$format=json";
+        case DZNPhotoPickerControllerServiceGettyImages:        return @"search/images";
         default:                                                return nil;
     }
 }
@@ -86,6 +90,7 @@ NSString *keyForAPIConsumerKey(DZNPhotoPickerControllerServices service)
         case DZNPhotoPickerControllerServiceFlickr:             return @"api_key";
         case DZNPhotoPickerControllerServiceInstagram:          return @"client_id";
         case DZNPhotoPickerControllerServiceGoogleImages:       return @"key";
+        case DZNPhotoPickerControllerServiceGettyImages:        return @"Api-Key";
         default:                                                return nil;
     }
 }
@@ -106,7 +111,8 @@ NSString *keyForSearchTerm(DZNPhotoPickerControllerServices service)
         case DZNPhotoPickerControllerServiceFlickr:             return @"text";
         case DZNPhotoPickerControllerServiceInstagram:          return @"q";
         case DZNPhotoPickerControllerServiceGoogleImages:       return @"q";
-        case DZNPhotoPickerControllerServiceBingImages:               return @"Query";
+        case DZNPhotoPickerControllerServiceBingImages:         return @"Query";
+        case DZNPhotoPickerControllerServiceGettyImages:        return @"phrase";
         default:                                                return nil;
     }
 }
@@ -128,6 +134,7 @@ NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerServices service)
         case DZNPhotoPickerControllerService500px:              return @"rpp";
         case DZNPhotoPickerControllerServiceFlickr:             return @"per_page";
         case DZNPhotoPickerControllerServiceGoogleImages:       return @"num";
+        case DZNPhotoPickerControllerServiceGettyImages:        return @"page_size";
         default:                                                return nil;
     }
 }

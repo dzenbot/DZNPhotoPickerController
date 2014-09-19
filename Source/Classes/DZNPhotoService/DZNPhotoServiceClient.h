@@ -14,6 +14,7 @@
 
 UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerKey;
 UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerSecret;
+UIKIT_EXTERN NSString *const DZNPhotoServiceClientAccessToken;
 UIKIT_EXTERN NSString *const DZNPhotoServiceClientSubscription;
 
 /**

@@ -49,6 +49,11 @@
                                consumerSecret:nil
                                  subscription:DZNPhotoPickerControllerSubscriptionFree];
     
+    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceGettyImages
+                                  consumerKey:kGettyImagesConsumerKey
+                               consumerSecret:kGettyImagesConsumerSecret
+                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
+    
 }
 
 - (void)viewDidLoad
@@ -110,7 +115,7 @@
     }
     else {
         picker = [DZNPhotoPickerController new];
-        picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceInstagram;
+        picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceGettyImages;
         picker.allowsEditing = YES;
         picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
         picker.initialSearchTerm = @"California";

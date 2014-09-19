@@ -26,4 +26,7 @@
 #define kYahooImagesConsumerKey         @"dj0yJmk9N01LeUVpY1YwcFBHJmQ9WVdrOVpVVm1ObTFITkdjbWNHbzlNVE0zT0RNeU1EazJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD1iNQ--"
 #define kYahooImagesConsumerSecret      @"9a31a307570aa29cf8f069b473d771caf5ebe262"
 
-#define kBingImagesAccountKey           @"9V3Rg6PgTrQno6t7pKpT9dLppEaVwVyucUwmHXZXlUo" //5000 per month free.
+#define kBingImagesAccountKey           @"9V3Rg6PgTrQno6t7pKpT9dLppEaVwVyucUwmHXZXlUo" //5000 request per month (free account)
+
+#define kGettyImagesConsumerKey         @"cf5w4mgydk5dwat2fwg8xth5"
+#define kGettyImagesConsumerSecret      @"6CAyRZAmdy7MZnbyaGwVZgECb3fYawan2CD2J7dZN3a2H" //1000 request per day (free account)

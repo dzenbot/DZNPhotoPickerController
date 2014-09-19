@@ -86,6 +86,18 @@
             _height = [object objectForKey:@"Height"];
             _contentType = [object objectForKey:@"ContentType"];
         }
+        else if ((service & DZNPhotoPickerControllerServiceGettyImages) > 0)
+        {
+            _Id = [object objectForKey:@"id"];
+            _authorName = nil;
+            _authorUsername = nil;
+            _authorProfileURL = nil;
+            _detailURL = nil;
+            _thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"display_sizes.uri"]];
+            _sourceURL = nil;
+            _width = [object valueForKeyPath:@"max_dimensions.width"];
+            _height = [object valueForKeyPath:@"max_dimensions.height"];
+        }
     }
     return self;
 }

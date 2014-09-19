@@ -38,15 +38,31 @@
         
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
         
+        NSString *consumerKey = [self consumerKey];
+        NSString *accessToken = [self accessToken];
+        
+        NSLog(@"consumerKey : %@", consumerKey);
+        NSLog(@"accessToken : %@", accessToken);
+
         // Add basic auth to Bing service
-        if (_service == DZNPhotoPickerControllerServiceBingImages) {
-            
-            NSString *key = [self consumerKey];
+        if (_service == DZNPhotoPickerControllerServiceBingImages && consumerKey) {
             
             //Bing requires basic auth with password and user name as the consumer key.
-            [self.requestSerializer setAuthorizationHeaderFieldWithUsername:key password:key];
+            [self.requestSerializer setAuthorizationHeaderFieldWithUsername:consumerKey password:consumerKey];
+        }
+        else if (_service == DZNPhotoPickerControllerServiceGettyImages && consumerKey) {
+            
+            
+            [self.requestSerializer setValue:consumerKey forHTTPHeaderField:@"Api-Key"];
+            
+            
+            // Getty Images requires a Client Credentials Client Credentials grant, meant for client applications that will not have individual users.
+//            [self.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", accessToken] forHTTPHeaderField:@"Authorization"];
         }
     }
+    
+    NSLog(@"HTTPRequestHeaders : %@", self.requestSerializer.HTTPRequestHeaders);
+    
     return self;
 }
 
@@ -55,12 +71,24 @@
 
 - (NSString *)consumerKey
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(_service, DZNPhotoServiceClientConsumerKey)];
+    return [self cachedValueForKey:DZNPhotoServiceClientConsumerKey];
 }
 
 - (NSString *)consumerSecret
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(_service, DZNPhotoServiceClientConsumerSecret)];
+    return [self cachedValueForKey:DZNPhotoServiceClientConsumerSecret];
+}
+
+- (NSString *)accessToken
+{
+    return @"yQyhe8rpE/MIKOOYdL6c9mlWQBh3IEMnxh3vjAPUXnYJNV5vLEu2OnIxhdYeEVqjtNXbE3ImY6sQhmpsgMACevPnLlDwVafWPXsC0L6/sMevY1znwsd5JWt35se/YfjxwEVyFA8YufAGw9FngyzoAe2QF9PQF9ABtaRBJ2kmzWs=|77u/dWZSYUF1WVl6ekJ5UnVJckJuY3YKMTIzMTQKODU1ODc1MAo0Z3Y5Qmc9PQo2aEw5Qmc9PQoxCmNmNXc0bWd5ZGs1ZHdhdDJmd2c4eHRoNQoxMjcuMC4wLjEKMAoxMjMxNAo0Z3Y5Qmc9PQoxMjMxNAowCgo=|3";
+    
+    return [self cachedValueForKey:DZNPhotoServiceClientAccessToken];
+}
+
+- (NSString *)cachedValueForKey:(NSString *)key
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(_service, key)];
 }
 
 - (NSDictionary *)tagsParamsWithKeyword:(NSString *)keyword
@@ -96,18 +124,17 @@
         [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(_service)];
     }
     
-    //Bing requires parameters to be wrapped in '' values. If I'm missing something like just choosing a different URLEncoding, or a different way to set parameters please help me understand. @dirtbikerdude.91 Thanks.
+    //Bing requires parameters to be wrapped in '' values.
     if (_service == DZNPhotoPickerControllerServiceBingImages) {
         [params setObject:[NSString stringWithFormat:@"'%@'", keyword] forKey:keyForSearchTerm(_service)];
     } else {
         [params setObject:keyword forKey:keyForSearchTerm(_service)];
     }
-
     
-    if (_service != DZNPhotoPickerControllerServiceInstagram && _service != DZNPhotoPickerControllerServiceBingImages) {
+    if (keyForSearchResultPerPage(_service)) {
         [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(_service)];
     }
-    if (_service == DZNPhotoPickerControllerService500px || _service == DZNPhotoPickerControllerServiceFlickr) {
+    if (_service == DZNPhotoPickerControllerService500px || _service == DZNPhotoPickerControllerServiceFlickr || _service == DZNPhotoPickerControllerServiceGettyImages) {
         [params setObject:@(page) forKey:@"page"];
     }
     
@@ -139,6 +166,14 @@
         //Default to size medium. Size Large causes some buggy behavior with download times.
         [params setObject:@"'Size:Medium'" forKey:@"ImageFilters"];
     }
+    else if (_service == DZNPhotoPickerControllerServiceGettyImages)
+    {
+        [params setObject:@[@"high_res_comp", @"largest_downloads"] forKey:@"fields"];
+        [params setObject:@"photography" forKey:@"graphical_styles"];
+        [params setObject:@YES forKey:@"exclude_nudity"];
+    }
+    
+    NSLog(@"params : %@", params);
     
     return params;
 }
