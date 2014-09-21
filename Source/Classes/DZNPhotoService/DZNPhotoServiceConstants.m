@@ -12,12 +12,12 @@
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 
-NSString *const DZNPhotoServiceClientIndentifier =      @"com.dzn.photoService.clientIndentifier";
-
-NSString *const DZNPhotoServiceClientConsumerKey =      @"com.dzn.photoService.consumerKey";
-NSString *const DZNPhotoServiceClientConsumerSecret =   @"com.dzn.photoService.consumerSecret";
-NSString *const DZNPhotoServiceClientAccessToken =      @"com.dzn.photoService.accessToken";
+NSString *const DZNPhotoServiceClientIndentifier =      @"com.dzn.photoService.client.identifier";
+NSString *const DZNPhotoServiceClientConsumerKey =      @"com.dzn.photoService.client.consumer_key";
+NSString *const DZNPhotoServiceClientConsumerSecret =   @"com.dzn.photoService.client.consumer_secret";
 NSString *const DZNPhotoServiceClientSubscription =     @"com.dzn.photoService.subscription";
+NSString *const DZNPhotoServiceCredentialIdentifier =   @"com.dzn.photoService.credential.identifier";
+NSString *const DZNPhotoServiceCredentialAccessToken =  @"com.dzn.photoService.credential.access_token";
 
 
 NSString *NSUserDefaultsUniqueKey(NSUInteger type, NSString *key)
@@ -33,7 +33,7 @@ NSURL *baseURLForService(DZNPhotoPickerControllerServices service)
         case DZNPhotoPickerControllerServiceInstagram:          return [NSURL URLWithString:@"https://api.instagram.com/v1/"];
         case DZNPhotoPickerControllerServiceGoogleImages:       return [NSURL URLWithString:@"https://www.googleapis.com/customsearch/v1/"];
         case DZNPhotoPickerControllerServiceBingImages:         return [NSURL URLWithString:@"https://api.datamarket.azure.com/"];
-        case DZNPhotoPickerControllerServiceGettyImages:        return [NSURL URLWithString:@"https://connect.gettyimages.com/v3/"];
+        case DZNPhotoPickerControllerServiceGettyImages:        return [NSURL URLWithString:@"https://connect.gettyimages.com/"];
         default:                                                return nil;
     }
 }
@@ -78,7 +78,15 @@ NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerServices service)
         case DZNPhotoPickerControllerServiceInstagram:          return @"tags/%@/media/recent";
         case DZNPhotoPickerControllerServiceGoogleImages:       return @"";
         case DZNPhotoPickerControllerServiceBingImages:         return @"Bing/Search/Image?$format=json";
-        case DZNPhotoPickerControllerServiceGettyImages:        return @"search/images";
+        case DZNPhotoPickerControllerServiceGettyImages:        return @"v3/search/images/creative";
+        default:                                                return nil;
+    }
+}
+
+NSString *authUrlPathForService(DZNPhotoPickerControllerServices service)
+{
+    switch (service) {
+        case DZNPhotoPickerControllerServiceGettyImages:        return @"oauth2/token/";
         default:                                                return nil;
     }
 }
@@ -158,4 +166,22 @@ NSString *keyPathForObjectName(DZNPhotoPickerControllerServices service, NSStrin
         return photosResourceKeyPathForService(service);
     }
     return nil;
+}
+
+BOOL isConsumerSecretRequiredForService(DZNPhotoPickerControllerServices services)
+{
+    if (services == DZNPhotoPickerControllerServiceBingImages) return NO;
+    return YES;
+}
+
+BOOL isConsumerKeyInParametersRequiredForService(DZNPhotoPickerControllerServices services)
+{
+    if (services == DZNPhotoPickerControllerServiceBingImages || services == DZNPhotoPickerControllerServiceGettyImages) return NO;
+    return YES;
+}
+
+BOOL isAuthenticationRequiredForService(DZNPhotoPickerControllerServices services)
+{
+    if (services == DZNPhotoPickerControllerServiceGettyImages) return YES;
+    return NO;
 }

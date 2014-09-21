@@ -90,21 +90,3 @@ NSArray *NSArrayFromServices(DZNPhotoPickerControllerServices services)
     }
     return [NSArray arrayWithArray:titles];
 }
-
-BOOL isConsumerSecretRequiredForService(DZNPhotoPickerControllerServices services)
-{
-    if (services == DZNPhotoPickerControllerServiceBingImages || services == DZNPhotoPickerControllerServiceGettyImages) return NO;
-    return YES;
-}
-
-BOOL isConsumerKeyInParametersRequiredForService(DZNPhotoPickerControllerServices services)
-{
-    if (services == DZNPhotoPickerControllerServiceBingImages || services == DZNPhotoPickerControllerServiceGettyImages) return NO;
-    return YES;
-}
-
-BOOL isAccessTokenInHeaderRequiredForService(DZNPhotoPickerControllerServices services)
-{
-    if (services == DZNPhotoPickerControllerServiceGettyImages) return YES;
-    return NO;
-}

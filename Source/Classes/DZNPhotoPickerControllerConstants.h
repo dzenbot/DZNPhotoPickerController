@@ -97,19 +97,3 @@ UIKIT_EXTERN DZNPhotoPickerControllerServices DZNPhotoServiceFromName(NSString *
  @returns The photo service type.
  */
 UIKIT_EXTERN DZNPhotoPickerControllerServices DZNFirstPhotoServiceFromPhotoServices(DZNPhotoPickerControllerServices services);
-
-/**
- Determines if the service requires a consumer secret.
- 
- @param services The bitmask of services.
- @returns YES for services that require valid consumer secrets.
- */
-UIKIT_EXTERN BOOL isConsumerSecretRequiredForService(DZNPhotoPickerControllerServices services);
-
-/**
- Determines if the service requires the consumer key to be posted as part of the request.
- 
- @param services The bitmask of services.
- @returns YES for services that require consumer keys to be passed as a request parameter.
- */
-UIKIT_EXTERN BOOL isConsumerKeyInParametersRequiredForService(DZNPhotoPickerControllerServices services);
