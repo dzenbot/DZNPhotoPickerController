@@ -47,15 +47,20 @@
 - (void)configureHTTPHeader
 {
     NSString *consumerKey = [self consumerKey];
+    
+    if (!consumerKey) {
+        return;
+    }
+    
     NSString *accessToken = [self accessToken];
     
     // Add basic auth to Bing service
-    if (self.service == DZNPhotoPickerControllerServiceBingImages && consumerKey) {
+    if (self.service == DZNPhotoPickerControllerServiceBingImages) {
         
         //Bing requires basic auth with password and user name as the consumer key.
         [self.requestSerializer setAuthorizationHeaderFieldWithUsername:consumerKey password:consumerKey];
     }
-    else if (self.service == DZNPhotoPickerControllerServiceGettyImages && consumerKey) {
+    else if (self.service == DZNPhotoPickerControllerServiceGettyImages) {
         
         // Getty Images requires authentification via the custom 'Api-Key' HTTP Header
         [self.requestSerializer setValue:consumerKey forHTTPHeaderField:@"Api-Key"];
@@ -95,9 +100,9 @@
     
     AFOAuthCredential *credential = [AFOAuthCredential retrieveCredentialWithIdentifier:identifier];
     
+    // If still found but expired, the credential is deleted and returns nil
     if (credential.isExpired) {
         [AFOAuthCredential deleteCredentialWithIdentifier:identifier];
-        
         return nil;
     }
     
