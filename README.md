@@ -6,10 +6,10 @@ DZNPhotoPickerController
 
 [![Screencast Vimeo Video](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_video_placeholder.png)](http://vimeo.com/user3409970/dznphotopickercontroller)
 
-A photo search/picker for iOS using popular providers like 500px, Flickr, Instagram, Google & Bing Images. This control tries to mimic as close as possible UIKit's UIImagePickerController in terms of features, appearance and behaviour.
+A photo search/picker for iOS using popular providers like 500px, Flickr, Instagram, Google, Bing & Getty Images. This control tries to mimic as close as possible UIKit's UIImagePickerController in terms of features, appearance and behaviour.
 
 ### Features
-* Search photos on mutiple service providers (500px, Flickr, Intagram, Google & Bing Images)
+* Search photos on mutiple service providers (500px, Flickr, Instagram, Google, Bing & Getty Images)
 * Auto-completed typing for easier search (using Flickr's API as a common denominator).
 * Present the photo picker with a pre-defined search term to automatically start searching.
 * Exact same UI layouts and behaviours than UIImagePickerController.
@@ -35,8 +35,10 @@ pod 'DZNPhotoPickerController'
 ```
 
 When installing, the following dependencies will be automatically installed:
-- AFNetworking (~> 2.3.1)
-- SDWebImage (~> 3.7)
+- AFNetworking (2.2.1)
+- SDWebImage (3.7)
+- GROAuth2SessionManager (0.2.2)
+- DZNEmptyDataSet (1.3.3)
 
 ## How to use
 For complete documentation, [visit CocoaPods' auto-generated doc](http://cocoadocs.org/docsets/DZNPhotoPickerController/)

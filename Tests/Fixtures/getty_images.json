@@ -1,0 +1,31 @@
+{
+    "id": "143071440",
+    "artist": null,
+    "asset_family": "Creative",
+    "caption": null,
+    "collection_id": 237,
+    "collection_name": "OJO Images",
+    "display_sizes": [
+        {
+            "is_watermarked": true,
+            "name": "comp",
+            "uri": "http://cache1.asset-cache.net/xc/143071440.jpg?v=2&c=IWSAsset&k=2&d=xnvCs_-5aSVR6p402MOLiDwWTj8gOq3VHVtp5mk9McI1"
+        },
+        {
+            "is_watermarked": true,
+            "name": "preview",
+            "uri": "http://cache1.asset-cache.net/xr/143071440.jpg?v=1&c=IWSAsset&k=3&d=2CF8528E6AC17C4FFE053859A42F61CE1704B0BBEA56BFF3268A5AF5A450969A00123AA3B5A18ED0"
+        },
+        {
+            "is_watermarked": false,
+            "name": "thumb",
+            "uri": "http://cache1.asset-cache.net/xt/143071440.jpg?v=1&g=fs1|0|OJO|71|440&s=1"
+        }
+    ],
+    "license_model": "royaltyfree",
+    "max_dimensions": {
+        "height": 3413,
+        "width": 5120
+    },
+    "title": "Student working at desk in classroom"
+}

@@ -7,10 +7,6 @@
 //
 
 #import "RootViewController.h"
-
-#import "DZNPhotoPickerController.h"
-#import "UIImagePickerControllerExtended.h"
-
 #import "Private.h"
 
 @interface RootViewController () {
@@ -23,32 +19,30 @@
 
 + (void)initialize
 {
-    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerService500px
-                                  consumerKey:k500pxConsumerKey
-                               consumerSecret:k500pxConsumerSecret
-                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
+    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerService500px
+                                      consumerKey:k500pxConsumerKey
+                                   consumerSecret:k500pxConsumerSecret];
     
-    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceFlickr
-                                  consumerKey:kFlickrConsumerKey
-                               consumerSecret:kFlickrConsumerSecret
-                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
+    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceFlickr
+                                      consumerKey:kFlickrConsumerKey
+                                   consumerSecret:kFlickrConsumerSecret];
+
+    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceInstagram
+                                      consumerKey:kInstagramConsumerKey
+                                   consumerSecret:kInstagramConsumerSecret];
+
+    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceGoogleImages
+                                      consumerKey:kGoogleImagesConsumerKey
+                                   consumerSecret:kGoogleImagesSearchEngineID];
     
-    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceInstagram
-                                  consumerKey:kInstagramConsumerKey
-                               consumerSecret:kInstagramConsumerSecret
-                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
+    //Bing does not require a secret. Rather just an "Account Key"
+    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceBingImages
+                                      consumerKey:kBingImagesAccountKey
+                                   consumerSecret:nil];
     
-    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceGoogleImages
-                                  consumerKey:kGoogleImagesConsumerKey
-                               consumerSecret:kGoogleImagesSearchEngineID
-                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
-    
-    //Bing does not require a secret. Rather just an "Account Key" 
-    [DZNPhotoPickerController registerService:DZNPhotoPickerControllerServiceBingImages
-                                  consumerKey:kBingImagesAccountKey
-                               consumerSecret:nil
-                                 subscription:DZNPhotoPickerControllerSubscriptionFree];
-    
+    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceGettyImages
+                                      consumerKey:kGettyImagesConsumerKey
+                                   consumerSecret:kGettyImagesConsumerSecret];
 }
 
 - (void)viewDidLoad
@@ -110,7 +104,7 @@
     }
     else {
         picker = [DZNPhotoPickerController new];
-        picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceInstagram;
+        picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages;
         picker.allowsEditing = YES;
         picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
         picker.initialSearchTerm = @"California";

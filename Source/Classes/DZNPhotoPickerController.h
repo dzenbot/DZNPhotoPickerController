@@ -69,6 +69,12 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 + (NSArray *)availableMediaTypesForSupportedServices:(DZNPhotoPickerControllerServices)services;
 
 /**
+ Registers a FREE (or demo) specified photo service.
+ @discussion This is a convenience method of +registerService:consumerKey:consumerSecret:subscription:
+ */
++ (void)registerFreeService:(DZNPhotoPickerControllerServices)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret;
+
+/**
  Registers a specified photo service.
  @discussion You must create an app for every photo service you'd like to use, and generate a consumer key and secret from their sites. Run this method on when initializing the view controller that will use DZNPhotoPickerController, typically in the +initialize method.
  

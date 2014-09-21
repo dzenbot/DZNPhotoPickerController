@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "DZNPhotoPickerController.h"
+#import "UIImagePickerControllerExtended.h"
 
 @interface RootViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIPopoverControllerDelegate>
 

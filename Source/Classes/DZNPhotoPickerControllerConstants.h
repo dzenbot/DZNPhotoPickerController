@@ -23,7 +23,8 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerServices) {
     DZNPhotoPickerControllerServiceFlickr = (1 << 1),           // Flickr                                   http://www.flickr.com/services/api/
     DZNPhotoPickerControllerServiceInstagram = (1 << 2),        // Instagram                                http://instagram.com/developer/
     DZNPhotoPickerControllerServiceGoogleImages = (1 << 3),     // Google Images                            https://developers.google.com/image-search/
-    DZNPhotoPickerControllerServiceBingImages = (1 << 4),       // Bing Images                              http://datamarket.azure.com/dataset/bing/search
+    DZNPhotoPickerControllerServiceBingImages = (1 << 4),       // Bing Images                              http://datamarket.azure.com/dataset/bing/search/
+    DZNPhotoPickerControllerServiceGettyImages = (1 << 5),      // Getty Images                             http://api.gettyimages.com/
 };
 
 /**
@@ -96,19 +97,3 @@ UIKIT_EXTERN DZNPhotoPickerControllerServices DZNPhotoServiceFromName(NSString *
  @returns The photo service type.
  */
 UIKIT_EXTERN DZNPhotoPickerControllerServices DZNFirstPhotoServiceFromPhotoServices(DZNPhotoPickerControllerServices services);
-
-/**
- Determines if the service requires a consumer secret.
- 
- @param services The bitmask of services.
- @returns YES for services that require valid consumer secrets.
- */
-UIKIT_EXTERN BOOL isConsumerSecretRequiredForService(DZNPhotoPickerControllerServices services);
-
-/**
- Determines if the service requires the consumer key to be posted as part of the request.
- 
- @param services The bitmask of services.
- @returns YES for services that require consumer keys to be passed as a request parameter.
- */
-UIKIT_EXTERN BOOL isConsumerKeyInParametersRequiredForService(DZNPhotoPickerControllerServices services);

@@ -14,7 +14,7 @@
 /**
  The data model to encapsulate meta data about a photo, provided by the photo service.
  */
-@interface DZNPhotoMetadata : NSObject
+@interface DZNPhotoMetadata : NSObject <NSCoding>
 
 /** The id of the photo. */
 @property (nonatomic, readonly) id Id;
@@ -35,9 +35,18 @@
 /** The MIME content-type of the image. */
 @property (nonatomic, readonly) NSString *contentType;
 /** The height of the photo. */
-@property (nonatomic, strong) NSNumber *height;
+@property (nonatomic, readonly) NSNumber *height;
 /** The width of the photo. */
-@property (nonatomic, strong) NSNumber *width;
+@property (nonatomic, readonly) NSNumber *width;
+
+/**
+ Initializes a new photo metadata instance with request response.
+ 
+ @param object A JSON object.
+ @param service The photo service of the response.
+ @returns A of photo metadata instance.
+ */
+- (instancetype)initWithObject:(NSDictionary *)object service:(DZNPhotoPickerControllerServices)service;
 
 /**
  Parses and returns a list of photo metadata from a request response.
