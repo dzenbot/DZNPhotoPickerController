@@ -10,6 +10,21 @@
 
 #import "DZNPhotoMetadata.h"
 
+@interface DZNPhotoMetadata ()
+@property (readwrite, nonatomic) id Id;
+@property (readwrite, nonatomic) NSURL *thumbURL;
+@property (readwrite, nonatomic) NSURL *sourceURL;
+@property (readwrite, nonatomic) NSURL *detailURL;
+@property (readwrite, nonatomic) NSString *authorName;
+@property (readwrite, nonatomic) NSString *authorUsername;
+@property (readwrite, nonatomic) NSURL *authorProfileURL;
+@property (readwrite, nonatomic) NSString *serviceName;
+@property (readwrite, nonatomic) NSString *contentType;
+@property (readwrite, nonatomic) NSNumber *height;
+@property (readwrite, nonatomic) NSNumber *width;
+
+@end
+
 @implementation DZNPhotoMetadata
 
 - (instancetype)initWithObject:(NSDictionary *)object service:(DZNPhotoPickerControllerServices)service
@@ -89,12 +104,15 @@
         else if ((service & DZNPhotoPickerControllerServiceGettyImages) > 0)
         {
             _Id = [object objectForKey:@"id"];
-            _authorName = nil;
-            _authorUsername = nil;
-            _authorProfileURL = nil;
-            _detailURL = nil;
-            _thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"display_sizes.uri"]];
-            _sourceURL = nil;
+            
+            id urls = [object valueForKeyPath:@"display_sizes.uri"];
+            
+            NSString *sourceUrl = [urls firstObject];
+            _sourceURL = [NSURL URLWithString:[sourceUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+            NSString *thumbUrl = [urls lastObject];
+            _thumbURL = [NSURL URLWithString:[thumbUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
             _width = [object valueForKeyPath:@"max_dimensions.width"];
             _height = [object valueForKeyPath:@"max_dimensions.height"];
         }
@@ -122,6 +140,42 @@
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"serviceName = %@; id = %@; authorName = %@; authorUsername = %@; authorProfileURL = %@; detailURL = %@; thumbURL = %@; sourceURL = %@; _width : %@; height = %@; contentType = %@", _serviceName, _Id, _authorName, _authorUsername, _authorProfileURL, _detailURL, _thumbURL, _sourceURL, _width, _height, _contentType];
+}
+
+
+#pragma mark - NSCoding
+
+- (id)initWithCoder:(NSCoder *)decoder
+{
+    self = [super init];
+    self.Id = [decoder decodeObjectForKey:@"Id"];
+    self.thumbURL = [decoder decodeObjectForKey:@"thumbURL"];
+    self.sourceURL = [decoder decodeObjectForKey:@"sourceURL"];
+    self.detailURL = [decoder decodeObjectForKey:@"detailURL"];
+    self.authorName = [decoder decodeObjectForKey:@"authorName"];
+    self.authorUsername = [decoder decodeObjectForKey:@"authorUsername"];
+    self.authorProfileURL = [decoder decodeObjectForKey:@"authorProfileURL"];
+    self.serviceName = [decoder decodeObjectForKey:@"serviceName"];
+    self.contentType = [decoder decodeObjectForKey:@"contentType"];
+    self.height = [decoder decodeObjectForKey:@"height"];
+    self.width = [decoder decodeObjectForKey:@"width"];
+
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
+    [encoder encodeObject:self.Id forKey:@"Id"];
+    [encoder encodeObject:self.thumbURL forKey:@"thumbURL"];
+    [encoder encodeObject:self.sourceURL forKey:@"sourceURL"];
+    [encoder encodeObject:self.detailURL forKey:@"detailURL"];
+    [encoder encodeObject:self.authorName forKey:@"authorName"];
+    [encoder encodeObject:self.authorUsername forKey:@"authorUsername"];
+    [encoder encodeObject:self.authorProfileURL forKey:@"authorProfileURL"];
+    [encoder encodeObject:self.serviceName forKey:@"serviceName"];
+    [encoder encodeObject:self.contentType forKey:@"contentType"];
+    [encoder encodeObject:self.height forKey:@"height"];
+    [encoder encodeObject:self.width forKey:@"width"];
 }
 
 
