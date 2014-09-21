@@ -28,5 +28,5 @@
 
 #define kBingImagesAccountKey           @"9V3Rg6PgTrQno6t7pKpT9dLppEaVwVyucUwmHXZXlUo" //5000 request per month (free account)
 
-#define kGettyImagesConsumerKey         @"cf5w4mgydk5dwat2fwg8xth5"
-#define kGettyImagesConsumerSecret      @"6CAyRZAmdy7MZnbyaGwVZgECb3fYawan2CD2J7dZN3a2H" //1000 request per day (free account)
+#define kGettyImagesConsumerKey         @"tt4fyd5487kgsjtfkf46v3d4"
+#define kGettyImagesConsumerSecret      @"jQhYJvW8HncyMd9UaEbc8vAYKuDyK2UxtmPHAmSnRhpy5" //1000 request per day (free account)
