@@ -40,6 +40,15 @@
 @property (nonatomic, readonly) NSNumber *width;
 
 /**
+ Initializes a new photo metadata instance with request response.
+ 
+ @param object A JSON object.
+ @param service The photo service of the response.
+ @returns A of photo metadata instance.
+ */
+- (instancetype)initWithObject:(NSDictionary *)object service:(DZNPhotoPickerControllerServices)service;
+
+/**
  Parses and returns a list of photo metadata from a request response.
  
  @param reponse The response with already parsed JSON.
