@@ -8,8 +8,9 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "DZNPhotoPickerControllerConstants.h"
+
 #import "DZNPhotoMetadata.h"
+#import "DZNPhotoPickerControllerConstants.h"
 
 @interface DZNPhotoParsingTests : XCTestCase
 @end
@@ -31,7 +32,8 @@
     NSBundle *testBundle = [NSBundle bundleForClass:[self class]];
     XCTAssertNotNil(testBundle, @"path : %@", testBundle);
 
-    NSString *path = [testBundle pathForResource:[NSStringFromService(service) lowercaseString] ofType:@"json"];
+    NSString *filename = [[NSStringFromService(service) lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSString *path = [testBundle pathForResource:ofType:@"json"];
     XCTAssertNotNil(path, @"The path (%@) to the file cannot be nil.", path);
     
     NSData *data = [NSData dataWithContentsOfFile:path];
@@ -50,6 +52,7 @@
     [self testParsingForService:DZNPhotoPickerControllerServiceInstagram];
     [self testParsingForService:DZNPhotoPickerControllerServiceGoogleImages];
     [self testParsingForService:DZNPhotoPickerControllerServiceBingImages];
+    [self testParsingForService:DZNPhotoPickerControllerServiceGettyImages];
 }
 
 - (void)testParsingForService:(DZNPhotoPickerControllerServices)service
