@@ -138,6 +138,11 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     _cropMode = DZNPhotoEditorViewControllerCropModeCustom;
 }
 
++ (void)registerFreeService:(DZNPhotoPickerControllerServices)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret
+{
+    [self registerService:service consumerKey:key consumerSecret:secret subscription:DZNPhotoPickerControllerSubscriptionFree];
+}
+
 + (void)registerService:(DZNPhotoPickerControllerServices)service consumerKey:(NSString *)key consumerSecret:(NSString *)secret subscription:(DZNPhotoPickerControllerSubscription)subscription
 {
     [DZNPhotoServiceFactory setConsumerKey:key consumerSecret:secret service:service subscription:subscription];
