@@ -323,7 +323,11 @@
     
     NSString *path = authUrlPathForService(self.service);
     
-    NSDictionary *params = @{@"grant_type":@"client_credentials"};
+    NSDictionary *params = @{};
+    
+    if (self.service == DZNPhotoPickerControllerServiceGettyImages) {
+        params = @{@"grant_type":@"client_credentials"};
+    }
     
     [sessionManager authenticateUsingOAuthWithPath:path
                                         parameters:params
