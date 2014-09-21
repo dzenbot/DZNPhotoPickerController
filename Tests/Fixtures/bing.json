@@ -1,0 +1,25 @@
+{
+    "__metadata": {
+        "uri": "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Image?Adult='Moderate'&ImageFilters='Size:Medium'&Query='California'&$skip=49&$top=1",
+        "type": "ImageResult"
+    },
+    "ID": "ddad3ceb-137d-49a9-ae00-77deeeaf1973",
+    "Title": "... Causing Further Deterioration of Southern California's Air Quality",
+    "MediaUrl": "http://media.treehugger.com/assets/images/2011/10/southern20california20fire-jj-001.jpg",
+    "SourceUrl": "http://www.treehugger.com/corporate-responsibility/why-does-california-burn-every-summer.html",
+    "DisplayUrl": "www.treehugger.com/corporate-responsibility/why-does-california...",
+    "Width": "468",
+    "Height": "300",
+    "FileSize": "43403",
+    "ContentType": "image/jpeg",
+    "Thumbnail": {
+        "__metadata": {
+            "type": "Bing.Thumbnail"
+        },
+        "MediaUrl": "http://ts2.mm.bing.net/th?id=HN.608052728067851221&pid=15.1",
+        "ContentType": "image/jpg",
+        "Width": "300",
+        "Height": "192",
+        "FileSize": "10688"
+    }
+}
