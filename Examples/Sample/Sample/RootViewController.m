@@ -100,13 +100,16 @@
     
     if (image && _photoPayload) {
         picker = [[DZNPhotoPickerController alloc] initWithEditableImage:image];
-        picker.cropMode = [[_photoPayload objectForKey:DZNPhotoPickerControllerCropMode] integerValue];
+        picker.allowsEditing = YES;
+        
+        DZNPhotoEditorViewControllerCropMode cropMode = [[_photoPayload objectForKey:DZNPhotoPickerControllerCropMode] integerValue];
+        picker.cropMode = (cropMode == DZNPhotoEditorViewControllerCropModeNone) ? DZNPhotoEditorViewControllerCropModeSquare : cropMode;
     }
     else {
         picker = [DZNPhotoPickerController new];
         picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages;
-        picker.allowsEditing = YES;
-        picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
+        picker.allowsEditing = NO;
+//        picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
         picker.initialSearchTerm = @"California";
         picker.enablePhotoDownload = YES;
         picker.allowAutoCompletedSearch = YES;

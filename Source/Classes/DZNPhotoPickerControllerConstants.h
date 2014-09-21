@@ -12,19 +12,19 @@ UIKIT_EXTERN NSString *const DZNPhotoPickerControllerCropMode;              // A
 UIKIT_EXTERN NSString *const DZNPhotoPickerControllerCropZoomScale;         // An NSString (from 1.0 to maximum zoom scale, 2.0f)
 UIKIT_EXTERN NSString *const DZNPhotoPickerControllerPhotoMetadata;         // An NSDictionary containing metadata from a captured photo
 
-UIKIT_EXTERN NSString *const DZNPhotoPickerDidFinishPickingNotification;    // The notification key used when photo picked.
-UIKIT_EXTERN NSString *const DZNPhotoPickerDidFailPickingNotification;      // The notification key used when photo picked.
+UIKIT_EXTERN NSString *const DZNPhotoPickerDidFinishPickingNotification;    // The notification key used when picking a photo finished.
+UIKIT_EXTERN NSString *const DZNPhotoPickerDidFailPickingNotification;      // The notification key used when picking a photo failed.
 
 /**
  Types of supported photo services
  */
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerServices) {
-    DZNPhotoPickerControllerService500px = (1 << 0),            // 500px                                    http://500px.com/developers/
-    DZNPhotoPickerControllerServiceFlickr = (1 << 1),           // Flickr                                   http://www.flickr.com/services/api/
-    DZNPhotoPickerControllerServiceInstagram = (1 << 2),        // Instagram                                http://instagram.com/developer/
-    DZNPhotoPickerControllerServiceGoogleImages = (1 << 3),     // Google Images                            https://developers.google.com/custom-search/
-    DZNPhotoPickerControllerServiceBingImages = (1 << 4),       // Bing Images                              http://datamarket.azure.com/dataset/bing/search/
-    DZNPhotoPickerControllerServiceGettyImages = (1 << 5),      // Getty Images                             http://api.gettyimages.com/
+    DZNPhotoPickerControllerService500px = (1 << 0),                        // 500px                        http://500px.com/developers/
+    DZNPhotoPickerControllerServiceFlickr = (1 << 1),                       // Flickr                       http://www.flickr.com/services/api/
+    DZNPhotoPickerControllerServiceInstagram = (1 << 2),                    // Instagram                    http://instagram.com/developer/
+    DZNPhotoPickerControllerServiceGoogleImages = (1 << 3),                 // Google Images                https://developers.google.com/custom-search/
+    DZNPhotoPickerControllerServiceBingImages = (1 << 4),                   // Bing Images                  http://datamarket.azure.com/dataset/bing/search/
+    DZNPhotoPickerControllerServiceGettyImages = (1 << 5),                  // Getty Images                 http://api.gettyimages.com/
 };
 
 /**
@@ -58,7 +58,8 @@ typedef NS_ENUM(NSInteger, DZNPhotoEditorViewControllerCropMode) {
 
 /**
  Types of photo service subscription (i.e. Free, Paid)
- For a few services, there is a limitation in terms of request per day and results per page (i.e. Google Custom Search API, Yahoo, etc.). You can pay for those services and register them as SubscriptionPaid for getting unlimited requests and results.
+ For a few services, there is a limitation in terms of request per day/week/month and results per page (i.e. Google Custom Search API, Yahoo, Bing & Getty Images).
+ You can subscribe to those services and register them as SubscriptionPaid for getting unlimited requests and results.
  */
 typedef NS_ENUM(NSInteger, DZNPhotoPickerControllerSubscription) {
     DZNPhotoPickerControllerSubscriptionFree,

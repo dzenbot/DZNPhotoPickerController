@@ -27,6 +27,7 @@ PODS:
     - DZNPhotoPickerController/UIImagePickerControllerExtended
     - DZNPhotoPickerController/UIImagePickerControllerExtended
     - GROAuth2SessionManager (= 0.2.2)
+    - MBProgressHUD (= 0.9)
     - SDWebImage (= 3.7)
   - DZNPhotoPickerController/DZNPhotoService (1.5):
     - AFNetworking (= 2.2.1)
@@ -34,6 +35,7 @@ PODS:
     - DZNPhotoPickerController/DZNPhotoService
     - DZNPhotoPickerController/UIImagePickerControllerExtended
     - GROAuth2SessionManager (= 0.2.2)
+    - MBProgressHUD (= 0.9)
     - SDWebImage (= 3.7)
   - DZNPhotoPickerController/UIImagePickerControllerExtended (1.5):
     - AFNetworking (= 2.2.1)
@@ -41,10 +43,12 @@ PODS:
     - DZNPhotoPickerController/DZNPhotoService
     - DZNPhotoPickerController/UIImagePickerControllerExtended
     - GROAuth2SessionManager (= 0.2.2)
+    - MBProgressHUD (= 0.9)
     - SDWebImage (= 3.7)
   - GROAuth2SessionManager (0.2.2):
     - AFNetworking (~> 2.2.1)
   - Kiwi (2.3.0)
+  - MBProgressHUD (0.9)
   - SDWebImage (3.7.0):
     - SDWebImage/Core
   - SDWebImage/Core (3.7.0)
@@ -60,9 +64,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: 8dde8c8a6597ad95dac332a593c27e541bc87371
   DZNEmptyDataSet: aa20600aff620af3d78edbff4bc47282972e815f
-  DZNPhotoPickerController: bdc65600e69e324ad9986b587ae4e8c78e228438
+  DZNPhotoPickerController: 94e18d4c998098f9de7d40cfcdc5d60ff34b1d45
   GROAuth2SessionManager: 342df22d07b4a2cc0d27ae13affb83d81f066da7
   Kiwi: 54bece5b35564d9b8e03c608d926f1a22fcfc589
+  MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
   SDWebImage: 791cb0f588046cb0bb7802ae8ae8f5462947b773
 
 COCOAPODS: 0.33.1

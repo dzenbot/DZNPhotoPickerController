@@ -24,6 +24,7 @@ Pod::Spec.new do |s|
   s.dependency 'AFNetworking', "2.2.1"
   s.dependency 'GROAuth2SessionManager', "0.2.2"
   s.dependency 'SDWebImage', "3.7"
+  s.dependency 'MBProgressHUD', "0.9"
   s.dependency 'DZNEmptyDataSet', '1.3.3'
 
   s.subspec 'DZNPhotoService' do |service|
