@@ -1,10 +1,8 @@
-@dznversion = "1.5"
-@afversion = "2.3.1"
-@sdversion = "3.7"
+@version = "1.5"
 
 Pod::Spec.new do |s|
   s.name         	= "DZNPhotoPickerController"
-  s.version      	= @dznversion
+  s.version      	= @version
   s.summary      	= "A photo search/picker for iOS using popular providers like 500px, Flickr, Intagram, Google Images, etc."
   s.description  	= "This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behaviour."
   s.homepage   		= "https://github.com/dzenbot/DZNPhotoPickerController"
@@ -23,8 +21,9 @@ Pod::Spec.new do |s|
   s.header_mappings_dir = 'Source'
   s.dependency 'DZNPhotoPickerController/DZNPhotoService'
   s.dependency 'DZNPhotoPickerController/UIImagePickerControllerExtended'
-  s.dependency 'AFNetworking', @afversion
-  s.dependency 'SDWebImage', @sdversion
+  s.dependency 'AFNetworking', "2.2.1"
+  s.dependency 'GROAuth2SessionManager', "0.2.2"
+  s.dependency 'SDWebImage', "3.7"
   s.dependency 'DZNEmptyDataSet', '1.3.3'
 
   s.subspec 'DZNPhotoService' do |service|
