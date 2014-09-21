@@ -16,7 +16,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    DZNPhotoPickerControllerServices service = DZNPhotoPickerControllerServiceGettyImages;
+    DZNPhotoPickerControllerServices service = DZNPhotoPickerControllerServiceBingImages;
 
     NSDictionary *JSON = [TestUtility JSONForService:service];
     DZNPhotoMetadata *metadata = [[DZNPhotoMetadata alloc] initWithObject:JSON service:service];

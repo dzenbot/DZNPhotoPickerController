@@ -29,6 +29,8 @@
 		4F675FD319CF3F78007C6D11 /* instagram.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FA4987718B866C600764406 /* instagram.json */; };
 		4F675FD519CF4643007C6D11 /* getty_images.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F675FD419CF4643007C6D11 /* getty_images.json */; };
 		4F675FD619CF4643007C6D11 /* getty_images.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F675FD419CF4643007C6D11 /* getty_images.json */; };
+		4F675FD819CF4AFA007C6D11 /* bing.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F675FD719CF4AFA007C6D11 /* bing.json */; };
+		4F675FD919CF4AFA007C6D11 /* bing.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F675FD719CF4AFA007C6D11 /* bing.json */; };
 		4FA4987C18B866C600764406 /* 500px.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FA4987318B866C600764406 /* 500px.json */; };
 		4FA4987E18B866C600764406 /* flickr.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FA4987518B866C600764406 /* flickr.json */; };
 		4FA4987F18B866C600764406 /* google.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FA4987618B866C600764406 /* google.json */; };
@@ -68,6 +70,7 @@
 		4F675FCB19CF39C8007C6D11 /* TestUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestUtility.h; path = Utilities/TestUtility.h; sourceTree = "<group>"; };
 		4F675FCC19CF39C8007C6D11 /* TestUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestUtility.m; path = Utilities/TestUtility.m; sourceTree = "<group>"; };
 		4F675FD419CF4643007C6D11 /* getty_images.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = getty_images.json; sourceTree = "<group>"; };
+		4F675FD719CF4AFA007C6D11 /* bing.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bing.json; sourceTree = "<group>"; };
 		4F97B28F18B066E500DED8C0 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
 		4FA4986F18B866C600764406 /* Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		4FA4987018B866C600764406 /* Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
@@ -201,6 +204,7 @@
 				4FA4987518B866C600764406 /* flickr.json */,
 				4FA4987618B866C600764406 /* google.json */,
 				4FA4987718B866C600764406 /* instagram.json */,
+				4F675FD719CF4AFA007C6D11 /* bing.json */,
 				4F675FD419CF4643007C6D11 /* getty_images.json */,
 			);
 			path = Fixtures;
@@ -290,6 +294,7 @@
 			files = (
 				4F675FD319CF3F78007C6D11 /* instagram.json in Resources */,
 				4F570157180E5D0E00E12444 /* Main_iPad.storyboard in Resources */,
+				4F675FD819CF4AFA007C6D11 /* bing.json in Resources */,
 				4F57015C180E5D0E00E12444 /* Images.xcassets in Resources */,
 				4F675FD519CF4643007C6D11 /* getty_images.json in Resources */,
 				4F675FD119CF3F78007C6D11 /* flickr.json in Resources */,
@@ -308,6 +313,7 @@
 				4F675FD619CF4643007C6D11 /* getty_images.json in Resources */,
 				4FA4987C18B866C600764406 /* 500px.json in Resources */,
 				4FA4987E18B866C600764406 /* flickr.json in Resources */,
+				4F675FD919CF4AFA007C6D11 /* bing.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

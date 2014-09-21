@@ -125,6 +125,32 @@ describe(@"Google Images", ^{
     });
 });
 
+describe(@"Bing Images", ^{
+    
+    __block DZNPhotoMetadata *metadata;
+    __block DZNPhotoPickerControllerServices service = DZNPhotoPickerControllerServiceBingImages;
+    
+    beforeAll(^{
+        NSDictionary *JSON = [TestUtility JSONForService:service];
+        metadata = [[DZNPhotoMetadata alloc] initWithObject:JSON service:service];
+    });
+    
+    it(@"should crate a valid instance", ^{
+        [[metadata shouldNot] beNil];
+    });
+    
+    it(@"should parse data correctly", ^{
+        [[metadata.Id should] equal:@"ddad3ceb-137d-49a9-ae00-77deeeaf1973"];
+        [[metadata.serviceName should] equal:@"bing"];
+        [[metadata.detailURL should] equal:[NSURL URLWithString:@"http://www.treehugger.com/corporate-responsibility/why-does-california-burn-every-summer.html"]];
+        [[metadata.thumbURL should] equal:[NSURL URLWithString:@"http://ts2.mm.bing.net/th?id=HN.608052728067851221&pid=15.1"]];
+        [[metadata.sourceURL should] equal:[NSURL URLWithString:@"http://media.treehugger.com/assets/images/2011/10/southern20california20fire-jj-001.jpg"]];
+        [[metadata.width should] equal:@468];
+        [[metadata.height should] equal:@300];
+        [[metadata.contentType should] equal:@"image/jpeg"];
+    });
+});
+
 describe(@"Getty Images", ^{
     
     __block DZNPhotoMetadata *metadata;

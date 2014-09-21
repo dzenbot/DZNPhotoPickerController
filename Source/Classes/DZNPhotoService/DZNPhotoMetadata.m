@@ -97,8 +97,8 @@
             _detailURL = [NSURL URLWithString:[object valueForKeyPath:@"SourceUrl"]];
             _thumbURL = [NSURL URLWithString:[object valueForKeyPath:@"Thumbnail.MediaUrl"]];
             _sourceURL = [NSURL URLWithString:[object valueForKeyPath:@"MediaUrl"]];
-            _width = [object objectForKey:@"Width"];
-            _height = [object objectForKey:@"Height"];
+            _width = @([[object objectForKey:@"Width"] integerValue]);
+            _height = @([[object objectForKey:@"Height"] integerValue]);
             _contentType = [object objectForKey:@"ContentType"];
         }
         else if ((service & DZNPhotoPickerControllerServiceGettyImages) > 0)
