@@ -44,12 +44,14 @@ PODS:
     - SDWebImage (= 3.7)
   - GROAuth2SessionManager (0.2.2):
     - AFNetworking (~> 2.2.1)
+  - Kiwi (2.3.0)
   - SDWebImage (3.7.0):
     - SDWebImage/Core
   - SDWebImage/Core (3.7.0)
 
 DEPENDENCIES:
   - DZNPhotoPickerController (from `../../`)
+  - Kiwi (~> 2.3)
 
 EXTERNAL SOURCES:
   DZNPhotoPickerController:
@@ -60,6 +62,7 @@ SPEC CHECKSUMS:
   DZNEmptyDataSet: aa20600aff620af3d78edbff4bc47282972e815f
   DZNPhotoPickerController: bdc65600e69e324ad9986b587ae4e8c78e228438
   GROAuth2SessionManager: 342df22d07b4a2cc0d27ae13affb83d81f066da7
+  Kiwi: 54bece5b35564d9b8e03c608d926f1a22fcfc589
   SDWebImage: 791cb0f588046cb0bb7802ae8ae8f5462947b773
 
 COCOAPODS: 0.33.1

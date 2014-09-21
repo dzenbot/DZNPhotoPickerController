@@ -112,9 +112,13 @@
 
             NSString *thumbUrl = [urls lastObject];
             _thumbURL = [NSURL URLWithString:[thumbUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-
+            
             _width = [object valueForKeyPath:@"max_dimensions.width"];
             _height = [object valueForKeyPath:@"max_dimensions.height"];
+            
+            if (_sourceURL) {
+                _contentType = [NSString stringWithFormat:@"image/%@",[_sourceURL pathExtension]];
+            }
         }
     }
     return self;
@@ -139,7 +143,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"serviceName = %@; id = %@; authorName = %@; authorUsername = %@; authorProfileURL = %@; detailURL = %@; thumbURL = %@; sourceURL = %@; _width : %@; height = %@; contentType = %@", _serviceName, _Id, _authorName, _authorUsername, _authorProfileURL, _detailURL, _thumbURL, _sourceURL, _width, _height, _contentType];
+    return [NSString stringWithFormat:@"{\nserviceName = %@ \nid = %@ \nauthorName = %@ \nauthorUsername = %@ \nauthorProfileURL = %@ \ndetailURL = %@ \nthumbURL = %@ \nsourceURL = %@ \nwidth : %@ \nheight = %@ \ncontentType = %@\n}", _serviceName, _Id, _authorName, _authorUsername, _authorProfileURL, _detailURL, _thumbURL, _sourceURL, _width, _height, _contentType];
 }
 
 
