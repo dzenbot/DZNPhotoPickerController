@@ -143,7 +143,6 @@ Big thanks to:
 - [SJ Singh](https://github.com/SJApps): Google Images search support.
 - [Felipe Saint-Jean](https://github.com/fsaint): 64bits fix of the editing guides.
 - [Adar Porat](https://github.com/aporat) & [Ryan Fitzgerald](https://github.com/ryanfitz): AFNetworking 2.0 upgrade
-- [Felipe Saint-Jean](https://github.com/fsaint): 64bits fix of the editing guides.
 - [NikDude](https://github.com/nikdude) & [Rob Phillips](https://github.com/iwasrobbed): cool add-ons
 - [Curtis Thorne](https://github.com/dirtbikerdude91): Bing Images search support.
 
