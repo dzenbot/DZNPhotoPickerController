@@ -21,6 +21,7 @@ Pod::Spec.new do |s|
   s.header_mappings_dir = 'Source'
   s.dependency 'DZNPhotoPickerController/DZNPhotoService'
   s.dependency 'DZNPhotoPickerController/UIImagePickerControllerExtended'
+  s.dependency 'DZNPhotoPickerController/DZNPhotoPickerControllerConstants'
   s.dependency 'AFNetworking', "2.2.1"
   s.dependency 'GROAuth2SessionManager', "0.2.2"
   s.dependency 'SDWebImage', "3.7"
@@ -28,12 +29,17 @@ Pod::Spec.new do |s|
   s.dependency 'DZNEmptyDataSet', '1.3.3'
 
   s.subspec 'DZNPhotoService' do |service|
-    service.source_files     =  'Source/Classes/DZNPhotoService/*.{h,m}',
-                                'Source/Classes/DZNPhotoPickerControllerConstants.h'
+    service.source_files     =  'Source/Classes/DZNPhotoService/*.{h,m}'
+    service.dependency 'DZNPhotoPickerController/DZNPhotoPickerControllerConstants'
   end
 
   s.subspec 'UIImagePickerControllerExtended' do |extension|
-    extension.source_files     =  'Source/Classes/UIImagePickerController/*.{h,m}',
-                                  'Source/Classes/DZNPhotoPickerControllerConstants.h'
+    extension.source_files     =  'Source/Classes/UIImagePickerController/*.{h,m}'
+    extension.dependency 'DZNPhotoPickerController/DZNPhotoPickerControllerConstants'
   end
+
+  s.subspec 'DZNPhotoPickerControllerConstants' do |constants|
+    constants.source_files = 'Source/Classes/DZNPhotoPickerControllerConstants/DZNPhotoPickerControllerConstants.{h,m}'
+  end
+
 end
