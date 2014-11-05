@@ -19,8 +19,6 @@ Pod::Spec.new do |s|
                               '#import <SystemConfiguration/SystemConfiguration.h>'
 
   s.header_mappings_dir = 'Source'
-  s.dependency 'DZNPhotoPickerController/DZNPhotoService'
-  s.dependency 'DZNPhotoPickerController/UIImagePickerControllerExtended'
   s.dependency 'AFNetworking', "2.2.1"
   s.dependency 'GROAuth2SessionManager', "0.2.2"
   s.dependency 'SDWebImage', "3.7"
