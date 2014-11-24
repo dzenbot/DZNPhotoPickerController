@@ -1,0 +1,61 @@
+PODS:
+  - AFNetworking (2.4.1):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+    - AFNetworking/UIKit
+  - AFNetworking/NSURLConnection (2.4.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.4.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.4.1)
+  - AFNetworking/Security (2.4.1)
+  - AFNetworking/Serialization (2.4.1)
+  - AFNetworking/UIKit (2.4.1):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - DZNEmptyDataSet (1.3.3)
+  - DZNPhotoPickerController (1.6):
+    - DZNPhotoPickerController/Core
+  - DZNPhotoPickerController/Core (1.6):
+    - DZNEmptyDataSet (= 1.3.3)
+    - DZNPhotoPickerController/Editor
+    - DZNPhotoPickerController/Services
+    - MBProgressHUD (= 0.9)
+    - SDWebImage (= 3.7)
+  - DZNPhotoPickerController/Editor (1.6)
+  - DZNPhotoPickerController/Services (1.6):
+    - AFNetworking (= 2.4.1)
+    - GROAuth2SessionManager (= 0.2.3)
+  - GROAuth2SessionManager (0.2.3):
+    - AFNetworking (~> 2.4.1)
+  - Kiwi (2.3.1)
+  - MBProgressHUD (0.9)
+  - SDWebImage (3.7.0):
+    - SDWebImage/Core
+  - SDWebImage/Core (3.7.0)
+
+DEPENDENCIES:
+  - DZNPhotoPickerController (from `../../`)
+  - Kiwi (~> 2.3)
+
+EXTERNAL SOURCES:
+  DZNPhotoPickerController:
+    :path: ../../
+
+SPEC CHECKSUMS:
+  AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
+  DZNEmptyDataSet: aa20600aff620af3d78edbff4bc47282972e815f
+  DZNPhotoPickerController: 8e8edab66004af6196380dbaf0199ddc5f67f249
+  GROAuth2SessionManager: d40e386b9e865806687b4b818964efb3ac6db952
+  Kiwi: 73e1400209055ee9c8ba78c6012b6b642d0fb9f7
+  MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
+  SDWebImage: 791cb0f588046cb0bb7802ae8ae8f5462947b773
+
+COCOAPODS: 0.34.4

@@ -18,7 +18,7 @@ typedef void (^UIImagePickerControllerCancellationBlock)(UIImagePickerController
  */
 @interface UIImagePickerController (Block)
 
-/** A block to be executed whenever the user pickes a new photo. Use this block to replace delegate method imagePickerController:didFinishPickingPhotoWithInfo: */
+/** A block to be executed whenever the user picks a new photo. Use this block to replace delegate method imagePickerController:didFinishPickingPhotoWithInfo: */
 @property (nonatomic, strong) UIImagePickerControllerFinalizationBlock finalizationBlock;
 /** A block to be executed whenever the user cancels the pick operation. Use this block to replace delegate method imagePickerControllerDidCancel: */
 @property (nonatomic, strong) UIImagePickerControllerCancellationBlock cancellationBlock;

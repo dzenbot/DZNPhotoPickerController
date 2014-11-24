@@ -1,0 +1,14 @@
+PODS:
+  - DZNPhotoPickerController/Editor (1.6)
+
+DEPENDENCIES:
+  - DZNPhotoPickerController/Editor (from `../../`)
+
+EXTERNAL SOURCES:
+  DZNPhotoPickerController:
+    :path: ../../
+
+SPEC CHECKSUMS:
+  DZNPhotoPickerController: 8e8edab66004af6196380dbaf0199ddc5f67f249
+
+COCOAPODS: 0.34.4
