@@ -11,6 +11,7 @@
 #import "DZNPhotoEditorViewController.h"
 
 static dispatch_once_t _willAppearConfig;
+static dispatch_once_t _willDisappearConfig;
 
 typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     DZNPhotoAspectUnknown,
@@ -111,6 +112,8 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
+    
+    _willDisappearConfig = 0;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -120,17 +123,19 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     }
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-    }
+    dispatch_once(&_willDisappearConfig, ^{
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+            [self.navigationController setNavigationBarHidden:NO animated:YES];
+        }
+    });
     
     _willAppearConfig = 0;
 }
@@ -634,14 +639,9 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     [super didReceiveMemoryWarning];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-}
-
 - (void)dealloc
 {
-    [self.imageView removeObserver:self forKeyPath:@"image" context:nil];
+    [_imageView removeObserver:self forKeyPath:@"image" context:nil];
     
     _imageView.image = nil;
     _imageView = nil;

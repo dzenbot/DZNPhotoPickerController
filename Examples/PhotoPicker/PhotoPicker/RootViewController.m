@@ -51,12 +51,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    NSLog(@"DZNPhotoEditorViewControllerCropModeNone : %lu", DZNPhotoEditorViewControllerCropModeNone);
-    NSLog(@"DZNPhotoEditorViewControllerCropModeSquare : %lu", DZNPhotoEditorViewControllerCropModeSquare);
-    NSLog(@"DZNPhotoEditorViewControllerCropModeCircular : %lu", DZNPhotoEditorViewControllerCropModeCircular);
-    NSLog(@"DZNPhotoEditorViewControllerCropModeCustom : %lu", DZNPhotoEditorViewControllerCropModeCustom);
-    
+
     [self resetLayout];
 }
 
