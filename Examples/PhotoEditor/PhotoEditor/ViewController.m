@@ -32,36 +32,41 @@
 
 - (void)editImage:(id)sender
 {
-    DZNPhotoEditorViewController *editor = [[DZNPhotoEditorViewController alloc] initWithImage:self.imageView.image];
+    __weak __typeof(self)weakSelf = self;
+
+    DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:self.imageView.image];
     
-    [editor setAcceptBlock:^(NSDictionary *userInfo){
+    [controller setAcceptBlock:^(DZNPhotoEditorViewController *editor, NSDictionary *userInfo){
         
         UIImage *image = userInfo[UIImagePickerControllerEditedImage];
         self.imageView.image = image;
         
-        [self.navigationController popViewControllerAnimated:YES];
+        // Dismiss the editor
+        [weakSelf dismissController:editor];
     }];
     
-    [editor setCancelBlock:^(void){
-        [self.navigationController popViewControllerAnimated:YES];
+    [controller setCancelBlock:^(DZNPhotoEditorViewController *editor){
+        
+        // Dismiss the editor
+        [weakSelf dismissController:editor];
     }];
     
-    [self presentController:editor push:YES sender:sender];
+    [self presentController:controller push:YES sender:sender];
 }
 
 - (void)importImage:(id)sender
 {
     __weak __typeof(self)weakSelf = self;
     
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    UIImagePickerController *controller = [[UIImagePickerController alloc] init];
+    controller.delegate = self;
+    controller.allowsEditing = YES;
+    controller.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
-    picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
+    controller.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
 //    picker.cropSize = CGSizeMake(CGRectGetWidth(self.view.frame), 100.0);
     
-    picker.finalizationBlock = ^(UIImagePickerController *picker, NSDictionary *info) {
+    controller.finalizationBlock = ^(UIImagePickerController *picker, NSDictionary *info) {
         
         UIImage *image = info[UIImagePickerControllerEditedImage];
         weakSelf.imageView.image = image;
@@ -74,7 +79,7 @@
         return weakSelf;
     };
 
-    picker.cancellationBlock = ^(UIImagePickerController *picker) {
+    controller.cancellationBlock = ^(UIImagePickerController *picker) {
         
         if (picker.cropMode == DZNPhotoEditorViewControllerCropModeNone || picker.viewControllers.count == 1) {
             [weakSelf dismissController:picker];
@@ -87,22 +92,26 @@
         return weakSelf;
     };
     
-    [self presentController:picker push:NO sender:sender];
+    [self presentController:controller push:NO sender:sender];
 }
 
 - (void)presentController:(UIViewController *)controller push:(BOOL)push sender:(id)sender
 {
+    if (_popoverController) {
+        [_popoverController dismissPopoverAnimated:YES];
+        _popoverController = nil;
+    }
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         if (push) {
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+            navigationController.preferredContentSize = CGSizeMake(320.0, 512.0);
             _popoverController = [[UIPopoverController alloc] initWithContentViewController:navigationController];
         }
         else {
             _popoverController = [[UIPopoverController alloc] initWithContentViewController:controller];
         }
-        
-        _popoverController.popoverContentSize = CGSizeMake(320.0, 512.0);
         
         [_popoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }

@@ -503,12 +503,12 @@ Returns the custom collection view layout.
         
         DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:nil cropMode:self.navigationController.cropMode cropSize:self.navigationController.cropSize];
         
-        [controller setAcceptBlock:^(NSDictionary *userInfo){
+        [controller setAcceptBlock:^(DZNPhotoEditorViewController *editor, NSDictionary *userInfo){
             [metadata postMetadataUpdate:userInfo];
             [self.navigationController popViewControllerAnimated:YES];
         }];
         
-        [controller setCancelBlock:^(void){
+        [controller setCancelBlock:^(DZNPhotoEditorViewController *editor){
             [self.navigationController popViewControllerAnimated:YES];
         }];
         

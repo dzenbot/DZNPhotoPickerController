@@ -10,6 +10,9 @@
 
 #import "DZNPhotoEditorViewController.h"
 
+#define kDZNPhotoEditorViewControllerInnerEdgeInset 15.0
+
+static CGFloat _lastZoomScale;
 static dispatch_once_t _willAppearConfig;
 
 typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
@@ -35,9 +38,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 /** The view layed out at the bottom for displaying action buttons. */
 @property (nonatomic, readonly) UIView *bottomView;
 
-/** The last registered zoom scale. */
-@property (nonatomic) CGFloat lastZoomScale;
-
 @end
 
 @implementation DZNPhotoEditorViewController
@@ -46,7 +46,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 @synthesize maskView = _maskView;
 @synthesize bottomView = _bottomView;
 @synthesize activityIndicator = _activityIndicator;
-@synthesize cropSize = _cropSize;
 
 
 #pragma mark - Initializer
@@ -75,13 +74,12 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     [super loadView];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     self.view.backgroundColor = [UIColor blackColor];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         self.title = NSLocalizedString(@"Edit Photo", nil);
-    }
-    else {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
     }
 }
 
@@ -89,48 +87,34 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 {
     [super viewDidLoad];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [self configureSubviews];
-    }
+    [self.view addSubview:self.scrollView];
+    [self.view addSubview:self.bottomView];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    [self setBarsHidden:YES];
     
     dispatch_once(&_willAppearConfig, ^{
-        
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            [self configureSubviews];
-        }
-        
         self.imageView.image = self.editingImage;
         [self.view insertSubview:self.maskView aboveSubview:self.scrollView];
     });
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    }
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-    }
+    [self setBarsHidden:NO];
     
     _willAppearConfig = 0;
 }
@@ -154,6 +138,8 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.showsVerticalScrollIndicator = NO;
         _scrollView.delegate = self;
+        
+        [_scrollView addSubview:self.imageView];
         
         [_scrollView setZoomScale:_scrollView.minimumZoomScale];
     }
@@ -259,22 +245,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     return button;
 }
 
-- (CGSize)cropSize
-{
-    CGSize viewSize = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? self.view.bounds.size : self.navigationController.preferredContentSize;
-    
-    if (self.cropMode == DZNPhotoEditorViewControllerCropModeCustom) {
-        CGFloat cropHeight = roundf((_cropSize.height * viewSize.width) / _cropSize.width);
-        if (cropHeight > viewSize.height) {
-            cropHeight = viewSize.height;
-        }
-        return CGSizeMake(_cropSize.width, cropHeight);
-    }
-    else {
-        return CGSizeMake(viewSize.width, viewSize.width);
-    }
-}
-
 // TODO: Implement this rectangle calculation, considering the guideRect, zoomScale and offset positioning.
 - (CGRect)croppingRect
 {
@@ -285,11 +255,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 {
     CGFloat margin = (self.navigationController.view.bounds.size.height-self.cropSize.height)/2;
     return CGRectMake(0.0, margin, self.cropSize.width, self.cropSize.height);
-}
-
-- (CGFloat)innerInset
-{
-    return 15.0;
 }
 
 CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
@@ -391,7 +356,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     CGFloat width = bounds.size.width;
     CGFloat height = bounds.size.height;
     
-    CGFloat diameter = width-(self.innerInset*2);
+    CGFloat diameter = width-(kDZNPhotoEditorViewControllerInnerEdgeInset*2);
     CGFloat radius = diameter/2;
     CGPoint center = CGPointMake(width/2, height/2);
     
@@ -442,16 +407,16 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     
     if (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
         
-        CGFloat diameter = viewRect.size.width-(self.innerInset*2);
+        CGFloat diameter = viewRect.size.width-(kDZNPhotoEditorViewControllerInnerEdgeInset*2);
         CGRect circularRect = CGRectMake(0, 0, diameter, diameter);
         
-        CGFloat increment = 1.0/(((self.innerInset*2)*100.0)/viewRect.size.width);
+        CGFloat increment = 1.0/(((kDZNPhotoEditorViewControllerInnerEdgeInset*2)*100.0)/viewRect.size.width);
         CGFloat scale = 1.0 + round(increment * 10) / 10.0;
         
         UIGraphicsBeginImageContextWithOptions(circularRect.size, NO, 0.0);{
 
             CGContextRef context = UIGraphicsGetCurrentContext();
-            CGContextTranslateCTM(context, -self.innerInset, -self.innerInset);
+            CGContextTranslateCTM(context, -kDZNPhotoEditorViewControllerInnerEdgeInset, -kDZNPhotoEditorViewControllerInnerEdgeInset);
             CGContextScaleCTM(context, scale, scale);
 
             [_image drawInRect:circularRect];
@@ -485,7 +450,26 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
         NSAssert(!CGSizeEqualToSize(size, CGSizeZero) , @"Expecting a non-zero CGSize for cropMode 'Custom'.");
     }
     
-    _cropSize = size;
+    CGSize viewSize = self.view.bounds.size;
+    
+    if (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular || self.cropMode == DZNPhotoEditorViewControllerCropModeSquare) {
+        _cropSize = CGSizeMake(viewSize.width, viewSize.width);
+    }
+    else {
+        CGFloat cropHeight = roundf((size.height * viewSize.width) / size.width);
+        if (cropHeight > viewSize.height) {
+            cropHeight = viewSize.height;
+        }
+        _cropSize = CGSizeMake(size.width, cropHeight);
+    }
+}
+
+- (void)setBarsHidden:(BOOL)hidden
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        [[UIApplication sharedApplication] setStatusBarHidden:hidden withAnimation:hidden ? UIStatusBarAnimationFade : UIStatusBarAnimationNone];
+        [self.navigationController setNavigationBarHidden:hidden animated:!hidden];
+    }
 }
 
 - (void)updateViewConstraints
@@ -501,13 +485,6 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 #pragma mark - DZNPhotoEditorViewController methods
 
-- (void)configureSubviews
-{
-    [self.view addSubview:self.scrollView];
-    [self.scrollView addSubview:self.imageView];
-    [self.view addSubview:self.bottomView];
-}
-
 /*
  * It is important to update the scroll view content inset, specilally after zooming.
  * This allows the user to move the image around with control, from edge to edge of the overlay masks.
@@ -516,9 +493,9 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 {
     CGSize imageSize = CGSizeAspectFit(self.imageView.image.size, self.imageView.frame.size);
     
-    CGFloat maskHeight = (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) ? self.cropSize.width-(self.innerInset*2) : self.cropSize.height;
+    CGFloat maskHeight = (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) ? self.cropSize.width-(kDZNPhotoEditorViewControllerInnerEdgeInset*2) : self.cropSize.height;
     
-    CGFloat hInset = (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) ? self.innerInset : 0.0;
+    CGFloat hInset = (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) ? kDZNPhotoEditorViewControllerInnerEdgeInset : 0.0;
     CGFloat vInset = fabs((maskHeight-imageSize.height)/2);
     
     if (vInset == 0) vInset = 0.5;
@@ -554,7 +531,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
                 
                 if (editedImage) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
                 
-                self.acceptBlock(self, userInfo);
+                self.acceptBlock(userInfo);
             }
         });
     });
@@ -563,7 +540,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 - (void)cancelEdition:(id)sender
 {
     if (self.cancelBlock) {
-        self.cancelBlock(self);
+        self.cancelBlock();
     }
 }
 
@@ -605,16 +582,6 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 
 #pragma mark - View Auto-Rotation
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return NO;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
-{
-    return UIInterfaceOrientationPortrait;
-}
 
 - (NSUInteger)supportedInterfaceOrientations
 {

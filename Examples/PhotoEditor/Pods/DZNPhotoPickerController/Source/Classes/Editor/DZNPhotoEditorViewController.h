@@ -11,10 +11,8 @@
 #import <UIKit/UIKit.h>
 #import "DZNPhotoPickerControllerConstants.h"
 
-@class DZNPhotoEditorViewController;
-
-typedef void (^DZNPhotoEditorAcceptBlock)(DZNPhotoEditorViewController *editor, NSDictionary *userInfo);
-typedef void (^DZNPhotoEditorCancelBlock)(DZNPhotoEditorViewController *editor);
+typedef void (^DZNPhotoEditorAcceptBlock)(NSDictionary *userInfo);
+typedef void (^DZNPhotoEditorCancelBlock)(void);
 
 /**
  The controller in charge of displaying the big resolution image with the different cropping modes.
