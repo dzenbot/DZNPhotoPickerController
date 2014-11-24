@@ -52,7 +52,12 @@
 {
     [super viewDidLoad];
     
-    [self startupConfig];
+    NSLog(@"DZNPhotoEditorViewControllerCropModeNone : %lu", DZNPhotoEditorViewControllerCropModeNone);
+    NSLog(@"DZNPhotoEditorViewControllerCropModeSquare : %lu", DZNPhotoEditorViewControllerCropModeSquare);
+    NSLog(@"DZNPhotoEditorViewControllerCropModeCircular : %lu", DZNPhotoEditorViewControllerCropModeCircular);
+    NSLog(@"DZNPhotoEditorViewControllerCropModeCustom : %lu", DZNPhotoEditorViewControllerCropModeCustom);
+    
+    [self resetLayout];
 }
 
 
@@ -106,7 +111,7 @@
         picker.allowsEditing = YES;
         
         DZNPhotoEditorViewControllerCropMode cropMode = [_photoPayload[DZNPhotoPickerControllerCropMode] integerValue];
-        picker.cropMode = (cropMode == DZNPhotoEditorViewControllerCropModeNone) ? DZNPhotoEditorViewControllerCropModeSquare : cropMode;
+        picker.cropMode = cropMode;
     }
     else {
         picker = [DZNPhotoPickerController new];
@@ -146,7 +151,7 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = sourceType;
     picker.allowsEditing = YES;
-    picker.delegate = self;
+//    picker.delegate = self;
     picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
     
     picker.finalizationBlock = ^(UIImagePickerController *picker, NSDictionary *info) {
@@ -200,13 +205,13 @@
     UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
 }
 
-- (void)startupConfig
+- (void)resetLayout
 {
     [_button setTitle:@"Tap Here to Start" forState:UIControlStateNormal];
     [_button setBackgroundImage:nil forState:UIControlStateHighlighted];
 
-    _imageView.image = nil;
     _photoPayload = nil;
+    _imageView.image = nil;
 }
 
 - (void)setButtonImage:(UIImage *)image
@@ -283,7 +288,7 @@
         [self presentPhotoEditor];
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"Delete Photo",nil)]) {
-        [self startupConfig];
+        [self resetLayout];
     }
 }
 

@@ -89,32 +89,40 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     
     [self.view addSubview:self.scrollView];
     [self.view addSubview:self.bottomView];
-    
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
-    [self setBarsHidden:YES];
-    
     dispatch_once(&_willAppearConfig, ^{
         self.imageView.image = self.editingImage;
         [self.view insertSubview:self.maskView aboveSubview:self.scrollView];
     });
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone || self.navigationController.viewControllers.count == 1) {
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    }
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
     
-    [self setBarsHidden:NO];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
     
     _willAppearConfig = 0;
 }
@@ -464,14 +472,6 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     }
 }
 
-- (void)setBarsHidden:(BOOL)hidden
-{
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [[UIApplication sharedApplication] setStatusBarHidden:hidden withAnimation:hidden ? UIStatusBarAnimationFade : UIStatusBarAnimationNone];
-        [self.navigationController setNavigationBarHidden:hidden animated:!hidden];
-    }
-}
-
 - (void)updateViewConstraints
 {
     [super updateViewConstraints];
@@ -582,6 +582,16 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 
 #pragma mark - View Auto-Rotation
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return NO;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    return UIInterfaceOrientationPortrait;
+}
 
 - (NSUInteger)supportedInterfaceOrientations
 {
