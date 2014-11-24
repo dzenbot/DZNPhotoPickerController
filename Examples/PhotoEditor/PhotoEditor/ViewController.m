@@ -25,7 +25,7 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.title = @"Photo Editor";
-    
+
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Import" style:UIBarButtonItemStyleDone target:self action:@selector(importImage:)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleDone target:self action:@selector(editImage:)];
 }
@@ -54,12 +54,12 @@
     __weak __typeof(self)weakSelf = self;
     
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-//    picker.delegate = self;
-//    picker.allowsEditing = YES;
+    picker.delegate = self;
+    picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
     picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
-    picker.cropSize = CGSizeMake(CGRectGetWidth(self.view.frame), 100.0);
+//    picker.cropSize = CGSizeMake(CGRectGetWidth(self.view.frame), 100.0);
     
     picker.finalizationBlock = ^(UIImagePickerController *picker, NSDictionary *info) {
         
@@ -76,7 +76,13 @@
 
     picker.cancellationBlock = ^(UIImagePickerController *picker) {
         
-        [weakSelf dismissController:picker];
+        if (picker.cropMode == DZNPhotoEditorViewControllerCropModeNone || picker.viewControllers.count == 1) {
+            [weakSelf dismissController:picker];
+        }
+        else {
+            picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
+            [picker popViewControllerAnimated:YES];
+        }
         
         return weakSelf;
     };
@@ -138,7 +144,13 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [self dismissController:picker];
+    if (picker.cropMode == DZNPhotoEditorViewControllerCropModeNone) {
+        [self dismissController:picker];
+    }
+    else {
+        picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
+        [picker popViewControllerAnimated:YES];
+    }
 }
 
 @end
