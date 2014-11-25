@@ -59,6 +59,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="placeholder" width="512" height="512"/>
+        <image name="placeholder" width="320" height="568"/>
     </resources>
 </document>

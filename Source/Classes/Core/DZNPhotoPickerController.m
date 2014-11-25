@@ -51,11 +51,11 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
         DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:image];
         self.editModeEnabled = YES;
         
-        [controller setAcceptBlock:^(NSDictionary *userInfo){
+        [controller setAcceptBlock:^(DZNPhotoEditorViewController *editor, NSDictionary *userInfo){
             [[DZNPhotoMetadata new] postMetadataUpdate:userInfo];
         }];
         
-        [controller setCancelBlock:^(void){
+        [controller setCancelBlock:^(DZNPhotoEditorViewController *editor){
             [self cancelPicker:nil];
         }];
         

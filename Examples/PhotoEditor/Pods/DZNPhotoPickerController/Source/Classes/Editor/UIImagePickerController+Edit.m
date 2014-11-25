@@ -108,28 +108,6 @@ static char cancelationBlockKey;
 }
 
 
-#pragma mark - Private Methods
-
-- (void)handleCompletion:(NSDictionary *)userInfo
-{
-    if (self.finalizationBlock) {
-        self.previousDelegate = self.finalizationBlock(self, userInfo);
-    }
-    else if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]) {
-        [self.delegate imagePickerController:self didFinishPickingMediaWithInfo:userInfo];
-    }
-}
-
-- (void)handleCancellation:(id)delegate
-{
-    if (self.cancellationBlock) {
-        self.cancellationBlock(self);
-    }
-    else if (delegate && [delegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
-        [delegate imagePickerControllerDidCancel:self];
-    }
-}
-
 
 #pragma mark - UIImagePickerControllerDelegate
 
@@ -138,30 +116,46 @@ static char cancelationBlockKey;
     if (self.cropMode != DZNPhotoEditorViewControllerCropModeNone && (self.previousDelegate || self.finalizationBlock)) {
         
         UIImage *image = info[UIImagePickerControllerOriginalImage];
+        DZNPhotoEditorViewController *editorController = [[DZNPhotoEditorViewController alloc] initWithImage:image cropMode:self.cropMode cropSize:self.cropSize];
+        [picker pushViewController:editorController animated:YES];
         
-        DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:image];
-        controller.cropMode = self.cropMode;
-        controller.cropSize = self.cropSize;
-        [picker pushViewController:controller animated:YES];
-        
-        [controller setAcceptBlock:^(DZNPhotoEditorViewController *editor, NSDictionary *userInfo){
+        [editorController setAcceptBlock:^(NSDictionary *userInfo){
+            
             self.cropMode = DZNPhotoEditorViewControllerCropModeNone;
-            [self handleCompletion:userInfo];
+            
+            // Block
+            if (self.finalizationBlock) {
+                self.previousDelegate = self.finalizationBlock(self, userInfo);
+            }
+            else if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]) {
+                [self.delegate imagePickerController:self didFinishPickingMediaWithInfo:userInfo];
+            }
         }];
         
-        [controller setCancelBlock:^(DZNPhotoEditorViewController *editor){
-            [self handleCancellation:self.delegate];
+        [editorController setCancelBlock:^(void){
+            
+            self.cropMode = DZNPhotoEditorViewControllerCropModeNone;
+            
+            if (self.cancellationBlock) {
+                self.previousDelegate = self.cancellationBlock(self);
+            }
+            else if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
+                [self.delegate imagePickerControllerDidCancel:self];
+            }
         }];
-    }
-    else if (self.delegate && !self.previousDelegate) {
-        [self handleCompletion:info];
     }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [self handleCancellation:self.previousDelegate];
-
+    if (self.cancellationBlock) {
+        self.previousDelegate = self.cancellationBlock(self);
+    }
+    else if (self.cropMode != DZNPhotoEditorViewControllerCropModeNone) {
+        if (self.previousDelegate && [self.delegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
+            [self.previousDelegate imagePickerControllerDidCancel:self];
+        }
+    }
 }
 
 @end

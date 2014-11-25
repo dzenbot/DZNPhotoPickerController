@@ -11,8 +11,8 @@
 @interface RootViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIPopoverControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
-@property (nonatomic, weak) IBOutlet UIButton *button;
 
-- (IBAction)pressButton:(id)sender;
+- (IBAction)importImage:(id)sender;
+- (IBAction)editImage:(id)sender;
 
 @end

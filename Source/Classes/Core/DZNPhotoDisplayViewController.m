@@ -496,29 +496,29 @@ Returns the custom collection view layout.
     DZNPhotoMetadata *metadata = [_metadataList objectAtIndex:indexPath.row];
     
     if (!self.navigationController.enablePhotoDownload) {
-        
         [metadata postMetadataUpdate:nil];
     }
     else if (self.navigationController.allowsEditing) {
         
-        DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:nil cropMode:self.navigationController.cropMode cropSize:self.navigationController.cropSize];
+        DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] init];
+        controller.cropMode = self.navigationController.cropMode;
+        controller.cropSize = self.navigationController.cropSize;
         
-        [controller setAcceptBlock:^(NSDictionary *userInfo){
+        [self.navigationController pushViewController:controller animated:YES];
+
+        [controller setAcceptBlock:^(DZNPhotoEditorViewController *editor, NSDictionary *userInfo){
             [metadata postMetadataUpdate:userInfo];
             [self.navigationController popViewControllerAnimated:YES];
         }];
         
-        [controller setCancelBlock:^(void){
+        [controller setCancelBlock:^(DZNPhotoEditorViewController *editor){
             [self.navigationController popViewControllerAnimated:YES];
         }];
         
-        [self.navigationController pushViewController:controller animated:YES];
-        
+        controller.rightButton.enabled = NO;
         [controller.activityIndicator startAnimating];
-
+        
         __weak DZNPhotoEditorViewController *_controller = controller;
-        __weak UIButton *_button = controller.rightButton;
-        _button.enabled = NO;
         
         [controller.imageView sd_setImageWithPreviousCachedImageWithURL:metadata.sourceURL
                                               andPlaceholderImage:nil
@@ -526,7 +526,7 @@ Returns the custom collection view layout.
                                                          progress:NULL
                                                         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                                             if (!error) {
-                                                                _button.enabled = YES;
+                                                                _controller.rightButton.enabled = YES;
                                                             }
                                                             else {
                                                                 [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFailPickingNotification object:nil userInfo:@{@"error": error}];

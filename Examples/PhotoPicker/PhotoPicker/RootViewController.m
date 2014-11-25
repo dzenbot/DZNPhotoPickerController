@@ -14,6 +14,7 @@
 
 @interface RootViewController () {
     UIPopoverController *_popoverController;
+    UIActionSheet *_actionSheet;
     NSDictionary *_photoPayload;
 }
 @end
@@ -51,95 +52,107 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self startupConfig];
+}
+
+- (IBAction)importImage:(id)sender
+{
+    [self showImportActionSheet:sender];
+}
+
+- (IBAction)editImage:(id)sender
+{
+    [self showEditActionSheet:sender];
 }
 
 
 #pragma mark - ViewController methods
 
-- (IBAction)pressButton:(UIButton *)button
+- (void)showImportActionSheet:(id)sender
 {
-    UIActionSheet *actionSheet = [UIActionSheet new];
+    _actionSheet = [UIActionSheet new];
     
     if ([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) {
-        [actionSheet addButtonWithTitle:NSLocalizedString(@"Take Photo", nil)];
+        [_actionSheet addButtonWithTitle:NSLocalizedString(@"Take Photo", nil)];
     }
     
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Choose Photo", nil)];
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Search Photo", nil)];
+    [_actionSheet addButtonWithTitle:NSLocalizedString(@"Choose Photo", nil)];
+    [_actionSheet addButtonWithTitle:NSLocalizedString(@"Search Photo", nil)];
+    
+    [_actionSheet setCancelButtonIndex:[_actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)]];
+    [_actionSheet setDelegate:self];
+    [_actionSheet showFromBarButtonItem:sender animated:YES];
+}
+
+- (void)showEditActionSheet:(id)sender
+{
+    _actionSheet = [UIActionSheet new];
     
     if (_imageView.image) {
-        [actionSheet addButtonWithTitle:NSLocalizedString(@"Edit Photo", nil)];
-        [actionSheet addButtonWithTitle:NSLocalizedString(@"Delete Photo", nil)];
+        [_actionSheet addButtonWithTitle:NSLocalizedString(@"Edit Photo", nil)];
+        [_actionSheet addButtonWithTitle:NSLocalizedString(@"Delete Photo", nil)];
     }
     
-    [actionSheet setCancelButtonIndex:[actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)]];
-    [actionSheet setDelegate:self];
-    
-    CGRect rect = button.frame;
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        rect.origin = CGPointMake(rect.origin.x, rect.origin.y+rect.size.height/2);
-    }
-    
-    [actionSheet showFromRect:rect inView:self.view animated:YES];
+    [_actionSheet setCancelButtonIndex:[_actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)]];
+    [_actionSheet setDelegate:self];
+    [_actionSheet showFromBarButtonItem:sender animated:YES];
 }
 
-- (void)presentPhotoPicker
+- (void)presentPhotoSearch:(id)sender
 {
-    [self presentPhotoPickerWithImage:nil];
-}
-
-- (void)presentPhotoEditor
-{
-    UIImage *image = _photoPayload[UIImagePickerControllerOriginalImage];
-    [self presentPhotoPickerWithImage:image];
-}
-
-- (void)presentPhotoPickerWithImage:(UIImage *)image
-{
-    DZNPhotoPickerController *picker = nil;
+    DZNPhotoPickerController *picker = [DZNPhotoPickerController new];
+    picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages;
+    picker.allowsEditing = NO;
+    picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
+    picker.initialSearchTerm = @"California";
+    picker.enablePhotoDownload = YES;
+    picker.allowAutoCompletedSearch = YES;
     
-    if (image && _photoPayload) {
-        picker = [[DZNPhotoPickerController alloc] initWithEditableImage:image];
-        picker.allowsEditing = YES;
-        
-        DZNPhotoEditorViewControllerCropMode cropMode = [_photoPayload[DZNPhotoPickerControllerCropMode] integerValue];
-        picker.cropMode = (cropMode == DZNPhotoEditorViewControllerCropModeNone) ? DZNPhotoEditorViewControllerCropModeSquare : cropMode;
-    }
-    else {
-        picker = [DZNPhotoPickerController new];
-        picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGoogleImages;
-        picker.allowsEditing = NO;
-        picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
-        picker.initialSearchTerm = @"California";
-        picker.enablePhotoDownload = YES;
-        picker.allowAutoCompletedSearch = YES;
-    }
-    
-    picker.finalizationBlock = ^(DZNPhotoPickerController *picker, NSDictionary *info) {
+    [picker setFinalizationBlock:^(DZNPhotoPickerController *picker, NSDictionary *info){
         [self updateImageWithPayload:info];
         [self dismissController:picker];
-    };
+    }];
     
-    picker.failureBlock = ^(DZNPhotoPickerController *picker, NSError *error) {
+    [picker setFailureBlock:^(DZNPhotoPickerController *picker, NSError *error){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
                                                         message:error.localizedDescription
                                                        delegate:nil
                                               cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                               otherButtonTitles:nil];
         [alert show];
-    };
+    }];
     
-    picker.cancellationBlock = ^(DZNPhotoPickerController *picker) {
+    [picker setCancellationBlock:^(DZNPhotoPickerController *picker){
         [self dismissController:picker];
-    };
+    }];
     
-    [self presentController:picker];
+    [self presentController:picker sender:sender];
 }
 
-- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType
+- (void)presentPhotoEditor:(id)sender
+{
+    UIImage *image = _photoPayload[UIImagePickerControllerOriginalImage];
+    if (!image) image = self.imageView.image;
+    
+    DZNPhotoEditorViewControllerCropMode cropMode = [_photoPayload[DZNPhotoPickerControllerCropMode] integerValue];
+
+    DZNPhotoEditorViewController *editor = [[DZNPhotoEditorViewController alloc] initWithImage:image];
+    editor.cropMode = (cropMode != DZNPhotoEditorViewControllerCropModeNone) ? : DZNPhotoEditorViewControllerCropModeSquare;
+    
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:editor];
+    
+    [editor setAcceptBlock:^(DZNPhotoEditorViewController *editor, NSDictionary *userInfo){
+        [self updateImageWithPayload:userInfo];
+        [self dismissController:editor];
+    }];
+    
+    [editor setCancelBlock:^(DZNPhotoEditorViewController *editor){
+        [self dismissController:editor];
+    }];
+    
+    [self presentController:controller sender:sender];
+}
+
+- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType sender:(id)sender
 {
     __weak __typeof(self)weakSelf = self;
 
@@ -155,18 +168,15 @@
         if (picker.cropMode == DZNPhotoEditorViewControllerCropModeNone) {
             [weakSelf handleImagePicker:picker withMediaInfo:info];
         }
-        
         return weakSelf;
     };
     
     picker.cancellationBlock = ^(UIImagePickerController *picker) {
-        
         [weakSelf dismissController:picker];
-        
         return weakSelf;
     };
     
-    [self presentController:picker];
+    [self presentController:picker sender:sender];
 }
 
 - (void)handleImagePicker:(UIImagePickerController *)picker withMediaInfo:(NSDictionary *)info
@@ -191,7 +201,9 @@
     UIImage *image = payload[UIImagePickerControllerEditedImage];
     if (!image) image = payload[UIImagePickerControllerOriginalImage];
     
-    [self setButtonImage:image];
+    self.imageView.image = image;
+    self.navigationItem.rightBarButtonItem.enabled = image ? YES : NO;
+    
 //    [self saveImage:image];
 }
 
@@ -200,40 +212,29 @@
     UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
 }
 
-- (void)startupConfig
+- (void)resetContent
 {
-    [_button setTitle:@"Tap Here to Start" forState:UIControlStateNormal];
-    [_button setBackgroundImage:nil forState:UIControlStateHighlighted];
-
-    _imageView.image = nil;
     _photoPayload = nil;
+    self.imageView.image = nil;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
-- (void)setButtonImage:(UIImage *)image
+- (void)presentController:(UIViewController *)controller sender:(id)sender
 {
-    _imageView.image = image;
-    [_button setTitle:nil forState:UIControlStateNormal];
+    if (_popoverController.isPopoverVisible) {
+        [_popoverController dismissPopoverAnimated:YES];
+        _popoverController = nil;
+    }
     
+    if (_actionSheet.isVisible) {
+        _actionSheet = nil;
+    }
     
-    UIGraphicsBeginImageContextWithOptions(_button.frame.size, NO, 0);
-    
-    CGSize imageSize = CGSizeMake(self.view.frame.size.width, (image.size.height*self.view.frame.size.width)/image.size.width);
-    UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, (_button.frame.size.height-imageSize.height)/2, imageSize.width, imageSize.height)];
-    [[UIColor colorWithWhite:0 alpha:0.75] setFill];
-    [clipPath fill];
-    
-    [_button setBackgroundImage:UIGraphicsGetImageFromCurrentImageContext() forState:UIControlStateHighlighted];
-    
-    UIGraphicsEndImageContext();
-}
-
-- (void)presentController:(UIViewController *)controller
-{
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        _popoverController = [[UIPopoverController alloc] initWithContentViewController:controller];
-        _popoverController.popoverContentSize = CGSizeMake(320.0, 548.0);
+        controller.preferredContentSize = CGSizeMake(320.0, 520.0);
         
-        [_popoverController presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        _popoverController = [[UIPopoverController alloc] initWithContentViewController:controller];
+        [_popoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else {
         [self presentViewController:controller animated:YES completion:NULL];
@@ -266,24 +267,24 @@
 
 #pragma mark - UIActionSheetDelegate methods
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
     
     if ([buttonTitle isEqualToString:NSLocalizedString(@"Take Photo", nil)]) {
-        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera sender:self.navigationItem.leftBarButtonItem];
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"Choose Photo", nil)]) {
-        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary sender:self.navigationItem.leftBarButtonItem];
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"Search Photo",nil)]) {
-        [self presentPhotoPicker];
+        [self presentPhotoSearch:self.navigationItem.leftBarButtonItem];
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"Edit Photo",nil)]) {
-        [self presentPhotoEditor];
+        [self presentPhotoEditor:self.navigationItem.rightBarButtonItem];
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"Delete Photo",nil)]) {
-        [self startupConfig];
+        [self resetContent];
     }
 }
 
