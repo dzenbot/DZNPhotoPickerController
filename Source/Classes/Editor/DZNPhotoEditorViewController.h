@@ -21,6 +21,11 @@ typedef void (^DZNPhotoEditorCancelBlock)(DZNPhotoEditorViewController *editor);
  */
 @interface DZNPhotoEditorViewController : UIViewController
 
+/** The cropping mode (ie: Square, Circular or Custom). Default is Square. */
+@property (nonatomic, assign) DZNPhotoEditorViewControllerCropMode cropMode;
+/** The cropping size. Default is view's size.width,size.width (most of the cases 320,320). */
+@property (nonatomic, assign) CGSize cropSize;
+
 /** The container for the edited image. */
 @property (nonatomic, readonly) UIImageView *imageView;
 /** The bottom-left action button. */
@@ -42,15 +47,5 @@ typedef void (^DZNPhotoEditorCancelBlock)(DZNPhotoEditorViewController *editor);
  @return A new instance of the editor controller.
  */
 - (instancetype)initWithImage:(UIImage *)image;
-
-/**
- Initializes a photo editor with the specified image and cropping size.
- 
- @param image The image to display in the photo editor.
- @param mode The crop mode to be used. Assigning 'DZNPhotoEditorViewControllerCropModeNone' will throw an exception.
- @param size The crop size to be used.
- @return A new instance of the editor controller.
- */
-- (instancetype)initWithImage:(UIImage *)image cropMode:(DZNPhotoEditorViewControllerCropMode)mode cropSize:(CGSize)size;
 
 @end

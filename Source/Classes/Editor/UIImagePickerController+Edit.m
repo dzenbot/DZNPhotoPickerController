@@ -123,7 +123,7 @@ static char cancelationBlockKey;
 - (void)handleCancellation:(id)delegate
 {
     if (self.cancellationBlock) {
-        delegate = self.cancellationBlock(self);
+        self.cancellationBlock(self);
     }
     else if (delegate && [delegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
         [delegate imagePickerControllerDidCancel:self];
@@ -138,7 +138,10 @@ static char cancelationBlockKey;
     if (self.cropMode != DZNPhotoEditorViewControllerCropModeNone && (self.previousDelegate || self.finalizationBlock)) {
         
         UIImage *image = info[UIImagePickerControllerOriginalImage];
-        DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:image cropMode:self.cropMode cropSize:self.cropSize];
+        
+        DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:image];
+        controller.cropMode = self.cropMode;
+        controller.cropSize = self.cropSize;
         [picker pushViewController:controller animated:YES];
         
         [controller setAcceptBlock:^(DZNPhotoEditorViewController *editor, NSDictionary *userInfo){

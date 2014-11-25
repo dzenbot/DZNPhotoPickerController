@@ -23,7 +23,6 @@
 {
     [super viewDidLoad];
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.title = @"Photo Editor";
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Import" style:UIBarButtonItemStyleDone target:self action:@selector(importImage:)];
@@ -106,7 +105,7 @@
         
         if (push) {
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-            navigationController.preferredContentSize = CGSizeMake(320.0, 512.0);
+            navigationController.preferredContentSize = CGSizeMake(320.0, 520.0);
             _popoverController = [[UIPopoverController alloc] initWithContentViewController:navigationController];
         }
         else {

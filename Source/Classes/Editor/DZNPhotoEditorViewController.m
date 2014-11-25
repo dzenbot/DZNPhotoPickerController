@@ -20,21 +20,37 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     DZNPhotoAspectHorizontalRectangle
 };
 
+@interface DZNPhotoEditorContainerView : UIView
+@end
+
+@implementation DZNPhotoEditorContainerView
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    UIView *view = [super hitTest:point withEvent:event];
+    
+    if ([self.subviews containsObject:view]) {
+        return view;
+    }
+    else if ([view isEqual:self]) {
+        return nil;
+    }
+    return view;
+}
+
+@end
+
 @interface DZNPhotoEditorViewController () <UIScrollViewDelegate>
 
 /** An optional UIImage use for displaying the already existing full size image. */
 @property (nonatomic, copy) UIImage *editingImage;
-/** The cropping mode (ie: Square, Circular or Custom). Default is Square. */
-@property (nonatomic) DZNPhotoEditorViewControllerCropMode cropMode;
-/** The cropping size. Default is view's size.width,size.width (most of the cases 320,320). */
-@property (nonatomic) CGSize cropSize;
 
 /** The scrollview containing the image for allowing panning and zooming. */
 @property (nonatomic, readonly) UIScrollView *scrollView;
 /** The container for the mask guide image. */
 @property (nonatomic, readonly) UIImageView *maskView;
 /** The view layed out at the bottom for displaying action buttons. */
-@property (nonatomic, readonly) UIView *bottomView;
+@property (nonatomic, readonly) DZNPhotoEditorContainerView *bottomView;
 
 /** The last registered zoom scale. */
 @property (nonatomic) CGFloat lastZoomScale;
@@ -52,20 +68,30 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 
 #pragma mark - Initializer
 
-- (instancetype)initWithImage:(UIImage *)image
+- (instancetype)init
 {
-    return [self initWithImage:image cropMode:DZNPhotoEditorViewControllerCropModeSquare cropSize:CGSizeZero];
+    self = [super init];
+    if (self) {
+        [self commonInit];
+    }
+    return self;
 }
 
-- (instancetype)initWithImage:(UIImage *)image cropMode:(DZNPhotoEditorViewControllerCropMode)mode cropSize:(CGSize)size
+- (instancetype)initWithImage:(UIImage *)image
 {
     self = [super init];
     if (self) {
         self.editingImage = image;
-        self.cropMode = mode;
-        self.cropSize = size;
+        [self commonInit];
     }
     return self;
+}
+
+- (void)commonInit
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        [self configureSubviews];
+    }
 }
 
 
@@ -86,19 +112,22 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     }
 }
 
+- (void)configureSubviews
+{
+    [self.view addSubview:self.scrollView];
+    [self.scrollView addSubview:self.imageView];
+    [self.view addSubview:self.bottomView];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [self configureSubviews];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     dispatch_once(&_willAppearConfig, ^{
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -187,29 +216,46 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     return _maskView;
 }
 
-- (UIView *)bottomView
+- (DZNPhotoEditorContainerView *)bottomView
 {
     if (!_bottomView)
     {
-        _bottomView = [UIView new];
+        _bottomView = [DZNPhotoEditorContainerView new];
         _bottomView.translatesAutoresizingMaskIntoConstraints = NO;
+        _bottomView.tintColor = [UIColor whiteColor];
+        _bottomView.userInteractionEnabled = YES;
         
         _leftButton = [self buttonWithTitle:NSLocalizedString(@"Cancel", nil)];
         [_leftButton addTarget:self action:@selector(cancelEdition:) forControlEvents:UIControlEventTouchUpInside];
-        [_bottomView addSubview:self.leftButton];
         
         _rightButton = [self buttonWithTitle:NSLocalizedString(@"Choose", nil)];
         [_rightButton addTarget:self action:@selector(acceptEdition:) forControlEvents:UIControlEventTouchUpInside];
-        [_bottomView addSubview:self.rightButton];
         
-        NSMutableDictionary *views = [[NSMutableDictionary alloc] initWithDictionary:@{@"leftButton": self.leftButton, @"rightButton": self.rightButton}];
-        NSDictionary *metrics = @{@"hmargin" : @(13), @"vmargin" : @(21), @"barsHeight": @([UIApplication sharedApplication].statusBarFrame.size.height+self.navigationController.navigationBar.frame.size.height)};
+        NSMutableDictionary *views = [NSMutableDictionary new];
+        NSDictionary *metrics = @{@"hmargin" : @(13), @"barsHeight": @(self.barsHeight)};
         
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-hmargin-[leftButton]" options:0 metrics:metrics views:views]];
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[rightButton]-hmargin-|" options:0 metrics:metrics views:views]];
-        
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[leftButton]-vmargin-|" options:0 metrics:metrics views:views]];
-        [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[rightButton]-vmargin-|" options:0 metrics:metrics views:views]];
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            
+            [_bottomView addSubview:self.leftButton];
+            [_bottomView addSubview:self.rightButton];
+            
+            [views setObject:self.leftButton forKey:@"leftButton"];
+            [views setObject:self.rightButton forKey:@"rightButton"];
+            
+            [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-hmargin-[leftButton]" options:0 metrics:metrics views:views]];
+            [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[rightButton]-hmargin-|" options:0 metrics:metrics views:views]];
+            
+            [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[leftButton]|" options:0 metrics:metrics views:views]];
+            [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[rightButton]|" options:0 metrics:metrics views:views]];
+        }
+        else {
+            
+            if (self.navigationController.viewControllers.count == 1) {
+                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftButton];
+            }
+            
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightButton];
+        }
         
         if (_cropMode == DZNPhotoEditorViewControllerCropModeCircular)
         {
@@ -223,7 +269,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
             
             NSDictionary *labels = @{@"label" : topLabel};
             
-            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label]-|" options:0 metrics:nil views:labels]];
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[label]|" options:0 metrics:nil views:labels]];
             [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-barsHeight-[label]" options:0 metrics:metrics views:labels]];
         }
         
@@ -233,8 +279,8 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
             
             [views setObject:self.activityIndicator forKey:@"activityIndicator"];
             
-            [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[activityIndicator]-|" options:0 metrics:nil views:views]];
-            [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[activityIndicator]-|" options:0 metrics:nil views:views]];
+            [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[activityIndicator]|" options:0 metrics:nil views:views]];
+            [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[activityIndicator]|" options:0 metrics:metrics views:views]];
         }
     }
     return _bottomView;
@@ -257,10 +303,10 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     [button.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
     [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [button setTitleEdgeInsets:UIEdgeInsetsMake(-1.0, 0.0, 0.0, 0.0)];
     [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [button setUserInteractionEnabled:YES];
+    [button sizeToFit];
     return button;
 }
 
@@ -280,15 +326,9 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     }
 }
 
-// TODO: Implement this rectangle calculation, considering the guideRect, zoomScale and offset positioning.
-- (CGRect)croppingRect
-{
-    return CGRectZero;
-}
-
 - (CGRect)guideRect
 {
-    CGFloat margin = (self.navigationController.view.bounds.size.height-self.cropSize.height)/2;
+    CGFloat margin = (CGRectGetHeight(self.navigationController.view.bounds)-self.cropSize.height)/2;
     return CGRectMake(0.0, margin, self.cropSize.width, self.cropSize.height);
 }
 
@@ -297,10 +337,17 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     return 15.0;
 }
 
+- (CGFloat)barsHeight
+{
+    CGFloat height = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
+    height += CGRectGetHeight(self.navigationController.navigationBar.frame);
+    return height;
+}
+
 CGSize CGSizeAspectFit(CGSize aspectRatio, CGSize boundingSize)
 {
-    float hRatio = boundingSize.width / aspectRatio.width;
-    float vRation = boundingSize.height / aspectRatio.height;
+    CGFloat hRatio = boundingSize.width / aspectRatio.width;
+    CGFloat vRation = boundingSize.height / aspectRatio.height;
     if (hRatio < vRation) {
         boundingSize.height = boundingSize.width / aspectRatio.width * aspectRatio.height;
     }
@@ -328,11 +375,11 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 - (UIImage *)overlayMask
 {
-    switch (_cropMode) {
-        case DZNPhotoEditorViewControllerCropModeCircular:      return [self circularOverlayMask];
+    switch (self.cropMode) {
+        case DZNPhotoEditorViewControllerCropModeNone:
         case DZNPhotoEditorViewControllerCropModeSquare:
         case DZNPhotoEditorViewControllerCropModeCustom:        return [self squareOverlayMask];
-        case DZNPhotoEditorViewControllerCropModeNone:          return nil;
+        case DZNPhotoEditorViewControllerCropModeCircular:      return [self circularOverlayMask];
     }
 }
 
@@ -361,11 +408,11 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     [clipPath addLineToPoint:CGPointMake(width, 0)];
     [clipPath addLineToPoint:CGPointMake(width, margin)];
     [clipPath closePath];
-    [clipPath moveToPoint:CGPointMake(width, bounds.size.height)];
-    [clipPath addLineToPoint:CGPointMake(0, bounds.size.height)];
+    [clipPath moveToPoint:CGPointMake(width, CGRectGetHeight(bounds))];
+    [clipPath addLineToPoint:CGPointMake(0, CGRectGetHeight(bounds))];
     [clipPath addLineToPoint:CGPointMake(0, margin+height)];
     [clipPath addLineToPoint:CGPointMake(width, margin+height)];
-    [clipPath addLineToPoint:CGPointMake(width, bounds.size.height)];
+    [clipPath addLineToPoint:CGPointMake(width, CGRectGetHeight(bounds))];
     [clipPath closePath];
     [[UIColor colorWithWhite:0 alpha:0.5] setFill];
     [clipPath fill];
@@ -399,6 +446,10 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     CGFloat diameter = width-(self.innerInset*2);
     CGFloat radius = diameter/2;
     CGPoint center = CGPointMake(width/2, height/2);
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        center.y += CGRectGetHeight(self.navigationController.navigationBar.frame)/2.0;
+    }
     
     // Create the image context
     UIGraphicsBeginImageContextWithOptions(bounds.size, NO, 0);
@@ -434,6 +485,10 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
     guideRect.origin.x = -self.scrollView.contentOffset.x;
     guideRect.origin.y = -self.scrollView.contentOffset.y - verticalMargin;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
+        guideRect.origin.y -= CGRectGetHeight(self.navigationController.navigationBar.bounds)/2.0;
+    }
     
     UIGraphicsBeginImageContextWithOptions(guideRect.size, NO, 0);{
         CGContextRef context = UIGraphicsGetCurrentContext();
@@ -500,18 +555,11 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     NSDictionary *views = [[NSMutableDictionary alloc] initWithDictionary:@{@"bottomView": self.bottomView}];
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(72)]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(88)]|" options:0 metrics:nil views:views]];
 }
 
 
 #pragma mark - DZNPhotoEditorViewController methods
-
-- (void)configureSubviews
-{
-    [self.view addSubview:self.scrollView];
-    [self.scrollView addSubview:self.imageView];
-    [self.view addSubview:self.bottomView];
-}
 
 /*
  * It is important to update the scroll view content inset, specilally after zooming.
@@ -524,11 +572,18 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     CGFloat maskHeight = (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) ? self.cropSize.width-(self.innerInset*2) : self.cropSize.height;
     
     CGFloat hInset = (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) ? self.innerInset : 0.0;
-    CGFloat vInset = fabs((maskHeight-imageSize.height)/2);
+    CGFloat vInset = fabsf((maskHeight-imageSize.height)/2);
     
-    if (vInset == 0) vInset = 0.5;
+    if (vInset == 0) vInset = 0.25;
     
-    self.scrollView.contentInset =  UIEdgeInsetsMake(vInset, hInset, vInset, hInset);
+    UIEdgeInsets inset = UIEdgeInsetsMake(vInset, hInset, vInset, hInset);
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
+        inset.top += CGRectGetHeight(self.navigationController.navigationBar.frame)/2.0;
+        inset.bottom -= CGRectGetHeight(self.navigationController.navigationBar.frame)/2.0;
+    }
+    
+    self.scrollView.contentInset = inset;
 }
 
 - (void)acceptEdition:(id)sender
@@ -574,6 +629,11 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 
 #pragma mark - UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+}
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
