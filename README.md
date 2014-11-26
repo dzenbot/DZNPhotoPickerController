@@ -80,53 +80,87 @@ picker.delegate = self;
 You can additionally set more properties:
 ```
 picker.initialSearchTerm = @"Surf";
-picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
+picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
 picker.enablePhotoDownload = YES;
 picker.supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
+picker.allowAutoCompletedSearch = YES;
 ```
 
 You can opt-in for block methods instead of using the delegate's methods:
 ```
 picker.finalizationBlock = ^(DZNPhotoPickerController *picker, NSDictionary *info) {
-        //Your implementation here
-    };
+    //Your implementation here
+};
     
 picker.failureBlock = ^(DZNPhotoPickerController *picker, NSError *error) {
-        //Your implementation here
-    };
+    //Your implementation here
+};
     
 picker.cancellationBlock = ^(DZNPhotoPickerController *picker) {
-        //Your implementation here
-    };
+    //Your implementation here
+};
 ```
 
-## UIImagePickerController extensions
 
-## Circular mode edition
+## Standalone Image Editor
+
+You can install it as a subspec (if you're not using `DZNPhotoPickerController`)
+```
+pod 'DZNPhotoPickerController/Editor'
+```
+
+If you already have an image to edit, simply do:
+```
+DZNPhotoEditorViewController *editor = [[DZNPhotoEditorViewController alloc] initWithImage:self.myImage];
+editor.cropMode = DZNPhotoEditorViewControllerCropModeCustom;
+editor.cropSize = CGSizeMake(CGRectGetWidth(self.view.frame), 200.0);
+
+[editor setAcceptBlock:^(DZNPhotoEditorViewController *editor, NSDictionary *userInfo){
+        
+    //Your implementation here
+}];
+    
+[editor setCancelBlock:^(DZNPhotoEditorViewController *editor){
+        
+    //Your implementation here
+}];
+
+// The view controller requieres to be nested in a navigation controller
+UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:navigation];
+[self presentViewController:controller animated:YES completion:NULL];
+````
+
+## UIImagePickerController Extensions
+
+You can install it as a subspec (if you're not using `DZNPhotoPickerController`)
+```
+pod 'DZNPhotoPickerController/Editor'
+```
+
+## Circular and Custom Edition
 Another great feature of DZNPhotoPickerController is to allow circular edit mode when using UIImagePickerController, just like the Contact app when editing a user's avatar image.<br>
 Its use is really straightforward:
 
 ```
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    if (picker.cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
-        
-        DZNPhotoEditorViewController *editor = [[DZNPhotoEditorViewController alloc] initWithImage:image cropMode:DZNPhotoEditorViewControllerCropModeCircular];
-        [picker pushViewController:editor animated:YES];
-    }
-}
+UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+picker.allowsEditing = YES;
+picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+picker.delegate = self;
+picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
+    
+[self presentViewController:picker animated:YES completion:NULL];
 ```
 
-## Block support
-As in DZNPhotoPickerController's API, there is block support for UIImagePickerController too! It replaces the 2 traditional delegate methods with 2 block properties instead:
+## Block Support
+There is also block support for UIImagePickerController! It replaces the 2 traditional delegate methods with 2 block properties instead:
 ```
 picker.finalizationBlock = ^(UIImagePickerController *picker, NSDictionary *info) {
-        //Your implementation here
-    };
+    //Your implementation here
+};
     
 picker.cancellationBlock = ^(UIImagePickerController *picker) {
-        //Your implementation here
-    };
+     //Your implementation here
+};
 ```
 
 
@@ -151,7 +185,8 @@ Are you using this control in your apps? Let me know at [iromero@dzen.cl](mailto
 
 - [Epiclist](https://itunes.apple.com/us/app/id789778193/)
 - [Everest](https://itunes.apple.com/us/app/id581016826/)
-- [Nifti](https://itunes.apple.com/us/app/nifti/id703097357)
+- [Nifti](https://itunes.apple.com/us/app/id703097357)
+- [Slack](https://itunes.apple.com/us/app/id618783545)
 
 ## License
 (The MIT License)
