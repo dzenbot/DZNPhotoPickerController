@@ -425,10 +425,10 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     [maskPath stroke];
     
     //Create the image using the current context.
-    UIImage *_image = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    return _image;
+    return image;
 }
 
 /*
@@ -465,10 +465,10 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     [[UIColor colorWithWhite:0 alpha:0.5] setFill];
     [clipPath fill];
     
-    UIImage *_image = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return _image;
+    return image;
 }
 
 /*
@@ -476,7 +476,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
  */
 - (UIImage *)editedImage
 {
-    UIImage *_image = nil;
+    UIImage *image = nil;
     
     CGRect viewRect = self.navigationController.view.bounds;
     CGRect guideRect = [self guideRect];
@@ -496,7 +496,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
         CGContextTranslateCTM(context, guideRect.origin.x, guideRect.origin.y);
         [self.scrollView.layer renderInContext:context];
         
-        _image = UIGraphicsGetImageFromCurrentImageContext();
+        image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
     }
     
@@ -514,14 +514,14 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
             CGContextTranslateCTM(context, -self.innerInset, -self.innerInset);
             CGContextScaleCTM(context, scale, scale);
 
-            [_image drawInRect:circularRect];
+            [image drawInRect:circularRect];
             
-            _image = UIGraphicsGetImageFromCurrentImageContext();
+            image = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
         }
     }
 
-    return _image;
+    return image;
 }
 
 /**
