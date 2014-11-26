@@ -58,7 +58,7 @@
     __weak __typeof(self)weakSelf = self;
     
     UIImagePickerController *controller = [[UIImagePickerController alloc] init];
-    controller.delegate = self;
+//    controller.delegate = self;
     controller.allowsEditing = YES;
     controller.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
@@ -74,12 +74,11 @@
         if (picker.cropMode == DZNPhotoEditorViewControllerCropModeNone) {
             [weakSelf dismissController:picker];
         }
-        
-        return weakSelf;
     };
 
     controller.cancellationBlock = ^(UIImagePickerController *picker) {
         
+        // Dismiss when the crop mode was disabled or if the navigation stack has only one child view controller.
         if (picker.cropMode == DZNPhotoEditorViewControllerCropModeNone || picker.viewControllers.count == 1) {
             [weakSelf dismissController:picker];
         }
@@ -87,8 +86,6 @@
             picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
             [picker popViewControllerAnimated:YES];
         }
-        
-        return weakSelf;
     };
     
     [self presentController:controller push:NO sender:sender];

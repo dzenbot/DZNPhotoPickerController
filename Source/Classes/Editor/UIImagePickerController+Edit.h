@@ -11,8 +11,8 @@
 #import <UIKit/UIImagePickerController.h>
 #import "DZNPhotoPickerControllerConstants.h"
 
-typedef id<UINavigationControllerDelegate,UIImagePickerControllerDelegate> (^UIImagePickerControllerFinalizationBlock)(UIImagePickerController *picker, NSDictionary *info);
-typedef id<UINavigationControllerDelegate,UIImagePickerControllerDelegate> (^UIImagePickerControllerCancellationBlock)(UIImagePickerController *picker);
+typedef void (^UIImagePickerControllerFinalizationBlock)(UIImagePickerController *picker, NSDictionary *info);
+typedef void (^UIImagePickerControllerCancellationBlock)(UIImagePickerController *picker);
 
 /**
  A category class allowing custom edition modes on UIImagePickerController with special crop guides, like the circular guide from the Contacts app.

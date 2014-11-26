@@ -113,7 +113,7 @@ static char cancelationBlockKey;
 - (void)handleCompletion:(NSDictionary *)userInfo
 {
     if (self.finalizationBlock) {
-        self.previousDelegate = self.finalizationBlock(self, userInfo);
+        self.finalizationBlock(self, userInfo);
     }
     else if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]) {
         [self.delegate imagePickerController:self didFinishPickingMediaWithInfo:userInfo];
