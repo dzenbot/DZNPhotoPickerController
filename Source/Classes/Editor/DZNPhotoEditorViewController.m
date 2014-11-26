@@ -384,8 +384,8 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 }
 
 /*
- * The square overlay mask image to be displayed on top of the photo as cropping guideline.
- * Created with PaintCode. The source file is available inside of the Resource folder.
+ The square overlay mask image to be displayed on top of the photo as cropping guideline.
+ Created with PaintCode. The source file is available inside of the Resource folder.
  */
 - (UIImage *)squareOverlayMask
 {
@@ -432,8 +432,8 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 }
 
 /*
- * The circular overlay mask image to be displayed on top of the photo as cropping guideline.
- * Created with PaintCode. The source file is available inside of the Resource folder.
+ The circular overlay mask image to be displayed on top of the photo as cropping guideline.
+ Created with PaintCode. The source file is available inside of the Resource folder.
  */
 - (UIImage *)circularOverlayMask
 {
@@ -472,7 +472,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 }
 
 /*
- * The final edited photo rendering.
+ The final edited photo rendering.
  */
 - (UIImage *)editedImage
 {
@@ -524,6 +524,98 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     return _image;
 }
 
+/**
+ Trims the image removing any alpha in its edges.
+ Code from http://stackoverflow.com/a/12617031/590010
+ */
+- (UIImage *)trimmedImage:(UIImage *)image
+{
+    CGImageRef inImage = image.CGImage;
+    CFDataRef m_DataRef;
+    m_DataRef = CGDataProviderCopyData(CGImageGetDataProvider(inImage));
+    
+    UInt8 * m_PixelBuf = (UInt8 *) CFDataGetBytePtr(m_DataRef);
+    
+    size_t width = CGImageGetWidth(inImage);
+    size_t height = CGImageGetHeight(inImage);
+    
+    CGPoint top,left,right,bottom;
+    
+    BOOL breakOut = NO;
+    for (int x = 0;breakOut==NO && x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            NSInteger loc = x + (y * width);
+            loc *= 4;
+            if (m_PixelBuf[loc + 3] != 0) {
+                left = CGPointMake(x, y);
+                breakOut = YES;
+                break;
+            }
+        }
+    }
+    
+    breakOut = NO;
+    for (int y = 0;breakOut==NO && y < height; y++) {
+        
+        for (int x = 0; x < width; x++) {
+            
+            NSInteger loc = x + (y * width);
+            loc *= 4;
+            if (m_PixelBuf[loc + 3] != 0) {
+                top = CGPointMake(x, y);
+                breakOut = YES;
+                break;
+            }
+            
+        }
+    }
+    
+    breakOut = NO;
+    for (NSInteger y = height-1;breakOut==NO && y >= 0; y--) {
+        
+        for (NSInteger x = width-1; x >= 0; x--) {
+            
+            NSInteger loc = x + (y * width);
+            loc *= 4;
+            if (m_PixelBuf[loc + 3] != 0) {
+                bottom = CGPointMake(x, y);
+                breakOut = YES;
+                break;
+            }
+            
+        }
+    }
+    
+    breakOut = NO;
+    for (NSInteger x = width-1;breakOut==NO && x >= 0; x--) {
+        
+        for (NSInteger y = height-1; y >= 0; y--) {
+            
+            NSInteger loc = x + (y * width);
+            loc *= 4;
+            if (m_PixelBuf[loc + 3] != 0) {
+                right = CGPointMake(x, y);
+                breakOut = YES;
+                break;
+            }
+            
+        }
+    }
+    
+    
+    CGFloat scale = image.scale;
+    
+    CGRect cropRect = CGRectMake(left.x / scale, top.y/scale, (right.x - left.x)/scale, (bottom.y - top.y) / scale);
+    
+    UIGraphicsBeginImageContextWithOptions(cropRect.size, NO, scale);
+    [image drawAtPoint:CGPointMake(-cropRect.origin.x, -cropRect.origin.y) blendMode:kCGBlendModeCopy alpha:1.];
+    
+    UIImage *croppedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    CFRelease(m_DataRef);
+    return croppedImage;
+}
+
 
 #pragma mark - Setter methods
 
@@ -535,9 +627,9 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 }
 
 /*
- * Sets the crop size
- * Instead of asigning the same CGSize value, we first calculate a proportional height
- * based on the maximum width of the container (ie: for iPhone, 320px).
+ Sets the crop size
+ Instead of asigning the same CGSize value, we first calculate a proportional height
+ based on the maximum width of the container (ie: for iPhone, 320px).
  */
 - (void)setCropSize:(CGSize)size
 {
@@ -548,17 +640,12 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     _cropSize = size;
 }
 
-- (void)updateViewConstraints
-{
-    [super updateViewConstraints];
-}
-
 
 #pragma mark - DZNPhotoEditorViewController methods
 
 /*
- * It is important to update the scroll view content inset, specilally after zooming.
- * This allows the user to move the image around with control, from edge to edge of the overlay masks.
+ It is important to update the scroll view content inset, specilally after zooming.
+ This allows the user to move the image around with control, from edge to edge of the overlay masks.
  */
 - (void)updateScrollViewContentInset
 {
@@ -590,7 +677,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     dispatch_queue_t exampleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
     dispatch_async(exampleQueue, ^{
         
-        UIImage *editedImage = [self editedImage];
+        UIImage *editedImage = [self trimmedImage:[self editedImage]];
         
         dispatch_queue_t queue = dispatch_get_main_queue();
         dispatch_async(queue, ^{
