@@ -10,8 +10,8 @@
 
 #import "DZNPhotoEditorViewController.h"
 
-static dispatch_once_t _willAppearConfig;
-static dispatch_once_t _willDisappearConfig;
+#define DZN_IS_IPAD [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad
+#define DZN_IS_IOS8 [[UIDevice currentDevice].systemVersion floatValue] > 8.0
 
 typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     DZNPhotoAspectUnknown,
@@ -89,14 +89,10 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 
 - (void)commonInit
 {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [self configureSubviews];
-    }
-    
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor blackColor];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (DZN_IS_IPAD) {
         self.title = NSLocalizedString(@"Edit Photo", nil);
     }
     else {
@@ -112,45 +108,53 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     [super loadView];
 }
 
-- (void)configureSubviews
-{
-    [self.view addSubview:self.scrollView];
-    [self.scrollView addSubview:self.imageView];
-    [self.view addSubview:self.bottomView];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    if (_scrollView.superview) {
+        return;
+    }
+    
+    [self.view addSubview:self.scrollView];
+    [self.scrollView addSubview:self.imageView];
+    [self.view addSubview:self.bottomView];
+    
+    self.imageView.image = self.editingImage;
+    [self.view insertSubview:self.maskView aboveSubview:self.scrollView];
+    
+    NSDictionary *views = @{@"bottomView": self.bottomView};
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(88)]|" options:0 metrics:nil views:views]];
+    
+    [self.view layoutSubviews];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
-    dispatch_once(&_willAppearConfig, ^{
-        
-        // On iPad we need the navigation bar to be set up, so we add the subviews here instead
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            [self configureSubviews];
-        }
-        
-        self.imageView.image = self.editingImage;
-        [self.view insertSubview:self.maskView aboveSubview:self.scrollView];
-    });
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+    if (!DZN_IS_IPAD) {
         [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
-    
-    _willDisappearConfig = 0;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+    if (!DZN_IS_IPAD) {
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     }
 }
@@ -159,15 +163,10 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 {
 	[super viewWillDisappear:animated];
     
-    dispatch_once(&_willDisappearConfig, ^{
-        
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-            [self.navigationController setNavigationBarHidden:NO animated:YES];
-        }
-    });
-    
-    _willAppearConfig = 0;
+    if (!DZN_IS_IPAD) {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -235,8 +234,14 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         NSMutableDictionary *views = [NSMutableDictionary new];
         NSDictionary *metrics = @{@"hmargin" : @(13), @"barsHeight": @(self.barsHeight)};
         
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        if (DZN_IS_IPAD) {
+            if (self.navigationController.viewControllers.count == 1) {
+                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftButton];
+            }
             
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightButton];
+        }
+        else {
             self.leftButton.translatesAutoresizingMaskIntoConstraints = NO;
             self.rightButton.translatesAutoresizingMaskIntoConstraints = NO;
             
@@ -251,14 +256,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
             
             [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[leftButton]|" options:0 metrics:metrics views:views]];
             [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[rightButton]|" options:0 metrics:metrics views:views]];
-        }
-        else {
-            
-            if (self.navigationController.viewControllers.count == 1) {
-                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftButton];
-            }
-            
-            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightButton];
         }
         
         if (_cropMode == DZNPhotoEditorViewControllerCropModeCircular)
@@ -315,7 +312,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 
 - (CGSize)cropSize
 {
-    CGSize viewSize = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? self.view.bounds.size : self.navigationController.preferredContentSize;
+    CGSize viewSize = (!DZN_IS_IPAD) ? self.view.bounds.size : self.navigationController.preferredContentSize;
     
     if (self.cropMode == DZNPhotoEditorViewControllerCropModeCustom) {
         CGFloat cropHeight = roundf((_cropSize.height * viewSize.width) / _cropSize.width);
@@ -450,7 +447,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     CGFloat radius = diameter/2;
     CGPoint center = CGPointMake(width/2, height/2);
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (DZN_IS_IPAD && DZN_IS_IOS8) {
         center.y += CGRectGetHeight(self.navigationController.navigationBar.frame)/2.0;
     }
     
@@ -489,7 +486,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     guideRect.origin.x = -self.scrollView.contentOffset.x;
     guideRect.origin.y = -self.scrollView.contentOffset.y - verticalMargin;
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
+    if (DZN_IS_IPAD && self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
         guideRect.origin.y -= CGRectGetHeight(self.navigationController.navigationBar.bounds)/2.0;
     }
     
@@ -554,11 +551,6 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 - (void)updateViewConstraints
 {
     [super updateViewConstraints];
-    
-    NSDictionary *views = [[NSMutableDictionary alloc] initWithDictionary:@{@"bottomView": self.bottomView}];
-    
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(88)]|" options:0 metrics:nil views:views]];
 }
 
 
@@ -581,7 +573,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     
     UIEdgeInsets inset = UIEdgeInsetsMake(vInset, hInset, vInset, hInset);
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) {
+    if (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular && DZN_IS_IPAD && DZN_IS_IOS8) {
         inset.top += CGRectGetHeight(self.navigationController.navigationBar.frame)/2.0;
         inset.bottom -= CGRectGetHeight(self.navigationController.navigationBar.frame)/2.0;
     }
