@@ -86,9 +86,6 @@
 				4F6B08461A22B63F00E1F8C7 /* AppDelegate.m */,
 				4F6B08481A22B63F00E1F8C7 /* ViewController.h */,
 				4F6B08491A22B63F00E1F8C7 /* ViewController.m */,
-				4F6B084B1A22B63F00E1F8C7 /* Main.storyboard */,
-				4F6B084E1A22B63F00E1F8C7 /* Images.xcassets */,
-				4F6B08501A22B63F00E1F8C7 /* LaunchScreen.xib */,
 				4F6B08411A22B63F00E1F8C7 /* Supporting Files */,
 			);
 			path = PhotoEditor;
@@ -97,6 +94,9 @@
 		4F6B08411A22B63F00E1F8C7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4F6B084B1A22B63F00E1F8C7 /* Main.storyboard */,
+				4F6B084E1A22B63F00E1F8C7 /* Images.xcassets */,
+				4F6B08501A22B63F00E1F8C7 /* LaunchScreen.xib */,
 				4F6B08421A22B63F00E1F8C7 /* Info.plist */,
 				4F6B08431A22B63F00E1F8C7 /* main.m */,
 			);
@@ -319,6 +319,7 @@
 			baseConfigurationReference = AC87F88D2D9CBD566FED4DBC /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = PhotoEditor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -330,6 +331,7 @@
 			baseConfigurationReference = 4339AF8BA51D5F4A6B16F409 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = PhotoEditor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

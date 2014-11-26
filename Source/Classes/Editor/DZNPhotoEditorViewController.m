@@ -92,14 +92,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         [self configureSubviews];
     }
-}
-
-
-#pragma mark - View lifecycle
-
-- (void)loadView
-{
-    [super loadView];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor blackColor];
@@ -110,6 +102,14 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     else {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+}
+
+
+#pragma mark - View lifecycle
+
+- (void)loadView
+{
+    [super loadView];
 }
 
 - (void)configureSubviews
@@ -130,6 +130,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 
     dispatch_once(&_willAppearConfig, ^{
         
+        // On iPad we need the navigation bar to be set up, so we add the subviews here instead
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             [self configureSubviews];
         }
@@ -236,6 +237,9 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
             
+            self.leftButton.translatesAutoresizingMaskIntoConstraints = NO;
+            self.rightButton.translatesAutoresizingMaskIntoConstraints = NO;
+            
             [_bottomView addSubview:self.leftButton];
             [_bottomView addSubview:self.rightButton];
             
@@ -304,7 +308,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     [button.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleEdgeInsets:UIEdgeInsetsMake(-1.0, 0.0, 0.0, 0.0)];
-    [button setTranslatesAutoresizingMaskIntoConstraints:NO];
     [button setUserInteractionEnabled:YES];
     [button sizeToFit];
     return button;
