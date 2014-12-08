@@ -157,6 +157,10 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     if (!DZN_IS_IPAD) {
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     }
+    else if (self.navigationController.isNavigationBarHidden) {
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.navigationItem.hidesBackButton = YES;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -238,7 +242,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
             if (self.navigationController.viewControllers.count == 1) {
                 self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftButton];
             }
-            
+
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightButton];
         }
         else {
