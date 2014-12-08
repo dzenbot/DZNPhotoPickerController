@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DZNPhotoPickerControllerConstants.h"
+#import <DZNPhotoPickerController/DZNPhotoPickerControllerConstants.h>
 
 @interface TestUtility : NSObject
 

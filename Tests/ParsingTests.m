@@ -114,7 +114,7 @@ describe(@"Google Images", ^{
     });
     
     it(@"should parse data correctly", ^{
-        [[metadata.Id should] equal:@(13950310593410234633)];
+        [[metadata.Id should] equal:@([@"13950310593410234633" integerValue])];
         [[metadata.serviceName should] equal:@"google"];
         [[metadata.detailURL should] equal:[NSURL URLWithString:@"http://www.chinatraderonline.com/Toys-and-Games/Promotional-Holiday-Toys/1-12-die-cast-motocycle-182245136.htm"]];
         [[metadata.thumbURL should] equal:[NSURL URLWithString:@"https://encrypted-tbn2.gstatic.com/images?q:tbn:ANd9GcTW6A1z_EtEdxytV6ZlO6g4zJoiRqUjTsPi7Io_nrY3CglXdN2Vm0DYKuRW"]];

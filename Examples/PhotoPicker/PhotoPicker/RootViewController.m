@@ -168,12 +168,10 @@
         if (picker.cropMode == DZNPhotoEditorViewControllerCropModeNone) {
             [weakSelf handleImagePicker:picker withMediaInfo:info];
         }
-        return weakSelf;
     };
     
     picker.cancellationBlock = ^(UIImagePickerController *picker) {
         [weakSelf dismissController:picker];
-        return weakSelf;
     };
     
     [self presentController:picker sender:sender];
