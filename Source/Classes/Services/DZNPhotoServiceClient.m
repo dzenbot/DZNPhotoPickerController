@@ -30,15 +30,15 @@
 {
     self = [super initWithBaseURL:baseURLForService(service)];
     if (self) {
-        
+
         _service = service;
         _subscription = subscription;
-        
+
         self.requestSerializer = [AFJSONRequestSerializer serializer];
         self.responseSerializer = [AFHTTPResponseSerializer serializer];
-        
+
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
-        
+
         [self configureHTTPHeader];
     }
     return self;
@@ -47,24 +47,24 @@
 - (void)configureHTTPHeader
 {
     NSString *consumerKey = [self consumerKey];
-    
+
     if (!consumerKey) {
         return;
     }
-    
+
     NSString *accessToken = [self accessToken];
-    
+
     // Add basic auth to Bing service
     if (self.service == DZNPhotoPickerControllerServiceBingImages) {
-        
+
         //Bing requires basic auth with password and user name as the consumer key.
         [self.requestSerializer setAuthorizationHeaderFieldWithUsername:consumerKey password:consumerKey];
     }
     else if (self.service == DZNPhotoPickerControllerServiceGettyImages) {
-        
+
         // Getty Images requires authentification via the custom 'Api-Key' HTTP Header
         [self.requestSerializer setValue:consumerKey forHTTPHeaderField:@"Api-Key"];
-        
+
         if (accessToken) {
             // Getty Images requires basic auth with access token via the standard Authorization HTTP header as type Bearer.
             [self.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", accessToken] forHTTPHeaderField:@"Authorization"];
@@ -93,19 +93,19 @@
 - (NSString *)accessToken
 {
     NSString *identifier = [self credentialIdentifier];
-    
+
     if (!identifier) {
         return nil;
     }
-    
+
     AFOAuthCredential *credential = [AFOAuthCredential retrieveCredentialWithIdentifier:identifier];
-    
+
     // If still found but expired, the credential is deleted and returns nil
     if (credential.isExpired) {
         [AFOAuthCredential deleteCredentialWithIdentifier:identifier];
         return nil;
     }
-    
+
     return credential.accessToken;
 }
 
@@ -119,16 +119,16 @@
     NSAssert(keyword, @"'keyword' cannot be nil for %@", NSStringFromService(self.service));
     NSAssert([self consumerKey], @"'consumerKey' cannot be nil for %@", NSStringFromService(self.service));
     NSAssert([self consumerSecret], @"'consumerSecret' cannot be nil for %@", NSStringFromService(self.service));
-    
+
     NSMutableDictionary *params = [NSMutableDictionary new];
     [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(self.service)];
     [params setObject:keyword forKey:keyForSearchTag(self.service)];
-    
+
     if (self.service == DZNPhotoPickerControllerServiceFlickr) {
         [params setObject:tagSearchUrlPathForService(self.service) forKey:@"method"];
         [params setObject:@"json" forKey:@"format"];
     }
-    
+
     return params;
 }
 
@@ -140,27 +140,27 @@
     if (isConsumerSecretRequiredForService(self.service)) {
         NSAssert([self consumerSecret], @"'consumerSecret' cannot be nil for %@", NSStringFromService(self.service));
     }
-    
+
     NSMutableDictionary *params = [NSMutableDictionary new];
-    
+
     if (isConsumerKeyInParametersRequiredForService(self.service)) {
         [params setObject:[self consumerKey] forKey:keyForAPIConsumerKey(self.service)];
     }
-    
+
     //Bing requires parameters to be wrapped in '' values.
     if (self.service == DZNPhotoPickerControllerServiceBingImages) {
         [params setObject:[NSString stringWithFormat:@"'%@'", keyword] forKey:keyForSearchTerm(self.service)];
     } else {
         [params setObject:keyword forKey:keyForSearchTerm(self.service)];
     }
-    
+
     if (keyForSearchResultPerPage(self.service)) {
         [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(self.service)];
     }
     if (self.service == DZNPhotoPickerControllerService500px || self.service == DZNPhotoPickerControllerServiceFlickr || self.service == DZNPhotoPickerControllerServiceGettyImages) {
         [params setObject:@(page) forKey:@"page"];
     }
-    
+
     if (self.service == DZNPhotoPickerControllerService500px)
     {
         [params setObject:@[@(2),@(4)] forKey:@"image_size"];
@@ -171,6 +171,7 @@
         [params setObject:photoSearchUrlPathForService(self.service) forKey:@"method"];
         [params setObject:@"json" forKey:@"format"];
         [params setObject:@"photos" forKey:@"media"];
+        [params setObject:@"relevance" forKey:@"sort"];
         [params setObject:@(YES) forKey:@"in_gallery"];
         [params setObject:@(1) forKey:@"safe_search"];
         [params setObject:@(1) forKey:@"content_type"];
@@ -185,7 +186,7 @@
     else if (self.service == DZNPhotoPickerControllerServiceBingImages)
     {
         [params setObject:@"'Moderate'" forKey:@"Adult"];
-        
+
         //Default to size medium. Size Large causes some buggy behavior with download times.
         [params setObject:@"'Size:Medium'" forKey:@"ImageFilters"];
     }
@@ -195,23 +196,23 @@
         [params setObject:@"photography" forKey:@"graphical_styles"];
         [params setObject:@"true" forKey:@"exclude_nudity"];
     }
-    
+
     return params;
 }
 
 - (NSData *)processData:(NSData *)data
 {
     if (self.service == DZNPhotoPickerControllerServiceFlickr) {
-        
+
         NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSString *responsePrefix = @"jsonFlickrApi(";
-        
+
         if ([string rangeOfString:responsePrefix].location != NSNotFound) {
             string = [[string stringByReplacingOccurrencesOfString:responsePrefix withString:@""] stringByReplacingOccurrencesOfString:@")" withString:@""];
             return [string dataUsingEncoding:NSUTF8StringEncoding];
         }
     }
-    
+
     return data;
 }
 
@@ -219,20 +220,20 @@
 {
     NSString *keyPath = keyPathForObjectName(self.service, [class name]);
     NSMutableArray *objects = [NSMutableArray arrayWithArray:[json valueForKeyPath:keyPath]];
-    
+
     if ([[class name] isEqualToString:[DZNPhotoTag name]]) {
-        
+
         if (self.service == DZNPhotoPickerControllerServiceFlickr) {
             NSString *keyword = [json valueForKeyPath:@"tags.source"];
             if (keyword) [objects insertObject:@{keyForSearchTagContent(self.service):keyword} atIndex:0];
         }
-        
+
         return [DZNPhotoTag photoTagListFromService:self.service withResponse:objects];
     }
     else if ([[class name] isEqualToString:[DZNPhotoMetadata name]]) {
         return [DZNPhotoMetadata metadataListWithResponse:objects service:self.service];
     }
-    
+
     return nil;
 }
 
@@ -242,10 +243,10 @@
 - (void)setCredentialIdentifier:(NSString *)identifier service:(DZNPhotoPickerControllerServices)service
 {
     NSAssert(identifier, @"'identifier' cannot be nil");
-    
+
     [[NSUserDefaults standardUserDefaults] setObject:identifier forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceCredentialIdentifier)];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
+
     [self configureHTTPHeader];
 }
 
@@ -255,7 +256,7 @@
 - (void)searchTagsWithKeyword:(NSString *)keyword completion:(DZNHTTPRequestCompletion)completion
 {
     NSString *path = tagSearchUrlPathForService(self.service);
-    
+
     NSDictionary *params = [self tagsParamsWithKeyword:keyword];
     [self getObject:[DZNPhotoTag class] path:path params:params completion:completion];
 }
@@ -271,12 +272,12 @@
 - (void)getObject:(Class)class path:(NSString *)path params:(NSDictionary *)params completion:(DZNHTTPRequestCompletion)completion
 {
     _loading = YES;
-    
+
     if (isAuthenticationRequiredForService(self.service) && ![self accessToken])
     {
         [self authenticateWithClientKey:[self consumerKey] secret:[self consumerSecret]
                        completion:^(NSString *accessToken, NSError *error) {
-                           
+
                            if (!error) {
                                [self getObject:class path:path params:params completion:completion];
                            }
@@ -287,7 +288,7 @@
                        }];
         return;
     }
-    
+
     if (self.service == DZNPhotoPickerControllerServiceInstagram) {
         NSString *keyword = [params objectForKey:keyForSearchTerm(self.service)];
         NSString *encodedKeyword = [keyword stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -296,18 +297,20 @@
     else if (self.service == DZNPhotoPickerControllerServiceFlickr) {
         path = @"";
     }
-        
+
+    NSLog(@"GET %@ %@", path, params);
+
     [self GET:path parameters:params
       success:^(AFHTTPRequestOperation *operation, id response) {
-          
+
           NSData *data = [self processData:response];
           NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves | NSJSONReadingAllowFragments error:nil];
-          
+
           _loading = NO;
           if (completion) completion([self parseObjects:class withJSON:json], nil);
-          
+
       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-          
+
           _loading = NO;
           if (completion) completion(nil, error);
       }];
@@ -325,15 +328,15 @@
 {
     NSURL *baseURL = baseURLForService(self.service);
     GROAuth2SessionManager *sessionManager = [GROAuth2SessionManager managerWithBaseURL:baseURL clientID:key secret:secret];
-    
+
     NSString *path = authUrlPathForService(self.service);
-    
+
     NSDictionary *params = @{};
-    
+
     if (self.service == DZNPhotoPickerControllerServiceGettyImages) {
         params = @{@"grant_type":@"client_credentials"};
     }
-    
+
     [sessionManager authenticateUsingOAuthWithPath:path
                                         parameters:params
                                            success:^(AFOAuthCredential *credential) {
