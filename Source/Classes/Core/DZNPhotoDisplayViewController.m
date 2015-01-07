@@ -519,7 +519,11 @@ Returns the custom collection view layout.
         [controller.activityIndicator startAnimating];
         
         __weak DZNPhotoEditorViewController *_controller = controller;
-        
+
+        // workaround for bug where image is blank when returning to the same image
+        // remove any previously cached image
+        [[SDImageCache sharedImageCache] removeImageForKey:[metadata.sourceURL absoluteString] fromDisk:NO];
+
         [controller.imageView sd_setImageWithPreviousCachedImageWithURL:metadata.sourceURL
                                               andPlaceholderImage:nil
                                                           options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
