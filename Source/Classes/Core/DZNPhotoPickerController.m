@@ -208,6 +208,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     }
     
     if (self.cancellationBlock) {
+        [controller hideKeyboard];
         self.cancellationBlock(self);
         return;
     }

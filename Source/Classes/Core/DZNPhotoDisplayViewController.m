@@ -861,6 +861,11 @@ Returns the custom collection view layout.
         return NO;
     }
 }
+- (void) hideKeyboard {
+    showResult = YES;
+    [_searchBar becomeFirstResponder];
+    [_searchBar resignFirstResponder];
+}
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
