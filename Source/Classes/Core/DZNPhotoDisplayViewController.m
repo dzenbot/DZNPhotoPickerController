@@ -848,6 +848,7 @@ Returns the custom collection view layout.
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
+    showResult = NO;
     [self stopLoadingRequest];
     return YES;
 }
