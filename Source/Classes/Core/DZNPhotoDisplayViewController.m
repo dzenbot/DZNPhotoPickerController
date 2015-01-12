@@ -53,6 +53,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 @synthesize loadButton = _loadButton;
 @synthesize activityIndicator = _activityIndicator;
 @synthesize searchTimer = _searchTimer;
+static bool showResult;
 
 - (instancetype)init
 {
@@ -603,6 +604,9 @@ Returns the custom collection view layout.
     if ((_previousService != _selectedService || _searchBar.text != keyword) && keyword.length > 1) {
         
         _previousService = _selectedService;
+        showResult = YES;
+        [_searchBar becomeFirstResponder];
+        [_searchBar resignFirstResponder];
         [self resetPhotos];
         [self searchPhotosWithKeyword:keyword];
     }
@@ -850,7 +854,11 @@ Returns the custom collection view layout.
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
 {
-    return YES;
+    if (showResult) {
+        return YES;
+    }else  {
+        return NO;
+    }
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
