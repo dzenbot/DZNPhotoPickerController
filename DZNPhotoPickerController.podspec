@@ -1,4 +1,4 @@
-@version = "1.6.2"
+@version = "1.6.3"
 
 Pod::Spec.new do |s|
   s.name         	  = "DZNPhotoPickerController"
