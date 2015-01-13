@@ -863,8 +863,7 @@ Returns the custom collection view layout.
 }
 - (void) hideKeyboard {
     showResult = YES;
-    [_searchBar becomeFirstResponder];
-    [_searchBar resignFirstResponder];
+     [_searchBar resignFirstResponder];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
