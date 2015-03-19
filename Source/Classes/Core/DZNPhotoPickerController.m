@@ -72,7 +72,9 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     [super loadView];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.edgesForExtendedLayout = UIRectEdgeTop;
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        self.edgesForExtendedLayout = UIRectEdgeTop;
+    }
 }
 
 - (void)viewDidLoad

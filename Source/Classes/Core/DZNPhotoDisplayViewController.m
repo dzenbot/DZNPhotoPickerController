@@ -22,6 +22,8 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "MBProgressHUD.h"
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
 static NSString *kDZNPhotoCellViewIdentifier = @"kDZNPhotoCellViewIdentifier";
 static NSString *kDZNPhotoFooterViewIdentifier = @"kDZNPhotoFooterViewIdentifier";
 static NSString *kDZNTagCellViewIdentifier = @"kDZNTagCellViewIdentifier";
@@ -86,9 +88,11 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.edgesForExtendedLayout = UIRectEdgeAll;
-    self.extendedLayoutIncludesOpaqueBars = YES;
-    self.automaticallyAdjustsScrollViewInsets = YES;
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        self.edgesForExtendedLayout = UIRectEdgeAll;
+        self.extendedLayoutIncludesOpaqueBars = YES;
+        self.automaticallyAdjustsScrollViewInsets = YES;
+    }
     
     self.collectionView.backgroundView = [UIView new];
     self.collectionView.backgroundView.backgroundColor = [UIColor whiteColor];
@@ -164,7 +168,9 @@ Returns the custom collection view layout.
         _searchController.searchResultsTableView.tableFooterView = [UIView new];
         _searchController.searchResultsTableView.backgroundView = [UIView new];
         _searchController.searchResultsTableView.backgroundView.backgroundColor = [UIColor whiteColor];
-        _searchController.searchResultsTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
+        if ([_searchController.searchResultsTableView respondsToSelector:@selector(setKeyboardDismissMode:)]) {
+            _searchController.searchResultsTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
+        }
         _searchController.searchResultsDataSource = self;
         _searchController.searchResultsDelegate = self;
         _searchController.delegate = self;
@@ -182,11 +188,13 @@ Returns the custom collection view layout.
     if (!_searchBar)
     {
         _searchBar = [[UISearchBar alloc] initWithFrame:[self searchBarFrame]];
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            _searchBar.searchBarStyle = UISearchBarStyleDefault;
+            _searchBar.barTintColor = [UIColor colorWithRed:202.0/255.0 green:202.0/255.0 blue:207.0/255.0 alpha:1.0];
+        }
         _searchBar.placeholder = NSLocalizedString(@"Search", nil);
         _searchBar.barStyle = UIBarStyleDefault;
-        _searchBar.searchBarStyle = UISearchBarStyleDefault;
         _searchBar.backgroundColor = [UIColor whiteColor];
-        _searchBar.barTintColor = [UIColor colorWithRed:202.0/255.0 green:202.0/255.0 blue:207.0/255.0 alpha:1.0];
         _searchBar.tintColor = self.view.window.tintColor;
         _searchBar.keyboardType = UIKeyboardAppearanceDark;
         _searchBar.text = self.navigationController.initialSearchTerm;
