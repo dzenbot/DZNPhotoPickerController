@@ -30,7 +30,7 @@ Pod::Spec.new do |s|
   s.subspec 'Services' do |ss|
     ss.source_files = 'Source/Classes/Services/*.{h,m}',
                       'Source/Classes/Core/DZNPhotoPickerControllerConstants.{h,m}'
-    ss.dependency 'AFNetworking', '2.4.1'
+    ss.dependency 'AFNetworking', '2.5.2'
     ss.dependency 'GROAuth2SessionManager', '0.2.3'
     ss.prefix_header_contents = '#import <MobileCoreServices/MobileCoreServices.h>',
                                 '#import <SystemConfiguration/SystemConfiguration.h>'
