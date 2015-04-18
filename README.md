@@ -130,13 +130,6 @@ UINavigationController *controller = [[UINavigationController alloc] initWithRoo
 [self presentViewController:controller animated:YES completion:NULL];
 ````
 
-## UIImagePickerController Extensions
-
-You can install it as a subspec (if you're not using `DZNPhotoPickerController`)
-```
-pod 'DZNPhotoPickerController/Editor'
-```
-
 ## Circular and Custom Edition
 Another great feature of DZNPhotoPickerController is to allow circular edit mode when using UIImagePickerController, just like the Contact app when editing a user's avatar image.<br>
 Its use is really straightforward:
