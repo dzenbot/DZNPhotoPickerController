@@ -30,5 +30,6 @@
  Stops any loading HTTP request.
  */
 - (void)stopLoadingRequest;
+- (void)hideKeyboard;
 
 @end
