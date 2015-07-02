@@ -208,8 +208,8 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
         [controller stopLoadingRequest];
     }
     
+    [controller hideKeyboard];
     if (self.cancellationBlock) {
-        [controller hideKeyboard];
         self.cancellationBlock(self);
         return;
     }
