@@ -53,6 +53,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 @synthesize loadButton = _loadButton;
 @synthesize activityIndicator = _activityIndicator;
 @synthesize searchTimer = _searchTimer;
+static bool showResult;
 
 - (instancetype)init
 {
@@ -519,7 +520,11 @@ Returns the custom collection view layout.
         [controller.activityIndicator startAnimating];
         
         __weak DZNPhotoEditorViewController *_controller = controller;
-        
+
+        // workaround for bug where image is blank when returning to the same image
+        // remove any previously cached image
+        [[SDImageCache sharedImageCache] removeImageForKey:[metadata.sourceURL absoluteString] fromDisk:NO];
+
         [controller.imageView sd_setImageWithPreviousCachedImageWithURL:metadata.sourceURL
                                               andPlaceholderImage:nil
                                                           options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
@@ -599,6 +604,9 @@ Returns the custom collection view layout.
     if ((_previousService != _selectedService || _searchBar.text != keyword) && keyword.length > 1) {
         
         _previousService = _selectedService;
+        showResult = YES;
+        [_searchBar becomeFirstResponder];
+        [_searchBar resignFirstResponder];
         [self resetPhotos];
         [self searchPhotosWithKeyword:keyword];
     }
@@ -840,13 +848,22 @@ Returns the custom collection view layout.
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
+    showResult = NO;
     [self stopLoadingRequest];
     return YES;
 }
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
 {
-    return YES;
+    if (showResult) {
+        return YES;
+    }else  {
+        return NO;
+    }
+}
+- (void) hideKeyboard {
+    showResult = YES;
+     [_searchBar resignFirstResponder];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText

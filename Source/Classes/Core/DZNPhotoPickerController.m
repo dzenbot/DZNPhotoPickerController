@@ -208,6 +208,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
         [controller stopLoadingRequest];
     }
     
+    [controller hideKeyboard];
     if (self.cancellationBlock) {
         self.cancellationBlock(self);
         return;
@@ -215,7 +216,9 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerControllerDidCancel:)]) {
         [self.delegate photoPickerControllerDidCancel:self];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
+    
 }
 
 
