@@ -27,6 +27,7 @@ NSString *NSStringFromService(DZNPhotoPickerControllerServices service)
         case DZNPhotoPickerControllerServiceGoogleImages:   return @"Google";
         case DZNPhotoPickerControllerServiceBingImages:     return @"Bing";
         case DZNPhotoPickerControllerServiceGettyImages:    return @"Getty Images";
+        case DZNPhotoPickerControllerServiceGiphy:          return @"Giphy";
         default:                                            return nil;
     }
 }
@@ -39,6 +40,7 @@ DZNPhotoPickerControllerServices DZNPhotoServiceFromName(NSString *name)
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceGoogleImages)])    return DZNPhotoPickerControllerServiceGoogleImages;
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceBingImages)])      return DZNPhotoPickerControllerServiceBingImages;
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceGettyImages)])     return DZNPhotoPickerControllerServiceGettyImages;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceGiphy)])           return DZNPhotoPickerControllerServiceGiphy;
     return -1;
 }
 
@@ -61,6 +63,9 @@ DZNPhotoPickerControllerServices DZNFirstPhotoServiceFromPhotoServices(DZNPhotoP
     }
     if ((services & DZNPhotoPickerControllerServiceGettyImages) > 0) {
         return DZNPhotoPickerControllerServiceGettyImages;
+    }
+    if ((services & DZNPhotoPickerControllerServiceGiphy) > 0) {
+        return DZNPhotoPickerControllerServiceGiphy;
     }
     return -1;
 }
@@ -87,6 +92,9 @@ NSArray *NSArrayFromServices(DZNPhotoPickerControllerServices services)
     }
     if ((services & DZNPhotoPickerControllerServiceGettyImages) > 0) {
         [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceGettyImages)];
+    }
+    if ((services & DZNPhotoPickerControllerServiceGiphy) > 0) {
+        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceGiphy)];
     }
     return [NSArray arrayWithArray:titles];
 }
