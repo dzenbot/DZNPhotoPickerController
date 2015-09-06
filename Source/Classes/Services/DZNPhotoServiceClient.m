@@ -163,7 +163,7 @@
     
     if (self.service == DZNPhotoPickerControllerService500px)
     {
-        [params setObject:@[@(2),@(4)] forKey:@"image_size"];
+        [params setObject:@[@2,@4] forKey:@"image_size"];
         [params setObject:@"Nude" forKey:@"exclude"];
     }
     else if (self.service == DZNPhotoPickerControllerServiceFlickr)
@@ -171,9 +171,9 @@
         [params setObject:photoSearchUrlPathForService(self.service) forKey:@"method"];
         [params setObject:@"json" forKey:@"format"];
         [params setObject:@"photos" forKey:@"media"];
-        [params setObject:@(YES) forKey:@"in_gallery"];
-        [params setObject:@(1) forKey:@"safe_search"];
-        [params setObject:@(1) forKey:@"content_type"];
+        [params setObject:@YES forKey:@"in_gallery"];
+        [params setObject:@1 forKey:@"safe_search"];
+        [params setObject:@1 forKey:@"content_type"];
     }
     else if (self.service == DZNPhotoPickerControllerServiceGoogleImages)
     {
