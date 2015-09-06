@@ -226,7 +226,7 @@ Returns the custom collection view layout.
 {
     if (!_activityIndicator)
     {
-        _activityIndicator = [[UIActivityIndicatorView alloc] init];
+        _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         _activityIndicator.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     }
     return _activityIndicator;
@@ -427,7 +427,6 @@ Returns the custom collection view layout.
     [UIApplication sharedApplication].networkActivityIndicatorVisible = visible;
     
     if (visible) {
-        self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
         [self.activityIndicator startAnimating];
         self.loadButton.hidden = YES;
     }
@@ -990,8 +989,6 @@ Returns the custom collection view layout.
 - (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView
 {
     if (self.loading) {
-        self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-        self.activityIndicator.color = [UIColor grayColor];
         self.activityIndicator.autoresizingMask = UIViewAutoresizingNone;
         [self.activityIndicator startAnimating];
         return self.activityIndicator;
