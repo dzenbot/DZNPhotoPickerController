@@ -9,16 +9,16 @@
 //
 
 #import "DZNPhotoDisplayViewController.h"
+#import "DZNPhotoCollectionViewLayout.h"
 #import "DZNPhotoPickerController.h"
-#import "DZNPhotoServiceFactory.h"
-
 #import "DZNPhotoDisplayViewCell.h"
+
+#import "DZNPhotoServiceFactory.h"
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 
 #import "SDWebImageManager.h"
 #import "UIImageView+WebCache.h"
-
 #import "UIScrollView+EmptyDataSet.h"
 
 static NSString *kDZNPhotoCellViewIdentifier = @"com.dzn.photoCellViewIdentifier";
@@ -26,6 +26,7 @@ static NSString *kDZNTagCellViewIdentifier = @"com.dzn.tagCellViewIdentifier";
 static NSString *kDZNSupplementaryViewIdentifier = @"com.dzn.supplementaryViewIdentifier";
 
 static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
+static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
 @interface DZNPhotoDisplayViewController () <UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate,
                                                 UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating,
@@ -52,21 +53,22 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 @synthesize activityIndicator = _activityIndicator;
 @synthesize searchTimer = _searchTimer;
 
-- (instancetype)init
-{
-    return [self initWithCollectionViewLayout:[DZNPhotoDisplayViewController flowLayout]];
-}
 
-- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
+#pragma mark - Initialization
+
+- (instancetype)initWithPreferredContentSize:(CGSize)size
 {
-    self = [super initWithCollectionViewLayout:layout];
+    self = [super initWithCollectionViewLayout:[DZNPhotoDisplayViewController layoutFittingSize:size]];
     if (self) {
-        self.title = NSLocalizedString(@"Internet Photos", nil);
-        
-        self.currentPage = 1;
-        _columnCount = 4;
+        [self commontInit];
     }
     return self;
+}
+
+- (void)commontInit
+{
+    self.title = NSLocalizedString(@"Internet Photos", nil);
+    self.currentPage = 1;
 }
 
 
@@ -119,12 +121,25 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 #pragma mark - Getter methods
 
 /* Returns the custom collection view layout. */
-+ (UICollectionViewFlowLayout *)flowLayout
++ (UICollectionViewFlowLayout *)layoutFittingSize:(CGSize)size
 {
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.minimumLineSpacing = 2.0;
-    flowLayout.minimumInteritemSpacing = 0.0;
-    return flowLayout;
+    NSUInteger columnCount = kDZNPhotoDisplayMinimumColumnCount;
+    CGFloat lineSpacing = 2.0;
+    
+    DZNPhotoCollectionViewLayout *layout = [DZNPhotoCollectionViewLayout layoutFittingWidth:size.width columnCount:columnCount];
+    layout.minimumLineSpacing = lineSpacing;
+    layout.minimumInteritemSpacing = lineSpacing;
+    
+    CGFloat itemWidth = (size.width - (layout.minimumInteritemSpacing * (columnCount-1))) / columnCount;
+    layout.itemSize = CGSizeMake(itemWidth, itemWidth);
+    
+    CGSize referenceSize = CGSizeMake(size.width, kDZNPhotoDisplayMinimumBarHeight);
+    layout.footerReferenceSize = referenceSize;
+    
+    referenceSize.height += layout.minimumLineSpacing;
+    layout.headerReferenceSize = referenceSize;
+    
+    return layout;
 }
 
 /*  Returns the selected service client. */
@@ -207,15 +222,15 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 /* Returns the appropriate cell view's size. */
 - (CGSize)cellSize
 {
-    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
-    CGFloat size = (self.navigationController.view.bounds.size.width/_columnCount) - flowLayout.minimumLineSpacing;
-    return CGSizeMake(size, size);
+    DZNPhotoCollectionViewLayout *layout = (DZNPhotoCollectionViewLayout *)self.collectionView.collectionViewLayout;
+    return layout.itemSize;
 }
 
 /* Returns the appropriate header and footer view's size. */
 - (CGSize)supplementaryViewSize
 {
-    return CGSizeMake(CGRectGetWidth(self.view.frame), CGRectGetHeight(self.navigationController.navigationBar.frame));
+    DZNPhotoCollectionViewLayout *layout = (DZNPhotoCollectionViewLayout *)self.collectionView.collectionViewLayout;
+    return layout.headerReferenceSize;
 }
 
 /* Returns the collectionView's content size. */
@@ -264,7 +279,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
  Calculates the available row count based on the collectionView's content size and the cell height.
  This allows to easily modify the collectionView layout, for displaying the image thumbs.
  */
-- (NSInteger)rowCount
+- (NSUInteger)rowCount
 {
     CGFloat supplementaryViewHeight = [self supplementaryViewSize].height;
     
@@ -287,7 +302,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 /* Returns the appropriate number of result per page. */
 - (NSInteger)resultPerPage
 {
-    return self.columnCount * self.rowCount;
+    return self.rowCount * kDZNPhotoDisplayMinimumColumnCount;
 }
 
 /* Checks if the search string is long enough to perfom a tag search. */
@@ -689,27 +704,6 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath;
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewFlowLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [self cellSize];
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewFlowLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
-{
-    CGSize size = [self supplementaryViewSize];
-    size.height += collectionViewLayout.minimumLineSpacing;
-    
-    return size;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewFlowLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
-{
-    if ([self canDisplayFooterView]) {
-        return [self supplementaryViewSize];
-    }
-    return CGSizeZero;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath

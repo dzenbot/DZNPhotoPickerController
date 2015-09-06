@@ -19,12 +19,12 @@
 
 /** The nearest ancestor in the view controller hierarchy that is a photo picker controller. */
 @property (nonatomic, readonly) DZNPhotoPickerController *navigationController;
-/** The count number of columns of thumbs to be displayed. */
-@property (nonatomic, readonly) NSInteger columnCount;
 /** The count number of rows of thumbs to be diplayed. */
-@property (nonatomic, readonly) NSInteger rowCount;
+@property (nonatomic, readonly) NSUInteger rowCount;
 /** YES if the controller started a request and loading content. */
 @property (nonatomic, readonly, getter = isLoading) BOOL loading;
+
+- (instancetype)initWithPreferredContentSize:(CGSize)size NS_DESIGNATED_INITIALIZER;
 
 /**
  Stops any loading HTTP request.
