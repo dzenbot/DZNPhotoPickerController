@@ -24,6 +24,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 @end
 
 @implementation DZNPhotoPickerController
+@synthesize delegate = _delegate;
 
 - (id)init
 {

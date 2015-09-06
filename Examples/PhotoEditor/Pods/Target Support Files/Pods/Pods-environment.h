@@ -10,5 +10,5 @@
 #define COCOAPODS_POD_AVAILABLE_DZNPhotoPickerController_Editor
 #define COCOAPODS_VERSION_MAJOR_DZNPhotoPickerController_Editor 1
 #define COCOAPODS_VERSION_MINOR_DZNPhotoPickerController_Editor 6
-#define COCOAPODS_VERSION_PATCH_DZNPhotoPickerController_Editor 0
+#define COCOAPODS_VERSION_PATCH_DZNPhotoPickerController_Editor 1
 

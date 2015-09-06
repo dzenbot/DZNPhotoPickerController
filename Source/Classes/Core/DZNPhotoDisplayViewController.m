@@ -20,11 +20,11 @@
 #import "UIImageView+WebCache.h"
 
 #import "UIScrollView+EmptyDataSet.h"
-#import "MBProgressHUD.h"
 
 static NSString *kDZNPhotoCellViewIdentifier = @"kDZNPhotoCellViewIdentifier";
 static NSString *kDZNPhotoFooterViewIdentifier = @"kDZNPhotoFooterViewIdentifier";
 static NSString *kDZNTagCellViewIdentifier = @"kDZNTagCellViewIdentifier";
+
 static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 @interface DZNPhotoDisplayViewController () <UISearchDisplayDelegate, UISearchBarDelegate,
@@ -536,14 +536,6 @@ Returns the custom collection view layout.
                                                         }];
     }
     else {
-        
-        // Presents a hud right after selecting an image while it's been downloaded
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-        hud.mode = MBProgressHUDModeIndeterminate;
-        hud.labelText = NSLocalizedString(@"Loading", nil);
-        hud.animationType = MBProgressHUDAnimationFade;
-        hud.dimBackground = YES;
-        
         [self setActivityIndicatorsVisible:YES];
         
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:metadata.sourceURL
@@ -559,7 +551,6 @@ Returns the custom collection view layout.
                                                                     [self setLoadingError:error];
                                                                 }
                                                                 
-                                                                [hud hide:YES];
                                                                 [self setActivityIndicatorsVisible:NO];
                                                             }];
     }

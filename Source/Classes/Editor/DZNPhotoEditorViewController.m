@@ -658,7 +658,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     CGFloat maskHeight = (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) ? self.cropSize.width-(self.innerInset*2) : self.cropSize.height;
     
     CGFloat hInset = (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) ? self.innerInset : 0.0;
-    CGFloat vInset = fabsf((maskHeight-imageSize.height)/2);
+    CGFloat vInset = fabs((maskHeight-imageSize.height)/2);
     
     if (vInset == 0) vInset = 0.25;
     
