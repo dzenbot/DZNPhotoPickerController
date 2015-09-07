@@ -11,17 +11,26 @@
 #import "DZNPhotoSearchResultsController.h"
 #import "DZNPhotoTag.h"
 
+#import "UIScrollView+EmptyDataSet.h"
+
 static NSString *kDZNTagCellViewIdentifier = @"com.dzn.tagCellViewIdentifier";
 
-@interface DZNPhotoSearchResultsController ()
+@interface DZNPhotoSearchResultsController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) NSMutableArray *searchResult;
 @end
 
 @implementation DZNPhotoSearchResultsController
 
+
+#pragma mark - View lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
+    self.tableView.emptyDataSetDelegate = self;
+    self.tableView.emptyDataSetSource = self;
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kDZNTagCellViewIdentifier];
 }
@@ -87,7 +96,16 @@ static NSString *kDZNTagCellViewIdentifier = @"com.dzn.tagCellViewIdentifier";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return  34.0;
+    return  40.0;
+}
+
+
+#pragma mark - Lifeterm
+
+- (void)dealloc
+{
+    self.tableView.emptyDataSetDelegate = nil;
+    self.tableView.emptyDataSetSource = nil;
 }
 
 @end

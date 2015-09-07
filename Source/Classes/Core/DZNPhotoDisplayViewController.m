@@ -163,20 +163,11 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         searchBar.placeholder = NSLocalizedString(@"Search", nil);
         searchBar.text = self.navigationController.initialSearchTerm;
         searchBar.scopeButtonTitles = [self segmentedControlTitles];
+        searchBar.searchBarStyle = UISearchBarStyleProminent;
+        searchBar.barStyle = UIBarStyleDefault;
         searchBar.selectedScopeButtonIndex = 0;
         searchBar.clipsToBounds = NO;
         searchBar.delegate = self;
-
-//        _searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-//        _searchController.searchResultsTableView.backgroundColor = [UIColor whiteColor];
-//        _searchController.searchResultsTableView.tableHeaderView = [UIView new];
-//        _searchController.searchResultsTableView.tableFooterView = [UIView new];
-//        _searchController.searchResultsTableView.backgroundView = [UIView new];
-//        _searchController.searchResultsTableView.backgroundView.backgroundColor = [UIColor whiteColor];
-//        _searchController.searchResultsTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
-//        _searchController.searchResultsDataSource = self;
-//        _searchController.searchResultsDelegate = self;
-//        _searchController.delegate = self;
     }
     return _searchController;
 }
@@ -289,7 +280,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     CGFloat supplementaryViewHeight = [self supplementaryViewSize].height;
     
     CGSize contentSize = [self contentSize];
-    contentSize.height -= supplementaryViewHeight*2;
+    contentSize.height -= supplementaryViewHeight;
     contentSize.height += self.navigationController.navigationBar.frame.size.height;
     
     CGFloat cellHeight = [self cellSize].height;
@@ -750,19 +741,20 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [searchBar resignFirstResponder];
+    NSString *term = searchBar.text;
+    [self.searchController setActive:NO];
     
-    NSString *text = searchBar.text;
-    
-    [self shouldSearchPhotos:text];
-//    [self setSearchBarText:text];
+    [self shouldSearchPhotos:term];
+    [self setSearchBarText:term];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    NSString *text = searchBar.text;
-    
-//    [self setSearchBarText:text];
+    NSString *term = searchBar.text;
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self setSearchBarText:term];
+    });
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
