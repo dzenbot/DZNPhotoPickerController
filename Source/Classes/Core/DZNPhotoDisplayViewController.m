@@ -403,7 +403,9 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     }
     else if (self.navigationController.allowsEditing) {
         
-        DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] init];
+        UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:metadata.sourceURL.absoluteString];
+        
+        DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:image];
         controller.cropMode = self.navigationController.cropMode;
         controller.cropSize = self.navigationController.cropSize;
         
@@ -418,25 +420,28 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
             [self.navigationController popViewControllerAnimated:YES];
         }];
         
-        controller.rightButton.enabled = NO;
-        [controller.activityIndicator startAnimating];
-        
-        __weak DZNPhotoEditorViewController *weakController = controller;
-        
-        [controller.imageView sd_setImageWithPreviousCachedImageWithURL:metadata.sourceURL
-                                              andPlaceholderImage:nil
-                                                          options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
-                                                         progress:NULL
-                                                        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                                            if (!error) {
-                                                                weakController.rightButton.enabled = YES;
-                                                            }
-                                                            else {
-                                                                [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFailPickingNotification object:nil userInfo:@{@"error": error}];
-                                                            }
-                                                            
-                                                            [weakController.activityIndicator stopAnimating];
-                                                        }];
+        if (!image) {
+            controller.rightButton.enabled = NO;
+            [controller.activityIndicator startAnimating];
+            
+            __weak DZNPhotoEditorViewController *weakController = controller;
+            
+            [controller.imageView sd_setImageWithPreviousCachedImageWithURL:metadata.sourceURL
+                                                        andPlaceholderImage:nil
+                                                                    options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
+                                                                   progress:NULL
+                                                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                                                      if (!error) {
+                                                                          weakController.rightButton.enabled = YES;
+                                                                          weakController.imageView.image = image;
+                                                                      }
+                                                                      else {
+                                                                          [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFailPickingNotification object:nil userInfo:@{@"error": error}];
+                                                                      }
+                                                                      
+                                                                      [weakController.activityIndicator stopAnimating];
+                                                                  }];
+        }
     }
     else {
         [self setActivityIndicatorsVisible:YES];
