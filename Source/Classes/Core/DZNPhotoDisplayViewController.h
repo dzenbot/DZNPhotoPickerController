@@ -9,16 +9,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DZNPhotoPickerControllerConstants.h"
 
 @class DZNPhotoPickerController;
 
 /**
  The collection view controller in charge of displaying the resulting thumb images.
  */
-@interface DZNPhotoDisplayViewController : UICollectionViewController
+@interface DZNPhotoDisplayViewController : UICollectionViewController <UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 /** The nearest ancestor in the view controller hierarchy that is a photo picker controller. */
 @property (nonatomic, readonly) DZNPhotoPickerController *navigationController;
+
+@property (nonatomic, readonly) UISearchController *searchController;
+
+@property (nonatomic) DZNPhotoPickerControllerServices selectedService;
+
 /** The count number of rows of thumbs to be diplayed. */
 @property (nonatomic, readonly) NSUInteger rowCount;
 /** YES if the controller started a request and loading content. */

@@ -47,6 +47,9 @@
 
 + (instancetype)layoutFittingWidth:(CGFloat)width columnCount:(NSUInteger)columnCount
 {
+    NSParameterAssert(width > 0.0);
+    NSParameterAssert(columnCount > 0);
+
     DZNPhotoCollectionViewLayout *layout = [DZNPhotoCollectionViewLayout new];
     [layout configureFittingWidth:width columnCount:columnCount];
     

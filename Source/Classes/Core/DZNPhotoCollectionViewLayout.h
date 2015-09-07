@@ -10,8 +10,18 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ A custom collection view layout allowing to display floating headers.
+ */
 @interface DZNPhotoCollectionViewLayout : UICollectionViewFlowLayout
 
+/**
+ Creates a new layout fitting a specific width, and honoring a minimum column count.
+ 
+ @param width The fitting width used to compute the amount of items. (required)
+ @param columnCount The minimum column count. (required)
+ @return A new DZNPhotoCollectionViewLayout instance.
+ */
 + (instancetype)layoutFittingWidth:(CGFloat)width columnCount:(NSUInteger)columnCount;
 
 @end

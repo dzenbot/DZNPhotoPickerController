@@ -296,6 +296,7 @@
 		F35D3CBAEE87868B43A7F139 /* KWBeWithinMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD35048D3F45A791895DE57 /* KWBeWithinMatcher.h */; };
 		F3CC32F97CD91A197015C23D /* KWItNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 566F1F6A6546C33A30C224A2 /* KWItNode.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		F4F3D31111B3809868B28959 /* NSValue+KiwiAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 491377AF00FA6F39CEB913F4 /* NSValue+KiwiAdditions.h */; };
+		F58B60C11B9D23CF0042C0A3 /* DZNPhotoSearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58B60C01B9D23CF0042C0A3 /* DZNPhotoSearchResultsController.m */; };
 		F5C870021B9CD4B3008EF26F /* DZNPhotoCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C870011B9CD4B3008EF26F /* DZNPhotoCollectionViewLayout.m */; };
 		F5F507B03394A3FA3913533B /* Pods-AFOAuth2Manager-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 51882027BD1020905B2E07B1 /* Pods-AFOAuth2Manager-dummy.m */; };
 		F630CEC2D7C0A34755601F66 /* KWMessageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 873DB8AE234E4E12CC69DCE0 /* KWMessageTracker.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
@@ -718,6 +719,8 @@
 		F2EB9E283C4E4459B574A85B /* KWSymbolicator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWSymbolicator.m; path = Classes/Core/KWSymbolicator.m; sourceTree = "<group>"; };
 		F2EC34D3199F34671975F418 /* KWPendingNode.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWPendingNode.m; path = Classes/Nodes/KWPendingNode.m; sourceTree = "<group>"; };
 		F4C2381063B6CA6300C3A2F0 /* UIImage+GIF.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+GIF.h"; path = "SDWebImage/UIImage+GIF.h"; sourceTree = "<group>"; };
+		F58B60BF1B9D23CF0042C0A3 /* DZNPhotoSearchResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZNPhotoSearchResultsController.h; path = Source/Classes/Core/DZNPhotoSearchResultsController.h; sourceTree = "<group>"; };
+		F58B60C01B9D23CF0042C0A3 /* DZNPhotoSearchResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZNPhotoSearchResultsController.m; path = Source/Classes/Core/DZNPhotoSearchResultsController.m; sourceTree = "<group>"; };
 		F5AC0838CE243EAB9100F5A3 /* KWUserDefinedMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWUserDefinedMatcher.h; path = Classes/Matchers/KWUserDefinedMatcher.h; sourceTree = "<group>"; };
 		F5C870001B9CD4B3008EF26F /* DZNPhotoCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZNPhotoCollectionViewLayout.h; path = Source/Classes/Core/DZNPhotoCollectionViewLayout.h; sourceTree = "<group>"; };
 		F5C870011B9CD4B3008EF26F /* DZNPhotoCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZNPhotoCollectionViewLayout.m; path = Source/Classes/Core/DZNPhotoCollectionViewLayout.m; sourceTree = "<group>"; };
@@ -1217,6 +1220,8 @@
 				CEA03DF83359AECAC05E6F7B /* DZNPhotoDisplayViewController.m */,
 				18272DA742D863E934F4417D /* DZNPhotoPickerController.h */,
 				CCC08B14BEC336144B1E4A92 /* DZNPhotoPickerController.m */,
+				F58B60BF1B9D23CF0042C0A3 /* DZNPhotoSearchResultsController.h */,
+				F58B60C01B9D23CF0042C0A3 /* DZNPhotoSearchResultsController.m */,
 				F5C870001B9CD4B3008EF26F /* DZNPhotoCollectionViewLayout.h */,
 				F5C870011B9CD4B3008EF26F /* DZNPhotoCollectionViewLayout.m */,
 				5A6B43B0A3FF4EB0056E9B71 /* DZNPhotoPickerControllerConstants.h */,
@@ -1792,6 +1797,7 @@
 			files = (
 				F5C870021B9CD4B3008EF26F /* DZNPhotoCollectionViewLayout.m in Sources */,
 				BB9D5125FE042E770F386DED /* Pods-dummy.m in Sources */,
+				F58B60C11B9D23CF0042C0A3 /* DZNPhotoSearchResultsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
