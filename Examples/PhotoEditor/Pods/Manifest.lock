@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  DZNPhotoPickerController: 9e04279ff13af9eb3bbc740d4213ab5739a77070
+  DZNPhotoPickerController: 86a27a0ea5ef8f81f85c79164f6dd8388c9988dd
 
 COCOAPODS: 0.35.0

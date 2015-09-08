@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.default_subspec = 'Core'
   s.resources       = 'Resources', 'Source/Resources/**/*.*'
   s.requires_arc 	  = true
-  s.platform        = :ios, '7.0'
+  s.platform        = :ios, '8.0'
 
   s.subspec 'Core' do |ss|
     ss.source_files = 'Source/Classes/Core/*.{h,m}'
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   s.subspec 'Services' do |ss|
     ss.source_files = 'Source/Classes/Services/*.{h,m}',
                       'Source/Classes/Core/DZNPhotoPickerControllerConstants.{h,m}'
-    ss.dependency 'AFNetworking', '~> 2.5.0'
+    ss.dependency 'AFNetworking', '~> 2.6.0'
     ss.dependency 'AFOAuth2Manager', '~> 2.2.0'
     ss.prefix_header_contents = '#import <MobileCoreServices/MobileCoreServices.h>',
                                 '#import <SystemConfiguration/SystemConfiguration.h>'
