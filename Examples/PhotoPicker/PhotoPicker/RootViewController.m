@@ -102,7 +102,7 @@
     DZNPhotoPickerController *picker = [DZNPhotoPickerController new];
     picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGettyImages;
     picker.allowsEditing = NO;
-    picker.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
+    picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
     picker.initialSearchTerm = @"California";
     picker.enablePhotoDownload = YES;
     picker.allowAutoCompletedSearch = YES;

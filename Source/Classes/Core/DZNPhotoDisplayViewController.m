@@ -313,6 +313,16 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 }
 
 
+- (DZNPhotoMetadata *)metadataAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row >= self.metadataList.count) {
+        return nil;
+    }
+    
+    return self.metadataList[indexPath.row];
+}
+
+
 #pragma mark - Setter methods
 
 /* Sets the search bar text, specially when the UISearchDisplayController when dimissing removes the bar's text by default. */
@@ -394,10 +404,8 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
  - Push into the edit controller for cropping
  - Download the full size photo and dismiss the controller
  */
-- (void)selectedItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)selectedMetadata:(DZNPhotoMetadata *)metadata
 {
-    DZNPhotoMetadata *metadata = [_metadataList objectAtIndex:indexPath.row];
-    
     if (!self.navigationController.enablePhotoDownload) {
         [metadata postMetadataUpdate:nil];
     }
@@ -462,8 +470,6 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
                                                                 [self setActivityIndicatorsVisible:NO];
                                                             }];
     }
-    
-    [self.collectionView deselectItemAtIndexPath:indexPath animated:YES];
 }
 
 /* Checks if the search string is long enough to perfom a tag search. */
@@ -571,7 +577,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     cell.tag = indexPath.row;
     
     if (_metadataList.count > 0) {
-        DZNPhotoMetadata *metadata = [_metadataList objectAtIndex:indexPath.row];
+        DZNPhotoMetadata *metadata = [self metadataAtIndexPath:indexPath];
         [cell setThumbURL:metadata.thumbURL];
     }
 
@@ -644,14 +650,12 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 {
     if ([self.searchBar isFirstResponder]) {
         [self.searchBar resignFirstResponder];
-        [self performSelector:@selector(selectedItemAtIndexPath:) withObject:indexPath afterDelay:0.3];
     }
-    else [self selectedItemAtIndexPath:indexPath];
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    
+    DZNPhotoMetadata *metada = [self metadataAtIndexPath:indexPath];
+    [self selectedMetadata:metada];
+    
+    [self.collectionView deselectItemAtIndexPath:indexPath animated:YES];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
@@ -660,16 +664,6 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         return NO;
     }
     return YES;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath;
-{
-
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath;
-{
-    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
