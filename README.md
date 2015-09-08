@@ -130,15 +130,10 @@ UINavigationController *controller = [[UINavigationController alloc] initWithRoo
 [self presentViewController:controller animated:YES completion:NULL];
 ````
 
-## UIImagePickerController Extensions
-
-You can install it as a subspec (if you're not using `DZNPhotoPickerController`)
-```
-pod 'DZNPhotoPickerController/Editor'
-```
-
 ## Circular and Custom Edition
-Another great feature of DZNPhotoPickerController is to allow circular edit mode when using UIImagePickerController, just like the Contact app when editing a user's avatar image.<br>
+Another great feature of DZNPhotoPickerController is to allow circular edit mode when using UIImagePickerController, just like the Contact app when editing a user's avatar image. *Please note that the circular mode still exports a squared image since it's sole purpose is for croping alignment. If you need to present a circular image in your app, you will need to implement it yourself.*
+
+<br>
 Its use is really straightforward:
 
 ```

@@ -197,6 +197,13 @@
         [params setObject:@"photography" forKey:@"graphical_styles"];
         [params setObject:@"true" forKey:@"exclude_nudity"];
     }
+    else if (self.service == DZNPhotoPickerControllerServiceGiphy)
+    {
+        [params setObject:@"pg" forKey:@"rating"];
+        if (page > 1) {
+            [params setObject:@((page-1)*resultPerPage) forKey:@"offset"];
+        }
+    }
     
     return params;
 }

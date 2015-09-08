@@ -47,6 +47,10 @@
     [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceGettyImages
                                       consumerKey:kGettyImagesConsumerKey
                                    consumerSecret:kGettyImagesConsumerSecret];
+
+    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceGiphy
+                                      consumerKey:kGiphyConsumerKey
+                                   consumerSecret:nil];
 }
 
 - (void)viewDidLoad
@@ -100,7 +104,7 @@
 - (void)presentPhotoSearch:(id)sender
 {
     DZNPhotoPickerController *picker = [DZNPhotoPickerController new];
-    picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceInstagram;
+    picker.supportedServices =  DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceGettyImages | DZNPhotoPickerControllerServiceGiphy;
     picker.allowsEditing = NO;
     picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
     picker.initialSearchTerm = @"California";

@@ -30,3 +30,5 @@
 
 #define kGettyImagesConsumerKey         @"tt4fyd5487kgsjtfkf46v3d4"
 #define kGettyImagesConsumerSecret      @"jQhYJvW8HncyMd9UaEbc8vAYKuDyK2UxtmPHAmSnRhpy5" //1000 request per day (free account)
+
+#define kGiphyConsumerKey               @"dc6zaTOxFJmzC"

@@ -120,6 +120,23 @@
                 _contentType = [NSString stringWithFormat:@"image/%@",[_sourceURL pathExtension]];
             }
         }
+        else if ((service & DZNPhotoPickerControllerServiceGiphy) > 0)
+        {
+            _Id = [object objectForKey:@"id"];
+
+            NSString *sourceUrl = [object valueForKeyPath:@"images.original.url"];
+            _sourceURL = [NSURL URLWithString:[sourceUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+            NSString *thumbUrl = [object valueForKeyPath:@"images.fixed_width_downsampled.url"];
+            _thumbURL = [NSURL URLWithString:[thumbUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+            _width = [object valueForKeyPath:@"images.original.width"];
+            _height = [object valueForKeyPath:@"images.origninal.height"];
+
+            if (_sourceURL) {
+                _contentType = [NSString stringWithFormat:@"image/%@",[_sourceURL pathExtension]];
+            }
+        }
     }
     return self;
 }
