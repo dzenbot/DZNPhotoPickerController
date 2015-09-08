@@ -141,8 +141,20 @@ NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerServices service)
     switch (service) {
         case DZNPhotoPickerControllerService500px:              return @"rpp";
         case DZNPhotoPickerControllerServiceFlickr:             return @"per_page";
+        case DZNPhotoPickerControllerServiceInstagram:          return @"count";
         case DZNPhotoPickerControllerServiceGoogleImages:       return @"num";
         case DZNPhotoPickerControllerServiceGettyImages:        return @"page_size";
+        default:                                                return nil;
+    }
+}
+
+NSString *keyForSearchPage(DZNPhotoPickerControllerServices service)
+{
+    switch (service) {
+        case DZNPhotoPickerControllerService500px:
+        case DZNPhotoPickerControllerServiceFlickr:
+        case DZNPhotoPickerControllerServiceInstagram:
+        case DZNPhotoPickerControllerServiceGettyImages:        return @"page";
         default:                                                return nil;
     }
 }

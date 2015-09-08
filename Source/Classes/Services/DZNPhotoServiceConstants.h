@@ -20,83 +20,54 @@
  */
 extern NSString *NSUserDefaultsUniqueKey(NSUInteger type, NSString *key);
 
-/**
- Returns a base URL for creating an HTTP client based on the specified service.
- */
+/** Returns a base URL for creating an HTTP client based on the specified service. */
 extern NSURL *baseURLForService(DZNPhotoPickerControllerServices service);
 
-/**
- Returns a key path for tags, to retrieve them from a JSON structure, for a specified service.
- */
+/** Returns a key path for tags, to retrieve them from a JSON structure, for a specified service. */
 extern NSString *tagsResourceKeyPathForService(DZNPhotoPickerControllerServices service);
 
-/**
- Returns the url path for tag search, for a specified service.
- */
+/** Returns the url path for tag search, for a specified service. */
 extern NSString *tagSearchUrlPathForService(DZNPhotoPickerControllerServices service);
 
-/**
- Returns a key path for photos, to retrieve them from a JSON structure, for a specified service.
- */
+/** Returns a key path for photos, to retrieve them from a JSON structure, for a specified service. */
 extern NSString *photosResourceKeyPathForService(DZNPhotoPickerControllerServices service);
 
-/**
- Returns the url path for photo search, for a specified service.
- */
+/** Returns the url path for photo search, for a specified service. */
 extern NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerServices service);
 
-/**
- Returns the url path for authentication, for a specified service.
- */
+/** Returns the url path for authentication, for a specified service. */
 extern NSString *authUrlPathForService(DZNPhotoPickerControllerServices service);
 
-/**
- Returns a key to be used for setting a consumer identifier value, for a specified service.
- */
+/** Returns a key to be used for setting a consumer identifier value, for a specified service. */
 extern NSString *keyForAPIConsumerKey(DZNPhotoPickerControllerServices service);
 
-/**
- Returns a key to be used for setting a consumer secret value, for a specified service.
- */
+/** Returns a key to be used for setting a consumer secret value, for a specified service. */
 extern NSString *keyForAPIConsumerSecret(DZNPhotoPickerControllerServices service);
 
-/**
- Returns a key to be used for setting a photo search term value, for a specified service.
- */
+/** Returns a key to be used for setting a photo search term value, for a specified service. */
 extern NSString *keyForSearchTerm(DZNPhotoPickerControllerServices service);
 
-/**
- Returns a key to be used for setting a tag search term value, for a specified service.
- */
+/** Returns a key to be used for setting a tag search term value, for a specified service. */
 extern NSString *keyForSearchTag(DZNPhotoPickerControllerServices service);
 
-/**
- Returns a key to be used for setting a search result value per page, for a specified service.
- */
+/** Returns a key to be used for setting a search result value per page, for a specified service. */
 extern NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerServices service);
 
-/**
- Returns a key to be used for retrieving search tag content, for a specified service.
- */
+/** Returns a key to be used for setting the search page, for a specified service. */
+extern NSString *keyForSearchPage(DZNPhotoPickerControllerServices service);
+
+/** Returns a key to be used for retrieving search tag content, for a specified service. */
 extern NSString *keyForSearchTagContent(DZNPhotoPickerControllerServices service);
 
-/**
- Returns a key path for photos or tags, to retrieve them from a JSON structure, for a specified service and object name.
- */
+/** Returns a key path for photos or tags, to retrieve them from a JSON structure, for a specified service and object name. */
 extern NSString *keyPathForObjectName(DZNPhotoPickerControllerServices service, NSString *objectName);
 
-/**
- Determines if the service requires a consumer secret.
- */
+/** Determines if the service requires a consumer secret. */
 extern BOOL isConsumerSecretRequiredForService(DZNPhotoPickerControllerServices services);
 
-/**
- Determines if the service requires the consumer key to be posted as part of the request parameters.
- */
+/** Determines if the service requires the consumer key to be posted as part of the request parameters. */
 extern BOOL isConsumerKeyInParametersRequiredForService(DZNPhotoPickerControllerServices services);
 
-/**
- Determines if the service requires any sort of authentification (Only Auth2 is supported for now).
- */
+/** Determines if the service requires any sort of authentification (Only Auth2 is supported for now). */
 extern BOOL isAuthenticationRequiredForService(DZNPhotoPickerControllerServices services);
 

@@ -157,8 +157,9 @@
     if (keyForSearchResultPerPage(self.service)) {
         [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(self.service)];
     }
-    if (self.service == DZNPhotoPickerControllerService500px || self.service == DZNPhotoPickerControllerServiceFlickr || self.service == DZNPhotoPickerControllerServiceGettyImages) {
-        [params setObject:@(page) forKey:@"page"];
+    
+    if (keyForSearchPage(self.service)) {
+        [params setObject:@(page) forKey:keyForSearchPage(self.service)];
     }
     
     if (self.service == DZNPhotoPickerControllerService500px)
