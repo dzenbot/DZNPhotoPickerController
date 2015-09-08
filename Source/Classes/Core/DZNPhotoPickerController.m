@@ -174,10 +174,8 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 {
     if (self.finalizationBlock) {
         self.finalizationBlock(self, notification.userInfo);
-        return;
     }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerController:didFinishPickingPhotoWithInfo:)]){
+    else if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerController:didFinishPickingPhotoWithInfo:)]){
         [self.delegate photoPickerController:self didFinishPickingPhotoWithInfo:notification.userInfo];
     }
 }
@@ -189,10 +187,8 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 {
     if (self.failureBlock) {
         self.failureBlock(self, notification.userInfo[@"error"]);
-        return;
     }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerController:didFailedPickingPhotoWithError:)]){
+    else if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerController:didFailedPickingPhotoWithError:)]){
         [self.delegate photoPickerController:self didFailedPickingPhotoWithError:notification.userInfo[@"error"]];
     }
 }
@@ -208,12 +204,12 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
         [controller stopLoadingRequest];
     }
     
+    [controller.searchController.searchBar resignFirstResponder];
+    
     if (self.cancellationBlock) {
         self.cancellationBlock(self);
-        return;
     }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerControllerDidCancel:)]) {
+    else if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerControllerDidCancel:)]) {
         [self.delegate photoPickerControllerDidCancel:self];
     }
 }
