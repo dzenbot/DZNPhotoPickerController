@@ -149,9 +149,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 
 #pragma mark - DZNPhotoPickerController methods
 
-/*
- * Shows the photo display controller.
- */
+/* Shows the photo display controller. */
 - (void)showPhotoDisplayController
 {
     [self setViewControllers:nil];
@@ -166,10 +164,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     [self setViewControllers:@[controller]];
 }
 
-
-/*
- * Called by a notification whenever the user picks a photo.
- */
+/* Called by a notification whenever the user picks a photo. */
 - (void)didFinishPickingPhoto:(NSNotification *)notification
 {
     if (self.finalizationBlock) {
@@ -180,9 +175,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     }
 }
 
-/*
- * Called by a notification whenever the picking a photo fails.
- */
+/* Called by a notification whenever the picking a photo fails. */
 - (void)didFailPickingPhoto:(NSNotification *)notification
 {
     if (self.failureBlock) {
@@ -193,10 +186,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     }
 }
 
-
-/*
- * Called whenever the user cancels the picker.
- */
+/* Called whenever the user cancels the picker. */
 - (void)cancelPicker:(id)sender
 {
     DZNPhotoDisplayViewController *controller = (DZNPhotoDisplayViewController *)[self.viewControllers firstObject];
@@ -212,6 +202,14 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     else if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerControllerDidCancel:)]) {
         [self.delegate photoPickerControllerDidCancel:self];
     }
+}
+
+
+#pragma mark - View Auto-Rotation
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
 }
 
 
@@ -234,19 +232,6 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     _initialSearchTerm = nil;
     _finalizationBlock = nil;
     _cancellationBlock = nil;
-}
-
-
-#pragma mark - View Auto-Rotation
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (BOOL)shouldAutorotate
-{
-    return NO;
 }
 
 @end

@@ -859,11 +859,6 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
 #pragma mark - View Auto-Rotation
 
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
-}
-
 - (BOOL)shouldAutorotate
 {
     return NO;
