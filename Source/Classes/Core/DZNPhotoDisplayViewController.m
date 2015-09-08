@@ -839,6 +839,15 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     return nil;
 }
 
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView
+{
+    if (self.loading) {
+        return -CGRectGetHeight(self.searchBar.frame)/2.0;
+    }
+    
+    return 0.0;
+}
+
 
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
