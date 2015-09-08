@@ -37,10 +37,16 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
 @property (nonatomic, strong) NSMutableArray *metadataList;
 @property (nonatomic, strong) NSArray *segmentedControlTitles;
+
+@property (nonatomic) DZNPhotoPickerControllerServices selectedService;
 @property (nonatomic) DZNPhotoPickerControllerServices previousService;
+
 @property (nonatomic) NSInteger resultPerPage;
 @property (nonatomic) NSInteger currentPage;
+
 @property (nonatomic, readonly) NSTimer *searchTimer;
+
+@property (nonatomic, strong) NSError *error;
 
 @end
 
@@ -304,6 +310,10 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 /* Checks if an additional footer view for loading more content should be displayed. */
 - (BOOL)canDisplayFooterView
 {
+    if (self.error) {
+        return NO;
+    }
+    
     if (self.metadataList.count > 0) {
         if (self.metadataList.count%self.resultPerPage == 0 || self.loading) {
             return YES;
@@ -371,8 +381,8 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     
     [self setActivityIndicatorsVisible:NO];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
-    [alert show];
+    self.error = error;
+    [self.collectionView reloadData];
 }
 
 /* Invalidates and nullifys the search timer. */
@@ -493,6 +503,8 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
  */
 - (void)searchTag:(NSTimer *)timer
 {
+    _error = nil;
+    
     NSString *term = [timer.userInfo objectForKey:@"term"];
     [self resetSearchTimer];
     
@@ -526,6 +538,8 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
  */
 - (void)searchPhotosWithKeyword:(NSString *)keyword
 {
+    _error = nil;
+    
     [self setActivityIndicatorsVisible:YES];
     [self.collectionView reloadData];
     
@@ -535,7 +549,10 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
                                                    page:self.currentPage
                                           resultPerPage:self.resultPerPage
                                              completion:^(NSArray *list, NSError *error) {
-                                                 if (error) [self setLoadingError:error];
+                                                 if (error) {
+                                                     [self setLoadingError:error];
+                                                     [self.collectionView reloadData];
+                                                 }
                                                  else [self setPhotoSearchList:list];
                                              }];
 }
@@ -593,18 +610,20 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
             [supplementaryView addSubview:self.searchBar];
         }
     }
-    else if ([kind isEqualToString:UICollectionElementKindSectionFooter] && [self canDisplayFooterView]) {
+    else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
         
         [[supplementaryView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
         [supplementaryView removeConstraints:supplementaryView.constraints];
         
         UIView *subview = nil;
         
-        if (self.isLoading) {
-            subview = self.activityIndicator;
-        }
-        else {
-            subview = self.loadButton;
+        if ([self canDisplayFooterView]) {
+            if (self.isLoading) {
+                subview = self.activityIndicator;
+            }
+            else {
+                subview = self.loadButton;
+            }
         }
         
         if (subview && !subview.superview) {
@@ -810,21 +829,42 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    if (!self.loading) {
-        NSString *text = NSLocalizedString(@"No Photos Found", nil);
-        return [[NSAttributedString alloc] initWithString:text attributes:nil];
+    NSString *text = nil;
+    
+    if (self.error) {
+        text = NSLocalizedString(@"Error", nil);;
+    }
+    else if (!self.loading) {
+        text = NSLocalizedString(@"No Photos Found", nil);
     }
     
+    if (text) {
+        return [[NSAttributedString alloc] initWithString:text attributes:nil];
+    }
     return nil;
 }
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {
-    if (!self.loading) {
-        NSString *text = NSLocalizedString(@"Make sure that all words are\nspelled correctly.", nil);
-        return [[NSAttributedString alloc] initWithString:text attributes:nil];
+    NSString *text = nil;
+    
+    if (self.error) {
+        NSError *underlyingError = self.error.userInfo[@"NSUnderlyingError"];
+        NSString *localizedDescription = underlyingError.localizedDescription;
+        
+        if (!localizedDescription) {
+            localizedDescription = self.error.localizedDescription;
+        }
+        
+        text = localizedDescription;
+    }
+    else if (!self.loading) {
+        text = NSLocalizedString(@"Make sure that all words are\nspelled correctly.", nil);
     }
     
+    if (text) {
+        return [[NSAttributedString alloc] initWithString:text attributes:nil];
+    }
     return nil;
 }
 
