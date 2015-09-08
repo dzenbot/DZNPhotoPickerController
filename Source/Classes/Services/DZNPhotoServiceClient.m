@@ -265,7 +265,7 @@
 - (void)searchPhotosWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage completion:(DZNHTTPRequestCompletion)completion
 {
     NSString *path = photoSearchUrlPathForService(self.service);
-
+    
     NSDictionary *params = [self photosParamsWithKeyword:keyword page:page resultPerPage:resultPerPage];
     [self getObject:[DZNPhotoMetadata class] path:path params:params completion:completion];
 }
@@ -277,16 +277,16 @@
     if (isAuthenticationRequiredForService(self.service) && ![self accessToken])
     {
         [self authenticateWithClientKey:[self consumerKey] secret:[self consumerSecret]
-                       completion:^(NSString *accessToken, NSError *error) {
-                           
-                           if (!error) {
-                               [self getObject:class path:path params:params completion:completion];
-                           }
-                           else {
-                               _loading = NO;
-                               if (completion) completion(nil, error);
-                           }
-                       }];
+                             completion:^(NSString *accessToken, NSError *error) {
+                                 
+                                 if (!error) {
+                                     [self getObject:class path:path params:params completion:completion];
+                                 }
+                                 else {
+                                     _loading = NO;
+                                     if (completion) completion(nil, error);
+                                 }
+                             }];
         return;
     }
     
@@ -298,7 +298,7 @@
     else if (self.service == DZNPhotoPickerControllerServiceFlickr) {
         path = @"";
     }
-        
+    
     [self GET:path parameters:params
       success:^(AFHTTPRequestOperation *operation, id response) {
           

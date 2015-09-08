@@ -109,7 +109,7 @@
             
             NSString *sourceUrl = [urls firstObject];
             _sourceURL = [NSURL URLWithString:[sourceUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-
+            
             NSString *thumbUrl = [urls lastObject];
             _thumbURL = [NSURL URLWithString:[thumbUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             
@@ -197,7 +197,7 @@
     self.contentType = [decoder decodeObjectForKey:@"contentType"];
     self.height = [decoder decodeObjectForKey:@"height"];
     self.width = [decoder decodeObjectForKey:@"width"];
-
+    
     return self;
 }
 
