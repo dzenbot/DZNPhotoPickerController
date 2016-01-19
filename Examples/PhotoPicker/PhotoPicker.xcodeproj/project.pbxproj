@@ -76,6 +76,7 @@
 		81CB7D6B303A4384A940032C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		894F2AC976E24545B96AF5B0 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B70AC998401468D684BF4A6D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		F54C27021C4EBC8F004689F8 /* DZNPhotoPickerController.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = DZNPhotoPickerController.podspec; path = ../../DZNPhotoPickerController.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +105,7 @@
 		4F570134180E5D0E00E12444 = {
 			isa = PBXGroup;
 			children = (
+				F54C27021C4EBC8F004689F8 /* DZNPhotoPickerController.podspec */,
 				4F570146180E5D0E00E12444 /* Sample */,
 				4FA4986D18B866C600764406 /* Tests */,
 				4F57013F180E5D0E00E12444 /* Frameworks */,
@@ -259,7 +261,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = DZN;
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "DZN Labs";
 				TargetAttributes = {
 					4F00AF2F1A3639CE003E995A = {
@@ -449,6 +451,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "cl.dzen.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -495,6 +498,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoPicker/PhotoPicker-Prefix.pch";
 				INFOPLIST_FILE = "PhotoPicker/PhotoPicker-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dzen.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = PhotoPicker;
 				WRAPPER_EXTENSION = app;
 			};
@@ -519,6 +523,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -543,6 +548,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoPicker/PhotoPicker-Prefix.pch";
 				INFOPLIST_FILE = "PhotoPicker/PhotoPicker-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dzen.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = PhotoPicker;
 				WRAPPER_EXTENSION = app;
 			};
@@ -563,6 +569,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "cl.dzen.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;

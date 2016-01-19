@@ -1,1077 +1,487 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>archiveVersion</key>
-	<string>1</string>
-	<key>classes</key>
-	<dict/>
-	<key>objectVersion</key>
-	<string>46</string>
-	<key>objects</key>
-	<dict>
-		<key>031875FCA2B06F34890DAA02</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>04C59F90B9824FEEAA90337F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>64B3B105EEB73AC1529B8AF7</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>091327048F4AD65E2D17925B</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>031875FCA2B06F34890DAA02</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>DSTROOT</key>
-				<string>/tmp/xcodeproj.dst</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-				<string>NO</string>
-				<key>INSTALL_PATH</key>
-				<string>$(BUILT_PRODUCTS_DIR)</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
-				<key>OTHER_LDFLAGS</key>
-				<string></string>
-				<key>OTHER_LIBTOOLFLAGS</key>
-				<string></string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>0AEDC50A1D806BC1DDD59CAD</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>4336F8FA47C91C39D6CF5C8B</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>DSTROOT</key>
-				<string>/tmp/xcodeproj.dst</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/Pods-DZNPhotoPickerController/Pods-DZNPhotoPickerController-prefix.pch</string>
-				<key>INSTALL_PATH</key>
-				<string>$(BUILT_PRODUCTS_DIR)</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
-				<key>OTHER_CFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>OTHER_CPLUSPLUSFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>OTHER_LDFLAGS</key>
-				<string></string>
-				<key>OTHER_LIBTOOLFLAGS</key>
-				<string></string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>14720CE75ABD0FE89931D30B</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>546CE3CEFA490B189C210EAF</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Development Pods</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>156FE497138120A325DBD1D1</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>Pods-DZNPhotoPickerController-prefix.pch</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>165EED51E696EF46D9008A82</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>name</key>
-			<string>Pods-DZNPhotoPickerController</string>
-			<key>target</key>
-			<string>C037D2EBF123B79F345A301F</string>
-			<key>targetProxy</key>
-			<string>927605EA6148D6B751823C8F</string>
-		</dict>
-		<key>1D4221702DD4F071FDEB4BD8</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>8DE26A09E4F748C1AFB0B358</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>DSTROOT</key>
-				<string>/tmp/xcodeproj.dst</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>INSTALL_PATH</key>
-				<string>$(BUILT_PRODUCTS_DIR)</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
-				<key>OTHER_CFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>OTHER_CPLUSPLUSFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>OTHER_LDFLAGS</key>
-				<string></string>
-				<key>OTHER_LIBTOOLFLAGS</key>
-				<string></string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>25B2E04D75EB29AD992798E1</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.script.sh</string>
-			<key>path</key>
-			<string>Pods-resources.sh</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>286631809A6955DCFF514326</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>DZNPhotoPickerControllerConstants.m</string>
-			<key>path</key>
-			<string>Source/Classes/Core/DZNPhotoPickerControllerConstants.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>314C29DE63B397E2D1A68D23</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>940C1417E8D7D3A1A476A31A</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>32C38BFA17AFEFC397A864AC</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Pods-acknowledgements.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>33933FA75CC1E55E40F7F2D2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>4006CEA2ADC32E8FD3611C61</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>375C831BB6302D14464666F4</key>
-		<dict>
-			<key>fileRef</key>
-			<string>6ACA504D98F1266D675A7183</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>3A043B43767FF012864F4006</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>7F27C4C99BDB737A95DE9A9B</string>
-				<string>0AEDC50A1D806BC1DDD59CAD</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>3ACC9D4094BE35BC283C66A7</key>
-		<dict>
-			<key>fileRef</key>
-			<string>C4C759DC6D6DB5EEBEA1D67A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>4006CEA2ADC32E8FD3611C61</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>DZNPhotoPickerControllerConstants.h</string>
-			<key>path</key>
-			<string>Source/Classes/Core/DZNPhotoPickerControllerConstants.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>4336F8FA47C91C39D6CF5C8B</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-DZNPhotoPickerController-Private.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>43A3BC95B3F30817BAD21473</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>CACDAC76D794A8689B7EE27F</string>
-				<string>897281696C4513792FCD9E11</string>
-				<string>4006CEA2ADC32E8FD3611C61</string>
-				<string>286631809A6955DCFF514326</string>
-				<string>FF62C0FACA9E82D1E9897A3A</string>
-				<string>64B3B105EEB73AC1529B8AF7</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Editor</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>4C12C7DAFBAB932D52D067C6</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>EB433975946280B85BB15ECA</string>
-				<string>14720CE75ABD0FE89931D30B</string>
-				<string>314C29DE63B397E2D1A68D23</string>
-				<string>9FC3E5EC7B851497A0F2B5A0</string>
-				<string>7EAE498F77C050F2C24CBE75</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>546CE3CEFA490B189C210EAF</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>43A3BC95B3F30817BAD21473</string>
-				<string>E9EED7AD7E9DC17E4D3F8785</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>DZNPhotoPickerController</string>
-			<key>path</key>
-			<string>../../..</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5E508F266976871C6CDE8F93</key>
-		<dict>
-			<key>fileRef</key>
-			<string>FF62C0FACA9E82D1E9897A3A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>61C6D1B81C1F930031F54EB8</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>375C831BB6302D14464666F4</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>64B3B105EEB73AC1529B8AF7</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>UIImagePickerController+Edit.m</string>
-			<key>path</key>
-			<string>Source/Classes/Editor/UIImagePickerController+Edit.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>69FF9038FDB7B02787BA4431</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text</string>
-			<key>path</key>
-			<string>Pods-acknowledgements.markdown</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>6A883ECB6960A323B01BB639</key>
-		<dict>
-			<key>fileRef</key>
-			<string>897281696C4513792FCD9E11</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>6ACA504D98F1266D675A7183</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>Foundation.framework</string>
-			<key>path</key>
-			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Foundation.framework</string>
-			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
-		</dict>
-		<key>71470DFBEA2F7D1144F65EDD</key>
-		<dict>
-			<key>attributes</key>
-			<dict>
-				<key>LastUpgradeCheck</key>
-				<string>0510</string>
-			</dict>
-			<key>buildConfigurationList</key>
-			<string>9C94A40FE4EEB8642C6FB6FE</string>
-			<key>compatibilityVersion</key>
-			<string>Xcode 3.2</string>
-			<key>developmentRegion</key>
-			<string>English</string>
-			<key>hasScannedForEncodings</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXProject</string>
-			<key>knownRegions</key>
-			<array>
-				<string>en</string>
-			</array>
-			<key>mainGroup</key>
-			<string>4C12C7DAFBAB932D52D067C6</string>
-			<key>productRefGroup</key>
-			<string>9FC3E5EC7B851497A0F2B5A0</string>
-			<key>projectDirPath</key>
-			<string></string>
-			<key>projectReferences</key>
-			<array/>
-			<key>projectRoot</key>
-			<string></string>
-			<key>targets</key>
-			<array>
-				<string>DD77AAB28555054CABEDCEDA</string>
-				<string>C037D2EBF123B79F345A301F</string>
-			</array>
-		</dict>
-		<key>714C95792C77B591CB1CB2C9</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-DZNPhotoPickerController.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7E0B258604FFE27B796386F1</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>091327048F4AD65E2D17925B</string>
-				<string>1D4221702DD4F071FDEB4BD8</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>7EAE498F77C050F2C24CBE75</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>C59684B3E47F767EDE8B07B7</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Targets Support Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7F27C4C99BDB737A95DE9A9B</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>4336F8FA47C91C39D6CF5C8B</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>DSTROOT</key>
-				<string>/tmp/xcodeproj.dst</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/Pods-DZNPhotoPickerController/Pods-DZNPhotoPickerController-prefix.pch</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-				<string>NO</string>
-				<key>INSTALL_PATH</key>
-				<string>$(BUILT_PRODUCTS_DIR)</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
-				<key>OTHER_LDFLAGS</key>
-				<string></string>
-				<key>OTHER_LIBTOOLFLAGS</key>
-				<string></string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>851534C3F323112491959917</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D60418F7D3B16C625F67BE54</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>897281696C4513792FCD9E11</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>DZNPhotoEditorViewController.m</string>
-			<key>path</key>
-			<string>Source/Classes/Editor/DZNPhotoEditorViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>8DE26A09E4F748C1AFB0B358</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>8E37AF646C9D8D4CE2A584A7</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-				<string>NO</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
-				<key>ONLY_ACTIVE_ARCH</key>
-				<string>YES</string>
-				<key>STRIP_INSTALLED_PRODUCT</key>
-				<string>NO</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>927605EA6148D6B751823C8F</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>71470DFBEA2F7D1144F65EDD</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>C037D2EBF123B79F345A301F</string>
-			<key>remoteInfo</key>
-			<string>Pods-DZNPhotoPickerController</string>
-		</dict>
-		<key>940C1417E8D7D3A1A476A31A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>6ACA504D98F1266D675A7183</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>iOS</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>9BA0FF2D953CCCA262204215</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>ENABLE_NS_ASSERTIONS</key>
-				<string>NO</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>RELEASE=1</string>
-				</array>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
-				<key>STRIP_INSTALLED_PRODUCT</key>
-				<string>NO</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>9C94A40FE4EEB8642C6FB6FE</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>8E37AF646C9D8D4CE2A584A7</string>
-				<string>9BA0FF2D953CCCA262204215</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>9FC3E5EC7B851497A0F2B5A0</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AEDB38D3A07CB42413BA5DE3</string>
-				<string>A0E28DE1743B9B3562ED2E2C</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>A0E28DE1743B9B3562ED2E2C</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods-DZNPhotoPickerController.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>A8074BCC5FD3D0EB42AA6879</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>C473282498499CE6F33E3644</string>
-				<string>33933FA75CC1E55E40F7F2D2</string>
-				<string>5E508F266976871C6CDE8F93</string>
-			</array>
-			<key>isa</key>
-			<string>PBXHeadersBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>AC38168FCEE35D3DA9EA89D5</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>6A883ECB6960A323B01BB639</string>
-				<string>AE09479453BCC4285F402F76</string>
-				<string>3ACC9D4094BE35BC283C66A7</string>
-				<string>04C59F90B9824FEEAA90337F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>AC5D849538E410CA3CAC1A95</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>Pods-environment.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AE09479453BCC4285F402F76</key>
-		<dict>
-			<key>fileRef</key>
-			<string>286631809A6955DCFF514326</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AEDB38D3A07CB42413BA5DE3</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>C037D2EBF123B79F345A301F</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>3A043B43767FF012864F4006</string>
-			<key>buildPhases</key>
-			<array>
-				<string>AC38168FCEE35D3DA9EA89D5</string>
-				<string>CD559BDA6DBD04B370087A8B</string>
-				<string>A8074BCC5FD3D0EB42AA6879</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>Pods-DZNPhotoPickerController</string>
-			<key>productName</key>
-			<string>Pods-DZNPhotoPickerController</string>
-			<key>productReference</key>
-			<string>A0E28DE1743B9B3562ED2E2C</string>
-			<key>productType</key>
-			<string>com.apple.product-type.library.static</string>
-		</dict>
-		<key>C473282498499CE6F33E3644</key>
-		<dict>
-			<key>fileRef</key>
-			<string>CACDAC76D794A8689B7EE27F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>C4C759DC6D6DB5EEBEA1D67A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>Pods-DZNPhotoPickerController-dummy.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>C59684B3E47F767EDE8B07B7</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>69FF9038FDB7B02787BA4431</string>
-				<string>32C38BFA17AFEFC397A864AC</string>
-				<string>D60418F7D3B16C625F67BE54</string>
-				<string>AC5D849538E410CA3CAC1A95</string>
-				<string>25B2E04D75EB29AD992798E1</string>
-				<string>031875FCA2B06F34890DAA02</string>
-				<string>8DE26A09E4F748C1AFB0B358</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>path</key>
-			<string>Target Support Files/Pods</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>CACDAC76D794A8689B7EE27F</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>DZNPhotoEditorViewController.h</string>
-			<key>path</key>
-			<string>Source/Classes/Editor/DZNPhotoEditorViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>CD559BDA6DBD04B370087A8B</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>D096BBB6761097CB7D2BE919</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>D096BBB6761097CB7D2BE919</key>
-		<dict>
-			<key>fileRef</key>
-			<string>6ACA504D98F1266D675A7183</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D60418F7D3B16C625F67BE54</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>Pods-dummy.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DD77AAB28555054CABEDCEDA</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>7E0B258604FFE27B796386F1</string>
-			<key>buildPhases</key>
-			<array>
-				<string>F70529E82D16828749E6AC71</string>
-				<string>61C6D1B81C1F930031F54EB8</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array>
-				<string>165EED51E696EF46D9008A82</string>
-			</array>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>productName</key>
-			<string>Pods</string>
-			<key>productReference</key>
-			<string>AEDB38D3A07CB42413BA5DE3</string>
-			<key>productType</key>
-			<string>com.apple.product-type.library.static</string>
-		</dict>
-		<key>E9EED7AD7E9DC17E4D3F8785</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>714C95792C77B591CB1CB2C9</string>
-				<string>4336F8FA47C91C39D6CF5C8B</string>
-				<string>C4C759DC6D6DB5EEBEA1D67A</string>
-				<string>156FE497138120A325DBD1D1</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Support Files</string>
-			<key>path</key>
-			<string>Examples/PhotoEditor/Pods/Target Support Files/Pods-DZNPhotoPickerController</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>EB433975946280B85BB15ECA</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text</string>
-			<key>name</key>
-			<string>Podfile</string>
-			<key>path</key>
-			<string>../Podfile</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-			<key>xcLanguageSpecificationIdentifier</key>
-			<string>xcode.lang.ruby</string>
-		</dict>
-		<key>F70529E82D16828749E6AC71</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>851534C3F323112491959917</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>FF62C0FACA9E82D1E9897A3A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>UIImagePickerController+Edit.h</string>
-			<key>path</key>
-			<string>Source/Classes/Editor/UIImagePickerController+Edit.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-	</dict>
-	<key>rootObject</key>
-	<string>71470DFBEA2F7D1144F65EDD</string>
-</dict>
-</plist>
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		09C2F7CF3A5E1D93C26E45DACE0F71FB /* DZNPhotoEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C22CFA85CC7B459E5E97644FE19777BD /* DZNPhotoEditorViewController.m */; };
+		0F3354941CECEE10E64231AD45B87A64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD8412A81A725E18889A5A789B3691E /* Foundation.framework */; };
+		28760FEE8A2C88F39DF4911BEFB14FA3 /* DZNPhotoPickerController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F7A9105690931BA2D4688661794554 /* DZNPhotoPickerController-dummy.m */; };
+		5A2E5AA6EA147DCC89B45A7E70CFC18D /* UIImagePickerController+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103F41CB42A0202241F1D87DA2B235F /* UIImagePickerController+Edit.m */; };
+		6138A66979014270D9267B86E5EE9A5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD8412A81A725E18889A5A789B3691E /* Foundation.framework */; };
+		6C7ABE8EECA7110D41A685FEEE0B5ADE /* UIImagePickerController+Edit.h in Headers */ = {isa = PBXBuildFile; fileRef = EC6EBFCCB0C82CD55CEFE1BE03F6B0AC /* UIImagePickerController+Edit.h */; };
+		7952FA298A702605FDEA3EFFBBFA8AE1 /* DZNPhotoPickerControllerConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = F7E882526882E64138F1D134F46584D4 /* DZNPhotoPickerControllerConstants.h */; };
+		7E58F8081C8C6D8C191844200EF6A126 /* DZNPhotoPickerControllerConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4264DC984E857E618A793709AAB75660 /* DZNPhotoPickerControllerConstants.m */; };
+		B7CD59CC8D1D0FEA285A8F4B74446A7E /* Pods-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C84758BD021546BECCFBC6E8FDFA7AAF /* Pods-dummy.m */; };
+		C35782C7A39ED13F9177F87182D5086C /* DZNPhotoEditorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FB5BF7085FE2DE1DAFBE509C1DE6E5A /* DZNPhotoEditorViewController.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4DC60C0DD35DBC4B39370F899CEA48CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA81A367BDE5FD55984D35D7F9602083;
+			remoteInfo = DZNPhotoPickerController;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		07BF73F79D3DF89D1F957D87D4192D79 /* DZNPhotoPickerController-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "DZNPhotoPickerController-Private.xcconfig"; sourceTree = "<group>"; };
+		15A529C27057E4A57D259CBC6E6CE49C /* Pods-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-acknowledgements.markdown"; sourceTree = "<group>"; };
+		2E7358F0261514C920A4A9BDBF16F988 /* libDZNPhotoPickerController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDZNPhotoPickerController.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C98BA47CF863A0B51D7F129DB85E5E8 /* DZNPhotoPickerController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DZNPhotoPickerController.xcconfig; sourceTree = "<group>"; };
+		3FB5BF7085FE2DE1DAFBE509C1DE6E5A /* DZNPhotoEditorViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DZNPhotoEditorViewController.h; sourceTree = "<group>"; };
+		4264DC984E857E618A793709AAB75660 /* DZNPhotoPickerControllerConstants.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerControllerConstants.m; sourceTree = "<group>"; };
+		641AE05DD55E5E6AC1590CD7B4A18F97 /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-resources.sh"; sourceTree = "<group>"; };
+		85C06E6E856C7B22F15E5652E6556377 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.release.xcconfig; sourceTree = "<group>"; };
+		9103F41CB42A0202241F1D87DA2B235F /* UIImagePickerController+Edit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+Edit.m"; sourceTree = "<group>"; };
+		B56FF9DB69A68006C45F798DE56C75E4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.debug.xcconfig; sourceTree = "<group>"; };
+		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BF59BC15D23E1E1912C8F334E7236813 /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = "<group>"; };
+		C22CFA85CC7B459E5E97644FE19777BD /* DZNPhotoEditorViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoEditorViewController.m; sourceTree = "<group>"; };
+		C2F7A9105690931BA2D4688661794554 /* DZNPhotoPickerController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DZNPhotoPickerController-dummy.m"; sourceTree = "<group>"; };
+		C5F157AEE9E8F55653661DB4758B6440 /* DZNPhotoPickerController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DZNPhotoPickerController-prefix.pch"; sourceTree = "<group>"; };
+		C84758BD021546BECCFBC6E8FDFA7AAF /* Pods-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-dummy.m"; sourceTree = "<group>"; };
+		CC7C09E495DDFB6A1DC1CB934E5E7476 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC6EBFCCB0C82CD55CEFE1BE03F6B0AC /* UIImagePickerController+Edit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+Edit.h"; sourceTree = "<group>"; };
+		F7E882526882E64138F1D134F46584D4 /* DZNPhotoPickerControllerConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerControllerConstants.h; sourceTree = "<group>"; };
+		FCD8412A81A725E18889A5A789B3691E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8AFDC954CB61AE31C455D7079DA20294 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6138A66979014270D9267B86E5EE9A5D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C752C97A590BC8BBB7866136BFF6900D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F3354941CECEE10E64231AD45B87A64 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0D320BE53A3210979F00669DB12FC325 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3C98BA47CF863A0B51D7F129DB85E5E8 /* DZNPhotoPickerController.xcconfig */,
+				07BF73F79D3DF89D1F957D87D4192D79 /* DZNPhotoPickerController-Private.xcconfig */,
+				C2F7A9105690931BA2D4688661794554 /* DZNPhotoPickerController-dummy.m */,
+				C5F157AEE9E8F55653661DB4758B6440 /* DZNPhotoPickerController-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "Examples/PhotoEditor/Pods/Target Support Files/DZNPhotoPickerController";
+			sourceTree = "<group>";
+		};
+		312AE04F473B75B6E85194640E095DF0 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				BB02A717D6761DD2E4F85049FE3FE515 /* Core */,
+				51858381ACFFB52277156C3C558DDE1F /* Editor */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		51858381ACFFB52277156C3C558DDE1F /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				3FB5BF7085FE2DE1DAFBE509C1DE6E5A /* DZNPhotoEditorViewController.h */,
+				C22CFA85CC7B459E5E97644FE19777BD /* DZNPhotoEditorViewController.m */,
+				EC6EBFCCB0C82CD55CEFE1BE03F6B0AC /* UIImagePickerController+Edit.h */,
+				9103F41CB42A0202241F1D87DA2B235F /* UIImagePickerController+Edit.m */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
+		53F661C0CA7190D2CF05023FB33D61E4 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				FCD8412A81A725E18889A5A789B3691E /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		72E2BC7F104D113E4C500FBA715720C5 /* DZNPhotoPickerController */ = {
+			isa = PBXGroup;
+			children = (
+				7543E3657E3E0FBEDE08A13C0D9C0285 /* Editor */,
+				0D320BE53A3210979F00669DB12FC325 /* Support Files */,
+			);
+			name = DZNPhotoPickerController;
+			path = ../../..;
+			sourceTree = "<group>";
+		};
+		7543E3657E3E0FBEDE08A13C0D9C0285 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				CADE87C6D6AFDC172AA6683BEEC50A3B /* Source */,
+			);
+			name = Editor;
+			sourceTree = "<group>";
+		};
+		76DB73C4E7FC9EDE26202B7AFC666C06 /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				72E2BC7F104D113E4C500FBA715720C5 /* DZNPhotoPickerController */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
+				76DB73C4E7FC9EDE26202B7AFC666C06 /* Development Pods */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				CCA510CFBEA2D207524CDA0D73C3B561 /* Products */,
+				D2411A5FE7F7A004607BED49990C37F4 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		952EEBFAF8F7E620423C9F156F25A506 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				15A529C27057E4A57D259CBC6E6CE49C /* Pods-acknowledgements.markdown */,
+				BF59BC15D23E1E1912C8F334E7236813 /* Pods-acknowledgements.plist */,
+				C84758BD021546BECCFBC6E8FDFA7AAF /* Pods-dummy.m */,
+				641AE05DD55E5E6AC1590CD7B4A18F97 /* Pods-resources.sh */,
+				B56FF9DB69A68006C45F798DE56C75E4 /* Pods.debug.xcconfig */,
+				85C06E6E856C7B22F15E5652E6556377 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			path = "Target Support Files/Pods";
+			sourceTree = "<group>";
+		};
+		BB02A717D6761DD2E4F85049FE3FE515 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				F7E882526882E64138F1D134F46584D4 /* DZNPhotoPickerControllerConstants.h */,
+				4264DC984E857E618A793709AAB75660 /* DZNPhotoPickerControllerConstants.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				53F661C0CA7190D2CF05023FB33D61E4 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CADE87C6D6AFDC172AA6683BEEC50A3B /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				312AE04F473B75B6E85194640E095DF0 /* Classes */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		CCA510CFBEA2D207524CDA0D73C3B561 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2E7358F0261514C920A4A9BDBF16F988 /* libDZNPhotoPickerController.a */,
+				CC7C09E495DDFB6A1DC1CB934E5E7476 /* libPods.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D2411A5FE7F7A004607BED49990C37F4 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				952EEBFAF8F7E620423C9F156F25A506 /* Pods */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		E078A665A5A357B6AAE6AFC8EBAA5FCE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C35782C7A39ED13F9177F87182D5086C /* DZNPhotoEditorViewController.h in Headers */,
+				7952FA298A702605FDEA3EFFBBFA8AE1 /* DZNPhotoPickerControllerConstants.h in Headers */,
+				6C7ABE8EECA7110D41A685FEEE0B5ADE /* UIImagePickerController+Edit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		521DB22CAB71443D6318B0ADBB2ECDFD /* Pods */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 60C5E1B8C548988B8E0F6B9CC07B3273 /* Build configuration list for PBXNativeTarget "Pods" */;
+			buildPhases = (
+				91BA3BE68F5172832CACDBA4AC435C49 /* Sources */,
+				8AFDC954CB61AE31C455D7079DA20294 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E6B437BE3C9C2C98D9F3318B4E62E4F9 /* PBXTargetDependency */,
+			);
+			name = Pods;
+			productName = Pods;
+			productReference = CC7C09E495DDFB6A1DC1CB934E5E7476 /* libPods.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		FA81A367BDE5FD55984D35D7F9602083 /* DZNPhotoPickerController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA45CC15A2C5B2538CECAC93FC2A2057 /* Build configuration list for PBXNativeTarget "DZNPhotoPickerController" */;
+			buildPhases = (
+				6CB0AE605EAC09F71CDBEAE30DA3F97E /* Sources */,
+				C752C97A590BC8BBB7866136BFF6900D /* Frameworks */,
+				E078A665A5A357B6AAE6AFC8EBAA5FCE /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DZNPhotoPickerController;
+			productName = DZNPhotoPickerController;
+			productReference = 2E7358F0261514C920A4A9BDBF16F988 /* libDZNPhotoPickerController.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = CCA510CFBEA2D207524CDA0D73C3B561 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA81A367BDE5FD55984D35D7F9602083 /* DZNPhotoPickerController */,
+				521DB22CAB71443D6318B0ADBB2ECDFD /* Pods */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6CB0AE605EAC09F71CDBEAE30DA3F97E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09C2F7CF3A5E1D93C26E45DACE0F71FB /* DZNPhotoEditorViewController.m in Sources */,
+				28760FEE8A2C88F39DF4911BEFB14FA3 /* DZNPhotoPickerController-dummy.m in Sources */,
+				7E58F8081C8C6D8C191844200EF6A126 /* DZNPhotoPickerControllerConstants.m in Sources */,
+				5A2E5AA6EA147DCC89B45A7E70CFC18D /* UIImagePickerController+Edit.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		91BA3BE68F5172832CACDBA4AC435C49 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7CD59CC8D1D0FEA285A8F4B74446A7E /* Pods-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E6B437BE3C9C2C98D9F3318B4E62E4F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DZNPhotoPickerController;
+			target = FA81A367BDE5FD55984D35D7F9602083 /* DZNPhotoPickerController */;
+			targetProxy = 4DC60C0DD35DBC4B39370F899CEA48CD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		48F13A2DA59B4BA12B8152120D7C6DCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B56FF9DB69A68006C45F798DE56C75E4 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A70CDAD61F90AC503C7D04CC22DA2923 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		B223C013462DE43B5EC3017F84F553BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07BF73F79D3DF89D1F957D87D4192D79 /* DZNPhotoPickerController-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/DZNPhotoPickerController/DZNPhotoPickerController-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		CDC86A90CB5385B689BDC135BF8A56A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 85C06E6E856C7B22F15E5652E6556377 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		D1B0377435CBDDEAF003B88B813A07F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07BF73F79D3DF89D1F957D87D4192D79 /* DZNPhotoPickerController-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/DZNPhotoPickerController/DZNPhotoPickerController-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		FB45FFD90572718D82AB9092B750F0CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A70CDAD61F90AC503C7D04CC22DA2923 /* Debug */,
+				FB45FFD90572718D82AB9092B750F0CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		60C5E1B8C548988B8E0F6B9CC07B3273 /* Build configuration list for PBXNativeTarget "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48F13A2DA59B4BA12B8152120D7C6DCE /* Debug */,
+				CDC86A90CB5385B689BDC135BF8A56A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA45CC15A2C5B2538CECAC93FC2A2057 /* Build configuration list for PBXNativeTarget "DZNPhotoPickerController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1B0377435CBDDEAF003B88B813A07F2 /* Debug */,
+				B223C013462DE43B5EC3017F84F553BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

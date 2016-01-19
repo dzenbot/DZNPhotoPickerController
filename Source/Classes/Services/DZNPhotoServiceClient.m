@@ -15,7 +15,7 @@
 #import "DZNPhotoTag.h"
 
 #import "AFNetworkActivityIndicatorManager.h"
-#import "AFOAuth2Manager.h"
+#import "GROAuth2SessionManager.h"
 
 @interface DZNPhotoServiceClient ()
 @property (nonatomic, copy) DZNHTTPRequestCompletion completion;
@@ -333,11 +333,9 @@
 - (void)authenticateWithClientKey:(NSString *)key secret:(NSString *)secret completion:(void (^)(NSString *accessToken, NSError *error))completion;
 {
     NSURL *baseURL = baseURLForService(self.service);
-    NSString *path = authUrlPathForService(self.service);
+    GROAuth2SessionManager *sessionManager = [GROAuth2SessionManager managerWithBaseURL:baseURL clientID:key secret:secret];
     
-    AFOAuth2Manager *oauth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:baseURL
-                                                                     clientID:key
-                                                                       secret:secret];
+    NSString *path = authUrlPathForService(self.service);
     
     NSDictionary *params = @{};
     
@@ -345,16 +343,15 @@
         params = @{@"grant_type":@"client_credentials"};
     }
     
-    [oauth2Manager authenticateUsingOAuthWithURLString:path
-                                            parameters:params
-                                               success:^(AFOAuthCredential *credential) {
-                                                   [self setCredentialIdentifier:oauth2Manager.serviceProviderIdentifier service:self.service];
-                                                   [AFOAuthCredential storeCredential:credential withIdentifier:oauth2Manager.serviceProviderIdentifier];
-                                                   if (completion) completion(credential.accessToken, nil);
-                                               }
-                                               failure:^(NSError *error) {
-                                                   if (completion) completion(nil, error);
-                                               }];
+    [sessionManager authenticateUsingOAuthWithPath:path
+                                        parameters:params
+                                           success:^(AFOAuthCredential *credential) {
+                                               [self setCredentialIdentifier:sessionManager.serviceProviderIdentifier service:self.service];
+                                               [AFOAuthCredential storeCredential:credential withIdentifier:sessionManager.serviceProviderIdentifier];
+                                               if (completion) completion(credential.accessToken, nil);
+                                           } failure:^(NSError *error) {
+                                               if (completion) completion(nil, error);
+                                           }];
 }
 
 @end

@@ -80,7 +80,7 @@ static NSString *kDZNTagCellViewIdentifier = @"com.dzn.tagCellViewIdentifier";
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDZNTagCellViewIdentifier];
     NSString *text = @"";
-    [tableView cellForRowAtIndexPath:nil];
+    
     if (indexPath.row < self.searchResult.count) {
         
         DZNPhotoTag *tag = [self tagAtIndexPath:indexPath];

@@ -60,6 +60,17 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
 #pragma mark - Initialization
 
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
+{
+    CGSize size = [UIScreen mainScreen].bounds.size;
+    
+    self = [super initWithCollectionViewLayout:[DZNPhotoDisplayViewController layoutFittingSize:size]];
+    if (self) {
+        [self commontInit];
+    }
+    return self;
+}
+
 - (instancetype)initWithPreferredContentSize:(CGSize)size
 {
     self = [super initWithCollectionViewLayout:[DZNPhotoDisplayViewController layoutFittingSize:size]];
@@ -445,7 +456,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
             __weak DZNPhotoEditorViewController *weakController = controller;
             
             [controller.imageView sd_setImageWithPreviousCachedImageWithURL:metadata.sourceURL
-                                                        andPlaceholderImage:nil
+                                                           placeholderImage:nil
                                                                     options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
                                                                    progress:NULL
                                                                   completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {

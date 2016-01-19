@@ -1,28 +1,26 @@
 PODS:
-  - AFNetworking (2.6.0):
-    - AFNetworking/NSURLConnection (= 2.6.0)
-    - AFNetworking/NSURLSession (= 2.6.0)
-    - AFNetworking/Reachability (= 2.6.0)
-    - AFNetworking/Security (= 2.6.0)
-    - AFNetworking/Serialization (= 2.6.0)
-    - AFNetworking/UIKit (= 2.6.0)
-  - AFNetworking/NSURLConnection (2.6.0):
+  - AFNetworking (2.4.1):
+    - AFNetworking/NSURLConnection (= 2.4.1)
+    - AFNetworking/NSURLSession (= 2.4.1)
+    - AFNetworking/Reachability (= 2.4.1)
+    - AFNetworking/Security (= 2.4.1)
+    - AFNetworking/Serialization (= 2.4.1)
+    - AFNetworking/UIKit (= 2.4.1)
+  - AFNetworking/NSURLConnection (2.4.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.6.0):
+  - AFNetworking/NSURLSession (2.4.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.6.0)
-  - AFNetworking/Security (2.6.0)
-  - AFNetworking/Serialization (2.6.0)
-  - AFNetworking/UIKit (2.6.0):
+  - AFNetworking/Reachability (2.4.1)
+  - AFNetworking/Security (2.4.1)
+  - AFNetworking/Serialization (2.4.1)
+  - AFNetworking/UIKit (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - AFOAuth2Manager (2.2.0):
-    - AFNetworking/NSURLConnection (~> 2.2)
-  - DZNEmptyDataSet (1.7.1)
+  - DZNEmptyDataSet (1.7.3)
   - DZNPhotoPickerController (1.6.1):
     - DZNPhotoPickerController/Core (= 1.6.1)
   - DZNPhotoPickerController/Core (1.6.1):
@@ -32,12 +30,14 @@ PODS:
     - SDWebImage (~> 3.7.0)
   - DZNPhotoPickerController/Editor (1.6.1)
   - DZNPhotoPickerController/Services (1.6.1):
-    - AFNetworking (~> 2.6.0)
-    - AFOAuth2Manager (~> 2.2.0)
+    - AFNetworking
+    - GROAuth2SessionManager
+  - GROAuth2SessionManager (0.2.3):
+    - AFNetworking (~> 2.4.1)
   - Kiwi (2.4.0)
-  - SDWebImage (3.7.3):
-    - SDWebImage/Core (= 3.7.3)
-  - SDWebImage/Core (3.7.3)
+  - SDWebImage (3.7.4):
+    - SDWebImage/Core (= 3.7.4)
+  - SDWebImage/Core (3.7.4)
 
 DEPENDENCIES:
   - DZNPhotoPickerController (from `../../`)
@@ -45,14 +45,14 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   DZNPhotoPickerController:
-    :path: ../../
+    :path: "../../"
 
 SPEC CHECKSUMS:
-  AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
-  AFOAuth2Manager: 952eb62e8fd8022971e64c6e8fe28b9e999224af
-  DZNEmptyDataSet: 2a398066c2bf5848f7f693fb50954b5064debd12
-  DZNPhotoPickerController: 86a27a0ea5ef8f81f85c79164f6dd8388c9988dd
+  AFNetworking: 41d45d2c14219af0fa5addf3cfd433a002c13c9f
+  DZNEmptyDataSet: dd7cca17c1d07dfa78956859b1e70a52505678ef
+  DZNPhotoPickerController: e5cc5d093eb823a79791f187bd528b0508be2265
+  GROAuth2SessionManager: c265ea7e6d33512e7b079ccc9bb509dba2d43131
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
-  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
+  SDWebImage: 247edd7dd80dd6124197b0d6a17846fe9d1df968
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.38.2

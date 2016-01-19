@@ -1,5 +1,6 @@
 // UIWebView+AFNetworking.m
-// Copyright (c) 2011–2015 Alamofire Software Foundation (http://alamofire.org/)
+//
+// Copyright (c) 2013-2014 AFNetworking (http://afnetworking.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -135,11 +136,6 @@
 #pragma clang diagnostic ignored "-Wgnu"
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf loadData:data MIMEType:(MIMEType ?: [operation.response MIMEType]) textEncodingName:(textEncodingName ?: [operation.response textEncodingName]) baseURL:[operation.response URL]];
-
-        if ([strongSelf.delegate respondsToSelector:@selector(webViewDidFinishLoad:)]) {
-            [strongSelf.delegate webViewDidFinishLoad:strongSelf];
-        }
-
 #pragma clang diagnostic pop
     } failure:^(AFHTTPRequestOperation * __unused operation, NSError *error) {
         if (failure) {
@@ -148,10 +144,6 @@
     }];
 
     [self.af_HTTPRequestOperation start];
-
-    if ([self.delegate respondsToSelector:@selector(webViewDidStartLoad:)]) {
-        [self.delegate webViewDidStartLoad:self];
-    }
 }
 
 @end

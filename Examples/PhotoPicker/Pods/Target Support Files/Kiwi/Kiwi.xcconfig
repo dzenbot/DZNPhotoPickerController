@@ -1,0 +1,2 @@
+KIWI_FRAMEWORK_SEARCH_PATHS = $(inherited) "$(SDKROOT)/Developer/Library/Frameworks" "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+KIWI_OTHER_LDFLAGS = -framework "XCTest"

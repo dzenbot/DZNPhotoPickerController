@@ -153,7 +153,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 /* Shows the photo display controller. */
 - (void)showPhotoDisplayController
 {
-    [self setViewControllers:nil];
+    [self setViewControllers:@[]];
     
     DZNPhotoDisplayViewController *controller = [[DZNPhotoDisplayViewController alloc] initWithPreferredContentSize:self.view.frame.size];
     

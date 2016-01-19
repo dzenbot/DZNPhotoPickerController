@@ -6,9 +6,9 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   DZNPhotoPickerController:
-    :path: ../../
+    :path: "../../"
 
 SPEC CHECKSUMS:
-  DZNPhotoPickerController: 86a27a0ea5ef8f81f85c79164f6dd8388c9988dd
+  DZNPhotoPickerController: e5cc5d093eb823a79791f187bd528b0508be2265
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.38.2

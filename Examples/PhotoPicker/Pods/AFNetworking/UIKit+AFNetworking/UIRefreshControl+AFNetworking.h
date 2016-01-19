@@ -28,12 +28,10 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @class AFURLConnectionOperation;
 
 /**
- This category adds methods to the UIKit framework's `UIRefreshControl` class. The methods in this category provide support for automatically beginning and ending refreshing depending on the loading state of a request operation or session task.
+ This category adds methods to the UIKit framework's `UIRefreshControl` class. The methods in this category provide support for automatically begining and ending refreshing depending on the loading state of a request operation or session task.
  */
 @interface UIRefreshControl (AFNetworking)
 
@@ -44,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Binds the refreshing state to the state of the specified task.
  
- @param task The task. If `nil`, automatic updating from any previously specified operation will be disabled.
+ @param task The task. If `nil`, automatic updating from any previously specified operation will be diabled.
  */
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
 - (void)setRefreshingWithStateOfTask:(NSURLSessionTask *)task;
@@ -62,7 +60,5 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setRefreshingWithStateOfOperation:(AFURLConnectionOperation *)operation;
 
 @end
-
-NS_ASSUME_NONNULL_END
 
 #endif

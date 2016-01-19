@@ -31,7 +31,7 @@
  @param size The preferred content size, to compute the right amount of rows to be displayed.
  @return A DZNPhotoPickerController instance.
  */
-- (instancetype)initWithPreferredContentSize:(CGSize)size NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithPreferredContentSize:(CGSize)size;
 
 /**
  Stops any loading HTTP request.

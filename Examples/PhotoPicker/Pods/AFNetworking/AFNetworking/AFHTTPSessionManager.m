@@ -1,5 +1,6 @@
 // AFHTTPSessionManager.m
-// Copyright (c) 2011–2015 Alamofire Software Foundation (http://alamofire.org/)
+//
+// Copyright (c) 2013-2014 AFNetworking (http://afnetworking.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +22,7 @@
 
 #import "AFHTTPSessionManager.h"
 
-#if (defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000) || (defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && __MAC_OS_X_VERSION_MAX_ALLOWED >= 1090) || TARGET_WATCH_OS
+#if (defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000) || (defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && __MAC_OS_X_VERSION_MAX_ALLOWED >= 1090)
 
 #import "AFURLRequestSerialization.h"
 #import "AFURLResponseSerialization.h"
@@ -37,10 +38,8 @@
 #import <netdb.h>
 #endif
 
-#if TARGET_OS_IOS
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
 #import <UIKit/UIKit.h>
-#elif TARGET_OS_WATCH
-#import <WatchKit/WatchKit.h>
 #endif
 
 @interface AFHTTPSessionManager ()
@@ -48,7 +47,6 @@
 @end
 
 @implementation AFHTTPSessionManager
-@dynamic responseSerializer;
 
 + (instancetype)manager {
     return [[[self class] alloc] initWithBaseURL:nil];
@@ -314,7 +312,7 @@
 
     HTTPClient.requestSerializer = [self.requestSerializer copyWithZone:zone];
     HTTPClient.responseSerializer = [self.responseSerializer copyWithZone:zone];
-
+    
     return HTTPClient;
 }
 
