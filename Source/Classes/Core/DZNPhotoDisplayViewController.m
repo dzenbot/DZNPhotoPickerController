@@ -94,7 +94,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     [super loadView];
     
     _segmentedControlTitles = NSArrayFromServices(self.navigationController.supportedServices);
-    NSAssert((_segmentedControlTitles.count < 4), @"DZNPhotoPickerController doesn't support more than 4 photo service providers");
+    NSAssert((_segmentedControlTitles.count <= 4), @"DZNPhotoPickerController doesn't support more than 4 photo service providers");
     
     _selectedService = DZNFirstPhotoServiceFromPhotoServices(self.navigationController.supportedServices);
     NSAssert((_selectedService > 0), @"DZNPhotoPickerController requieres at least 1 supported photo service provider");
