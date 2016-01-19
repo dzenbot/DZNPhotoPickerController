@@ -19,9 +19,9 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |ss|
     ss.source_files = 'Source/Classes/Core/*.{h,m}'
-    ss.dependency   'SDWebImage', '3.7'
-    ss.dependency   'DZNEmptyDataSet', '1.3.3'
-    ss.dependency   'MBProgressHUD', '0.9'
+    ss.dependency   'SDWebImage'
+    ss.dependency   'DZNEmptyDataSet'
+    ss.dependency   'MBProgressHUD'
 
     ss.dependency   'DZNPhotoPickerController/Services'
     ss.dependency   'DZNPhotoPickerController/Editor'
@@ -30,8 +30,8 @@ Pod::Spec.new do |s|
   s.subspec 'Services' do |ss|
     ss.source_files = 'Source/Classes/Services/*.{h,m}',
                       'Source/Classes/Core/DZNPhotoPickerControllerConstants.{h,m}'
-    ss.dependency 'AFNetworking', '2.4.1'
-    ss.dependency 'GROAuth2SessionManager', '0.2.3'
+    ss.dependency 'AFNetworking'
+    ss.dependency 'GROAuth2SessionManager'
     ss.prefix_header_contents = '#import <MobileCoreServices/MobileCoreServices.h>',
                                 '#import <SystemConfiguration/SystemConfiguration.h>'
   end
