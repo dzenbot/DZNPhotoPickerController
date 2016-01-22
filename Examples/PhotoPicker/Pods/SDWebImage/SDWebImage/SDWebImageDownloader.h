@@ -40,7 +40,7 @@ typedef NS_OPTIONS(NSUInteger, SDWebImageDownloaderOptions) {
     SDWebImageDownloaderHandleCookies = 1 << 5,
 
     /**
-     * Enable to allow untrusted SSL ceriticates.
+     * Enable to allow untrusted SSL certificates.
      * Useful for testing purposes. Use with caution in production.
      */
     SDWebImageDownloaderAllowInvalidSSLCertificates = 1 << 6,
@@ -49,8 +49,6 @@ typedef NS_OPTIONS(NSUInteger, SDWebImageDownloaderOptions) {
      * Put the image in the high priority queue.
      */
     SDWebImageDownloaderHighPriority = 1 << 7,
-    
-
 };
 
 typedef NS_ENUM(NSInteger, SDWebImageDownloaderExecutionOrder) {
@@ -72,17 +70,24 @@ typedef void(^SDWebImageDownloaderProgressBlock)(NSInteger receivedSize, NSInteg
 
 typedef void(^SDWebImageDownloaderCompletedBlock)(UIImage *image, NSData *data, NSError *error, BOOL finished);
 
+typedef NSDictionary *(^SDWebImageDownloaderHeadersFilterBlock)(NSURL *url, NSDictionary *headers);
+
 /**
  * Asynchronous downloader dedicated and optimized for image loading.
  */
 @interface SDWebImageDownloader : NSObject
+
+/**
+ * Decompressing images that are downloaded and cached can improve performance but can consume lot of memory.
+ * Defaults to YES. Set this to NO if you are experiencing a crash due to excessive memory consumption.
+ */
+@property (assign, nonatomic) BOOL shouldDecompressImages;
 
 @property (assign, nonatomic) NSInteger maxConcurrentDownloads;
 
 /**
  * Shows the current amount of downloads that still need to be downloaded
  */
-
 @property (readonly, nonatomic) NSUInteger currentDownloadCount;
 
 
@@ -105,6 +110,11 @@ typedef void(^SDWebImageDownloaderCompletedBlock)(UIImage *image, NSData *data, 
 + (SDWebImageDownloader *)sharedDownloader;
 
 /**
+ *  Set the default URL credential to be set for request operations.
+ */
+@property (strong, nonatomic) NSURLCredential *urlCredential;
+
+/**
  * Set username
  */
 @property (strong, nonatomic) NSString *username;
@@ -120,7 +130,7 @@ typedef void(^SDWebImageDownloaderCompletedBlock)(UIImage *image, NSData *data, 
  * This block will be invoked for each downloading image request, returned
  * NSDictionary will be used as headers in corresponding HTTP request.
  */
-@property (nonatomic, strong) NSDictionary *(^headersFilter)(NSURL *url, NSDictionary *headers);
+@property (nonatomic, copy) SDWebImageDownloaderHeadersFilterBlock headersFilter;
 
 /**
  * Set a value for a HTTP header to be appended to each download HTTP request.
@@ -136,6 +146,16 @@ typedef void(^SDWebImageDownloaderCompletedBlock)(UIImage *image, NSData *data, 
  * @return The value associated with the header field field, or `nil` if there is no corresponding header field.
  */
 - (NSString *)valueForHTTPHeaderField:(NSString *)field;
+
+/**
+ * Sets a subclass of `SDWebImageDownloaderOperation` as the default
+ * `NSOperation` to be used each time SDWebImage constructs a request
+ * operation to download an image.
+ *
+ * @param operationClass The subclass of `SDWebImageDownloaderOperation` to set 
+ *        as default. Passing `nil` will revert to `SDWebImageDownloaderOperation`.
+ */
+- (void)setOperationClass:(Class)operationClass;
 
 /**
  * Creates a SDWebImageDownloader async downloader instance with a given URL
