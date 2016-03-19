@@ -291,11 +291,8 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
  */
 - (NSUInteger)rowCount
 {
-    CGFloat supplementaryViewHeight = [self supplementaryViewSize].height;
-    
     CGSize contentSize = [self contentSize];
-    contentSize.height -= supplementaryViewHeight;
-    contentSize.height += self.navigationController.navigationBar.frame.size.height;
+    contentSize.height *= 2.0;
     
     CGFloat cellHeight = [self cellSize].height;
     

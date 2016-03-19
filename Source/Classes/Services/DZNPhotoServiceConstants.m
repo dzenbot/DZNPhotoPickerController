@@ -143,10 +143,7 @@ NSString *keyForSearchResultPerPage(DZNPhotoPickerControllerServices service)
 NSString *keyForSearchPage(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
-        case DZNPhotoPickerControllerService500px:
-        case DZNPhotoPickerControllerServiceFlickr:
-        case DZNPhotoPickerControllerServiceInstagram:
-        default:                                                return nil;
+        default:                                                return @"page";
     }
 }
 

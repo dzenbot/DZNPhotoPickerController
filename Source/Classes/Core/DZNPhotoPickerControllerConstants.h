@@ -19,7 +19,7 @@ extern NSString *const DZNPhotoPickerDidFailPickingNotification;      // The not
  Types of supported photo services
  */
 typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerServices) {
-    DZNPhotoPickerControllerService500px = (1 << 0),                        // 500px                        http://500px.com/developers/
+    DZNPhotoPickerControllerService500px = (1 << 0),                        // 500px                        http://developers.500px.com/
     DZNPhotoPickerControllerServiceFlickr = (1 << 1),                       // Flickr                       http://www.flickr.com/services/api/
     DZNPhotoPickerControllerServiceInstagram = (1 << 2),                    // Instagram                    http://instagram.com/developer/
     DZNPhotoPickerControllerServiceGoogleImages = (1 << 3),                 // Google Images                https://developers.google.com/custom-search/
