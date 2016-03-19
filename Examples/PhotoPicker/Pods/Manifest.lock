@@ -15,15 +15,15 @@ PODS:
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
   - DZNEmptyDataSet (1.7.3)
-  - DZNPhotoPickerController (1.6.1):
-    - DZNPhotoPickerController/Core (= 1.6.1)
-  - DZNPhotoPickerController/Core (1.6.1):
+  - DZNPhotoPickerController (2.0):
+    - DZNPhotoPickerController/Core (= 2.0)
+  - DZNPhotoPickerController/Core (2.0):
     - DZNEmptyDataSet (~> 1.7)
     - DZNPhotoPickerController/Editor
     - DZNPhotoPickerController/Services
     - SDWebImage (~> 3.7)
-  - DZNPhotoPickerController/Editor (1.6.1)
-  - DZNPhotoPickerController/Services (1.6.1):
+  - DZNPhotoPickerController/Editor (2.0)
+  - DZNPhotoPickerController/Services (2.0):
     - AFNetworking (~> 3.0)
   - Kiwi (2.4.0)
   - SDWebImage (3.7.5):
@@ -41,7 +41,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   DZNEmptyDataSet: dd7cca17c1d07dfa78956859b1e70a52505678ef
-  DZNPhotoPickerController: abca542cc19974f3dc051d16d30dc1ab599439f5
+  DZNPhotoPickerController: 1a9b83a53a2f35094e35c163417ab0aeb8653fd1
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
 

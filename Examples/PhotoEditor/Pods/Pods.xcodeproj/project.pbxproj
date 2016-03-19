@@ -7,49 +7,49 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09C2F7CF3A5E1D93C26E45DACE0F71FB /* DZNPhotoEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C22CFA85CC7B459E5E97644FE19777BD /* DZNPhotoEditorViewController.m */; };
-		0F3354941CECEE10E64231AD45B87A64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD8412A81A725E18889A5A789B3691E /* Foundation.framework */; };
-		28760FEE8A2C88F39DF4911BEFB14FA3 /* DZNPhotoPickerController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F7A9105690931BA2D4688661794554 /* DZNPhotoPickerController-dummy.m */; };
-		5A2E5AA6EA147DCC89B45A7E70CFC18D /* UIImagePickerController+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103F41CB42A0202241F1D87DA2B235F /* UIImagePickerController+Edit.m */; };
-		6138A66979014270D9267B86E5EE9A5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD8412A81A725E18889A5A789B3691E /* Foundation.framework */; };
-		6C7ABE8EECA7110D41A685FEEE0B5ADE /* UIImagePickerController+Edit.h in Headers */ = {isa = PBXBuildFile; fileRef = EC6EBFCCB0C82CD55CEFE1BE03F6B0AC /* UIImagePickerController+Edit.h */; };
-		7952FA298A702605FDEA3EFFBBFA8AE1 /* DZNPhotoPickerControllerConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = F7E882526882E64138F1D134F46584D4 /* DZNPhotoPickerControllerConstants.h */; };
-		7E58F8081C8C6D8C191844200EF6A126 /* DZNPhotoPickerControllerConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4264DC984E857E618A793709AAB75660 /* DZNPhotoPickerControllerConstants.m */; };
+		4021180087CE94B02A07ECB98A04F0ED /* DZNPhotoEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FF34C5C93710461475209839E084F15 /* DZNPhotoEditorViewController.m */; };
+		5743FD1D5B00E15460FBA771F4248455 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B031432706063B22ADAF0B838C7153F /* Foundation.framework */; };
+		5EE9BCBC7C70448E010D472D1BB38F2C /* DZNPhotoPickerController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C1905D1B53C2DF618076CEB643EB6E3D /* DZNPhotoPickerController-dummy.m */; };
+		5FCD161F5DB11C5E5F81483D152B4B7D /* UIImagePickerController+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A413D6264D66E30BFC477E1C4C11C73 /* UIImagePickerController+Edit.m */; };
+		6138A66979014270D9267B86E5EE9A5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B031432706063B22ADAF0B838C7153F /* Foundation.framework */; };
+		A6A6334316E931F25DD42CE5E1AF63B3 /* DZNPhotoPickerControllerConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 95CFD9EE13A2D388CAAF61F743EBD563 /* DZNPhotoPickerControllerConstants.h */; };
 		B7CD59CC8D1D0FEA285A8F4B74446A7E /* Pods-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C84758BD021546BECCFBC6E8FDFA7AAF /* Pods-dummy.m */; };
-		C35782C7A39ED13F9177F87182D5086C /* DZNPhotoEditorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FB5BF7085FE2DE1DAFBE509C1DE6E5A /* DZNPhotoEditorViewController.h */; };
+		BBE4F816366D818970FB2C2F24C59000 /* DZNPhotoPickerControllerConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A923613656D3B2131AE954272D477B8C /* DZNPhotoPickerControllerConstants.m */; };
+		C4EF805EA56527A4BB68685610990E2B /* DZNPhotoEditorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F4E206CED43209CCCAE4A4098B2C2FD7 /* DZNPhotoEditorViewController.h */; };
+		FF0A5F4F9B97C5D03DF162B04C2203D5 /* UIImagePickerController+Edit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A492AAF7DEA9874020149D7DB78AEF8 /* UIImagePickerController+Edit.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4DC60C0DD35DBC4B39370F899CEA48CD /* PBXContainerItemProxy */ = {
+		10C4A76A3691826700AD755C06C96123 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = FA81A367BDE5FD55984D35D7F9602083;
+			remoteGlobalIDString = 71EB8ED69D94558E886231690B0D3566;
 			remoteInfo = DZNPhotoPickerController;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		07BF73F79D3DF89D1F957D87D4192D79 /* DZNPhotoPickerController-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "DZNPhotoPickerController-Private.xcconfig"; sourceTree = "<group>"; };
+		0A492AAF7DEA9874020149D7DB78AEF8 /* UIImagePickerController+Edit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+Edit.h"; sourceTree = "<group>"; };
 		15A529C27057E4A57D259CBC6E6CE49C /* Pods-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-acknowledgements.markdown"; sourceTree = "<group>"; };
-		2E7358F0261514C920A4A9BDBF16F988 /* libDZNPhotoPickerController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDZNPhotoPickerController.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C98BA47CF863A0B51D7F129DB85E5E8 /* DZNPhotoPickerController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DZNPhotoPickerController.xcconfig; sourceTree = "<group>"; };
-		3FB5BF7085FE2DE1DAFBE509C1DE6E5A /* DZNPhotoEditorViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DZNPhotoEditorViewController.h; sourceTree = "<group>"; };
-		4264DC984E857E618A793709AAB75660 /* DZNPhotoPickerControllerConstants.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerControllerConstants.m; sourceTree = "<group>"; };
+		4B031432706063B22ADAF0B838C7153F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		5A413D6264D66E30BFC477E1C4C11C73 /* UIImagePickerController+Edit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+Edit.m"; sourceTree = "<group>"; };
 		641AE05DD55E5E6AC1590CD7B4A18F97 /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-resources.sh"; sourceTree = "<group>"; };
 		85C06E6E856C7B22F15E5652E6556377 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.release.xcconfig; sourceTree = "<group>"; };
-		9103F41CB42A0202241F1D87DA2B235F /* UIImagePickerController+Edit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+Edit.m"; sourceTree = "<group>"; };
+		95CFD9EE13A2D388CAAF61F743EBD563 /* DZNPhotoPickerControllerConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerControllerConstants.h; sourceTree = "<group>"; };
+		9FF34C5C93710461475209839E084F15 /* DZNPhotoEditorViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoEditorViewController.m; sourceTree = "<group>"; };
+		A923613656D3B2131AE954272D477B8C /* DZNPhotoPickerControllerConstants.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoPickerControllerConstants.m; sourceTree = "<group>"; };
 		B56FF9DB69A68006C45F798DE56C75E4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.debug.xcconfig; sourceTree = "<group>"; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BF59BC15D23E1E1912C8F334E7236813 /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = "<group>"; };
-		C22CFA85CC7B459E5E97644FE19777BD /* DZNPhotoEditorViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DZNPhotoEditorViewController.m; sourceTree = "<group>"; };
-		C2F7A9105690931BA2D4688661794554 /* DZNPhotoPickerController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DZNPhotoPickerController-dummy.m"; sourceTree = "<group>"; };
+		C1905D1B53C2DF618076CEB643EB6E3D /* DZNPhotoPickerController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DZNPhotoPickerController-dummy.m"; sourceTree = "<group>"; };
 		C5F157AEE9E8F55653661DB4758B6440 /* DZNPhotoPickerController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DZNPhotoPickerController-prefix.pch"; sourceTree = "<group>"; };
 		C84758BD021546BECCFBC6E8FDFA7AAF /* Pods-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-dummy.m"; sourceTree = "<group>"; };
 		CC7C09E495DDFB6A1DC1CB934E5E7476 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC6EBFCCB0C82CD55CEFE1BE03F6B0AC /* UIImagePickerController+Edit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+Edit.h"; sourceTree = "<group>"; };
-		F7E882526882E64138F1D134F46584D4 /* DZNPhotoPickerControllerConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DZNPhotoPickerControllerConstants.h; sourceTree = "<group>"; };
-		FCD8412A81A725E18889A5A789B3691E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		D14AC22B7A91D89BE51D698A9048EC53 /* DZNPhotoPickerController-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "DZNPhotoPickerController-Private.xcconfig"; sourceTree = "<group>"; };
+		E693C61B5B41F139576FEFFF928D8ED0 /* libDZNPhotoPickerController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDZNPhotoPickerController.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4E206CED43209CCCAE4A4098B2C2FD7 /* DZNPhotoEditorViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DZNPhotoEditorViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,11 +61,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C752C97A590BC8BBB7866136BFF6900D /* Frameworks */ = {
+		B783AE7CE4B071906A311F406C145571 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F3354941CECEE10E64231AD45B87A64 /* Foundation.framework in Frameworks */,
+				5743FD1D5B00E15460FBA771F4248455 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,8 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				3C98BA47CF863A0B51D7F129DB85E5E8 /* DZNPhotoPickerController.xcconfig */,
-				07BF73F79D3DF89D1F957D87D4192D79 /* DZNPhotoPickerController-Private.xcconfig */,
-				C2F7A9105690931BA2D4688661794554 /* DZNPhotoPickerController-dummy.m */,
+				D14AC22B7A91D89BE51D698A9048EC53 /* DZNPhotoPickerController-Private.xcconfig */,
+				C1905D1B53C2DF618076CEB643EB6E3D /* DZNPhotoPickerController-dummy.m */,
 				C5F157AEE9E8F55653661DB4758B6440 /* DZNPhotoPickerController-prefix.pch */,
 			);
 			name = "Support Files";
@@ -96,10 +96,10 @@
 		51858381ACFFB52277156C3C558DDE1F /* Editor */ = {
 			isa = PBXGroup;
 			children = (
-				3FB5BF7085FE2DE1DAFBE509C1DE6E5A /* DZNPhotoEditorViewController.h */,
-				C22CFA85CC7B459E5E97644FE19777BD /* DZNPhotoEditorViewController.m */,
-				EC6EBFCCB0C82CD55CEFE1BE03F6B0AC /* UIImagePickerController+Edit.h */,
-				9103F41CB42A0202241F1D87DA2B235F /* UIImagePickerController+Edit.m */,
+				F4E206CED43209CCCAE4A4098B2C2FD7 /* DZNPhotoEditorViewController.h */,
+				9FF34C5C93710461475209839E084F15 /* DZNPhotoEditorViewController.m */,
+				0A492AAF7DEA9874020149D7DB78AEF8 /* UIImagePickerController+Edit.h */,
+				5A413D6264D66E30BFC477E1C4C11C73 /* UIImagePickerController+Edit.m */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -107,7 +107,7 @@
 		53F661C0CA7190D2CF05023FB33D61E4 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				FCD8412A81A725E18889A5A789B3691E /* Foundation.framework */,
+				4B031432706063B22ADAF0B838C7153F /* Foundation.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
@@ -166,8 +166,8 @@
 		BB02A717D6761DD2E4F85049FE3FE515 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				F7E882526882E64138F1D134F46584D4 /* DZNPhotoPickerControllerConstants.h */,
-				4264DC984E857E618A793709AAB75660 /* DZNPhotoPickerControllerConstants.m */,
+				95CFD9EE13A2D388CAAF61F743EBD563 /* DZNPhotoPickerControllerConstants.h */,
+				A923613656D3B2131AE954272D477B8C /* DZNPhotoPickerControllerConstants.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -191,7 +191,7 @@
 		CCA510CFBEA2D207524CDA0D73C3B561 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2E7358F0261514C920A4A9BDBF16F988 /* libDZNPhotoPickerController.a */,
+				E693C61B5B41F139576FEFFF928D8ED0 /* libDZNPhotoPickerController.a */,
 				CC7C09E495DDFB6A1DC1CB934E5E7476 /* libPods.a */,
 			);
 			name = Products;
@@ -208,13 +208,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		E078A665A5A357B6AAE6AFC8EBAA5FCE /* Headers */ = {
+		FF614B85B7464E60BDDA13DF70B3A227 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C35782C7A39ED13F9177F87182D5086C /* DZNPhotoEditorViewController.h in Headers */,
-				7952FA298A702605FDEA3EFFBBFA8AE1 /* DZNPhotoPickerControllerConstants.h in Headers */,
-				6C7ABE8EECA7110D41A685FEEE0B5ADE /* UIImagePickerController+Edit.h in Headers */,
+				C4EF805EA56527A4BB68685610990E2B /* DZNPhotoEditorViewController.h in Headers */,
+				A6A6334316E931F25DD42CE5E1AF63B3 /* DZNPhotoPickerControllerConstants.h in Headers */,
+				FF0A5F4F9B97C5D03DF162B04C2203D5 /* UIImagePickerController+Edit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,20 +231,20 @@
 			buildRules = (
 			);
 			dependencies = (
-				E6B437BE3C9C2C98D9F3318B4E62E4F9 /* PBXTargetDependency */,
+				18E4F2468573AC7DD04C7539707DBB5A /* PBXTargetDependency */,
 			);
 			name = Pods;
 			productName = Pods;
 			productReference = CC7C09E495DDFB6A1DC1CB934E5E7476 /* libPods.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		FA81A367BDE5FD55984D35D7F9602083 /* DZNPhotoPickerController */ = {
+		71EB8ED69D94558E886231690B0D3566 /* DZNPhotoPickerController */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BA45CC15A2C5B2538CECAC93FC2A2057 /* Build configuration list for PBXNativeTarget "DZNPhotoPickerController" */;
+			buildConfigurationList = 419315E3F0A3DEE945AF6DBC32EAA6F3 /* Build configuration list for PBXNativeTarget "DZNPhotoPickerController" */;
 			buildPhases = (
-				6CB0AE605EAC09F71CDBEAE30DA3F97E /* Sources */,
-				C752C97A590BC8BBB7866136BFF6900D /* Frameworks */,
-				E078A665A5A357B6AAE6AFC8EBAA5FCE /* Headers */,
+				96BD4079B0B32FFB64F97436C7E13E51 /* Sources */,
+				B783AE7CE4B071906A311F406C145571 /* Frameworks */,
+				FF614B85B7464E60BDDA13DF70B3A227 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -252,7 +252,7 @@
 			);
 			name = DZNPhotoPickerController;
 			productName = DZNPhotoPickerController;
-			productReference = 2E7358F0261514C920A4A9BDBF16F988 /* libDZNPhotoPickerController.a */;
+			productReference = E693C61B5B41F139576FEFFF928D8ED0 /* libDZNPhotoPickerController.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -276,24 +276,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FA81A367BDE5FD55984D35D7F9602083 /* DZNPhotoPickerController */,
+				71EB8ED69D94558E886231690B0D3566 /* DZNPhotoPickerController */,
 				521DB22CAB71443D6318B0ADBB2ECDFD /* Pods */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		6CB0AE605EAC09F71CDBEAE30DA3F97E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				09C2F7CF3A5E1D93C26E45DACE0F71FB /* DZNPhotoEditorViewController.m in Sources */,
-				28760FEE8A2C88F39DF4911BEFB14FA3 /* DZNPhotoPickerController-dummy.m in Sources */,
-				7E58F8081C8C6D8C191844200EF6A126 /* DZNPhotoPickerControllerConstants.m in Sources */,
-				5A2E5AA6EA147DCC89B45A7E70CFC18D /* UIImagePickerController+Edit.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		91BA3BE68F5172832CACDBA4AC435C49 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -302,14 +291,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		96BD4079B0B32FFB64F97436C7E13E51 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4021180087CE94B02A07ECB98A04F0ED /* DZNPhotoEditorViewController.m in Sources */,
+				5EE9BCBC7C70448E010D472D1BB38F2C /* DZNPhotoPickerController-dummy.m in Sources */,
+				BBE4F816366D818970FB2C2F24C59000 /* DZNPhotoPickerControllerConstants.m in Sources */,
+				5FCD161F5DB11C5E5F81483D152B4B7D /* UIImagePickerController+Edit.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E6B437BE3C9C2C98D9F3318B4E62E4F9 /* PBXTargetDependency */ = {
+		18E4F2468573AC7DD04C7539707DBB5A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = DZNPhotoPickerController;
-			target = FA81A367BDE5FD55984D35D7F9602083 /* DZNPhotoPickerController */;
-			targetProxy = 4DC60C0DD35DBC4B39370F899CEA48CD /* PBXContainerItemProxy */;
+			target = 71EB8ED69D94558E886231690B0D3566 /* DZNPhotoPickerController */;
+			targetProxy = 10C4A76A3691826700AD755C06C96123 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -329,6 +329,22 @@
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
+		};
+		59229B5CB83E7CF85A7E721D9FB43651 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D14AC22B7A91D89BE51D698A9048EC53 /* DZNPhotoPickerController-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/DZNPhotoPickerController/DZNPhotoPickerController-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
 		};
 		A70CDAD61F90AC503C7D04CC22DA2923 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -369,21 +385,21 @@
 			};
 			name = Debug;
 		};
-		B223C013462DE43B5EC3017F84F553BC /* Release */ = {
+		AA9AC555E10D9B1E84DB559AC2AE1769 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 07BF73F79D3DF89D1F957D87D4192D79 /* DZNPhotoPickerController-Private.xcconfig */;
+			baseConfigurationReference = D14AC22B7A91D89BE51D698A9048EC53 /* DZNPhotoPickerController-Private.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/DZNPhotoPickerController/DZNPhotoPickerController-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
-			name = Release;
+			name = Debug;
 		};
 		CDC86A90CB5385B689BDC135BF8A56A3 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -400,22 +416,6 @@
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
-		};
-		D1B0377435CBDDEAF003B88B813A07F2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 07BF73F79D3DF89D1F957D87D4192D79 /* DZNPhotoPickerController-Private.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/DZNPhotoPickerController/DZNPhotoPickerController-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
 		};
 		FB45FFD90572718D82AB9092B750F0CA /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -463,20 +463,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		419315E3F0A3DEE945AF6DBC32EAA6F3 /* Build configuration list for PBXNativeTarget "DZNPhotoPickerController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA9AC555E10D9B1E84DB559AC2AE1769 /* Debug */,
+				59229B5CB83E7CF85A7E721D9FB43651 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		60C5E1B8C548988B8E0F6B9CC07B3273 /* Build configuration list for PBXNativeTarget "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				48F13A2DA59B4BA12B8152120D7C6DCE /* Debug */,
 				CDC86A90CB5385B689BDC135BF8A56A3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BA45CC15A2C5B2538CECAC93FC2A2057 /* Build configuration list for PBXNativeTarget "DZNPhotoPickerController" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D1B0377435CBDDEAF003B88B813A07F2 /* Debug */,
-				B223C013462DE43B5EC3017F84F553BC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
