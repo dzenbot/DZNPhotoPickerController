@@ -1,7 +1,6 @@
 DZNPhotoPickerController
 ========================
 [![Pod Version](http://img.shields.io/cocoapods/v/DZNPhotoPickerController.svg)](https://cocoadocs.org/docsets/DZNPhotoPickerController)
-[![Gittip](http://img.shields.io/gittip/dzenbot.svg)](https://www.gittip.com/dzenbot/)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 [![Screencast Vimeo Video](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_video_placeholder.png)](http://vimeo.com/user3409970/dznphotopickercontroller)
@@ -9,17 +8,17 @@ DZNPhotoPickerController
 A photo search/picker for iOS using popular providers like 500px, Flickr, Instagram, Google, Bing & Getty Images. This control tries to mimic as close as possible UIKit's UIImagePickerController in terms of features, appearance and behaviour.
 
 ### Features
-* Search photos on mutiple service providers (500px, Flickr, Instagram, Google, Bing & Getty Images)
+* Search photos on mutiple service providers (500px, Flickr, Giphy, Instagram, Google Images & Bing Images)
 * Auto-completed typing for easier search (using Flickr's API as a common denominator).
 * Present the photo picker with a pre-defined search term to automatically start searching.
 * Exact same UI layouts and behaviours than UIImagePickerController.
 * Edit photo selections with cropping guides : square, circular (like the Contacts app) and custom size.
 * Circular cropping mode for using with UIImagePickerController (check on UIImagePickerController+Edit).
+* Infinite scrolling.
 * Creative Commons licences optional filtering.
 * App Store safe. Innapropriate content disabled for all services.
 * Option for disabling full sized photo download and retrieving metadata only.
-* iPhone (3.5" & 4") and iPad support.
-* ARC & 64bits support.
+* iOS 8 and 9. iPhone 4, 5 and 6 support.
 * Localization support (UI strings use NSLocalizedString but it's up to you to localize them on your app)
 <br>
 <br>
@@ -35,10 +34,9 @@ pod 'DZNPhotoPickerController'
 ```
 
 When installing, the following dependencies will be automatically installed:
-- AFNetworking (2.2.1)
-- SDWebImage (3.7)
-- GROAuth2SessionManager (0.2.2)
-- DZNEmptyDataSet (1.3.3)
+- AFNetworking (~> 3.0)
+- SDWebImage (~> 3.7)
+- DZNEmptyDataSet (~> 1.7)
 
 ## How to use
 For complete documentation, [visit CocoaPods' auto-generated doc](http://cocoadocs.org/docsets/DZNPhotoPickerController/)
@@ -84,6 +82,7 @@ picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
 picker.enablePhotoDownload = YES;
 picker.supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
 picker.allowAutoCompletedSearch = YES;
+picker.infiniteScrollingEnabled = YES;
 ```
 
 You can opt-in for block methods instead of using the delegate's methods:
@@ -169,19 +168,19 @@ pod install
 ### Collaboration
 Feel free to collaborate with this project!
 Big thanks to:
-- [SJ Singh](https://github.com/SJApps): Google Images search support.
+- [Greg Knauss](https://github.com/gknauss): Giphy integration.
+- [SJ Singh](https://github.com/SJApps): Google Images integration.
 - [Felipe Saint-Jean](https://github.com/fsaint): 64bits fix of the editing guides.
 - [Adar Porat](https://github.com/aporat) & [Ryan Fitzgerald](https://github.com/ryanfitz): AFNetworking 2.0 upgrade
 - [NikDude](https://github.com/nikdude) & [Rob Phillips](https://github.com/iwasrobbed): cool add-ons
-- [Curtis Thorne](https://github.com/dirtbikerdude91): Bing Images search support.
+- [Curtis Thorne](https://github.com/dirtbikerdude91): Bing Images integration.
 
 ## Apps using DZNPhotoPickerController
-Are you using this control in your apps? Let me know at [iromero@dzen.cl](mailto:iromero@dzen.cl).<br>
-
+Are you using this control in your apps? Simply add it here.<br>
+- [Slack](https://itunes.apple.com/us/app/id618783545)
 - [Epiclist](https://itunes.apple.com/us/app/id789778193/)
 - [Everest](https://itunes.apple.com/us/app/id581016826/)
 - [Nifti](https://itunes.apple.com/us/app/id703097357)
-- [Slack](https://itunes.apple.com/us/app/id618783545)
 
 ## License
 (The MIT License)
