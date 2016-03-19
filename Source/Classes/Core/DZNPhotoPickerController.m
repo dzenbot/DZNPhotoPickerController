@@ -30,7 +30,6 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 {
     self = [super init];
     if (self) {
-        
         self.allowsEditing = NO;
         self.enablePhotoDownload = YES;
         self.allowAutoCompletedSearch = YES;
@@ -48,7 +47,6 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     
     self = [super init];
     if (self) {
-        
         DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:image];
         self.editModeEnabled = YES;
         
@@ -105,15 +103,6 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 
 #pragma mark - Setter methods
 
-- (void)setTitle:(NSString *)title
-{
-    UIViewController *controller = [self.viewControllers firstObject];
-    
-    if ([controller isKindOfClass:[DZNPhotoDisplayViewController class]]) {
-        controller.title = title;
-    }
-}
-
 - (void)setSupportedServices:(DZNPhotoPickerControllerServices)services
 {
     NSAssert(services > 0, @"You must support at least 1 service.");
@@ -156,6 +145,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     [self setViewControllers:@[]];
     
     DZNPhotoDisplayViewController *controller = [[DZNPhotoDisplayViewController alloc] initWithPreferredContentSize:self.view.frame.size];
+    if (self.title) controller.title = self.title;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelPicker:)];
