@@ -319,12 +319,14 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         return NO;
     }
     
-    if (self.metadataList.count > 0) {
-        if (self.metadataList.count%self.resultPerPage == 0 || self.loading) {
-            return YES;
-        }
+    if (self.metadataList.count == 0) {
+        return NO;
     }
-    return NO;
+    else if (self.metadataList.count%kDZNPhotoDisplayMinimumColumnCount != 0) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 
