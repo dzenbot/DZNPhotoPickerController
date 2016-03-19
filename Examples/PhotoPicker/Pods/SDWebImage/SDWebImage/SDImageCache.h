@@ -28,6 +28,8 @@ typedef void(^SDWebImageQueryCompletedBlock)(UIImage *image, SDImageCacheType ca
 
 typedef void(^SDWebImageCheckCacheCompletionBlock)(BOOL isInCache);
 
+typedef void(^SDWebImageCalculateSizeBlock)(NSUInteger fileCount, NSUInteger totalSize);
+
 /**
  * SDImageCache maintains a memory cache and an optional disk cache. Disk cache write operations are performed
  * asynchronous so it doesn’t add unnecessary latency to the UI.
@@ -35,9 +37,30 @@ typedef void(^SDWebImageCheckCacheCompletionBlock)(BOOL isInCache);
 @interface SDImageCache : NSObject
 
 /**
+ * Decompressing images that are downloaded and cached can improve performance but can consume lot of memory.
+ * Defaults to YES. Set this to NO if you are experiencing a crash due to excessive memory consumption.
+ */
+@property (assign, nonatomic) BOOL shouldDecompressImages;
+
+/**
+ *  disable iCloud backup [defaults to YES]
+ */
+@property (assign, nonatomic) BOOL shouldDisableiCloud;
+
+/**
+ * use memory cache [defaults to YES]
+ */
+@property (assign, nonatomic) BOOL shouldCacheImagesInMemory;
+
+/**
  * The maximum "total cost" of the in-memory image cache. The cost function is the number of pixels held in memory.
  */
 @property (assign, nonatomic) NSUInteger maxMemoryCost;
+
+/**
+ * The maximum number of objects the cache should hold.
+ */
+@property (assign, nonatomic) NSUInteger maxMemoryCountLimit;
 
 /**
  * The maximum length of time to keep an image in the cache, in seconds
@@ -62,6 +85,16 @@ typedef void(^SDWebImageCheckCacheCompletionBlock)(BOOL isInCache);
  * @param ns The namespace to use for this cache store
  */
 - (id)initWithNamespace:(NSString *)ns;
+
+/**
+ * Init a new cache store with a specific namespace and directory
+ *
+ * @param ns        The namespace to use for this cache store
+ * @param directory Directory to cache disk images in
+ */
+- (id)initWithNamespace:(NSString *)ns diskCacheDirectory:(NSString *)directory;
+
+-(NSString *)makeDiskCachePath:(NSString*)fullNamespace;
 
 /**
  * Add a read-only cache path to search for images pre-cached by SDImageCache
@@ -131,15 +164,15 @@ typedef void(^SDWebImageCheckCacheCompletionBlock)(BOOL isInCache);
 
 
 /**
- * Remove the image from memory and disk cache synchronously
+ * Remove the image from memory and disk cache asynchronously
  *
  * @param key             The unique image cache key
- * @param completionBlock An block that should be executed after the image has been removed (optional)
+ * @param completion      An block that should be executed after the image has been removed (optional)
  */
-- (void)removeImageForKey:(NSString *)key withCompletion:(void (^)())completion;
+- (void)removeImageForKey:(NSString *)key withCompletion:(SDWebImageNoParamsBlock)completion;
 
 /**
- * Remove the image from memory and optionally disk cache synchronously
+ * Remove the image from memory and optionally disk cache asynchronously
  *
  * @param key      The unique image cache key
  * @param fromDisk Also remove cache entry from disk if YES
@@ -147,13 +180,13 @@ typedef void(^SDWebImageCheckCacheCompletionBlock)(BOOL isInCache);
 - (void)removeImageForKey:(NSString *)key fromDisk:(BOOL)fromDisk;
 
 /**
- * Remove the image from memory and optionally disk cache synchronously
+ * Remove the image from memory and optionally disk cache asynchronously
  *
  * @param key             The unique image cache key
  * @param fromDisk        Also remove cache entry from disk if YES
- * @param completionBlock An block that should be executed after the image has been removed (optional)
+ * @param completion      An block that should be executed after the image has been removed (optional)
  */
-- (void)removeImageForKey:(NSString *)key fromDisk:(BOOL)fromDisk withCompletion:(void (^)())completion;
+- (void)removeImageForKey:(NSString *)key fromDisk:(BOOL)fromDisk withCompletion:(SDWebImageNoParamsBlock)completion;
 
 /**
  * Clear all memory cached images
@@ -162,9 +195,9 @@ typedef void(^SDWebImageCheckCacheCompletionBlock)(BOOL isInCache);
 
 /**
  * Clear all disk cached images. Non-blocking method - returns immediately.
- * @param completionBlock An block that should be executed after cache expiration completes (optional)
+ * @param completion    An block that should be executed after cache expiration completes (optional)
  */
-- (void)clearDiskOnCompletion:(void (^)())completion;
+- (void)clearDiskOnCompletion:(SDWebImageNoParamsBlock)completion;
 
 /**
  * Clear all disk cached images
@@ -176,7 +209,7 @@ typedef void(^SDWebImageCheckCacheCompletionBlock)(BOOL isInCache);
  * Remove all expired cached image from disk. Non-blocking method - returns immediately.
  * @param completionBlock An block that should be executed after cache expiration completes (optional)
  */
-- (void)cleanDiskWithCompletionBlock:(void (^)())completionBlock;
+- (void)cleanDiskWithCompletionBlock:(SDWebImageNoParamsBlock)completionBlock;
 
 /**
  * Remove all expired cached image from disk
@@ -197,7 +230,7 @@ typedef void(^SDWebImageCheckCacheCompletionBlock)(BOOL isInCache);
 /**
  * Asynchronously calculate the disk cache's size.
  */
-- (void)calculateSizeWithCompletionBlock:(void (^)(NSUInteger fileCount, NSUInteger totalSize))completionBlock;
+- (void)calculateSizeWithCompletionBlock:(SDWebImageCalculateSizeBlock)completionBlock;
 
 /**
  *  Async check if image exists in disk cache already (does not load the image)
@@ -221,7 +254,7 @@ typedef void(^SDWebImageCheckCacheCompletionBlock)(BOOL isInCache);
  *  Get the cache path for a certain key (needs the cache path root folder)
  *
  *  @param key  the key (can be obtained from url using cacheKeyForURL)
- *  @param path the cach path root folder
+ *  @param path the cache path root folder
  *
  *  @return the cache path
  */

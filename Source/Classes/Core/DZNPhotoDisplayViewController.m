@@ -521,19 +521,19 @@ Returns the custom collection view layout.
         __weak DZNPhotoEditorViewController *_controller = controller;
         
         [controller.imageView sd_setImageWithPreviousCachedImageWithURL:metadata.sourceURL
-                                              andPlaceholderImage:nil
-                                                          options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
-                                                         progress:NULL
-                                                        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                                            if (!error) {
-                                                                _controller.rightButton.enabled = YES;
-                                                            }
-                                                            else {
-                                                                [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFailPickingNotification object:nil userInfo:@{@"error": error}];
-                                                            }
-                                                            
-                                                            [_controller.activityIndicator stopAnimating];
-                                                        }];
+                                                       placeholderImage:nil
+                                                                options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
+                                                               progress:NULL
+                                                              completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                                                  if (!error) {
+                                                                      _controller.rightButton.enabled = YES;
+                                                                  }
+                                                                  else {
+                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFailPickingNotification object:nil userInfo:@{@"error": error}];
+                                                                  }
+                                                                  
+                                                                  [_controller.activityIndicator stopAnimating];
+                                                              }];
     }
     else {
         

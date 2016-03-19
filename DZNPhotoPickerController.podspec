@@ -17,6 +17,8 @@ Pod::Spec.new do |s|
   s.requires_arc 	  = true
   s.platform        = :ios, '7.0'
 
+  s.public_header_files = 'Source/Classes/*/*.h'
+
   s.subspec 'Core' do |ss|
     ss.source_files = 'Source/Classes/Core/*.{h,m}'
     ss.dependency   'SDWebImage'
