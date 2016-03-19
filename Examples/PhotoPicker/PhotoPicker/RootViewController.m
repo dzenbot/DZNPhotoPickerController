@@ -14,7 +14,6 @@
 
 @interface RootViewController () {
     UIPopoverController *_popoverController;
-    UIActionSheet *_actionSheet;
     NSDictionary *_photoPayload;
 }
 @end
@@ -69,32 +68,47 @@
 
 - (void)showImportActionSheet:(id)sender
 {
-    _actionSheet = [UIActionSheet new];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     if ([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) {
-        [_actionSheet addButtonWithTitle:NSLocalizedString(@"Take Photo", nil)];
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Take Photo...", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera sender:self.navigationItem.leftBarButtonItem];
+        }]];
     }
     
-    [_actionSheet addButtonWithTitle:NSLocalizedString(@"Choose Photo", nil)];
-    [_actionSheet addButtonWithTitle:NSLocalizedString(@"Search Photo", nil)];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Search Photo...", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [self presentPhotoSearch:self.navigationItem.leftBarButtonItem];
+    }]];
     
-    [_actionSheet setCancelButtonIndex:[_actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)]];
-    [_actionSheet setDelegate:self];
-    [_actionSheet showFromBarButtonItem:sender animated:YES];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Choose Photo...", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary sender:self.navigationItem.leftBarButtonItem];
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:NULL]];
+    
+    [self presentViewController:alert animated:YES completion:NULL];
 }
 
 - (void)showEditActionSheet:(id)sender
 {
-    _actionSheet = [UIActionSheet new];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    if (_imageView.image) {
-        [_actionSheet addButtonWithTitle:NSLocalizedString(@"Edit Photo", nil)];
-        [_actionSheet addButtonWithTitle:NSLocalizedString(@"Delete Photo", nil)];
+    if (self.imageView.image) {
+        
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Edit Photo...", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            [self presentPhotoEditor:self.navigationItem.rightBarButtonItem];
+        }]];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete Photo", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+            [self resetContent];
+        }]];
     }
     
-    [_actionSheet setCancelButtonIndex:[_actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)]];
-    [_actionSheet setDelegate:self];
-    [_actionSheet showFromBarButtonItem:sender animated:YES];
+    if (alert.actions.count > 0) {
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:NULL]];
+        
+        [self presentViewController:alert animated:YES completion:NULL];
+    }
 }
 
 - (void)presentPhotoSearch:(id)sender
@@ -106,6 +120,8 @@
     picker.initialSearchTerm = @"Chile";
     picker.enablePhotoDownload = YES;
     picker.allowAutoCompletedSearch = YES;
+    picker.title = @"Hello";
+    
     
     [picker setFinalizationBlock:^(DZNPhotoPickerController *picker, NSDictionary *info){
         [self updateImageWithPayload:info];
@@ -224,10 +240,6 @@
         _popoverController = nil;
     }
     
-    if (_actionSheet.isVisible) {
-        _actionSheet = nil;
-    }
-    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         controller.preferredContentSize = CGSizeMake(320.0, 520.0);
         
@@ -260,30 +272,6 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self handleImagePicker:picker withMediaInfo:nil];
-}
-
-
-#pragma mark - UIActionSheetDelegate methods
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-    
-    if ([buttonTitle isEqualToString:NSLocalizedString(@"Take Photo", nil)]) {
-        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera sender:self.navigationItem.leftBarButtonItem];
-    }
-    else if ([buttonTitle isEqualToString:NSLocalizedString(@"Choose Photo", nil)]) {
-        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary sender:self.navigationItem.leftBarButtonItem];
-    }
-    else if ([buttonTitle isEqualToString:NSLocalizedString(@"Search Photo",nil)]) {
-        [self presentPhotoSearch:self.navigationItem.leftBarButtonItem];
-    }
-    else if ([buttonTitle isEqualToString:NSLocalizedString(@"Edit Photo",nil)]) {
-        [self presentPhotoEditor:self.navigationItem.rightBarButtonItem];
-    }
-    else if ([buttonTitle isEqualToString:NSLocalizedString(@"Delete Photo",nil)]) {
-        [self resetContent];
-    }
 }
 
 
