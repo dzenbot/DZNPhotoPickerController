@@ -25,22 +25,23 @@
   "platforms": {
     "ios": "8.0"
   },
+  "public_header_files": "Source/Classes/*/*.h",
   "subspecs": [
     {
       "name": "Core",
       "source_files": "Source/Classes/Core/*.{h,m}",
       "dependencies": {
-        "SDWebImage": [
-          "~> 3.7"
-        ],
-        "DZNEmptyDataSet": [
-          "~> 1.7"
-        ],
         "DZNPhotoPickerController/Services": [
 
         ],
         "DZNPhotoPickerController/Editor": [
 
+        ],
+        "SDWebImage": [
+          "~> 3.7"
+        ],
+        "DZNEmptyDataSet": [
+          "~> 1.7"
         ]
       }
     },

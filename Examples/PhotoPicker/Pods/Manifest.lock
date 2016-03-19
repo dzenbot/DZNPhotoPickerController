@@ -41,7 +41,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   DZNEmptyDataSet: dd7cca17c1d07dfa78956859b1e70a52505678ef
-  DZNPhotoPickerController: e426dfd78ce0b610be190b61ba47dc354a9610c0
+  DZNPhotoPickerController: abca542cc19974f3dc051d16d30dc1ab599439f5
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
 
