@@ -15,7 +15,6 @@
 #import "DZNPhotoTag.h"
 
 #import "AFNetworkActivityIndicatorManager.h"
-#import "GROAuth2SessionManager.h"
 
 @interface DZNPhotoServiceClient ()
 @property (nonatomic, copy) DZNHTTPRequestCompletion completion;
@@ -52,23 +51,11 @@
         return;
     }
     
-    NSString *accessToken = [self accessToken];
-    
     // Add basic auth to Bing service
     if (self.service == DZNPhotoPickerControllerServiceBingImages) {
         
         //Bing requires basic auth with password and user name as the consumer key.
         [self.requestSerializer setAuthorizationHeaderFieldWithUsername:consumerKey password:consumerKey];
-    }
-    else if (self.service == DZNPhotoPickerControllerServiceGettyImages) {
-        
-        // Getty Images requires authentification via the custom 'Api-Key' HTTP Header
-        [self.requestSerializer setValue:consumerKey forHTTPHeaderField:@"Api-Key"];
-        
-        if (accessToken) {
-            // Getty Images requires basic auth with access token via the standard Authorization HTTP header as type Bearer.
-            [self.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", accessToken] forHTTPHeaderField:@"Authorization"];
-        }
     }
 }
 
@@ -88,25 +75,6 @@
 - (NSString *)credentialIdentifier
 {
     return [self cachedValueForKey:DZNPhotoServiceCredentialIdentifier];
-}
-
-- (NSString *)accessToken
-{
-    NSString *identifier = [self credentialIdentifier];
-    
-    if (!identifier) {
-        return nil;
-    }
-    
-    AFOAuthCredential *credential = [AFOAuthCredential retrieveCredentialWithIdentifier:identifier];
-    
-    // If still found but expired, the credential is deleted and returns nil
-    if (credential.isExpired) {
-        [AFOAuthCredential deleteCredentialWithIdentifier:identifier];
-        return nil;
-    }
-    
-    return credential.accessToken;
 }
 
 - (NSString *)cachedValueForKey:(NSString *)key
@@ -157,13 +125,14 @@
     if (keyForSearchResultPerPage(self.service)) {
         [params setObject:@(resultPerPage) forKey:keyForSearchResultPerPage(self.service)];
     }
-    if (self.service == DZNPhotoPickerControllerService500px || self.service == DZNPhotoPickerControllerServiceFlickr || self.service == DZNPhotoPickerControllerServiceGettyImages) {
-        [params setObject:@(page) forKey:@"page"];
+    
+    if (keyForSearchPage(self.service)) {
+        [params setObject:@(page) forKey:keyForSearchPage(self.service)];
     }
     
     if (self.service == DZNPhotoPickerControllerService500px)
     {
-        [params setObject:@[@(2),@(4)] forKey:@"image_size"];
+        [params setObject:@[@2,@4] forKey:@"image_size"];
         [params setObject:@"Nude" forKey:@"exclude"];
     }
     else if (self.service == DZNPhotoPickerControllerServiceFlickr)
@@ -171,9 +140,10 @@
         [params setObject:photoSearchUrlPathForService(self.service) forKey:@"method"];
         [params setObject:@"json" forKey:@"format"];
         [params setObject:@"photos" forKey:@"media"];
-        [params setObject:@(YES) forKey:@"in_gallery"];
-        [params setObject:@(1) forKey:@"safe_search"];
-        [params setObject:@(1) forKey:@"content_type"];
+        [params setObject:@"relevance" forKey:@"sort"];
+        [params setObject:@YES forKey:@"in_gallery"];
+        [params setObject:@1 forKey:@"safe_search"];
+        [params setObject:@1 forKey:@"content_type"];
     }
     else if (self.service == DZNPhotoPickerControllerServiceGoogleImages)
     {
@@ -189,11 +159,12 @@
         //Default to size medium. Size Large causes some buggy behavior with download times.
         [params setObject:@"'Size:Medium'" forKey:@"ImageFilters"];
     }
-    else if (self.service == DZNPhotoPickerControllerServiceGettyImages)
+    else if (self.service == DZNPhotoPickerControllerServiceGiphy)
     {
-        [params setObject:@"id,thumb,artist,comp,max_dimensions" forKey:@"fields"];
-        [params setObject:@"photography" forKey:@"graphical_styles"];
-        [params setObject:@"true" forKey:@"exclude_nudity"];
+        [params setObject:@"pg" forKey:@"rating"];
+        if (page > 1) {
+            [params setObject:@((page-1)*resultPerPage) forKey:@"offset"];
+        }
     }
     
     return params;
@@ -263,7 +234,7 @@
 - (void)searchPhotosWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage completion:(DZNHTTPRequestCompletion)completion
 {
     NSString *path = photoSearchUrlPathForService(self.service);
-
+    
     NSDictionary *params = [self photosParamsWithKeyword:keyword page:page resultPerPage:resultPerPage];
     [self getObject:[DZNPhotoMetadata class] path:path params:params completion:completion];
 }
@@ -271,22 +242,6 @@
 - (void)getObject:(Class)class path:(NSString *)path params:(NSDictionary *)params completion:(DZNHTTPRequestCompletion)completion
 {
     _loading = YES;
-    
-    if (isAuthenticationRequiredForService(self.service) && ![self accessToken])
-    {
-        [self authenticateWithClientKey:[self consumerKey] secret:[self consumerSecret]
-                       completion:^(NSString *accessToken, NSError *error) {
-                           
-                           if (!error) {
-                               [self getObject:class path:path params:params completion:completion];
-                           }
-                           else {
-                               _loading = NO;
-                               if (completion) completion(nil, error);
-                           }
-                       }];
-        return;
-    }
     
     if (self.service == DZNPhotoPickerControllerServiceInstagram) {
         NSString *keyword = [params objectForKey:keyForSearchTerm(self.service)];
@@ -296,18 +251,16 @@
     else if (self.service == DZNPhotoPickerControllerServiceFlickr) {
         path = @"";
     }
+    
+    [self GET:path parameters:params progress:NULL success:^(NSURLSessionDataTask *task, id response) {
         
-    [self GET:path parameters:params
-      success:^(AFHTTPRequestOperation *operation, id response) {
-          
-          NSData *data = [self processData:response];
-          NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves | NSJSONReadingAllowFragments error:nil];
-          
-          _loading = NO;
-          if (completion) completion([self parseObjects:class withJSON:json], nil);
-          
-      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-          
+        NSData *data = [self processData:response];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves | NSJSONReadingAllowFragments error:nil];
+        
+        _loading = NO;
+        if (completion) completion([self parseObjects:class withJSON:json], nil);
+    }
+      failure:^(NSURLSessionDataTask *task, NSError *error) {
           _loading = NO;
           if (completion) completion(nil, error);
       }];
@@ -316,33 +269,6 @@
 - (void)cancelRequest
 {
     [self.operationQueue cancelAllOperations];
-}
-
-
-#pragma mark - Authentication
-
-- (void)authenticateWithClientKey:(NSString *)key secret:(NSString *)secret completion:(void (^)(NSString *accessToken, NSError *error))completion;
-{
-    NSURL *baseURL = baseURLForService(self.service);
-    GROAuth2SessionManager *sessionManager = [GROAuth2SessionManager managerWithBaseURL:baseURL clientID:key secret:secret];
-    
-    NSString *path = authUrlPathForService(self.service);
-    
-    NSDictionary *params = @{};
-    
-    if (self.service == DZNPhotoPickerControllerServiceGettyImages) {
-        params = @{@"grant_type":@"client_credentials"};
-    }
-    
-    [sessionManager authenticateUsingOAuthWithPath:path
-                                        parameters:params
-                                           success:^(AFOAuthCredential *credential) {
-                                               [self setCredentialIdentifier:sessionManager.serviceProviderIdentifier service:self.service];
-                                               [AFOAuthCredential storeCredential:credential withIdentifier:sessionManager.serviceProviderIdentifier];
-                                               if (completion) completion(credential.accessToken, nil);
-                                           } failure:^(NSError *error) {
-                                               if (completion) completion(nil, error);
-                                           }];
 }
 
 @end

@@ -24,12 +24,12 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 @end
 
 @implementation DZNPhotoPickerController
+@synthesize delegate = _delegate;
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        
         self.allowsEditing = NO;
         self.enablePhotoDownload = YES;
         self.allowAutoCompletedSearch = YES;
@@ -37,29 +37,6 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
         self.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
         self.supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
         self.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
-    }
-    return self;
-}
-
-- (instancetype)initWithEditableImage:(UIImage *)image
-{
-    NSAssert(image, @"Expecting a non-nil image for using the editor.");
-    
-    self = [super init];
-    if (self) {
-        
-        DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:image];
-        self.editModeEnabled = YES;
-        
-        [controller setAcceptBlock:^(DZNPhotoEditorViewController *editor, NSDictionary *userInfo){
-            [[DZNPhotoMetadata new] postMetadataUpdate:userInfo];
-        }];
-        
-        [controller setCancelBlock:^(DZNPhotoEditorViewController *editor){
-            [self cancelPicker:nil];
-        }];
-        
-        [self setViewControllers:@[controller] animated:NO];
     }
     return self;
 }
@@ -104,15 +81,6 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 
 #pragma mark - Setter methods
 
-- (void)setTitle:(NSString *)title
-{
-    UIViewController *controller = [self.viewControllers firstObject];
-    
-    if ([controller isKindOfClass:[DZNPhotoDisplayViewController class]]) {
-        controller.title = title;
-    }
-}
-
 - (void)setSupportedServices:(DZNPhotoPickerControllerServices)services
 {
     NSAssert(services > 0, @"You must support at least 1 service.");
@@ -149,14 +117,13 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 
 #pragma mark - DZNPhotoPickerController methods
 
-/*
- * Shows the photo display controller.
- */
+/* Shows the photo display controller. */
 - (void)showPhotoDisplayController
 {
-    [self setViewControllers:nil];
+    [self setViewControllers:@[]];
     
-    DZNPhotoDisplayViewController *controller = [[DZNPhotoDisplayViewController alloc] init];
+    DZNPhotoDisplayViewController *controller = [[DZNPhotoDisplayViewController alloc] initWithPreferredContentSize:self.view.frame.size];
+    if (self.title) controller.title = self.title;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelPicker:)];
@@ -166,41 +133,29 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     [self setViewControllers:@[controller]];
 }
 
-
-/*
- * Called by a notification whenever the user picks a photo.
- */
+/* Called by a notification whenever the user picks a photo. */
 - (void)didFinishPickingPhoto:(NSNotification *)notification
 {
     if (self.finalizationBlock) {
         self.finalizationBlock(self, notification.userInfo);
-        return;
     }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerController:didFinishPickingPhotoWithInfo:)]){
+    else if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerController:didFinishPickingPhotoWithInfo:)]){
         [self.delegate photoPickerController:self didFinishPickingPhotoWithInfo:notification.userInfo];
     }
 }
 
-/*
- * Called by a notification whenever the picking a photo fails.
- */
+/* Called by a notification whenever the picking a photo fails. */
 - (void)didFailPickingPhoto:(NSNotification *)notification
 {
     if (self.failureBlock) {
         self.failureBlock(self, notification.userInfo[@"error"]);
-        return;
     }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerController:didFailedPickingPhotoWithError:)]){
+    else if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerController:didFailedPickingPhotoWithError:)]){
         [self.delegate photoPickerController:self didFailedPickingPhotoWithError:notification.userInfo[@"error"]];
     }
 }
 
-
-/*
- * Called whenever the user cancels the picker.
- */
+/* Called whenever the user cancels the picker. */
 - (void)cancelPicker:(id)sender
 {
     DZNPhotoDisplayViewController *controller = (DZNPhotoDisplayViewController *)[self.viewControllers firstObject];
@@ -208,14 +163,22 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
         [controller stopLoadingRequest];
     }
     
+    [controller.searchController.searchBar resignFirstResponder];
+    
     if (self.cancellationBlock) {
         self.cancellationBlock(self);
-        return;
     }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerControllerDidCancel:)]) {
+    else if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerControllerDidCancel:)]) {
         [self.delegate photoPickerControllerDidCancel:self];
     }
+}
+
+
+#pragma mark - View Auto-Rotation
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
 }
 
 
@@ -236,19 +199,6 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     _initialSearchTerm = nil;
     _finalizationBlock = nil;
     _cancellationBlock = nil;
-}
-
-
-#pragma mark - View Auto-Rotation
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (BOOL)shouldAutorotate
-{
-    return NO;
 }
 
 @end

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="YBV-VS-LeT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="YBV-VS-LeT">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
         <!--Photo Picker-->
@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="O3o-DN-xac">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O3o-DN-xac">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                         </subviews>
@@ -30,12 +30,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Photo Picker" id="1s5-PR-QJ8">
-                        <barButtonItem key="leftBarButtonItem" systemItem="camera" id="Njw-eF-WGP">
+                        <barButtonItem key="leftBarButtonItem" title="Import" id="Njw-eF-WGP">
                             <connections>
                                 <action selector="importImage:" destination="vXZ-lx-hvc" id="duQ-z7-YGG"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="Gta-By-2qF">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="Gta-By-2qF">
                             <connections>
                                 <action selector="editImage:" destination="vXZ-lx-hvc" id="qga-Je-3ku"/>
                             </connections>
@@ -68,12 +68,4 @@
             <point key="canvasLocation" x="488" y="387"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="placeholder" width="256" height="256"/>
-    </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

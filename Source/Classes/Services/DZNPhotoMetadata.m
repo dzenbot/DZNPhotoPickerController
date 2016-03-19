@@ -101,21 +101,19 @@
             _height = @([[object objectForKey:@"Height"] integerValue]);
             _contentType = [object objectForKey:@"ContentType"];
         }
-        else if ((service & DZNPhotoPickerControllerServiceGettyImages) > 0)
+        else if ((service & DZNPhotoPickerControllerServiceGiphy) > 0)
         {
             _Id = [object objectForKey:@"id"];
-            
-            id urls = [object valueForKeyPath:@"display_sizes.uri"];
-            
-            NSString *sourceUrl = [urls firstObject];
+
+            NSString *sourceUrl = [object valueForKeyPath:@"images.original.url"];
             _sourceURL = [NSURL URLWithString:[sourceUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 
-            NSString *thumbUrl = [urls lastObject];
+            NSString *thumbUrl = [object valueForKeyPath:@"images.fixed_width_downsampled.url"];
             _thumbURL = [NSURL URLWithString:[thumbUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-            
-            _width = [object valueForKeyPath:@"max_dimensions.width"];
-            _height = [object valueForKeyPath:@"max_dimensions.height"];
-            
+
+            _width = [object valueForKeyPath:@"images.original.width"];
+            _height = [object valueForKeyPath:@"images.origninal.height"];
+
             if (_sourceURL) {
                 _contentType = [NSString stringWithFormat:@"image/%@",[_sourceURL pathExtension]];
             }
@@ -197,7 +195,7 @@
     self.contentType = [decoder decodeObjectForKey:@"contentType"];
     self.height = [decoder decodeObjectForKey:@"height"];
     self.width = [decoder decodeObjectForKey:@"width"];
-
+    
     return self;
 }
 

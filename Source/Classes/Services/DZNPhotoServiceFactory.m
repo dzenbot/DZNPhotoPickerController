@@ -47,7 +47,7 @@
     }
     
     DZNPhotoPickerControllerSubscription subscription = [[[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientSubscription)] integerValue];
-        
+    
     DZNPhotoServiceClient *client = [[DZNPhotoServiceClient alloc] initWithService:service subscription:subscription];
     [self.clients addObject:client];
     
@@ -60,7 +60,7 @@
 + (void)setConsumerKey:(NSString *)key consumerSecret:(NSString *)secret service:(DZNPhotoPickerControllerServices)service subscription:(DZNPhotoPickerControllerSubscription)subscription
 {
     NSAssert(key, @"'key' cannot be nil");
-
+    
     [[NSUserDefaults standardUserDefaults] setObject:key forKey:NSUserDefaultsUniqueKey(service, DZNPhotoServiceClientConsumerKey)];
     
     if (isConsumerSecretRequiredForService(service)) {

@@ -12,17 +12,17 @@
 #import "DZNPhotoServiceClientProtocol.h"
 #import "DZNPhotoPickerControllerConstants.h"
 
-UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerKey;
-UIKIT_EXTERN NSString *const DZNPhotoServiceClientConsumerSecret;
-UIKIT_EXTERN NSString *const DZNPhotoServiceClientSubscription;
+extern NSString *const DZNPhotoServiceClientConsumerKey;
+extern NSString *const DZNPhotoServiceClientConsumerSecret;
+extern NSString *const DZNPhotoServiceClientSubscription;
 
-UIKIT_EXTERN NSString *const DZNPhotoServiceCredentialIdentifier;
-UIKIT_EXTERN NSString *const DZNPhotoServiceCredentialAccessToken;
+extern NSString *const DZNPhotoServiceCredentialIdentifier;
+extern NSString *const DZNPhotoServiceCredentialAccessToken;
 
 /**
  The HTTP service client used to interact with multiple RESTful APIs for photo search services.
  */
-@interface DZNPhotoServiceClient : AFHTTPRequestOperationManager <DZNPhotoServiceClientProtocol>
+@interface DZNPhotoServiceClient : AFHTTPSessionManager <DZNPhotoServiceClientProtocol>
 
 /**
  Initializes a new HTTP service client.

@@ -64,7 +64,8 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
 @synthesize bottomView = _bottomView;
 @synthesize activityIndicator = _activityIndicator;
 @synthesize cropSize = _cropSize;
-
+@synthesize rightButton = _rightButton;
+@synthesize leftButton = _leftButton;
 
 #pragma mark - Initializer
 
@@ -220,6 +221,24 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     return _maskView;
 }
 
+- (UIButton *)leftButton
+{
+    if (!_leftButton) {
+        _leftButton = [self buttonWithTitle:NSLocalizedString(@"Cancel", nil)];
+        [_leftButton addTarget:self action:@selector(cancelEdition:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _leftButton;
+}
+
+- (UIButton *)rightButton
+{
+    if (!_rightButton) {
+        _rightButton = [self buttonWithTitle:NSLocalizedString(@"Choose", nil)];
+        [_rightButton addTarget:self action:@selector(acceptEdition:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _rightButton;
+}
+
 - (DZNPhotoEditorContainerView *)bottomView
 {
     if (!_bottomView)
@@ -228,12 +247,6 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
         _bottomView.translatesAutoresizingMaskIntoConstraints = NO;
         _bottomView.tintColor = [UIColor whiteColor];
         _bottomView.userInteractionEnabled = YES;
-        
-        _leftButton = [self buttonWithTitle:NSLocalizedString(@"Cancel", nil)];
-        [_leftButton addTarget:self action:@selector(cancelEdition:) forControlEvents:UIControlEventTouchUpInside];
-        
-        _rightButton = [self buttonWithTitle:NSLocalizedString(@"Choose", nil)];
-        [_rightButton addTarget:self action:@selector(acceptEdition:) forControlEvents:UIControlEventTouchUpInside];
         
         NSMutableDictionary *views = [NSMutableDictionary new];
         NSDictionary *metrics = @{@"hmargin" : @(13), @"barsHeight": @(self.barsHeight)};
@@ -262,7 +275,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
             [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[rightButton]|" options:0 metrics:metrics views:views]];
         }
         
-        if (_cropMode == DZNPhotoEditorViewControllerCropModeCircular)
+        if (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular)
         {
             UILabel *topLabel = [UILabel new];
             topLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -658,7 +671,7 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
     CGFloat maskHeight = (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) ? self.cropSize.width-(self.innerInset*2) : self.cropSize.height;
     
     CGFloat hInset = (self.cropMode == DZNPhotoEditorViewControllerCropModeCircular) ? self.innerInset : 0.0;
-    CGFloat vInset = fabsf((maskHeight-imageSize.height)/2);
+    CGFloat vInset = fabs((maskHeight-imageSize.height)/2);
     
     if (vInset == 0) vInset = 0.25;
     
@@ -757,19 +770,9 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
 
 #pragma mark - View Auto-Rotation
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return NO;
-}
-
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
 {
     return UIInterfaceOrientationPortrait;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (BOOL)shouldAutorotate

@@ -9,66 +9,78 @@
 //
 
 #import "DZNPhotoDisplayViewController.h"
+#import "DZNPhotoSearchResultsController.h"
+#import "DZNPhotoCollectionViewLayout.h"
 #import "DZNPhotoPickerController.h"
-#import "DZNPhotoServiceFactory.h"
-
 #import "DZNPhotoDisplayViewCell.h"
+
+#import "DZNPhotoServiceFactory.h"
 #import "DZNPhotoMetadata.h"
 #import "DZNPhotoTag.h"
 
 #import "SDWebImageManager.h"
 #import "UIImageView+WebCache.h"
-
 #import "UIScrollView+EmptyDataSet.h"
-#import "MBProgressHUD.h"
 
-static NSString *kDZNPhotoCellViewIdentifier = @"kDZNPhotoCellViewIdentifier";
-static NSString *kDZNPhotoFooterViewIdentifier = @"kDZNPhotoFooterViewIdentifier";
-static NSString *kDZNTagCellViewIdentifier = @"kDZNTagCellViewIdentifier";
+static NSString *kDZNPhotoCellViewIdentifier = @"com.dzn.photoCellViewIdentifier";
+static NSString *kDZNSupplementaryViewIdentifier = @"com.dzn.supplementaryViewIdentifier";
+
 static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
+static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
-@interface DZNPhotoDisplayViewController () <UISearchDisplayDelegate, UISearchBarDelegate,
-                                            UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate,
+@interface DZNPhotoDisplayViewController () <UICollectionViewDelegateFlowLayout, UITableViewDelegate,
                                             DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 
-@property (nonatomic, readonly) UISearchBar *searchBar;
-@property (nonatomic, readonly) UISearchDisplayController *searchController;
+@property (nonatomic, readonly) DZNPhotoSearchResultsController *searchResultsController;
 @property (nonatomic, readonly) UIButton *loadButton;
 @property (nonatomic, readonly) UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic, strong) NSMutableArray *metadataList;
-@property (nonatomic, strong) NSMutableArray *tagList;
 @property (nonatomic, strong) NSArray *segmentedControlTitles;
+
 @property (nonatomic) DZNPhotoPickerControllerServices selectedService;
 @property (nonatomic) DZNPhotoPickerControllerServices previousService;
+
 @property (nonatomic) NSInteger resultPerPage;
 @property (nonatomic) NSInteger currentPage;
-@property (nonatomic, readonly) NSTimer *searchTimer;
+
+@property (nonatomic, strong) NSTimer *searchTimer;
+@property (nonatomic, strong) NSError *error;
 
 @end
 
 @implementation DZNPhotoDisplayViewController
-@synthesize searchBar = _searchBar;
 @synthesize searchController = _searchController;
+@synthesize searchResultsController = _searchResultsController;
 @synthesize loadButton = _loadButton;
 @synthesize activityIndicator = _activityIndicator;
-@synthesize searchTimer = _searchTimer;
 
-- (instancetype)init
-{
-    return [self initWithCollectionViewLayout:[DZNPhotoDisplayViewController flowLayout]];
-}
+#pragma mark - Initialization
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
 {
-    self = [super initWithCollectionViewLayout:layout];
+    CGSize size = [UIScreen mainScreen].bounds.size;
+    
+    self = [super initWithCollectionViewLayout:[DZNPhotoDisplayViewController layoutFittingSize:size]];
     if (self) {
-        self.title = NSLocalizedString(@"Internet Photos", nil);
-        
-        _currentPage = 1;
-        _columnCount = 4;
+        [self commontInit];
     }
     return self;
+}
+
+- (instancetype)initWithPreferredContentSize:(CGSize)size
+{
+    self = [super initWithCollectionViewLayout:[DZNPhotoDisplayViewController layoutFittingSize:size]];
+    if (self) {
+        [self commontInit];
+    }
+    return self;
+}
+
+- (void)commontInit
+{
+    self.title = NSLocalizedString(@"Internet Photos", nil);
+    self.currentPage = 0;
 }
 
 
@@ -79,44 +91,37 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
     [super loadView];
     
     _segmentedControlTitles = NSArrayFromServices(self.navigationController.supportedServices);
-    NSAssert((_segmentedControlTitles.count < 4), @"DZNPhotoPickerController doesn't support more than 4 photo service providers");
+    NSAssert((_segmentedControlTitles.count <= 4), @"DZNPhotoPickerController doesn't support more than 4 photo service providers");
     
     _selectedService = DZNFirstPhotoServiceFromPhotoServices(self.navigationController.supportedServices);
     NSAssert((_selectedService > 0), @"DZNPhotoPickerController requieres at least 1 supported photo service provider");
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    self.edgesForExtendedLayout = UIRectEdgeAll;
     self.extendedLayoutIncludesOpaqueBars = YES;
+    self.edgesForExtendedLayout = UIRectEdgeAll;
     self.automaticallyAdjustsScrollViewInsets = YES;
+    self.definesPresentationContext = YES;
     
-    self.collectionView.backgroundView = [UIView new];
-    self.collectionView.backgroundView.backgroundColor = [UIColor whiteColor];
-    self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight;
-    self.collectionView.contentInset = UIEdgeInsetsMake(self.searchBar.frame.size.height+8.0, 0, 0, 0);
-    self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(self.searchBar.frame.size.height, 0, 0, 0);
-    
+    self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.emptyDataSetSource = self;
     self.collectionView.emptyDataSetDelegate = self;
     
     [self.collectionView registerClass:[DZNPhotoDisplayViewCell class] forCellWithReuseIdentifier:kDZNPhotoCellViewIdentifier];
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kDZNPhotoFooterViewIdentifier];
-    
-    [self.searchController.searchResultsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kDZNTagCellViewIdentifier];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kDZNSupplementaryViewIdentifier];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kDZNSupplementaryViewIdentifier];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    if (!_metadataList) {
+    if (!self.metadataList) {
 
-        if (_searchBar.text.length > 0) {
-            [self searchPhotosWithKeyword:_searchBar.text];
+        if (self.searchBar.text.length > 0) {
+            [self searchPhotosWithKeyword:self.searchBar.text];
         }
         else {
-            [self.searchDisplayController setActive:YES];
-            [_searchBar becomeFirstResponder];
+            [self.searchController setActive:YES];
+            [self.searchBar becomeFirstResponder];
         }
     }
 }
@@ -124,93 +129,91 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 
 #pragma mark - Getter methods
 
-/*
-Returns the custom collection view layout.
- */
-+ (UICollectionViewFlowLayout *)flowLayout
+/* Returns the custom collection view layout. */
++ (UICollectionViewFlowLayout *)layoutFittingSize:(CGSize)size
 {
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.minimumLineSpacing = 2.0;
-    flowLayout.minimumInteritemSpacing = 0.0;
-    return flowLayout;
+    NSUInteger columnCount = kDZNPhotoDisplayMinimumColumnCount;
+    CGFloat lineSpacing = 2.0;
+    
+    DZNPhotoCollectionViewLayout *layout = [DZNPhotoCollectionViewLayout layoutFittingWidth:size.width columnCount:columnCount];
+    layout.minimumLineSpacing = lineSpacing;
+    layout.minimumInteritemSpacing = lineSpacing;
+    
+    CGFloat itemWidth = (size.width - (layout.minimumInteritemSpacing * (columnCount-1))) / columnCount;
+    layout.itemSize = CGSizeMake(itemWidth, itemWidth);
+    
+    CGSize referenceSize = CGSizeMake(size.width, kDZNPhotoDisplayMinimumBarHeight);
+    layout.footerReferenceSize = referenceSize;
+    
+    referenceSize.height += layout.minimumLineSpacing;
+    layout.headerReferenceSize = referenceSize;
+    
+    return layout;
 }
 
-/*
- Returns the selected service client.
- */
+/*  Returns the selected service client. */
 - (id<DZNPhotoServiceClientProtocol>)selectedServiceClient
 {
     return [[DZNPhotoServiceFactory defaultFactory] clientForService:self.selectedService];
 }
 
-/*
- Returns the navigation controller casted to DZNPhotoPickerController.
- */
+/* Returns the navigation controller casted to DZNPhotoPickerController. */
 - (DZNPhotoPickerController *)navigationController
 {
     return (DZNPhotoPickerController *)[super navigationController];
 }
 
-/*
- Returns the custom search display controller.
- */
-- (UISearchDisplayController *)searchController
+/*  Returns the custom search display controller. */
+- (UISearchController *)searchController
 {
-    if (!_searchController)
-    {
-        _searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-        _searchController.searchResultsTableView.backgroundColor = [UIColor whiteColor];
-        _searchController.searchResultsTableView.tableHeaderView = [UIView new];
-        _searchController.searchResultsTableView.tableFooterView = [UIView new];
-        _searchController.searchResultsTableView.backgroundView = [UIView new];
-        _searchController.searchResultsTableView.backgroundView.backgroundColor = [UIColor whiteColor];
-        _searchController.searchResultsTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeNone;
-        _searchController.searchResultsDataSource = self;
-        _searchController.searchResultsDelegate = self;
-        _searchController.delegate = self;
+    if (!_searchController) {
         
-        [_searchController setValue:@"" forKey:@"noResultsMessage"];
+        UIViewController *resultsController = self.canSearchTags ? self.searchResultsController : nil;
+        
+        _searchController = [[UISearchController alloc] initWithSearchResultsController:resultsController];
+        _searchController.searchResultsUpdater = self;
+        _searchController.delegate = self;
+        _searchController.dimsBackgroundDuringPresentation = YES;
+        _searchController.hidesNavigationBarDuringPresentation = YES;
+
+        UISearchBar *searchBar = _searchController.searchBar;
+        searchBar.placeholder = NSLocalizedString(@"Search", nil);
+        searchBar.text = self.navigationController.initialSearchTerm;
+        searchBar.scopeButtonTitles = [self segmentedControlTitles];
+        searchBar.searchBarStyle = UISearchBarStyleProminent;
+        searchBar.barStyle = UIBarStyleDefault;
+        searchBar.selectedScopeButtonIndex = 0;
+        searchBar.clipsToBounds = NO;
+        searchBar.delegate = self;
     }
     return _searchController;
 }
 
-/*
- Returns the custom search bar.
- */
-- (UISearchBar *)searchBar
+- (DZNPhotoSearchResultsController *)searchResultsController
 {
-    if (!_searchBar)
-    {
-        _searchBar = [[UISearchBar alloc] initWithFrame:[self searchBarFrame]];
-        _searchBar.placeholder = NSLocalizedString(@"Search", nil);
-        _searchBar.barStyle = UIBarStyleDefault;
-        _searchBar.searchBarStyle = UISearchBarStyleDefault;
-        _searchBar.backgroundColor = [UIColor whiteColor];
-        _searchBar.barTintColor = [UIColor colorWithRed:202.0/255.0 green:202.0/255.0 blue:207.0/255.0 alpha:1.0];
-        _searchBar.tintColor = self.view.window.tintColor;
-        _searchBar.keyboardType = UIKeyboardAppearanceDark;
-        _searchBar.text = self.navigationController.initialSearchTerm;
-        _searchBar.delegate = self;
-        
-        if (self.segmentedControlTitles.count > 1) {
-            _searchBar.scopeButtonTitles = [self segmentedControlTitles];
-        }
-        
-        _searchBar.selectedScopeButtonIndex = 0;
-        
-        [self.view addSubview:_searchBar];
+    if (!_searchResultsController) {
+        _searchResultsController = [[DZNPhotoSearchResultsController alloc] initWithStyle:UITableViewStylePlain];
+        _searchResultsController.tableView.tableFooterView = [UIView new];
+        _searchResultsController.tableView.delegate = self;
     }
-    return _searchBar;
+    return _searchResultsController;
 }
 
-/*
- Returns the 'Load More' footer button.
- */
+- (UISearchBar *)searchBar
+{
+    return self.searchController.searchBar;
+}
+
+- (UITableView *)searchResultsTableView
+{
+    return _searchResultsController.tableView;
+}
+
 - (UIButton *)loadButton
 {
-    if (!_loadButton)
-    {
+    if (!_loadButton) {
         _loadButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        _loadButton.translatesAutoresizingMaskIntoConstraints = NO;
         [_loadButton setTitle:NSLocalizedString(@"Load More", nil) forState:UIControlStateNormal];
         [_loadButton addTarget:self action:@selector(loadMorePhotos:) forControlEvents:UIControlEventTouchUpInside];
         [_loadButton.titleLabel setFont:[UIFont systemFontOfSize:17.0]];
@@ -219,73 +222,58 @@ Returns the custom collection view layout.
     return _loadButton;
 }
 
-/*
- * Returns the activity indicator.
- */
 - (UIActivityIndicatorView *)activityIndicator
 {
-    if (!_activityIndicator)
-    {
-        _activityIndicator = [[UIActivityIndicatorView alloc] init];
-        _activityIndicator.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    if (!_activityIndicator) {
+        _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        _activityIndicator.translatesAutoresizingMaskIntoConstraints = NO;
+        _activityIndicator.color = [UIColor grayColor];
     }
     return _activityIndicator;
 }
 
-/*
- Returns the appropriate cell view's size.
- */
+/* Returns the appropriate cell view's size. */
 - (CGSize)cellSize
 {
-    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
-    CGFloat size = (self.navigationController.view.bounds.size.width/_columnCount) - flowLayout.minimumLineSpacing;
-    return CGSizeMake(size, size);
+    DZNPhotoCollectionViewLayout *layout = (DZNPhotoCollectionViewLayout *)self.collectionView.collectionViewLayout;
+    return layout.itemSize;
 }
 
-/*
- Returns the appropriate footer view's size.
- */
-- (CGSize)footerSize
+/* Returns the appropriate header and footer view's size. */
+- (CGSize)supplementaryViewSize
 {
-    return CGSizeMake(0, (self.navigationController.view.frame.size.height > 480.0) ? 60.0 : 50.0);
+    DZNPhotoCollectionViewLayout *layout = (DZNPhotoCollectionViewLayout *)self.collectionView.collectionViewLayout;
+    return layout.headerReferenceSize;
 }
 
-/*
- Returns the collectionView's content size.
- */
+/* Returns the collectionView's content size. */
 - (CGSize)topBarsSize
 {
-    CGFloat topBarsHeight = 0;
+    CGFloat topBarsHeight = 0.0;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        CGFloat statusHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+        CGFloat statusHeight = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
         topBarsHeight += statusHeight;
     }
     
-    CGFloat navigationHeight = self.navigationController.navigationBar.frame.size.height;
-    topBarsHeight += navigationHeight;
-    
-    topBarsHeight += self.searchBar.frame.size.height+8.0;
+    topBarsHeight += CGRectGetHeight(self.navigationController.navigationBar.frame);
+    topBarsHeight += self.searchBar.frame.size.height;
     
     return CGSizeMake(self.navigationController.view.frame.size.width, topBarsHeight);
 }
 
-/*
- The collectionView's content size calculation.
- */
+/* The collectionView's content size calculation. */
 - (CGSize)contentSize
 {
-    CGFloat viewHeight = self.navigationController.view.frame.size.height;
-    CGFloat topBarsHeight = [self topBarsSize].height;
-    return CGSizeMake(self.navigationController.view.frame.size.width, viewHeight-topBarsHeight);
+    CGSize size = self.navigationController.view.frame.size;
+    size.height -= [self topBarsSize].height;
+    return size;
 }
 
-/*
- The search bar appropriate rectangle.
- */
+/* The search bar appropriate rectangle. */
 - (CGRect)searchBarFrame
 {
-    BOOL shouldShift = _searchBar.showsScopeBar;
+    BOOL shouldShift = self.searchBar.showsScopeBar;
     
     CGFloat statusHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? [UIApplication sharedApplication].statusBarFrame.size.height : 0.0;
     
@@ -304,13 +292,10 @@ Returns the custom collection view layout.
  Calculates the available row count based on the collectionView's content size and the cell height.
  This allows to easily modify the collectionView layout, for displaying the image thumbs.
  */
-- (NSInteger)rowCount
+- (NSUInteger)rowCount
 {
     CGSize contentSize = [self contentSize];
-    
-    CGFloat footerSize = [self footerSize].height;
-    contentSize.height -= footerSize;
-    contentSize.height += self.navigationController.navigationBar.frame.size.height;
+    contentSize.height *= 2.0;
     
     CGFloat cellHeight = [self cellSize].height;
     
@@ -324,110 +309,65 @@ Returns the custom collection view layout.
     return count;
 }
 
-/*
- Returns the appropriate number of result per page.
- */
+/* Returns the appropriate number of result per page. */
 - (NSInteger)resultPerPage
 {
-    return self.columnCount * self.rowCount;
+    return self.rowCount * kDZNPhotoDisplayMinimumColumnCount;
 }
 
-/*
- Checks if the search string is long enough to perfom a tag search.
- */
-- (BOOL)canSearchTag:(NSString *)term
+/* Checks if an additional footer view for loading more content should be displayed. */
+- (BOOL)canDisplayFooterView
 {
-    if (!self.navigationController.allowAutoCompletedSearch) {
+    if (self.error) {
         return NO;
     }
     
-    if ([self.searchDisplayController.searchBar isFirstResponder] && term.length > 2) {
-        
-        [self resetSearchTimer];
-        
-        _searchTimer = [NSTimer timerWithTimeInterval:0.25 target:self selector:@selector(searchTag:) userInfo:@{@"term": term} repeats:YES];
-        [[NSRunLoop currentRunLoop] addTimer:_searchTimer forMode:NSDefaultRunLoopMode];
-        
-        return YES;
-    }
-    else {
-        [_tagList removeAllObjects];
-        [self.searchDisplayController.searchResultsTableView reloadData];
+    if (self.metadataList.count == 0) {
         return NO;
     }
+    else if (self.metadataList.count%kDZNPhotoDisplayMinimumColumnCount != 0) {
+        return NO;
+    }
+    
+    return YES;
 }
 
-/*
- Checks if an additional footer view for loading more content should be displayed.
- */
-- (BOOL)canDisplayFooterView
+
+- (DZNPhotoMetadata *)metadataAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_metadataList.count > 0) {
-        return (_metadataList.count%self.resultPerPage == 0) ? YES : NO;
+    if (indexPath.row >= self.metadataList.count) {
+        return nil;
     }
-    return self.loading;
+    
+    return self.metadataList[indexPath.row];
 }
 
 
 #pragma mark - Setter methods
 
-/*
- Sets the search bar text, specially when the UISearchDisplayController when dimissing removes the bar's text by default.
- */
+/* Sets the search bar text, specially when the UISearchDisplayController when dimissing removes the bar's text by default. */
 - (void)setSearchBarText:(NSString *)text
 {
-    self.searchDisplayController.searchBar.text = text;
+    self.searchBar.text = text;
 }
 
-/*
- Sets the current photo search response and refreshs the collection view.
- */
+/* Sets the current photo search response and refreshs the collection view. */
 - (void)setPhotoSearchList:(NSArray *)list
 {
     [self setActivityIndicatorsVisible:NO];
     
-    if (!_metadataList) _metadataList = [NSMutableArray new];
+    if (!self.metadataList) self.metadataList = [NSMutableArray new];
     
-    [_metadataList addObjectsFromArray:list];
+    [self.metadataList addObjectsFromArray:list];
+    self.currentPage++;
     
     [self.collectionView reloadData];
-//    [self.collectionView reloadDataSetIfNeeded];
-    
-    CGSize contentSize = self.collectionView.contentSize;
-    self.collectionView.contentSize = CGSizeMake(contentSize.width, contentSize.height+[self footerSize].height);
 }
 
-/*
- Sets a tag search response and refreshs the results tableview from the UISearchDisplayController.
- */
-- (void)setTagSearchList:(NSArray *)list
-{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
-    if (!_tagList) _tagList = [NSMutableArray new];
-    else [_tagList removeAllObjects];
-    
-    [_tagList addObjectsFromArray:list];
-    
-    if (_tagList.count == 1) {
-        [_tagList removeAllObjects];
-        
-        DZNPhotoTag *tag = [DZNPhotoTag newTagWithTerm:_searchBar.text service:_selectedService];
-        [_tagList addObject:tag];
-    }
-    
-    [self.searchDisplayController.searchResultsTableView reloadData];
-}
-
-/*
- Toggles the activity indicators on the status bar & footer view.
- */
+/* Toggles the activity indicators on the status bar & footer view. */
 - (void)setActivityIndicatorsVisible:(BOOL)visible
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = visible;
-    
     if (visible) {
-        self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
         [self.activityIndicator startAnimating];
         self.loadButton.hidden = YES;
     }
@@ -440,9 +380,7 @@ Returns the custom collection view layout.
     _loading = visible;
 }
 
-/*
- Sets the request errors with an alert view.
- */
+/* Sets the request errors with an alert view. */
 - (void)setLoadingError:(NSError *)error
 {
     switch (error.code) {
@@ -454,13 +392,11 @@ Returns the custom collection view layout.
     
     [self setActivityIndicatorsVisible:NO];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
-    [alert show];
+    self.error = error;
+    [self.collectionView reloadData];
 }
 
-/*
- Invalidates and nullifys the search timer.
- */
+/* Invalidates and nullifys the search timer. */
 - (void)resetSearchTimer
 {
     if (_searchTimer) {
@@ -469,13 +405,11 @@ Returns the custom collection view layout.
     }
 }
 
-/*
- Removes all photo metadata from the array and cleans the collection view from photo thumbnails.
- */
+/* Removes all photo metadata from the array and cleans the collection view from photo thumbnails. */
 - (void)resetPhotos
 {
-    [_metadataList removeAllObjects];
-    _currentPage = 1;
+    [self.metadataList removeAllObjects];
+    self.currentPage = 0;
     
     [self.collectionView reloadData];
 }
@@ -491,16 +425,16 @@ Returns the custom collection view layout.
  - Push into the edit controller for cropping
  - Download the full size photo and dismiss the controller
  */
-- (void)selectedItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)selectedMetadata:(DZNPhotoMetadata *)metadata
 {
-    DZNPhotoMetadata *metadata = [_metadataList objectAtIndex:indexPath.row];
-    
     if (!self.navigationController.enablePhotoDownload) {
         [metadata postMetadataUpdate:nil];
     }
     else if (self.navigationController.allowsEditing) {
         
-        DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] init];
+        UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:metadata.sourceURL.absoluteString];
+        
+        DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:image];
         controller.cropMode = self.navigationController.cropMode;
         controller.cropSize = self.navigationController.cropSize;
         
@@ -515,35 +449,30 @@ Returns the custom collection view layout.
             [self.navigationController popViewControllerAnimated:YES];
         }];
         
-        controller.rightButton.enabled = NO;
-        [controller.activityIndicator startAnimating];
-        
-        __weak DZNPhotoEditorViewController *_controller = controller;
-        
-        [controller.imageView sd_setImageWithPreviousCachedImageWithURL:metadata.sourceURL
-                                              andPlaceholderImage:nil
-                                                          options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
-                                                         progress:NULL
-                                                        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                                            if (!error) {
-                                                                _controller.rightButton.enabled = YES;
-                                                            }
-                                                            else {
-                                                                [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFailPickingNotification object:nil userInfo:@{@"error": error}];
-                                                            }
-                                                            
-                                                            [_controller.activityIndicator stopAnimating];
-                                                        }];
+        if (!image) {
+            controller.rightButton.enabled = NO;
+            [controller.activityIndicator startAnimating];
+            
+            __weak DZNPhotoEditorViewController *weakController = controller;
+            
+            [controller.imageView sd_setImageWithPreviousCachedImageWithURL:metadata.sourceURL
+                                                           placeholderImage:nil
+                                                                    options:SDWebImageCacheMemoryOnly|SDWebImageProgressiveDownload|SDWebImageRetryFailed
+                                                                   progress:NULL
+                                                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                                                      if (!error) {
+                                                                          weakController.rightButton.enabled = YES;
+                                                                          weakController.imageView.image = image;
+                                                                      }
+                                                                      else {
+                                                                          [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFailPickingNotification object:nil userInfo:@{@"error": error}];
+                                                                      }
+                                                                      
+                                                                      [weakController.activityIndicator stopAnimating];
+                                                                  }];
+        }
     }
     else {
-        
-        // Presents a hud right after selecting an image while it's been downloaded
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-        hud.mode = MBProgressHUDModeIndeterminate;
-        hud.labelText = NSLocalizedString(@"Loading", nil);
-        hud.animationType = MBProgressHUDAnimationFade;
-        hud.dimBackground = YES;
-        
         [self setActivityIndicatorsVisible:YES];
         
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:metadata.sourceURL
@@ -551,7 +480,6 @@ Returns the custom collection view layout.
                                                              progress:NULL
                                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
                                                                 if (image) {
-                                                                    
                                                                     NSDictionary *userInfo = @{UIImagePickerControllerOriginalImage: image};
                                                                     [metadata postMetadataUpdate:userInfo];
                                                                 }
@@ -559,12 +487,38 @@ Returns the custom collection view layout.
                                                                     [self setLoadingError:error];
                                                                 }
                                                                 
-                                                                [hud hide:YES];
                                                                 [self setActivityIndicatorsVisible:NO];
                                                             }];
     }
+}
+
+- (BOOL)canSearchTags
+{
+    if (!self.navigationController.allowAutoCompletedSearch) {
+        return NO;
+    }
     
-    [self.collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    id <DZNPhotoServiceClientProtocol> client = [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
+    if (!client) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+/* Checks if the search string is long enough to perfom a tag search. */
+- (void)shouldSearchTag:(NSString *)term
+{
+    if (!self.canSearchTags) {
+        return;
+    }
+    
+    [self resetSearchTimer];
+    
+    if ([self.searchBar isFirstResponder] && term.length > 2) {
+        self.searchTimer = [NSTimer timerWithTimeInterval:0.25 target:self selector:@selector(searchTag:) userInfo:@{@"term": term} repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:self.searchTimer forMode:NSDefaultRunLoopMode];
+    }
 }
 
 /*
@@ -573,35 +527,36 @@ Returns the custom collection view layout.
  */
 - (void)searchTag:(NSTimer *)timer
 {
+    if (!self.canSearchTags) {
+        return;
+    }
+    
+    _error = nil;
+    
     NSString *term = [timer.userInfo objectForKey:@"term"];
     [self resetSearchTimer];
     
     id <DZNPhotoServiceClientProtocol> client = [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
-    
-    if (!client) {
-        return;
-    }
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     [client searchTagsWithKeyword:term
                        completion:^(NSArray *list, NSError *error) {
+                           
                            if (error) [self setLoadingError:error];
-                           else [self setTagSearchList:list];
+                           else [_searchResultsController setSearchResults:list];
                        }];
 }
 
-/*
- Checks if the search string is valid and conditions are ok, for performing a photo search.
- */
+/* Checks if the search string is valid and conditions are ok, for performing a photo search. */
 - (void)shouldSearchPhotos:(NSString *)keyword
 {
-    if ((_previousService != _selectedService || _searchBar.text != keyword) && keyword.length > 1) {
-        
-        _previousService = _selectedService;
-        [self resetPhotos];
-        [self searchPhotosWithKeyword:keyword];
+    if ([self.searchBar.text isEqualToString:keyword] && self.previousService == self.selectedService) {
+        return;
     }
+    
+    self.previousService = self.selectedService;
+    
+    [self resetPhotos];
+    [self searchPhotosWithKeyword:keyword];
 }
 
 /*
@@ -610,41 +565,44 @@ Returns the custom collection view layout.
  */
 - (void)searchPhotosWithKeyword:(NSString *)keyword
 {
+    _error = nil;
+    
     [self setActivityIndicatorsVisible:YES];
     [self.collectionView reloadData];
     
-    _searchBar.text = keyword;
+    self.searchBar.text = keyword;
 
     [self.selectedServiceClient searchPhotosWithKeyword:keyword
-                                                   page:_currentPage
+                                                   page:self.currentPage
                                           resultPerPage:self.resultPerPage
                                              completion:^(NSArray *list, NSError *error) {
+                                                 
                                                  if (error) [self setLoadingError:error];
                                                  else [self setPhotoSearchList:list];
                                              }];
 }
 
-/*
- Stops the loading search request of the selected photo service.
- */
+/* Stops the loading search request of the selected photo service. */
 - (void)stopLoadingRequest
 {
-    if (self.loading) {
-        
-        [self setActivityIndicatorsVisible:NO];
-        [self.selectedServiceClient cancelRequest];
+    if (!self.loading) {
+        return;
     }
+    
+    [self setActivityIndicatorsVisible:NO];
+    [self.selectedServiceClient cancelRequest];
 }
 
-/*
- Triggers a photo search for the next page.
- */
-- (void)loadMorePhotos:(UIButton *)sender
+/* Triggers a photo search for the next page. */
+- (void)loadMorePhotos:(UIButton *)button
 {
-    sender.enabled = NO;
+    if (self.isLoading) {
+        return;
+    }
+        
+    button.enabled = NO;
     
-    _currentPage++;
-    [self searchPhotosWithKeyword:_searchBar.text];
+    [self searchPhotosWithKeyword:self.searchBar.text];
 }
 
 
@@ -657,7 +615,7 @@ Returns the custom collection view layout.
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _metadataList.count;
+    return self.metadataList.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -665,43 +623,83 @@ Returns the custom collection view layout.
     DZNPhotoDisplayViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDZNPhotoCellViewIdentifier forIndexPath:indexPath];
     cell.tag = indexPath.row;
     
-    if (_metadataList.count > 0) {
-        DZNPhotoMetadata *metadata = [_metadataList objectAtIndex:indexPath.row];
+    if (self.metadataList.count > 0) {
+        DZNPhotoMetadata *metadata = [self metadataAtIndexPath:indexPath];
         [cell setThumbURL:metadata.thumbURL];
     }
 
     return cell;
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
 {
-    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+    UICollectionReusableView *supplementaryView = [collectionView dequeueReusableSupplementaryViewOfKind:elementKind withReuseIdentifier:kDZNSupplementaryViewIdentifier forIndexPath:indexPath];
+    
+    if ([elementKind isEqualToString:UICollectionElementKindSectionHeader]) {
+        if (supplementaryView.subviews.count == 0) {
+            [supplementaryView addSubview:self.searchBar];
+        }
+    }
+    else if ([elementKind isEqualToString:UICollectionElementKindSectionFooter]) {
         
-        UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kDZNPhotoFooterViewIdentifier forIndexPath:indexPath];
+        [[supplementaryView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [supplementaryView removeConstraints:supplementaryView.constraints];
+        
+        UIView *subview = nil;
         
         if ([self canDisplayFooterView]) {
-            UIView *subview = nil;
-            
-            if (self.isLoading) subview = self.activityIndicator;
-            else subview = self.loadButton;
-            
-            subview.frame = footer.bounds;
-            
-            if (!subview.superview) {
-                [footer addSubview:subview];
+            if (self.isLoading || self.navigationController.infiniteScrollingEnabled) {
+                subview = self.activityIndicator;
+            }
+            else {
+                subview = self.loadButton;
             }
         }
-        else {
-            [[footer subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        }
         
-        return footer;
+        if (subview && !subview.superview) {
+            [supplementaryView addSubview:subview];
+            
+            NSDictionary *views = NSDictionaryOfVariableBindings(subview);
+            
+            [supplementaryView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[subview]|" options:0 metrics:nil views:views]];
+            [supplementaryView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[subview]|" options:0 metrics:nil views:views]];
+            
+            [supplementaryView addConstraint:[NSLayoutConstraint constraintWithItem:supplementaryView
+                                                                          attribute:NSLayoutAttributeCenterX
+                                                                          relatedBy:NSLayoutRelationEqual
+                                                                             toItem:subview
+                                                                          attribute:NSLayoutAttributeCenterX
+                                                                         multiplier:1.0
+                                                                           constant:0.0]];
+            
+            [supplementaryView addConstraint:[NSLayoutConstraint constraintWithItem:supplementaryView
+                                                                          attribute:NSLayoutAttributeCenterY
+                                                                          relatedBy:NSLayoutRelationEqual
+                                                                             toItem:subview
+                                                                          attribute:NSLayoutAttributeCenterY
+                                                                         multiplier:1.0
+                                                                           constant:0.0]];
+        }
     }
-    return nil;
+    return supplementaryView;
 }
 
 
 #pragma mark - UICollectionViewDataDelegate methods
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
+{
+    if ([elementKind isEqualToString:UICollectionElementKindSectionFooter]) {
+        if (self.navigationController.infiniteScrollingEnabled && [self canDisplayFooterView] && !self.isLoading) {
+            
+            // It is important to schedule this call on the next run loop so it doesn't
+            // interfere with the current scroll's run loop.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self loadMorePhotos:self.loadButton];
+            });
+        }
+    }
+}
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 {
@@ -713,16 +711,14 @@ Returns the custom collection view layout.
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([_searchBar isFirstResponder]) {
-        [_searchBar resignFirstResponder];
-        [self performSelector:@selector(selectedItemAtIndexPath:) withObject:indexPath afterDelay:0.3];
+    if ([self.searchBar isFirstResponder]) {
+        [self.searchBar resignFirstResponder];
     }
-    else [self selectedItemAtIndexPath:indexPath];
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    
+    DZNPhotoMetadata *metada = [self metadataAtIndexPath:indexPath];
+    [self selectedMetadata:metada];
+    
+    [self.collectionView deselectItemAtIndexPath:indexPath animated:YES];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
@@ -733,29 +729,6 @@ Returns the custom collection view layout.
     return YES;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath;
-{
-
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath;
-{
-    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [self cellSize];
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
-{
-    if (_metadataList.count > 0) {
-        return [self footerSize];
-    }
-    else return CGSizeZero;
-}
-
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DZNPhotoDisplayViewCell *cell = (DZNPhotoDisplayViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -763,7 +736,7 @@ Returns the custom collection view layout.
     if (cell.imageView.image) {
         return YES;
     }
-    else return NO;
+    return NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
@@ -786,53 +759,19 @@ Returns the custom collection view layout.
 }
 
 
-#pragma mark - UITableViewDataSource methods
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return _tagList.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDZNTagCellViewIdentifier];
-    NSString *text = @"";
-    
-    if (indexPath.row < _tagList.count) {
-        
-        DZNPhotoTag *tag = [_tagList objectAtIndex:indexPath.row];
-        
-        if (_tagList.count == 1) text = [NSString stringWithFormat:NSLocalizedString(@"Search for \"%@\"", nil), tag.term];
-        else text = tag.term;
-    }
-    
-    cell.textLabel.text = text;
-    
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return  kDZNPhotoDisplayMinimumBarHeight;
-}
-
-
 #pragma mark - UITableViewDelegate methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DZNPhotoTag *tag = [_tagList objectAtIndex:indexPath.row];
-    
-    [self shouldSearchPhotos:tag.term];
-    [self.searchDisplayController setActive:NO animated:YES];
-    [self setSearchBarText:tag.term];
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.searchController setActive:NO];
+    
+    DZNPhotoTag *tag = [_searchResultsController tagAtIndexPath:indexPath];
+    
+    if (tag) {
+        [self shouldSearchPhotos:tag.term];
+        [self setSearchBarText:tag.term];
+    }
 }
 
 
@@ -856,47 +795,30 @@ Returns the custom collection view layout.
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-
+    [self.searchResultsController setSearchResults:nil];
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
-    [_tagList removeAllObjects];
-}
-
-- (void)searchBarShouldShift:(BOOL)shift
-{
-    [self searchBarShouldShift:shift animated:YES];
-}
-
-- (void)searchBarShouldShift:(BOOL)shift animated:(BOOL)animated
-{
-    _searchBar.showsScopeBar = shift;
-    NSTimeInterval duration = animated ? 0.25 : 0.0;
-    
-    [UIView animateWithDuration:duration
-                     animations:^{
-                         [self.searchBar setFrame:[self searchBarFrame]];
-                         [self.searchDisplayController setActive:shift];
-                     }
-                     completion:NULL];
+    // do something
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    NSString *text = searchBar.text;
+    NSString *term = searchBar.text;
+    [self.searchController setActive:NO];
     
-    [self shouldSearchPhotos:text];
-    [self searchBarShouldShift:NO];
-    [self setSearchBarText:text];
+    [self shouldSearchPhotos:term];
+    [self setSearchBarText:term];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    NSString *text = searchBar.text;
-    
-    [self searchBarShouldShift:NO];
-    [self setSearchBarText:text];
+    NSString *term = searchBar.text;
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self setSearchBarText:term];
+    });
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
@@ -906,71 +828,46 @@ Returns the custom collection view layout.
 }
 
 
-#pragma mark - UISearchDisplayDelegate methods
+#pragma mark - UISearchResultsUpdating methods
 
-- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
-    [self searchBarShouldShift:YES];
+    [self shouldSearchTag:self.searchBar.text];
 }
 
-- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
+
+#pragma mark - UISearchControllerDelegate
+
+// Called after the search controller's search bar has agreed to begin editing or when
+// 'active' is set to YES.
+// If you choose not to present the controller yourself or do not implement this method,
+// a default presentation is performed on your behalf.
+//
+// Implement this method if the default presentation is not adequate for your purposes.
+//
+- (void)presentSearchController:(UISearchController *)searchController
 {
     
 }
 
-- (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
+- (void)willPresentSearchController:(UISearchController *)searchController
 {
-    [self searchBarShouldShift:NO];
-    
-    [_tagList removeAllObjects];
-    [controller.searchResultsTableView reloadData];
+    // do something before the search controller is presented
 }
 
-- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
+- (void)didPresentSearchController:(UISearchController *)searchController
 {
-    
+    // do something after the search controller is presented
 }
 
-- (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
+- (void)willDismissSearchController:(UISearchController *)searchController
 {
-
+    // do something before the search controller is dismissed
 }
 
-- (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView
+- (void)didDismissSearchController:(UISearchController *)searchController
 {
-
-}
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-}
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView
-{
-    
-}
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView
-{
-    
-}
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-}
-
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
-    return [self canSearchTag:searchString];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification
-{
-    UITableView *tableView = [self.searchDisplayController searchResultsTableView];
-    [tableView setContentInset:UIEdgeInsetsZero];
-    [tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
+    // do something after the search controller is dismissed
 }
 
 
@@ -978,46 +875,77 @@ Returns the custom collection view layout.
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    if (!self.loading) {
-        NSString *text = NSLocalizedString(@"No Photos Found", nil);
-        return [[NSAttributedString alloc] initWithString:text attributes:nil];
+    NSString *text = nil;
+    
+    if (self.error) {
+        text = NSLocalizedString(@"Error", nil);;
+    }
+    else if (!self.loading) {
+        text = NSLocalizedString(@"No Photos Found", nil);
     }
     
+    if (text) {
+        return [[NSAttributedString alloc] initWithString:text attributes:nil];
+    }
     return nil;
 }
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {
-    if (!self.loading) {
-        NSString *text = NSLocalizedString(@"Make sure that all words are\nspelled correctly.", nil);
-        return [[NSAttributedString alloc] initWithString:text attributes:nil];
+    NSString *text = nil;
+    
+    if (self.error) {
+        NSError *underlyingError = self.error.userInfo[@"NSUnderlyingError"];
+        NSString *localizedDescription = underlyingError.localizedDescription;
+        
+        if (!localizedDescription) {
+            localizedDescription = self.error.localizedDescription;
+        }
+        
+        text = localizedDescription;
+    }
+    else if (!self.loading) {
+        text = NSLocalizedString(@"Make sure that all words are\nspelled correctly.", nil);
     }
     
+    if (text) {
+        return [[NSAttributedString alloc] initWithString:text attributes:nil];
+    }
     return nil;
 }
 
 - (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView
 {
     if (self.loading) {
-        self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-        self.activityIndicator.color = [UIColor grayColor];
-        self.activityIndicator.autoresizingMask = UIViewAutoresizingNone;
-        [self.activityIndicator startAnimating];
-        return self.activityIndicator;
+        UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [activityIndicatorView startAnimating];
+        return activityIndicatorView;
     }
     
     return nil;
 }
 
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView
 {
-    return [UIColor whiteColor];
+    if (self.loading) {
+        return -CGRectGetHeight(self.searchBar.frame)/2.0;
+    }
+    
+    return 0.0;
 }
 
 
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
 - (BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView
+{
+    return NO;
+}
+
+
+#pragma mark - View Auto-Rotation
+
+- (BOOL)shouldAutorotate
 {
     return NO;
 }
@@ -1030,19 +958,12 @@ Returns the custom collection view layout.
     [super didReceiveMemoryWarning];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-}
-
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     _metadataList = nil;
-    _tagList = nil;
     
-    _searchBar = nil;
     _searchController = nil;
     _loadButton = nil;
     _activityIndicator = nil;
@@ -1052,19 +973,6 @@ Returns the custom collection view layout.
     self.collectionView.delegate = nil;
     self.collectionView.emptyDataSetSource = nil;
     self.collectionView.emptyDataSetDelegate = nil;
-}
-
-
-#pragma mark - View Auto-Rotation
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (BOOL)shouldAutorotate
-{
-    return NO;
 }
 
 @end
