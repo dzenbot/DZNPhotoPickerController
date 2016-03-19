@@ -1,1 +1,0 @@
-GROAUTH_SESSIONMANAGER_OTHER_LDFLAGS = -framework "Security"

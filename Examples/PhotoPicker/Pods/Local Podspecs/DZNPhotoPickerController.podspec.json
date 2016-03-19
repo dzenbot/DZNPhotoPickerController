@@ -31,10 +31,10 @@
       "source_files": "Source/Classes/Core/*.{h,m}",
       "dependencies": {
         "SDWebImage": [
-          "~> 3.7.0"
+          "~> 3.7"
         ],
         "DZNEmptyDataSet": [
-          "~> 1.7.0"
+          "~> 1.7"
         ],
         "DZNPhotoPickerController/Services": [
 
@@ -52,10 +52,7 @@
       ],
       "dependencies": {
         "AFNetworking": [
-
-        ],
-        "GROAuth2SessionManager": [
-
+          "~> 3.0"
         ]
       },
       "prefix_header_contents": [

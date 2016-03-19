@@ -43,10 +43,6 @@
     [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceBingImages
                                       consumerKey:kBingImagesAccountKey
                                    consumerSecret:nil];
-    
-    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceGettyImages
-                                      consumerKey:kGettyImagesConsumerKey
-                                   consumerSecret:kGettyImagesConsumerSecret];
 
     [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceGiphy
                                       consumerKey:kGiphyConsumerKey
@@ -104,10 +100,10 @@
 - (void)presentPhotoSearch:(id)sender
 {
     DZNPhotoPickerController *picker = [DZNPhotoPickerController new];
-    picker.supportedServices =  DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceGettyImages | DZNPhotoPickerControllerServiceGiphy;
+    picker.supportedServices =  DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceInstagram | DZNPhotoPickerControllerServiceGoogleImages | DZNPhotoPickerControllerServiceBingImages;
     picker.allowsEditing = NO;
     picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
-    picker.initialSearchTerm = @"California";
+    picker.initialSearchTerm = @"Chile";
     picker.enablePhotoDownload = YES;
     picker.allowAutoCompletedSearch = YES;
     

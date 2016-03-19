@@ -24,8 +24,7 @@ typedef NS_OPTIONS(NSUInteger, DZNPhotoPickerControllerServices) {
     DZNPhotoPickerControllerServiceInstagram = (1 << 2),                    // Instagram                    http://instagram.com/developer/
     DZNPhotoPickerControllerServiceGoogleImages = (1 << 3),                 // Google Images                https://developers.google.com/custom-search/
     DZNPhotoPickerControllerServiceBingImages = (1 << 4),                   // Bing Images                  http://datamarket.azure.com/dataset/bing/search/
-    DZNPhotoPickerControllerServiceGettyImages = (1 << 5),                  // Getty Images                 http://api.gettyimages.com/
-    DZNPhotoPickerControllerServiceGiphy = (1 << 6),                        // Giphy                        http://api.giphy.com/v1/gifs/search/
+    DZNPhotoPickerControllerServiceGiphy = (1 << 5),                        // Giphy                        http://api.giphy.com/v1/gifs/search/
 };
 
 /**

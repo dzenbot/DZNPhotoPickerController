@@ -22,7 +22,7 @@ extern NSString *const DZNPhotoServiceCredentialAccessToken;
 /**
  The HTTP service client used to interact with multiple RESTful APIs for photo search services.
  */
-@interface DZNPhotoServiceClient : AFHTTPRequestOperationManager <DZNPhotoServiceClientProtocol>
+@interface DZNPhotoServiceClient : AFHTTPSessionManager <DZNPhotoServiceClientProtocol>
 
 /**
  Initializes a new HTTP service client.

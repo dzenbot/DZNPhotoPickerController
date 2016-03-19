@@ -35,9 +35,6 @@ extern NSString *photosResourceKeyPathForService(DZNPhotoPickerControllerService
 /** Returns the url path for photo search, for a specified service. */
 extern NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerServices service);
 
-/** Returns the url path for authentication, for a specified service. */
-extern NSString *authUrlPathForService(DZNPhotoPickerControllerServices service);
-
 /** Returns a key to be used for setting a consumer identifier value, for a specified service. */
 extern NSString *keyForAPIConsumerKey(DZNPhotoPickerControllerServices service);
 
@@ -67,7 +64,4 @@ extern BOOL isConsumerSecretRequiredForService(DZNPhotoPickerControllerServices 
 
 /** Determines if the service requires the consumer key to be posted as part of the request parameters. */
 extern BOOL isConsumerKeyInParametersRequiredForService(DZNPhotoPickerControllerServices services);
-
-/** Determines if the service requires any sort of authentification (Only Auth2 is supported for now). */
-extern BOOL isAuthenticationRequiredForService(DZNPhotoPickerControllerServices services);
 

@@ -1,43 +1,34 @@
 PODS:
-  - AFNetworking (2.4.1):
-    - AFNetworking/NSURLConnection (= 2.4.1)
-    - AFNetworking/NSURLSession (= 2.4.1)
-    - AFNetworking/Reachability (= 2.4.1)
-    - AFNetworking/Security (= 2.4.1)
-    - AFNetworking/Serialization (= 2.4.1)
-    - AFNetworking/UIKit (= 2.4.1)
-  - AFNetworking/NSURLConnection (2.4.1):
+  - AFNetworking (3.0.4):
+    - AFNetworking/NSURLSession (= 3.0.4)
+    - AFNetworking/Reachability (= 3.0.4)
+    - AFNetworking/Security (= 3.0.4)
+    - AFNetworking/Serialization (= 3.0.4)
+    - AFNetworking/UIKit (= 3.0.4)
+  - AFNetworking/NSURLSession (3.0.4):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.4.1):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.4.1)
-  - AFNetworking/Security (2.4.1)
-  - AFNetworking/Serialization (2.4.1)
-  - AFNetworking/UIKit (2.4.1):
-    - AFNetworking/NSURLConnection
+  - AFNetworking/Reachability (3.0.4)
+  - AFNetworking/Security (3.0.4)
+  - AFNetworking/Serialization (3.0.4)
+  - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
   - DZNEmptyDataSet (1.7.3)
   - DZNPhotoPickerController (1.6.1):
     - DZNPhotoPickerController/Core (= 1.6.1)
   - DZNPhotoPickerController/Core (1.6.1):
-    - DZNEmptyDataSet (~> 1.7.0)
+    - DZNEmptyDataSet (~> 1.7)
     - DZNPhotoPickerController/Editor
     - DZNPhotoPickerController/Services
-    - SDWebImage (~> 3.7.0)
+    - SDWebImage (~> 3.7)
   - DZNPhotoPickerController/Editor (1.6.1)
   - DZNPhotoPickerController/Services (1.6.1):
-    - AFNetworking
-    - GROAuth2SessionManager
-  - GROAuth2SessionManager (0.2.3):
-    - AFNetworking (~> 2.4.1)
+    - AFNetworking (~> 3.0)
   - Kiwi (2.4.0)
-  - SDWebImage (3.7.4):
-    - SDWebImage/Core (= 3.7.4)
-  - SDWebImage/Core (3.7.4)
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
 
 DEPENDENCIES:
   - DZNPhotoPickerController (from `../../`)
@@ -48,11 +39,10 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  AFNetworking: 41d45d2c14219af0fa5addf3cfd433a002c13c9f
+  AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   DZNEmptyDataSet: dd7cca17c1d07dfa78956859b1e70a52505678ef
-  DZNPhotoPickerController: e5cc5d093eb823a79791f187bd528b0508be2265
-  GROAuth2SessionManager: c265ea7e6d33512e7b079ccc9bb509dba2d43131
+  DZNPhotoPickerController: e426dfd78ce0b610be190b61ba47dc354a9610c0
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
-  SDWebImage: 247edd7dd80dd6124197b0d6a17846fe9d1df968
+  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
 
 COCOAPODS: 0.38.2

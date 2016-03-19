@@ -151,29 +151,4 @@ describe(@"Bing Images", ^{
     });
 });
 
-describe(@"Getty Images", ^{
-    
-    __block DZNPhotoMetadata *metadata;
-    __block DZNPhotoPickerControllerServices service = DZNPhotoPickerControllerServiceGettyImages;
-    
-    beforeAll(^{
-        NSDictionary *JSON = [TestUtility JSONForService:service];
-        metadata = [[DZNPhotoMetadata alloc] initWithObject:JSON service:service];
-    });
-    
-    it(@"should crate a valid instance", ^{
-        [[metadata shouldNot] beNil];
-    });
-    
-    it(@"should parse data correctly", ^{
-        [[metadata.Id should] equal:@"143071440"];
-        [[metadata.serviceName should] equal:@"getty images"];
-        [[metadata.thumbURL should] equal:[NSURL URLWithString:@"http://cache1.asset-cache.net/xt/143071440.jpg?v=1&g=fs1%7C0%7COJO%7C71%7C440&s=1"]];
-        [[metadata.sourceURL should] equal:[NSURL URLWithString:@"http://cache1.asset-cache.net/xc/143071440.jpg?v=2&c=IWSAsset&k=2&d=xnvCs_-5aSVR6p402MOLiDwWTj8gOq3VHVtp5mk9McI1"]];
-        [[metadata.width should] equal:@5120];
-        [[metadata.height should] equal:@3413];
-        [[metadata.contentType should] equal:@"image/jpg"];
-    });
-});
-
 SPEC_END

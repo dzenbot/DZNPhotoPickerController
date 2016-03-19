@@ -101,25 +101,6 @@
             _height = @([[object objectForKey:@"Height"] integerValue]);
             _contentType = [object objectForKey:@"ContentType"];
         }
-        else if ((service & DZNPhotoPickerControllerServiceGettyImages) > 0)
-        {
-            _Id = [object objectForKey:@"id"];
-            
-            id urls = [object valueForKeyPath:@"display_sizes.uri"];
-            
-            NSString *sourceUrl = [urls firstObject];
-            _sourceURL = [NSURL URLWithString:[sourceUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-            
-            NSString *thumbUrl = [urls lastObject];
-            _thumbURL = [NSURL URLWithString:[thumbUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-            
-            _width = [object valueForKeyPath:@"max_dimensions.width"];
-            _height = [object valueForKeyPath:@"max_dimensions.height"];
-            
-            if (_sourceURL) {
-                _contentType = [NSString stringWithFormat:@"image/%@",[_sourceURL pathExtension]];
-            }
-        }
         else if ((service & DZNPhotoPickerControllerServiceGiphy) > 0)
         {
             _Id = [object objectForKey:@"id"];
