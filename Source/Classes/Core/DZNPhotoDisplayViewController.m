@@ -29,7 +29,7 @@ static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
 @interface DZNPhotoDisplayViewController () <UICollectionViewDelegateFlowLayout, UITableViewDelegate,
-                                                DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
+                                            DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 
 @property (nonatomic, readonly) DZNPhotoSearchResultsController *searchResultsController;
 @property (nonatomic, readonly) UIButton *loadButton;
@@ -44,8 +44,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 @property (nonatomic) NSInteger resultPerPage;
 @property (nonatomic) NSInteger currentPage;
 
-@property (nonatomic, readonly) NSTimer *searchTimer;
-
+@property (nonatomic, strong) NSTimer *searchTimer;
 @property (nonatomic, strong) NSError *error;
 
 @end
@@ -55,8 +54,6 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 @synthesize searchResultsController = _searchResultsController;
 @synthesize loadButton = _loadButton;
 @synthesize activityIndicator = _activityIndicator;
-@synthesize searchTimer = _searchTimer;
-
 
 #pragma mark - Initialization
 
@@ -117,7 +114,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 {
     [super viewWillAppear:animated];
     
-    if (!_metadataList) {
+    if (!self.metadataList) {
 
         if (self.searchBar.text.length > 0) {
             [self searchPhotosWithKeyword:self.searchBar.text];
@@ -357,9 +354,9 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 {
     [self setActivityIndicatorsVisible:NO];
     
-    if (!_metadataList) _metadataList = [NSMutableArray new];
+    if (!self.metadataList) self.metadataList = [NSMutableArray new];
     
-    [_metadataList addObjectsFromArray:list];
+    [self.metadataList addObjectsFromArray:list];
     
     [self.collectionView reloadData];
 }
@@ -408,7 +405,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 /* Removes all photo metadata from the array and cleans the collection view from photo thumbnails. */
 - (void)resetPhotos
 {
-    [_metadataList removeAllObjects];
+    [self.metadataList removeAllObjects];
     self.currentPage = 1;
     
     [self.collectionView reloadData];
@@ -503,8 +500,8 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     [self resetSearchTimer];
     
     if ([self.searchBar isFirstResponder] && term.length > 2) {
-        _searchTimer = [NSTimer timerWithTimeInterval:0.25 target:self selector:@selector(searchTag:) userInfo:@{@"term": term} repeats:YES];
-        [[NSRunLoop currentRunLoop] addTimer:_searchTimer forMode:NSDefaultRunLoopMode];
+        self.searchTimer = [NSTimer timerWithTimeInterval:0.25 target:self selector:@selector(searchTag:) userInfo:@{@"term": term} repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:self.searchTimer forMode:NSDefaultRunLoopMode];
     }
 }
 
@@ -596,7 +593,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _metadataList.count;
+    return self.metadataList.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -604,7 +601,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     DZNPhotoDisplayViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDZNPhotoCellViewIdentifier forIndexPath:indexPath];
     cell.tag = indexPath.row;
     
-    if (_metadataList.count > 0) {
+    if (self.metadataList.count > 0) {
         DZNPhotoMetadata *metadata = [self metadataAtIndexPath:indexPath];
         [cell setThumbURL:metadata.thumbURL];
     }
@@ -765,7 +762,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
-//    [self.searchResultsController setSearchResults:nil];
+    // do something
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar

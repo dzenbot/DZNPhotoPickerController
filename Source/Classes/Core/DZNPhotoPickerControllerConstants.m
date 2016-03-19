@@ -17,7 +17,6 @@ NSString *const DZNPhotoPickerControllerPhotoMetadata =         @"com.dzn.photoP
 NSString *const DZNPhotoPickerDidFinishPickingNotification =    @"com.dzn.photoPicker.didFinishPickingNotification";
 NSString *const DZNPhotoPickerDidFailPickingNotification =      @"com.dzn.photoPicker.didFinishPickingWithErrorNotification";
 
-
 NSString *NSStringFromService(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
@@ -64,7 +63,6 @@ DZNPhotoPickerControllerServices DZNFirstPhotoServiceFromPhotoServices(DZNPhotoP
     }
     return -1;
 }
-
 
 NSArray *NSArrayFromServices(DZNPhotoPickerControllerServices services)
 {

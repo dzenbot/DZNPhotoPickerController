@@ -51,15 +51,6 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @property (nonatomic, assign) BOOL allowAutoCompletedSearch;
 
 /**
- Initializes and returns a newly created picker controller, on edit mode only.
- @discussion This is a convenience method for initializing the receiver and pushing a photo edit view controller onto the navigation stack, with a presetted image to edit.
- 
- @param image The image to be edited.
- @returns The initialized picker controller.
- */
-- (instancetype)initWithEditableImage:(UIImage *)image  DEPRECATED_MSG_ATTRIBUTE("Use DZNPhotoEditorViewController -initWithImage: instead");
-
-/**
  Returns an array of the available media types for the specified service type.
  @discussion Only kUTTypeImage will be returned for now. Maybe on a future, this library could have video and audio search support.
  

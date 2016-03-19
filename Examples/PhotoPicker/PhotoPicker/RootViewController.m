@@ -91,30 +91,29 @@
 
 - (void)showEditActionSheet:(id)sender
 {
+    if (!self.imageView.image) {
+        return;
+    }
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    if (self.imageView.image) {
-        
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Edit Photo...", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            [self presentPhotoEditor:self.navigationItem.rightBarButtonItem];
-        }]];
-        
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete Photo", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
-            [self resetContent];
-        }]];
-    }
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Edit Photo...", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [self presentPhotoEditor:self.navigationItem.rightBarButtonItem];
+    }]];
     
-    if (alert.actions.count > 0) {
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:NULL]];
-        
-        [self presentViewController:alert animated:YES completion:NULL];
-    }
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete Photo", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+        [self resetContent];
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:NULL]];
+    
+    [self presentViewController:alert animated:YES completion:NULL];
 }
 
 - (void)presentPhotoSearch:(id)sender
 {
     DZNPhotoPickerController *picker = [DZNPhotoPickerController new];
-    picker.supportedServices =  DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceInstagram | DZNPhotoPickerControllerServiceGoogleImages | DZNPhotoPickerControllerServiceBingImages;
+    picker.supportedServices =  DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGiphy;
     picker.allowsEditing = NO;
     picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
     picker.initialSearchTerm = @"Chile";

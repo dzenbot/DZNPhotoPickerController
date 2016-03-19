@@ -30,12 +30,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Photo Picker" id="1s5-PR-QJ8">
-                        <barButtonItem key="leftBarButtonItem" systemItem="camera" id="Njw-eF-WGP">
+                        <barButtonItem key="leftBarButtonItem" title="Import" id="Njw-eF-WGP">
                             <connections>
                                 <action selector="importImage:" destination="vXZ-lx-hvc" id="duQ-z7-YGG"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="Gta-By-2qF">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="Gta-By-2qF">
                             <connections>
                                 <action selector="editImage:" destination="vXZ-lx-hvc" id="qga-Je-3ku"/>
                             </connections>

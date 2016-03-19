@@ -41,28 +41,6 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     return self;
 }
 
-- (instancetype)initWithEditableImage:(UIImage *)image
-{
-    NSAssert(image, @"Expecting a non-nil image for using the editor.");
-    
-    self = [super init];
-    if (self) {
-        DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:image];
-        self.editModeEnabled = YES;
-        
-        [controller setAcceptBlock:^(DZNPhotoEditorViewController *editor, NSDictionary *userInfo){
-            [[DZNPhotoMetadata new] postMetadataUpdate:userInfo];
-        }];
-        
-        [controller setCancelBlock:^(DZNPhotoEditorViewController *editor){
-            [self cancelPicker:nil];
-        }];
-        
-        [self setViewControllers:@[controller] animated:NO];
-    }
-    return self;
-}
-
 
 #pragma mark - View lifecycle
 
