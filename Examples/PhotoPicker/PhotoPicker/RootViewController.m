@@ -119,8 +119,8 @@
     picker.initialSearchTerm = @"Chile";
     picker.enablePhotoDownload = YES;
     picker.allowAutoCompletedSearch = YES;
-    picker.title = @"Hello";
-    
+    picker.infiniteScrollingEnabled = YES;
+    picker.title = @"Search Photos";
     
     [picker setFinalizationBlock:^(DZNPhotoPickerController *picker, NSDictionary *info){
         [self updateImageWithPayload:info];

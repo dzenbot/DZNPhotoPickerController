@@ -252,7 +252,7 @@
         path = @"";
     }
     
-    [self GET:path parameters:params progress:NULL success:^(NSURLSessionDataTask * task, id response) {
+    [self GET:path parameters:params progress:NULL success:^(NSURLSessionDataTask *task, id response) {
         
         NSData *data = [self processData:response];
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves | NSJSONReadingAllowFragments error:nil];

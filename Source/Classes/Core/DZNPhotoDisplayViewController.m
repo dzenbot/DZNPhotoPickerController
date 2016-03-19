@@ -80,7 +80,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 - (void)commontInit
 {
     self.title = NSLocalizedString(@"Internet Photos", nil);
-    self.currentPage = 1;
+    self.currentPage = 0;
 }
 
 
@@ -167,7 +167,10 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 - (UISearchController *)searchController
 {
     if (!_searchController) {
-        _searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsController];
+        
+        UIViewController *resultsController = self.canSearchTags ? self.searchResultsController : nil;
+        
+        _searchController = [[UISearchController alloc] initWithSearchResultsController:resultsController];
         _searchController.searchResultsUpdater = self;
         _searchController.delegate = self;
         _searchController.dimsBackgroundDuringPresentation = YES;
@@ -203,7 +206,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
 - (UITableView *)searchResultsTableView
 {
-    return self.searchResultsController.tableView;
+    return _searchResultsController.tableView;
 }
 
 - (UIButton *)loadButton
@@ -356,6 +359,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     if (!self.metadataList) self.metadataList = [NSMutableArray new];
     
     [self.metadataList addObjectsFromArray:list];
+    self.currentPage++;
     
     [self.collectionView reloadData];
 }
@@ -405,7 +409,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 - (void)resetPhotos
 {
     [self.metadataList removeAllObjects];
-    self.currentPage = 1;
+    self.currentPage = 0;
     
     [self.collectionView reloadData];
 }
@@ -476,7 +480,6 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
                                                              progress:NULL
                                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
                                                                 if (image) {
-                                                                    
                                                                     NSDictionary *userInfo = @{UIImagePickerControllerOriginalImage: image};
                                                                     [metadata postMetadataUpdate:userInfo];
                                                                 }
@@ -489,10 +492,24 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     }
 }
 
+- (BOOL)canSearchTags
+{
+    if (!self.navigationController.allowAutoCompletedSearch) {
+        return NO;
+    }
+    
+    id <DZNPhotoServiceClientProtocol> client = [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
+    if (!client) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 /* Checks if the search string is long enough to perfom a tag search. */
 - (void)shouldSearchTag:(NSString *)term
 {
-    if (!self.navigationController.allowAutoCompletedSearch) {
+    if (!self.canSearchTags) {
         return;
     }
     
@@ -510,20 +527,23 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
  */
 - (void)searchTag:(NSTimer *)timer
 {
+    if (!self.canSearchTags) {
+        return;
+    }
+    
     _error = nil;
     
     NSString *term = [timer.userInfo objectForKey:@"term"];
     [self resetSearchTimer];
     
     id <DZNPhotoServiceClientProtocol> client = [[DZNPhotoServiceFactory defaultFactory] clientForService:DZNPhotoPickerControllerServiceFlickr];
-    
-    if (client) {
-        [client searchTagsWithKeyword:term
-                           completion:^(NSArray *list, NSError *error) {
-                               if (error) [self setLoadingError:error];
-                               else [self.searchResultsController setSearchResults:list];
-                           }];
-    }
+
+    [client searchTagsWithKeyword:term
+                       completion:^(NSArray *list, NSError *error) {
+                           
+                           if (error) [self setLoadingError:error];
+                           else [_searchResultsController setSearchResults:list];
+                       }];
 }
 
 /* Checks if the search string is valid and conditions are ok, for performing a photo search. */
@@ -556,10 +576,8 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
                                                    page:self.currentPage
                                           resultPerPage:self.resultPerPage
                                              completion:^(NSArray *list, NSError *error) {
-                                                 if (error) {
-                                                     [self setLoadingError:error];
-                                                     [self.collectionView reloadData];
-                                                 }
+                                                 
+                                                 if (error) [self setLoadingError:error];
                                                  else [self setPhotoSearchList:list];
                                              }];
 }
@@ -567,18 +585,23 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 /* Stops the loading search request of the selected photo service. */
 - (void)stopLoadingRequest
 {
-    if (self.loading) {
-        [self setActivityIndicatorsVisible:NO];
-        [self.selectedServiceClient cancelRequest];
+    if (!self.loading) {
+        return;
     }
+    
+    [self setActivityIndicatorsVisible:NO];
+    [self.selectedServiceClient cancelRequest];
 }
 
 /* Triggers a photo search for the next page. */
-- (void)loadMorePhotos:(UIButton *)sender
+- (void)loadMorePhotos:(UIButton *)button
 {
-    sender.enabled = NO;
+    if (self.isLoading) {
+        return;
+    }
+        
+    button.enabled = NO;
     
-    self.currentPage++;
     [self searchPhotosWithKeyword:self.searchBar.text];
 }
 
@@ -608,16 +631,16 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     return cell;
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionReusableView *supplementaryView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kDZNSupplementaryViewIdentifier forIndexPath:indexPath];
+    UICollectionReusableView *supplementaryView = [collectionView dequeueReusableSupplementaryViewOfKind:elementKind withReuseIdentifier:kDZNSupplementaryViewIdentifier forIndexPath:indexPath];
     
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+    if ([elementKind isEqualToString:UICollectionElementKindSectionHeader]) {
         if (supplementaryView.subviews.count == 0) {
             [supplementaryView addSubview:self.searchBar];
         }
     }
-    else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+    else if ([elementKind isEqualToString:UICollectionElementKindSectionFooter]) {
         
         [[supplementaryView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
         [supplementaryView removeConstraints:supplementaryView.constraints];
@@ -625,7 +648,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         UIView *subview = nil;
         
         if ([self canDisplayFooterView]) {
-            if (self.isLoading) {
+            if (self.isLoading || self.navigationController.infiniteScrollingEnabled) {
                 subview = self.activityIndicator;
             }
             else {
@@ -663,6 +686,20 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
 
 #pragma mark - UICollectionViewDataDelegate methods
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
+{
+    if ([elementKind isEqualToString:UICollectionElementKindSectionFooter]) {
+        if (self.navigationController.infiniteScrollingEnabled && [self canDisplayFooterView] && !self.isLoading) {
+            
+            // It is important to schedule this call on the next run loop so it doesn't
+            // interfere with the current scroll's run loop.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self loadMorePhotos:self.loadButton];
+            });
+        }
+    }
+}
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 {
@@ -729,10 +766,12 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.searchController setActive:NO];
     
-    DZNPhotoTag *tag = [self.searchResultsController tagAtIndexPath:indexPath];
+    DZNPhotoTag *tag = [_searchResultsController tagAtIndexPath:indexPath];
     
-    [self shouldSearchPhotos:tag.term];
-    [self setSearchBarText:tag.term];
+    if (tag) {
+        [self shouldSearchPhotos:tag.term];
+        [self setSearchBarText:tag.term];
+    }
 }
 
 

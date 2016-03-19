@@ -49,6 +49,8 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @property (nonatomic, strong) DZNPhotoPickerControllerCancellationBlock cancellationBlock;
 /** YES if auto-completion search is available while the user is typing on the search bar. This data uses Flickr's tag search API. Default is YES. */
 @property (nonatomic, assign) BOOL allowAutoCompletedSearch;
+/** YES if images should load automatically once reaching the bottom of the scroll view. Default is NO. */
+@property (nonatomic, assign) BOOL infiniteScrollingEnabled;
 
 /**
  Returns an array of the available media types for the specified service type.
