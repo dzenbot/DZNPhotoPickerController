@@ -28,6 +28,8 @@ static NSString *kDZNSupplementaryViewIdentifier = @"com.dzn.supplementaryViewId
 static CGFloat kDZNPhotoDisplayMinimumBarHeight = 44.0;
 static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
+#define DZN_IS_IPHONE UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone
+
 @interface DZNPhotoDisplayViewController () <UICollectionViewDelegateFlowLayout, UITableViewDelegate,
                                             DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 
@@ -251,15 +253,15 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 {
     CGFloat topBarsHeight = 0.0;
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+    if (DZN_IS_IPHONE) {
         CGFloat statusHeight = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
         topBarsHeight += statusHeight;
     }
     
     topBarsHeight += CGRectGetHeight(self.navigationController.navigationBar.frame);
-    topBarsHeight += self.searchBar.frame.size.height;
+    topBarsHeight += CGRectGetHeight(self.searchBar.frame);
     
-    return CGSizeMake(self.navigationController.view.frame.size.width, topBarsHeight);
+    return CGSizeMake(CGRectGetWidth(self.navigationController.view.frame), topBarsHeight);
 }
 
 /* The collectionView's content size calculation. */
@@ -268,24 +270,6 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     CGSize size = self.navigationController.view.frame.size;
     size.height -= [self topBarsSize].height;
     return size;
-}
-
-/* The search bar appropriate rectangle. */
-- (CGRect)searchBarFrame
-{
-    BOOL shouldShift = self.searchBar.showsScopeBar;
-    
-    CGFloat statusHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? [UIApplication sharedApplication].statusBarFrame.size.height : 0.0;
-    
-    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width,  kDZNPhotoDisplayMinimumBarHeight);
-    frame.size.height = shouldShift ?  kDZNPhotoDisplayMinimumBarHeight*2 :  kDZNPhotoDisplayMinimumBarHeight;
-    frame.origin.y = shouldShift ? statusHeight : 0.0;
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && !shouldShift) {
-        frame.origin.y += statusHeight+ kDZNPhotoDisplayMinimumBarHeight;
-    }
-    
-    return frame;
 }
 
 /*
@@ -331,7 +315,6 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     
     return YES;
 }
-
 
 - (DZNPhotoMetadata *)metadataAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -638,6 +621,10 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     if ([elementKind isEqualToString:UICollectionElementKindSectionHeader]) {
         if (supplementaryView.subviews.count == 0) {
             [supplementaryView addSubview:self.searchBar];
+            
+            CGRect frame = self.searchBar.frame;
+            frame.size.width = CGRectGetWidth(collectionView.frame);
+            self.searchBar.frame = frame;
         }
     }
     else if ([elementKind isEqualToString:UICollectionElementKindSectionFooter]) {
