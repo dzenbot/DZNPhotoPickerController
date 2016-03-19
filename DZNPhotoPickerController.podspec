@@ -19,16 +19,16 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |ss|
     ss.source_files = 'Source/Classes/Core/*.{h,m}'
-    ss.dependency   'SDWebImage', '~> 3.7'
-    ss.dependency   'DZNEmptyDataSet', '~> 1.7'
-
     ss.dependency   'DZNPhotoPickerController/Services'
     ss.dependency   'DZNPhotoPickerController/Editor'
+    ss.dependency   'SDWebImage', '~> 3.7'
+    ss.dependency   'DZNEmptyDataSet', '~> 1.7'
   end
 
   s.subspec 'Services' do |ss|
     ss.source_files = 'Source/Classes/Services/*.{h,m}',
                       'Source/Classes/Core/DZNPhotoPickerControllerConstants.{h,m}'
+
     ss.dependency 'AFNetworking', '~> 3.0'
     ss.prefix_header_contents = '#import <MobileCoreServices/MobileCoreServices.h>',
                                 '#import <SystemConfiguration/SystemConfiguration.h>'

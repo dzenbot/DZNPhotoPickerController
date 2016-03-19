@@ -29,7 +29,7 @@ A photo search/picker for iOS using popular providers like 500px, Flickr, Instag
 
 ## Installation
 
-Available in [Cocoa Pods](http://cocoapods.org/?q=DZNPhotoPickerController)
+Available in [CocoaPods](http://cocoapods.org/?q=DZNPhotoPickerController)
 ```
 pod 'DZNPhotoPickerController'
 ```
@@ -46,7 +46,7 @@ For complete documentation, [visit CocoaPods' auto-generated doc](http://cocoado
 ### Step 1
 
 ```
-Import "DZNPhotoPickerController.h"
+#import <DZNPhotoPickerController/DZNPhotoPickerController.h>
 ```
 
 ### Step 2
@@ -74,7 +74,7 @@ picker.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPicker
 picker.allowsEditing = YES;
 picker.delegate = self;
     
-[self presentViewController:picker animated:YES completion:NO];
+[self presentViewController:picker animated:YES completion:nil];
 ````
 
 You can additionally set more properties:
@@ -127,7 +127,7 @@ editor.cropSize = CGSizeMake(CGRectGetWidth(self.view.frame), 200.0);
 
 // The view controller requieres to be nested in a navigation controller
 UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:navigation];
-[self presentViewController:controller animated:YES completion:NULL];
+[self presentViewController:controller animated:YES completion:nil];
 ````
 
 ## Circular and Custom Edition
@@ -143,7 +143,7 @@ picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 picker.delegate = self;
 picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
     
-[self presentViewController:picker animated:YES completion:NULL];
+[self presentViewController:picker animated:YES completion:nil];
 ```
 
 ## Block Support
