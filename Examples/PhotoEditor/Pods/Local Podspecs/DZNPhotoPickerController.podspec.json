@@ -1,6 +1,6 @@
 {
   "name": "DZNPhotoPickerController",
-  "version": "1.6.1",
+  "version": "2.0",
   "summary": "A photo search/picker for iOS using popular providers like 500px, Flickr, Intagram, Google Images, etc.",
   "description": "This framework tries to mimic as close as possible the native UIImagePickerController API for iOS7, in terms of features, appearance and behaviour.",
   "homepage": "https://github.com/dzenbot/DZNPhotoPickerController",
@@ -14,7 +14,7 @@
   },
   "source": {
     "git": "https://github.com/dzenbot/UIPhotoPickerController.git",
-    "tag": "v1.6.1"
+    "tag": "v2.0"
   },
   "default_subspecs": "Core",
   "resources": [
@@ -25,22 +25,23 @@
   "platforms": {
     "ios": "8.0"
   },
+  "public_header_files": "Source/Classes/*/*.h",
   "subspecs": [
     {
       "name": "Core",
       "source_files": "Source/Classes/Core/*.{h,m}",
       "dependencies": {
-        "SDWebImage": [
-          "~> 3.7.0"
-        ],
-        "DZNEmptyDataSet": [
-          "~> 1.7.0"
-        ],
         "DZNPhotoPickerController/Services": [
 
         ],
         "DZNPhotoPickerController/Editor": [
 
+        ],
+        "SDWebImage": [
+          "~> 3.7"
+        ],
+        "DZNEmptyDataSet": [
+          "~> 1.7"
         ]
       }
     },
@@ -52,10 +53,7 @@
       ],
       "dependencies": {
         "AFNetworking": [
-
-        ],
-        "GROAuth2SessionManager": [
-
+          "~> 3.0"
         ]
       },
       "prefix_header_contents": [

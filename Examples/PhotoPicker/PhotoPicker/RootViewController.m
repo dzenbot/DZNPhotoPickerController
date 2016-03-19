@@ -86,6 +86,14 @@
     
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:NULL]];
     
+    if ([sender isKindOfClass:[UIBarButtonItem class]]) {
+        alert.popoverPresentationController.barButtonItem = sender;
+    }
+    else if ([sender isKindOfClass:[UIView class]]) {
+        alert.popoverPresentationController.sourceView = [sender superview];
+        alert.popoverPresentationController.sourceRect = [sender frame];
+    }
+    
     [self presentViewController:alert animated:YES completion:NULL];
 }
 
@@ -106,6 +114,14 @@
     }]];
     
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:NULL]];
+    
+    if ([sender isKindOfClass:[UIBarButtonItem class]]) {
+        alert.popoverPresentationController.barButtonItem = sender;
+    }
+    else if ([sender isKindOfClass:[UIView class]]) {
+        alert.popoverPresentationController.sourceView = [sender superview];
+        alert.popoverPresentationController.sourceRect = [sender frame];
+    }
     
     [self presentViewController:alert animated:YES completion:NULL];
 }

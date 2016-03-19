@@ -1,5 +1,5 @@
 PODS:
-  - DZNPhotoPickerController/Editor (1.6.1)
+  - DZNPhotoPickerController/Editor (2.0)
 
 DEPENDENCIES:
   - DZNPhotoPickerController/Editor (from `../../`)
@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  DZNPhotoPickerController: e5cc5d093eb823a79791f187bd528b0508be2265
+  DZNPhotoPickerController: 1a9b83a53a2f35094e35c163417ab0aeb8653fd1
 
 COCOAPODS: 0.38.2

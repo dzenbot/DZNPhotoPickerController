@@ -49,7 +49,6 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     [super loadView];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.edgesForExtendedLayout = UIRectEdgeTop;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -64,7 +63,8 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated
+{
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
