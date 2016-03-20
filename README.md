@@ -5,8 +5,8 @@ DZNPhotoPickerController
 
 A photo search/picker for iOS using popular image providers like 500px, Flickr, Instagram, Giphy, Google, Bing & Getty Images, combined with a minimalistic image cropper inspired from UIImagePickerController's.
 
-![features](Docs/screenshot_features.png)
 ![services](Docs/screenshot_services.png)
+![features](Docs/screenshot_features.png)
 
 ## Feature List
 * Search photos on mutiple service providers (500px, Flickr, Giphy, Instagram, Google Images & Bing Images)
