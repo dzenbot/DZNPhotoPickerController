@@ -3,7 +3,7 @@ DZNPhotoPickerController
 [![Pod Version](http://img.shields.io/cocoapods/v/DZNPhotoPickerController.svg)](https://cocoadocs.org/docsets/DZNPhotoPickerController)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-A photo search/picker for iOS using popular image providers like 500px, Flickr, Instagram, Giphy, Google, Bing & Getty Images, combined with a minimalistic image cropper inspired from UIImagePickerController's.
+A photo search/picker for iOS using popular image providers like 500px, Flickr, Instagram, Giphy, Google & Bing Images, combined with a minimalistic image cropper inspired from UIImagePickerController's.
 
 ![services](Docs/screenshot_services.png)
 ![features](Docs/screenshot_features.png)
