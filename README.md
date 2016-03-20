@@ -3,51 +3,48 @@ DZNPhotoPickerController
 [![Pod Version](http://img.shields.io/cocoapods/v/DZNPhotoPickerController.svg)](https://cocoadocs.org/docsets/DZNPhotoPickerController)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-[![Screencast Vimeo Video](https://dl.dropboxusercontent.com/u/2452151/Permalink/DZNPhotoPickerController_video_placeholder.png)](http://vimeo.com/user3409970/dznphotopickercontroller)
+A photo search/picker for iOS using popular image providers like 500px, Flickr, Instagram, Giphy, Google, Bing & Getty Images, combined with a minimalistic image cropper inspired from UIImagePickerController's.
 
-A photo search/picker for iOS using popular providers like 500px, Flickr, Instagram, Google, Bing & Getty Images. This control tries to mimic as close as possible UIKit's UIImagePickerController in terms of features, appearance and behaviour.
+![services](Docs/Screenshots/screenshot_features.png)
+![services](Docs/Screenshots/screenshot_services.png)
 
-### Features
+## Feature List
 * Search photos on mutiple service providers (500px, Flickr, Giphy, Instagram, Google Images & Bing Images)
 * Auto-completed typing for easier search (using Flickr's API as a common denominator).
 * Present the photo picker with a pre-defined search term to automatically start searching.
 * Exact same UI layouts and behaviours than UIImagePickerController.
 * Edit photo selections with cropping guides : square, circular (like the Contacts app) and custom size.
-* Circular cropping mode for using with UIImagePickerController (check on UIImagePickerController+Edit).
-* Infinite scrolling.
+* Cropping mecanism compatible with UIImagePickerController (check on UIImagePickerController+Edit).
+* Infinite scrolling (optional).
 * Creative Commons licences optional filtering.
 * App Store safe. Innapropriate content disabled for all services.
 * Option for disabling full sized photo download and retrieving metadata only.
-* iOS 8 and 9. iPhone 4, 5 and 6 support.
+* iOS 8 and 9. iPhone 4/5/6 and iPad support.
 * Localization support (UI strings use NSLocalizedString but it's up to you to localize them on your app)
-<br>
-<br>
-![screenshots](Docs/screenshots.png)
-![services](Docs/services.png)
 <br>
 
 ## Installation
 
-Available in [CocoaPods](http://cocoapods.org/?q=DZNPhotoPickerController)
-```
-pod 'DZNPhotoPickerController'
+###### With [CocoaPods](https://cocoapods.org/):
+```ruby
+pod "DZNPhotoPickerController"
 ```
 
-When installing, the following dependencies will be automatically installed:
-- AFNetworking (~> 3.0)
-- SDWebImage (~> 3.7)
-- DZNEmptyDataSet (~> 1.7)
+Dependencies:
+- AFNetworking
+- SDWebImage
+- DZNEmptyDataSet
 
 ## How to use
 For complete documentation, [visit CocoaPods' auto-generated doc](http://cocoadocs.org/docsets/DZNPhotoPickerController/)
 
-### Step 1
+### Import
 
 ```
 #import <DZNPhotoPickerController/DZNPhotoPickerController.h>
 ```
 
-### Step 2
+### Registration
 Before even creating a new instance of DZNPhotoPickerController, it is recommended that you register to the photo services APIs your will need, on your UIViewController's class method +initialize, like so:
 ```
 + (void)initialize
@@ -64,7 +61,7 @@ Before even creating a new instance of DZNPhotoPickerController, it is recommend
 }
 ```
 
-### Step 3
+### Initialisation
 Creating a new instance of DZNPhotoPickerController is very similar to what you would do with UIImagePickerController:
 ```
 DZNPhotoPickerController *picker = [[DZNPhotoPickerController alloc] init];

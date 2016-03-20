@@ -58,7 +58,7 @@ typedef NS_ENUM(NSInteger, DZNPhotoEditorViewControllerCropMode) {
 
 /**
  Types of photo service subscription (i.e. Free, Paid)
- For a few services, there is a limitation in terms of request per day/week/month and results per page (i.e. Google Custom Search API, Yahoo, Bing & Getty Images).
+ For a few services, there is a limitation in terms of request per day/week/month and results per page (i.e. Google Custom Search API, Bing & Getty Images).
  You can subscribe to those services and register them as SubscriptionPaid for getting unlimited requests and results.
  */
 typedef NS_ENUM(NSInteger, DZNPhotoPickerControllerSubscription) {
