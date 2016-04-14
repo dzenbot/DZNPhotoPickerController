@@ -195,7 +195,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 {
     if([[self segmentedControlTitles] count]>1)
     {
-       return [self getScopeButtonTitles];
+       return [self segmentedControlTitles]; 
     }
 
     return nil;
