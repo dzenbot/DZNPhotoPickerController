@@ -181,7 +181,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         UISearchBar *searchBar = _searchController.searchBar;
         searchBar.placeholder = NSLocalizedString(@"Search", nil);
         searchBar.text = self.navigationController.initialSearchTerm;
-        searchBar.scopeButtonTitles = [self segmentedControlTitles];
+        searchBar.scopeButtonTitles = self.segmentedControlTitles;
         searchBar.searchBarStyle = UISearchBarStyleProminent;
         searchBar.barStyle = UIBarStyleDefault;
         searchBar.selectedScopeButtonIndex = 0;
@@ -232,6 +232,14 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         _activityIndicator.color = [UIColor grayColor];
     }
     return _activityIndicator;
+}
+
+- (NSArray *)segmentedControlTitles
+{
+    if (_segmentedControlTitles.count > 1) {
+        return _segmentedControlTitles;
+    }
+    return nil;
 }
 
 /* Returns the appropriate cell view's size. */
