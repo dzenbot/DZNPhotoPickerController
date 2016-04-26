@@ -187,6 +187,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         searchBar.selectedScopeButtonIndex = 0;
         searchBar.clipsToBounds = NO;
         searchBar.delegate = self;
+        [ searchBar sizeToFit ];
     }
     return _searchController;
 }
