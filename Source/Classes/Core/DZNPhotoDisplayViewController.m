@@ -179,6 +179,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         _searchController.hidesNavigationBarDuringPresentation = YES;
 
         UISearchBar *searchBar = _searchController.searchBar;
+        [searchBar sizeToFit];
         searchBar.placeholder = NSLocalizedString(@"Search", nil);
         searchBar.text = self.navigationController.initialSearchTerm;
         searchBar.scopeButtonTitles = [self segmentedControlTitles];
