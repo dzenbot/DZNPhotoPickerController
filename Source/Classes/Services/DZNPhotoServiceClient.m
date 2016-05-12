@@ -158,6 +158,9 @@
         
         //Default to size medium. Size Large causes some buggy behavior with download times.
         [params setObject:@"'Size:Medium'" forKey:@"ImageFilters"];
+        
+        [params setObject:@(resultPerPage) forKey:@"$top"];
+        [params setObject:@(page * resultPerPage) forKey:@"$skip"];
     }
     else if (self.service == DZNPhotoPickerControllerServiceGiphy)
     {
