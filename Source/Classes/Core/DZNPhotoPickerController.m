@@ -139,6 +139,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     if (self.finalizationBlock) {
         self.finalizationBlock(self, notification.userInfo);
     }
+    
     else if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerController:didFinishPickingPhotoWithInfo:)]){
         [self.delegate photoPickerController:self didFinishPickingPhotoWithInfo:notification.userInfo];
     }

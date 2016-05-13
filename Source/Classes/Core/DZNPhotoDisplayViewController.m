@@ -432,7 +432,14 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         [self.navigationController pushViewController:controller animated:YES];
 
         [controller setAcceptBlock:^(DZNPhotoEditorViewController *editor, NSDictionary *userInfo){
-            [metadata postMetadataUpdate:userInfo];
+            if (self.searchController.searchBar.text) {
+                NSMutableDictionary *allUserInfo = [userInfo mutableCopy];
+                if (self.searchController.searchBar.text) [allUserInfo setObject:self.searchController.searchBar.text forKey:DZNPhotoPickerControllerSearchTerm];
+                [metadata postMetadataUpdate:allUserInfo];
+            } else {
+                [metadata postMetadataUpdate:userInfo];
+            }
+            
             [self.navigationController popViewControllerAnimated:YES];
         }];
         
@@ -471,7 +478,13 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
                                                              progress:NULL
                                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
                                                                 if (image) {
-                                                                    NSDictionary *userInfo = @{UIImagePickerControllerOriginalImage: image};
+                                                                    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                                                                    [userInfo setObject:image forKey:UIImagePickerControllerOriginalImage];
+                                                                    
+                                                                    if (self.searchController.searchBar.text) {
+                                                                        [userInfo setObject:self.searchController.searchBar.text forKey:DZNPhotoPickerControllerSearchTerm];
+                                                                    }
+                                                                    
                                                                     [metadata postMetadataUpdate:userInfo];
                                                                 }
                                                                 else {
