@@ -54,7 +54,7 @@
     // Add basic auth to Bing service
     if (self.service == DZNPhotoPickerControllerServiceBingImages) {
         
-        //Bing requires basic auth with password and user name as the consumer key.
+        // Bing requires basic auth with password and user name as the consumer key.
         [self.requestSerializer setAuthorizationHeaderFieldWithUsername:consumerKey password:consumerKey];
     }
 }
@@ -157,13 +157,18 @@
     {
         [params setObject:@"'Moderate'" forKey:@"Adult"];
         
-        //Default to size medium. Size Large causes some buggy behavior with download times.
+        // Default to size medium. Size Large causes some buggy behavior with download times.
         [params setObject:@"'Size:Medium'" forKey:@"ImageFilters"];
         [params setObject:@"Image" forKey:@"Source"];
+        
+        // Top and skip are like limit and offset
+        [params setObject:@(resultPerPage) forKey:@"$top"];
+        [params setObject:@(page * resultPerPage) forKey:@"$skip"];
     }
     else if (self.service == DZNPhotoPickerControllerServiceGiphy)
     {
         [params setObject:@"pg" forKey:@"rating"];
+        
         if (page > 1) {
             [params setObject:@((page-1)*resultPerPage) forKey:@"offset"];
         }
