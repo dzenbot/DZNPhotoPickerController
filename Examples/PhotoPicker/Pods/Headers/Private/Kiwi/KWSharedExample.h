@@ -1,1 +1,0 @@
-../../../Kiwi/Classes/Shared Examples/KWSharedExample.h
