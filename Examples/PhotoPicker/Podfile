@@ -7,5 +7,6 @@ end
 
 target :Tests do
 	inherit! :search_paths
-    pod 'Kiwi', '~> 2.3'
+    
+	pod 'Kiwi', '~> 2.3'
 end
