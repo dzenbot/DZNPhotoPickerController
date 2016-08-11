@@ -22,10 +22,7 @@
 
 + (void)initialize
 {
-    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerService500px
-                                      consumerKey:k500pxConsumerKey
-                                   consumerSecret:k500pxConsumerSecret];
-    
+   
     [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceFlickr
                                       consumerKey:kFlickrConsumerKey
                                    consumerSecret:kFlickrConsumerSecret];
@@ -45,6 +42,11 @@
 
     [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceGiphy
                                       consumerKey:kGiphyConsumerKey
+                                   consumerSecret:nil];
+    
+    
+    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceRiffsy
+                                      consumerKey:kRiffsyConsumerKey
                                    consumerSecret:nil];
 }
 
@@ -129,7 +131,7 @@
 - (void)presentPhotoSearch:(id)sender
 {
     DZNPhotoPickerController *picker = [DZNPhotoPickerController new];
-    picker.supportedServices =  DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGiphy;
+    picker.supportedServices =  DZNPhotoPickerControllerServiceGiphy | DZNPhotoPickerControllerServiceRiffsy | DZNPhotoPickerControllerServiceGoogleImages;
     picker.allowsEditing = NO;
     picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
     picker.initialSearchTerm = @"Chile";
