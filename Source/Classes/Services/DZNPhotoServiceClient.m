@@ -174,6 +174,16 @@
             [params setObject:@((page-1)*resultPerPage) forKey:@"offset"];
         }
     }
+    else if (self.service == DZNPhotoPickerControllerServiceRiffsy)
+    {
+        if (page == 0) {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:NSUserDefaultsUniqueKey(self.service, DZNPhotoServiceClientNextKey)];
+        } else {
+            NSString *nextKey = [[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(self.service, DZNPhotoServiceClientNextKey)];
+            if (nextKey)
+                [params setObject:nextKey forKey:@"pos"];
+        }
+    }
     
     return params;
 }
@@ -198,6 +208,10 @@
 {
     NSString *keyPath = keyPathForObjectName(self.service, [class name]);
     NSMutableArray *objects = [NSMutableArray arrayWithArray:[json valueForKeyPath:keyPath]];
+    
+    if (self.service == DZNPhotoPickerControllerServiceRiffsy) {
+        [self setServiceNextKey:json];
+    }
     
     if ([[class name] isEqualToString:[DZNPhotoTag name]]) {
         
@@ -226,6 +240,12 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self configureHTTPHeader];
+}
+
+- (void)setServiceNextKey:(NSDictionary*)response {
+    NSAssert(response, @"'response' cannot be nil");
+    NSString *nextKey = response[keyForSearchPage(self.service)];
+    [[NSUserDefaults standardUserDefaults] setObject:nextKey forKey:NSUserDefaultsUniqueKey(self.service, DZNPhotoServiceClientNextKey)];
 }
 
 
@@ -259,6 +279,7 @@
     else if (self.service == DZNPhotoPickerControllerServiceFlickr) {
         path = @"";
     }
+    
     
     [self GET:path parameters:params progress:NULL success:^(NSURLSessionDataTask *task, id response) {
         

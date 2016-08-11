@@ -358,7 +358,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     
     [self.metadataList addObjectsFromArray:list];
     self.currentPage++;
-    
+
     [self.collectionView reloadData];
 }
 

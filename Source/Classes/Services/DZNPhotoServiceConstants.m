@@ -15,9 +15,11 @@
 NSString *const DZNPhotoServiceClientIndentifier =      @"com.dzn.photoService.client.identifier";
 NSString *const DZNPhotoServiceClientConsumerKey =      @"com.dzn.photoService.client.consumer_key";
 NSString *const DZNPhotoServiceClientConsumerSecret =   @"com.dzn.photoService.client.consumer_secret";
+NSString *const DZNPhotoServiceClientNextKey =          @"com.dzn.photoService.client.next_key";
 NSString *const DZNPhotoServiceClientSubscription =     @"com.dzn.photoService.subscription";
 NSString *const DZNPhotoServiceCredentialIdentifier =   @"com.dzn.photoService.credential.identifier";
 NSString *const DZNPhotoServiceCredentialAccessToken =  @"com.dzn.photoService.credential.access_token";
+
 
 
 NSString *NSUserDefaultsUniqueKey(NSUInteger type, NSString *key)
@@ -150,6 +152,7 @@ NSString *keyForSearchPage(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
         case DZNPhotoPickerControllerServiceBingImages:         return nil;
+        case DZNPhotoPickerControllerServiceRiffsy:             return @"next";
         default:                                                return @"page";
     }
 }
