@@ -55,7 +55,8 @@
 
 - (IBAction)importImage:(id)sender
 {
-    [self showImportActionSheet:sender];
+//    [self showImportActionSheet:sender];
+    [self presentPhotoSearch:sender];
 }
 
 - (IBAction)editImage:(id)sender
@@ -132,7 +133,7 @@
     picker.supportedServices =  DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGiphy;
     picker.allowsEditing = NO;
     picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
-    picker.initialSearchTerm = @"Chile";
+//    picker.initialSearchTerm = @"Chile";
     picker.enablePhotoDownload = YES;
     picker.allowAutoCompletedSearch = YES;
     picker.infiniteScrollingEnabled = YES;

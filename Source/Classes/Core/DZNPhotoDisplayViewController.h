@@ -24,6 +24,8 @@
 @property (nonatomic, readonly) NSUInteger rowCount;
 /** YES if the controller started a request and loading content. */
 @property (nonatomic, readonly, getter = isLoading) BOOL loading;
+/** YES if searchbar should get the focus on launch. Default is NO. */
+@property (nonatomic, assign) BOOL autoFocusOnSearchBar;
 
 /**
  Initializes and returns a newly created photo display controller.

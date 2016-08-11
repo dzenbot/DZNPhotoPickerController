@@ -126,6 +126,16 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
             [self.searchBar becomeFirstResponder];
         }
     }
+    
+    
+
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self.searchBar performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.01];
+    //    if (self.autoFocusOnSearchBar) {
+    //        [self.searchBar becomeFirstResponder];
+    //    }
 }
 
 
@@ -706,6 +716,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if ([self.searchBar isFirstResponder]) {
         [self.searchBar resignFirstResponder];
     }
@@ -853,6 +864,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 - (void)didPresentSearchController:(UISearchController *)searchController
 {
     // do something after the search controller is presented
+    [self.searchBar becomeFirstResponder];
 }
 
 - (void)willDismissSearchController:(UISearchController *)searchController
