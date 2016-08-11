@@ -125,7 +125,7 @@
             NSString *sourceUrl = [media valueForKeyPath:@"gif.url"];
             _sourceURL = [NSURL URLWithString:[sourceUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             
-            NSString *thumbUrl = [media valueForKeyPath:@"gif.preview"];
+            NSString *thumbUrl = [media valueForKeyPath:@"tinygif.url"];
             _thumbURL = [NSURL URLWithString:[thumbUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             
             NSArray *size = [media valueForKeyPath:@"gif.dims"];

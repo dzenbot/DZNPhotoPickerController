@@ -36,7 +36,7 @@ NSURL *baseURLForService(DZNPhotoPickerControllerServices service)
         case DZNPhotoPickerControllerServiceGoogleImages:       return [NSURL URLWithString:@"https://www.googleapis.com/customsearch/v1/"];
         case DZNPhotoPickerControllerServiceBingImages:         return [NSURL URLWithString:@"https://api.datamarket.azure.com/"];
         case DZNPhotoPickerControllerServiceGiphy:              return [NSURL URLWithString:@"https://api.giphy.com/"];
-        case DZNPhotoPickerControllerServiceRiffsy:             return [NSURL URLWithString:@"https://api.riffsy.com/"];
+        case DZNPhotoPickerControllerServiceRiffsy:             return [NSURL URLWithString:@"https://api.riffsy.com/v1/"];
         default:                                                return nil;
     }
 }
@@ -47,6 +47,7 @@ NSString *tagsResourceKeyPathForService(DZNPhotoPickerControllerServices service
         case DZNPhotoPickerControllerService500px:
         case DZNPhotoPickerControllerServiceFlickr:             return @"tags.tag";
         case DZNPhotoPickerControllerServiceInstagram:          return @"data";
+        case DZNPhotoPickerControllerServiceRiffsy:             return @"tags";
         default:                                                return nil;
     }
 }
@@ -83,7 +84,7 @@ NSString *photoSearchUrlPathForService(DZNPhotoPickerControllerServices service)
         case DZNPhotoPickerControllerServiceGoogleImages:       return @"";
         case DZNPhotoPickerControllerServiceBingImages:         return @"Bing/Search/Image?$format=json";
         case DZNPhotoPickerControllerServiceGiphy:              return @"v1/gifs/search";
-        case DZNPhotoPickerControllerServiceRiffsy:             return @"v1/search";
+        case DZNPhotoPickerControllerServiceRiffsy:             return @"search";
         default:                                                return nil;
     }
 }
