@@ -126,9 +126,6 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
             [self.searchBar becomeFirstResponder];
         }
     }
-    
-    
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
