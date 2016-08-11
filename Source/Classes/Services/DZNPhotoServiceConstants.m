@@ -152,6 +152,7 @@ NSString *keyForSearchPage(DZNPhotoPickerControllerServices service)
 {
     switch (service) {
         case DZNPhotoPickerControllerServiceBingImages:         return nil;
+        case DZNPhotoPickerControllerServiceGoogleImages:       return @"start";
         case DZNPhotoPickerControllerServiceRiffsy:             return @"next";
         default:                                                return @"page";
     }

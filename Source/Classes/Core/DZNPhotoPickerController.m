@@ -34,7 +34,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
         self.enablePhotoDownload = YES;
         self.allowAutoCompletedSearch = YES;
         
-        self.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
+        self.supportedServices = DZNPhotoPickerControllerServiceGoogleImages | DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
         self.supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
         self.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
     }

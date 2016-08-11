@@ -34,16 +34,17 @@
     [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceInstagram
                                       consumerKey:kInstagramConsumerKey
                                    consumerSecret:kInstagramConsumerSecret];
-
-    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceGoogleImages
-                                      consumerKey:kGoogleImagesConsumerKey
-                                   consumerSecret:kGoogleImagesSearchEngineID];
     
     //Bing does not require a secret. Rather just an "Account Key"
     [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceBingImages
                                       consumerKey:kBingImagesAccountKey
                                    consumerSecret:nil];
 */
+    
+    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceGoogleImages
+                                      consumerKey:kGoogleImagesConsumerKey
+                                   consumerSecret:kGoogleImagesSearchEngineID];
+    
     [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceGiphy
                                       consumerKey:kGiphyConsumerKey
                                    consumerSecret:nil];
@@ -137,7 +138,7 @@
 - (void)presentPhotoSearch:(id)sender
 {
     DZNPhotoPickerController *picker = [DZNPhotoPickerController new];
-    picker.supportedServices =  DZNPhotoPickerControllerServiceGiphy | DZNPhotoPickerControllerServiceRiffsy;
+    picker.supportedServices =  DZNPhotoPickerControllerServiceGiphy | DZNPhotoPickerControllerServiceRiffsy | DZNPhotoPickerControllerServiceGoogleImages;
     picker.allowsEditing = NO;
     picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
 //    picker.initialSearchTerm = @"Chile";
