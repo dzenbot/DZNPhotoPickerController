@@ -22,7 +22,6 @@
 
 + (void)initialize
 {
-    /*
     [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerService500px
                                       consumerKey:k500pxConsumerKey
                                    consumerSecret:k500pxConsumerSecret];
@@ -34,26 +33,19 @@
     [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceInstagram
                                       consumerKey:kInstagramConsumerKey
                                    consumerSecret:kInstagramConsumerSecret];
+
+    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceGoogleImages
+                                      consumerKey:kGoogleImagesConsumerKey
+                                   consumerSecret:kGoogleImagesSearchEngineID];
     
     //Bing does not require a secret. Rather just an "Account Key"
     [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceBingImages
                                       consumerKey:kBingImagesAccountKey
                                    consumerSecret:nil];
-*/
-    
-    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceGoogleImages
-                                      consumerKey:kGoogleImagesConsumerKey
-                                   consumerSecret:kGoogleImagesSearchEngineID];
-    
+
     [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceGiphy
                                       consumerKey:kGiphyConsumerKey
                                    consumerSecret:nil];
-    
-    [DZNPhotoPickerController registerFreeService:DZNPhotoPickerControllerServiceRiffsy
-                                      consumerKey:kRiffsyConsumerKey
-                                   consumerSecret:nil];
-    
-    
 }
 
 - (void)viewDidLoad
@@ -63,8 +55,7 @@
 
 - (IBAction)importImage:(id)sender
 {
-//    [self showImportActionSheet:sender];
-    [self presentPhotoSearch:sender];
+    [self showImportActionSheet:sender];
 }
 
 - (IBAction)editImage:(id)sender
@@ -138,10 +129,10 @@
 - (void)presentPhotoSearch:(id)sender
 {
     DZNPhotoPickerController *picker = [DZNPhotoPickerController new];
-    picker.supportedServices =  DZNPhotoPickerControllerServiceGiphy | DZNPhotoPickerControllerServiceRiffsy | DZNPhotoPickerControllerServiceGoogleImages;
+    picker.supportedServices =  DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGiphy;
     picker.allowsEditing = NO;
     picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
-//    picker.initialSearchTerm = @"Chile";
+    picker.initialSearchTerm = @"Chile";
     picker.enablePhotoDownload = YES;
     picker.allowAutoCompletedSearch = YES;
     picker.infiniteScrollingEnabled = YES;
