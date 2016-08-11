@@ -34,7 +34,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
         self.enablePhotoDownload = YES;
         self.allowAutoCompletedSearch = YES;
         
-        self.supportedServices = DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
+        self.supportedServices = DZNPhotoPickerControllerServiceGoogleImages | DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr;
         self.supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
         self.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
     }
@@ -123,6 +123,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     [self setViewControllers:@[]];
     
     DZNPhotoDisplayViewController *controller = [[DZNPhotoDisplayViewController alloc] initWithPreferredContentSize:self.view.frame.size];
+    controller.autoFocusOnSearchBar = YES;
     if (self.title) controller.title = self.title;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {

@@ -150,10 +150,8 @@
         [params setObject:[self consumerSecret] forKey:keyForAPIConsumerSecret(self.service)];
         [params setObject:@"image" forKey:@"searchType"];
         [params setObject:@"medium" forKey:@"safe"];
-        
-        if (page > 1) {
-            [params setObject:@((page - 1) * resultPerPage + 1) forKey:@"start"];
-        }
+        [params setObject:@(10) forKey:@"num"];
+        [params setObject:@(page ? page * resultPerPage + 1 : 1) forKey:keyForSearchPage(self.service)];
     }
     else if (self.service == DZNPhotoPickerControllerServiceBingImages)
     {
@@ -172,6 +170,16 @@
         
         if (page > 1) {
             [params setObject:@((page-1)*resultPerPage) forKey:@"offset"];
+        }
+    }
+    else if (self.service == DZNPhotoPickerControllerServiceRiffsy)
+    {
+        if (page == 0) {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:NSUserDefaultsUniqueKey(self.service, DZNPhotoServiceClientNextKey)];
+        } else {
+            NSString *nextKey = [[NSUserDefaults standardUserDefaults] objectForKey:NSUserDefaultsUniqueKey(self.service, DZNPhotoServiceClientNextKey)];
+            if (nextKey)
+                [params setObject:nextKey forKey:@"pos"];
         }
     }
     
@@ -198,6 +206,10 @@
 {
     NSString *keyPath = keyPathForObjectName(self.service, [class name]);
     NSMutableArray *objects = [NSMutableArray arrayWithArray:[json valueForKeyPath:keyPath]];
+    
+    if (self.service == DZNPhotoPickerControllerServiceRiffsy) {
+        [self setServiceNextKey:json];
+    }
     
     if ([[class name] isEqualToString:[DZNPhotoTag name]]) {
         
@@ -228,6 +240,12 @@
     [self configureHTTPHeader];
 }
 
+- (void)setServiceNextKey:(NSDictionary*)response {
+    NSAssert(response, @"'response' cannot be nil");
+    NSString *nextKey = response[keyForSearchPage(self.service)];
+    [[NSUserDefaults standardUserDefaults] setObject:nextKey forKey:NSUserDefaultsUniqueKey(self.service, DZNPhotoServiceClientNextKey)];
+}
+
 
 #pragma mark - Requests
 
@@ -244,6 +262,27 @@
     NSString *path = photoSearchUrlPathForService(self.service);
     
     NSDictionary *params = [self photosParamsWithKeyword:keyword page:page resultPerPage:resultPerPage];
+    
+    __block NSMutableArray * aggregate = [NSMutableArray arrayWithCapacity:resultPerPage];
+    __block NSInteger currentPage = [[params objectForKey:keyForSearchPage(self.service)] integerValue];
+//    NSLog(@"starting with currentPage %ul", currentPage);
+    __block DZNHTTPRequestCompletion recursive = ^(NSArray *list, NSError *error) {
+        if (error)
+            completion(nil, error);
+        
+        [aggregate addObjectsFromArray:list];
+        currentPage = currentPage + list.count;
+        if ((aggregate.count < resultPerPage) && list.count) {
+//            NSLog(@"asking for more at %ul after receiving %ul", currentPage, list.count);
+            [params setValue:@(currentPage) forKey:keyForSearchPage(self.service)];
+            [params setValue:MIN(@(resultPerPage - aggregate.count),[params objectForKey:keyForSearchResultPerPage(self.service)])  forKey:keyForSearchResultPerPage(self.service)];
+            [self getObject:[DZNPhotoMetadata class] path:path params:params completion:recursive];
+        } else {
+//            NSLog(@"received all items %ul",aggregate.count);
+            completion(aggregate, nil);
+        }
+    };
+    
     [self getObject:[DZNPhotoMetadata class] path:path params:params completion:completion];
 }
 
@@ -259,6 +298,7 @@
     else if (self.service == DZNPhotoPickerControllerServiceFlickr) {
         path = @"";
     }
+    
     
     [self GET:path parameters:params progress:NULL success:^(NSURLSessionDataTask *task, id response) {
         

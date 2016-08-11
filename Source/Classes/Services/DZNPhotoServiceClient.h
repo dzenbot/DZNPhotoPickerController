@@ -9,13 +9,14 @@
 //
 
 #import "AFNetworking.h"
+
 #import "DZNPhotoServiceClientProtocol.h"
 #import "DZNPhotoPickerControllerConstants.h"
 
 extern NSString *const DZNPhotoServiceClientConsumerKey;
 extern NSString *const DZNPhotoServiceClientConsumerSecret;
 extern NSString *const DZNPhotoServiceClientSubscription;
-
+extern NSString *const DZNPhotoServiceClientNextKey;
 extern NSString *const DZNPhotoServiceCredentialIdentifier;
 extern NSString *const DZNPhotoServiceCredentialAccessToken;
 

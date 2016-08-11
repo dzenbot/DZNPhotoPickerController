@@ -26,6 +26,7 @@ NSString *NSStringFromService(DZNPhotoPickerControllerServices service)
         case DZNPhotoPickerControllerServiceGoogleImages:   return @"Google";
         case DZNPhotoPickerControllerServiceBingImages:     return @"Bing";
         case DZNPhotoPickerControllerServiceGiphy:          return @"Giphy";
+        case DZNPhotoPickerControllerServiceRiffsy:         return @"Riffsy";
         default:                                            return nil;
     }
 }
@@ -38,6 +39,7 @@ DZNPhotoPickerControllerServices DZNPhotoServiceFromName(NSString *name)
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceGoogleImages)])    return DZNPhotoPickerControllerServiceGoogleImages;
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceBingImages)])      return DZNPhotoPickerControllerServiceBingImages;
     if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceGiphy)])           return DZNPhotoPickerControllerServiceGiphy;
+    if ([name isEqualToString:NSStringFromService(DZNPhotoPickerControllerServiceRiffsy)])          return DZNPhotoPickerControllerServiceRiffsy;
     return -1;
 }
 
@@ -60,6 +62,9 @@ DZNPhotoPickerControllerServices DZNFirstPhotoServiceFromPhotoServices(DZNPhotoP
     }
     if ((services & DZNPhotoPickerControllerServiceGiphy) > 0) {
         return DZNPhotoPickerControllerServiceGiphy;
+    }
+    if ((services & DZNPhotoPickerControllerServiceRiffsy) > 0) {
+        return DZNPhotoPickerControllerServiceRiffsy;
     }
     return -1;
 }
@@ -85,6 +90,9 @@ NSArray *NSArrayFromServices(DZNPhotoPickerControllerServices services)
     }
     if ((services & DZNPhotoPickerControllerServiceGiphy) > 0) {
         [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceGiphy)];
+    }
+    if ((services & DZNPhotoPickerControllerServiceRiffsy) > 0) {
+        [titles addObject:NSStringFromService(DZNPhotoPickerControllerServiceRiffsy)];
     }
     return [NSArray arrayWithArray:titles];
 }

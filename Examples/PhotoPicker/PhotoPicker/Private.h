@@ -33,3 +33,6 @@
 // Giphy
 #define kGiphyConsumerKey               @"dc6zaTOxFJmzC"
 
+// Riffsy
+#define kRiffsyConsumerKey               @"LIVDSRZULELA"
+

@@ -118,6 +118,22 @@
                 _contentType = [NSString stringWithFormat:@"image/%@",[_sourceURL pathExtension]];
             }
         }
+        else if ((service & DZNPhotoPickerControllerServiceRiffsy) > 0)
+        {
+            _Id = [object objectForKey:@"id"];
+            NSDictionary *media  = object[@"media"][0];
+            NSString *sourceUrl = [media valueForKeyPath:@"gif.url"];
+            _sourceURL = [NSURL URLWithString:[sourceUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSString *thumbUrl = [media valueForKeyPath:@"tinygif.url"];
+            _thumbURL = [NSURL URLWithString:[thumbUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSArray *size = [media valueForKeyPath:@"gif.dims"];
+            _width = size[0];
+            _height = size[1];
+            _contentType = @"image/gif";
+            
+        }
     }
     return self;
 }
