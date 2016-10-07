@@ -29,6 +29,8 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @property (nonatomic, assign) id <UINavigationControllerDelegate, DZNPhotoPickerControllerDelegate> delegate;
 /** The photo services to be supported by the controller. Default are 500px & Flickr. */
 @property (nonatomic) DZNPhotoPickerControllerServices supportedServices;
+/** A photo service that will initially be selected at first when controller presented. */
+@property (nonatomic) DZNPhotoPickerControllerServices initialSelectedService;
 /** YES if the user is allowed to edit a selected image. Default is NO. */
 @property (nonatomic) BOOL allowsEditing;
 /** An optional string term for auto-starting the photo search, as soon as the picker is presented. */
