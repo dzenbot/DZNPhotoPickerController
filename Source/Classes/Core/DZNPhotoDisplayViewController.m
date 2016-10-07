@@ -97,9 +97,14 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     
     _selectedService = DZNFirstPhotoServiceFromPhotoServices(self.navigationController.supportedServices);
     NSAssert((_selectedService > 0), @"DZNPhotoPickerController requieres at least 1 supported photo service provider");
-    
-    self.extendedLayoutIncludesOpaqueBars = YES;
-    self.edgesForExtendedLayout = UIRectEdgeAll;
+
+    if(_segmentedControlTitles.count>1){
+        self.extendedLayoutIncludesOpaqueBars = YES;
+        self.edgesForExtendedLayout = UIRectEdgeAll;
+    }else{
+        self.extendedLayoutIncludesOpaqueBars = NO;
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
     self.automaticallyAdjustsScrollViewInsets = YES;
     self.definesPresentationContext = YES;
     
