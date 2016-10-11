@@ -75,6 +75,6 @@
  @param cropMode The crop mode being used.
  @param photoDescription The photo metadata.
  */
-- (void)postMetadataUpdate:(NSDictionary *)userInfo;
+- (void)postMetadataUpdate:(NSDictionary *)userInfo notification:(NSString *)name;
 
 @end

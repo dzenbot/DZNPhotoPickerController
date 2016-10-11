@@ -147,20 +147,21 @@
 
 #pragma mark - Notification
 
-- (void)postMetadataUpdate:(NSDictionary *)userInfo
+- (void)postMetadataUpdate:(NSDictionary *)userInfo notification:(NSString *)name
 {
-    NSLog(@"postMetadataUpdate : %@", userInfo);
-    
+    NSLog(@"postMetadataUpdate : %@, notification: %@", userInfo, name);
+
     NSMutableDictionary *_userInfo = [[NSMutableDictionary alloc] initWithDictionary:userInfo];
-    
+
     NSDictionary *payload = [self payload];
-    
+
     if (payload.allKeys.count > 0) {
         [_userInfo setObject:payload forKey:DZNPhotoPickerControllerPhotoMetadata];
     }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:DZNPhotoPickerDidFinishPickingNotification object:nil userInfo:_userInfo];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil userInfo:_userInfo];
 }
+
 
 - (NSDictionary *)payload
 {

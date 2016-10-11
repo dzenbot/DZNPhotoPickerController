@@ -432,7 +432,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 - (void)selectedMetadata:(DZNPhotoMetadata *)metadata
 {
     if (!self.navigationController.enablePhotoDownload) {
-        [metadata postMetadataUpdate:nil];
+        [metadata postMetadataUpdate:nil notification:DZNPhotoPickerDidFinishPickingNotification];
     }
     else if (self.navigationController.allowsEditing) {
         
@@ -445,7 +445,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         [self.navigationController pushViewController:controller animated:YES];
 
         [controller setAcceptBlock:^(DZNPhotoEditorViewController *editor, NSDictionary *userInfo){
-            [metadata postMetadataUpdate:userInfo];
+            [metadata postMetadataUpdate:userInfo notification:DZNPhotoPickerDidFinishPickingNotification];
             [self.navigationController popViewControllerAnimated:YES];
         }];
         
@@ -485,7 +485,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
                                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
                                                                 if (image) {
                                                                     NSDictionary *userInfo = @{UIImagePickerControllerOriginalImage: image};
-                                                                    [metadata postMetadataUpdate:userInfo];
+                                                                    [metadata postMetadataUpdate:userInfo notification:DZNPhotoPickerDidFinishPickingNotification];
                                                                 }
                                                                 else {
                                                                     [self setLoadingError:error];
