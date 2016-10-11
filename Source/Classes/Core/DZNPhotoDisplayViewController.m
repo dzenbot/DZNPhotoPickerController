@@ -431,6 +431,8 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
  */
 - (void)selectedMetadata:(DZNPhotoMetadata *)metadata
 {
+    [metadata postMetadataUpdate:nil notification:DZNPhotoPickerDidSelectNotification];
+
     if (!self.navigationController.enablePhotoDownload) {
         [metadata postMetadataUpdate:nil notification:DZNPhotoPickerDidFinishPickingNotification];
     }

@@ -156,7 +156,7 @@
     NSDictionary *payload = [self payload];
 
     if (payload.allKeys.count > 0) {
-        [_userInfo setObject:payload forKey:DZNPhotoPickerControllerPhotoMetadata];
+        _userInfo[DZNPhotoPickerControllerPhotoMetadata] = payload;
     }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil userInfo:_userInfo];

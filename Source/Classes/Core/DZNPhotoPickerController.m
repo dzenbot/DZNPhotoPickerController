@@ -14,6 +14,7 @@
 #import "DZNPhotoMetadata.h"
 
 #import <MobileCoreServices/UTCoreTypes.h>
+#import <DZNPhotoPickerController/DZNPhotoPickerControllerConstants.h>
 
 static DZNPhotoPickerControllerFinalizationBlock _finalizationBlock;
 static DZNPhotoPickerControllerFailureBlock _failureBlock;
@@ -55,6 +56,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 {
     [super viewWillAppear:animated];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectPhoto:) name:DZNPhotoPickerDidSelectNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFinishPickingPhoto:) name:DZNPhotoPickerDidFinishPickingNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFailPickingPhoto:) name:DZNPhotoPickerDidFailPickingNotification object:nil];
     
@@ -134,6 +136,18 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 }
 
 /* Called by a notification whenever the user picks a photo. */
+- (void)didSelectPhoto:(NSNotification *)notification
+{
+    if (self.selectionBlock) {
+        self.selectionBlock(self, notification.userInfo);
+
+    }
+    else if (self.delegate && [self.delegate respondsToSelector:@selector(photoPickerController:didSelectPhotoWithInfo:)]){
+        [self.delegate photoPickerController:self didSelectPhotoWithInfo:notification.userInfo];
+    }
+}
+
+/* Called by a notification whenever the user picks a photo and internal process was completed. */
 - (void)didFinishPickingPhoto:(NSNotification *)notification
 {
     if (self.finalizationBlock) {
@@ -197,6 +211,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 - (void)dealloc
 {
     _initialSearchTerm = nil;
+    _selectionBlock = nil;
     _finalizationBlock = nil;
     _cancellationBlock = nil;
 }
