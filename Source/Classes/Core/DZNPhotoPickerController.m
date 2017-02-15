@@ -21,6 +21,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 
 @interface DZNPhotoPickerController ()
 @property (nonatomic, getter=isEditModeEnabled) BOOL editModeEnabled;
+@property (nonatomic, assign) BOOL firstAppear;
 @end
 
 @implementation DZNPhotoPickerController
@@ -33,8 +34,9 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
         self.allowsEditing = NO;
         self.enablePhotoDownload = YES;
         self.allowAutoCompletedSearch = YES;
+        self.firstAppear = YES;
         
-        self.supportedServices = DZNPhotoPickerControllerServiceGoogleImages | DZNPhotoPickerControllerServiceFlickr;
+        self.supportedServices = DZNPhotoPickerControllerServiceGoogleImages | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceBingImages;
         self.supportedLicenses = DZNPhotoPickerControllerCCLicenseBY_ALL;
         self.cropMode = DZNPhotoEditorViewControllerCropModeSquare;
     }
@@ -58,7 +60,8 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFinishPickingPhoto:) name:DZNPhotoPickerDidFinishPickingNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFailPickingPhoto:) name:DZNPhotoPickerDidFailPickingNotification object:nil];
     
-    if (!self.isEditModeEnabled) {
+    if (!self.isEditModeEnabled && self.firstAppear) {
+        self.firstAppear = NO;
         [self showPhotoDisplayController];
     }
 }
@@ -120,7 +123,6 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 /* Shows the photo display controller. */
 - (void)showPhotoDisplayController
 {
-    [self setViewControllers:@[]];
     
     DZNPhotoDisplayViewController *controller = [[DZNPhotoDisplayViewController alloc] initWithPreferredContentSize:self.view.frame.size];
     if (self.title) controller.title = self.title;
@@ -130,7 +132,8 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
         [controller.navigationItem setRightBarButtonItem:cancel];
     }
     
-    [self setViewControllers:@[controller]];
+    [self addChildViewController:controller];
+    [self.view addSubview:controller.view];
 }
 
 /* Called by a notification whenever the user picks a photo. */
@@ -158,7 +161,7 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
 /* Called whenever the user cancels the picker. */
 - (void)cancelPicker:(id)sender
 {
-    DZNPhotoDisplayViewController *controller = (DZNPhotoDisplayViewController *)[self.viewControllers firstObject];
+    DZNPhotoDisplayViewController *controller = (DZNPhotoDisplayViewController *)[self.childViewControllers firstObject];
     if ([controller respondsToSelector:@selector(stopLoadingRequest)]) {
         [controller stopLoadingRequest];
     }

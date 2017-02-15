@@ -92,10 +92,10 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 {
     [super loadView];
     
-    _segmentedControlTitles = NSArrayFromServices(self.navigationController.supportedServices);
+    _segmentedControlTitles = NSArrayFromServices(self.pickerController.supportedServices);
     NSAssert((_segmentedControlTitles.count <= 4), @"DZNPhotoPickerController doesn't support more than 4 photo service providers");
     
-    _selectedService = DZNFirstPhotoServiceFromPhotoServices(self.navigationController.supportedServices);
+    _selectedService = DZNFirstPhotoServiceFromPhotoServices(self.pickerController.supportedServices);
     NSAssert((_selectedService > 0), @"DZNPhotoPickerController requieres at least 1 supported photo service provider");
     
     self.extendedLayoutIncludesOpaqueBars = YES;
@@ -159,10 +159,10 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     return [[DZNPhotoServiceFactory defaultFactory] clientForService:self.selectedService];
 }
 
-/* Returns the navigation controller casted to DZNPhotoPickerController. */
-- (DZNPhotoPickerController *)navigationController
+///* Returns the navigation controller casted to DZNPhotoPickerController. */
+- (DZNPhotoPickerController *)pickerController
 {
-    return (DZNPhotoPickerController *)[super navigationController];
+    return (DZNPhotoPickerController *) self.parentViewController;
 }
 
 /*  Returns the custom search display controller. */
@@ -176,12 +176,12 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         _searchController.searchResultsUpdater = self;
         _searchController.delegate = self;
         _searchController.dimsBackgroundDuringPresentation = YES;
-        _searchController.hidesNavigationBarDuringPresentation = YES;
+        _searchController.hidesNavigationBarDuringPresentation = NO;
 
         UISearchBar *searchBar = _searchController.searchBar;
         [searchBar sizeToFit];
         searchBar.placeholder = NSLocalizedString(@"Search", nil);
-        searchBar.text = self.navigationController.initialSearchTerm;
+        searchBar.text = self.pickerController.initialSearchTerm;
         searchBar.scopeButtonTitles = [self segmentedControlTitles];
         searchBar.searchBarStyle = UISearchBarStyleProminent;
         searchBar.barStyle = UIBarStyleDefault;
@@ -419,16 +419,16 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
  */
 - (void)selectedMetadata:(DZNPhotoMetadata *)metadata
 {
-    if (!self.navigationController.enablePhotoDownload) {
+    if (!self.pickerController.enablePhotoDownload) {
         [metadata postMetadataUpdate:nil];
     }
-    else if (self.navigationController.allowsEditing) {
+    else if (self.pickerController.allowsEditing) {
         
         UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:metadata.sourceURL.absoluteString];
         
         DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:image];
-        controller.cropMode = self.navigationController.cropMode;
-        controller.cropSize = self.navigationController.cropSize;
+        controller.cropMode = self.pickerController.cropMode;
+        controller.cropSize = self.pickerController.cropSize;
         
         [self.navigationController pushViewController:controller animated:YES];
 
@@ -486,7 +486,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 
 - (BOOL)canSearchTags
 {
-    if (!self.navigationController.allowAutoCompletedSearch) {
+    if (!self.pickerController.allowAutoCompletedSearch) {
         return NO;
     }
     
@@ -644,7 +644,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         UIView *subview = nil;
         
         if ([self canDisplayFooterView]) {
-            if (self.isLoading || self.navigationController.infiniteScrollingEnabled) {
+            if (self.isLoading || self.pickerController.infiniteScrollingEnabled) {
                 subview = self.activityIndicator;
             }
             else {
@@ -686,7 +686,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
 {
     if ([elementKind isEqualToString:UICollectionElementKindSectionFooter]) {
-        if (self.navigationController.infiniteScrollingEnabled && [self canDisplayFooterView] && !self.isLoading) {
+        if (self.pickerController.infiniteScrollingEnabled && [self canDisplayFooterView] && !self.isLoading) {
             
             // It is important to schedule this call on the next run loop so it doesn't
             // interfere with the current scroll's run loop.
@@ -901,7 +901,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         text = localizedDescription;
     }
     else if (!self.loading) {
-        if (self.navigationController.initialSearchTerm)
+        if (self.pickerController.initialSearchTerm)
             text = NSLocalizedString(@"Make sure that all words are\nspelled correctly.", nil);
         else
             text = nil;

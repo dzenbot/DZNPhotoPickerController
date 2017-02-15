@@ -19,7 +19,7 @@
  
  @discussion Due to Terms of Use of some photo services, the images can only be cached in memory, but not the device's hard drive.
  */
-@interface DZNPhotoPickerController : UINavigationController
+@interface DZNPhotoPickerController : UIViewController
 
 typedef void (^DZNPhotoPickerControllerFinalizationBlock)(DZNPhotoPickerController *picker, NSDictionary *info);
 typedef void (^DZNPhotoPickerControllerFailureBlock)(DZNPhotoPickerController *picker, NSError *error);
