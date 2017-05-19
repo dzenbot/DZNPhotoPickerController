@@ -10,8 +10,8 @@
 
 #import "DZNPhotoEditorViewController.h"
 
-#define DZN_IS_IPAD [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad
-#define DZN_IS_IOS8 [[UIDevice currentDevice].systemVersion floatValue] > 8.0
+#define DZN_IS_IPAD ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+#define DZN_IS_IOS8 ([[UIDevice currentDevice].systemVersion floatValue] > 8.0)
 
 typedef NS_ENUM(NSInteger, DZNPhotoAspect) {
     DZNPhotoAspectUnknown,
