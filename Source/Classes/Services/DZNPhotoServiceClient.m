@@ -141,9 +141,10 @@
         [params setObject:@"json" forKey:@"format"];
         [params setObject:@"photos" forKey:@"media"];
         [params setObject:@"relevance" forKey:@"sort"];
-        [params setObject:@YES forKey:@"in_gallery"];
+//        [params setObject:@YES forKey:@"in_gallery"];
         [params setObject:@1 forKey:@"safe_search"];
         [params setObject:@1 forKey:@"content_type"];
+        [params setObject:@"7" forKey:@"license"];
     }
     else if (self.service == DZNPhotoPickerControllerServiceGoogleImages)
     {
