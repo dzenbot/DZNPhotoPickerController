@@ -465,21 +465,22 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         }
     }
     else {
-        [self setActivityIndicatorsVisible:YES];
-        
+        self.pickerController.activityBlock(self.pickerController, YES);
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:metadata.sourceURL
                                                               options:SDWebImageCacheMemoryOnly|SDWebImageRetryFailed
                                                              progress:NULL
-                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
-                                                                if (image) {
-                                                                    NSDictionary *userInfo = @{UIImagePickerControllerOriginalImage: image};
-                                                                    [metadata postMetadataUpdate:userInfo];
-                                                                }
-                                                                else {
-                                                                    [self setLoadingError:error];
-                                                                }
-                                                                
-                                                                [self setActivityIndicatorsVisible:NO];
+                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                                    if (image) {
+                                                                        NSDictionary *userInfo = @{UIImagePickerControllerOriginalImage: image};
+                                                                        [metadata postMetadataUpdate:userInfo];
+                                                                    }
+                                                                    else {
+                                                                        [self setLoadingError:error];
+                                                                    }
+                                                                    
+                                                                    self.pickerController.activityBlock(self.pickerController, NO);
+                                                                });
                                                             }];
     }
 }
