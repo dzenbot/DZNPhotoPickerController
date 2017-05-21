@@ -128,6 +128,17 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     }
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    if (([self.searchController.searchBar.text length] == 0) && (self.metadataList.count == 0)) {
+        // Calling becomeFirstResponder directly doesn't open the keybord for some reason
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.searchController.searchBar becomeFirstResponder];
+        });
+    }
+}
 
 #pragma mark - Getter methods
 
