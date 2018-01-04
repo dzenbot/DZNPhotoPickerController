@@ -10,6 +10,7 @@
 
 #import "DZNPhotoDisplayViewCell.h"
 #import "UIImageView+WebCache.h"
+#import "UIView+WebCache.h"
 
 @implementation DZNPhotoDisplayViewCell
 @synthesize imageView = _imageView;
