@@ -134,6 +134,14 @@ static DZNPhotoPickerControllerCancellationBlock _cancellationBlock;
     
     [self addChildViewController:controller];
     [self.view addSubview:controller.view];
+
+    controller.view.translatesAutoresizingMaskIntoConstraints = false;
+    [NSLayoutConstraint activateConstraints:@[[controller.view.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+                                              [controller.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+                                              [controller.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+                                              [controller.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor]]];
+
+    [controller didMoveToParentViewController:self];
 }
 
 /* Called by a notification whenever the user picks a photo. */
