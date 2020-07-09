@@ -691,31 +691,27 @@ DZNPhotoAspect photoAspectFromSize(CGSize aspectRatio)
         return;
     }
     
-    dispatch_queue_t exampleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-    dispatch_async(exampleQueue, ^{
+    dispatch_queue_t queue = dispatch_get_main_queue();
+    dispatch_async(queue, ^{
         
         UIImage *editedImage = [self trimmedImage:[self editedImage]];
-        
-        dispatch_queue_t queue = dispatch_get_main_queue();
-        dispatch_async(queue, ^{
+
+        if (self.acceptBlock) {
             
-            if (self.acceptBlock) {
-                
-                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                                 [NSValue valueWithCGRect:self.guideRect], UIImagePickerControllerCropRect,
-                                                 @"public.image", UIImagePickerControllerMediaType,
-                                                 @(self.cropMode), DZNPhotoPickerControllerCropMode,
-                                                 @(self.scrollView.zoomScale), DZNPhotoPickerControllerCropZoomScale,
-                                                 nil];
-                
-                if (self.editingImage) [userInfo setObject:self.editingImage forKey:UIImagePickerControllerOriginalImage];
-                else [userInfo setObject:self.imageView.image forKey:UIImagePickerControllerOriginalImage];
-                
-                if (editedImage) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
-                
-                self.acceptBlock(self, userInfo);
-            }
-        });
+            NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                             [NSValue valueWithCGRect:self.guideRect], UIImagePickerControllerCropRect,
+                                             @"public.image", UIImagePickerControllerMediaType,
+                                             @(self.cropMode), DZNPhotoPickerControllerCropMode,
+                                             @(self.scrollView.zoomScale), DZNPhotoPickerControllerCropZoomScale,
+                                             nil];
+            
+            if (self.editingImage) [userInfo setObject:self.editingImage forKey:UIImagePickerControllerOriginalImage];
+            else [userInfo setObject:self.imageView.image forKey:UIImagePickerControllerOriginalImage];
+            
+            if (editedImage) [userInfo setObject:editedImage forKey:UIImagePickerControllerEditedImage];
+            
+            self.acceptBlock(self, userInfo);
+        }
     });
 }
 
