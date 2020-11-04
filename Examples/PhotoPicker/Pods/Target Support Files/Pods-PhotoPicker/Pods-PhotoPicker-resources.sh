@@ -79,6 +79,14 @@ EOM
       ;;
   esac
 }
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "../../../Source/Resources/en.lproj/DZNPhotoPickerController.strings"
+  install_resource "../../../Source/Resources/en.lproj"
+fi
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "../../../Source/Resources/en.lproj/DZNPhotoPickerController.strings"
+  install_resource "../../../Source/Resources/en.lproj"
+fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
