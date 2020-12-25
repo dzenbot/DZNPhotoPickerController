@@ -11,6 +11,7 @@
 extern NSString *const DZNPhotoPickerControllerCropMode;              // An NSString (i.e. square, circular)
 extern NSString *const DZNPhotoPickerControllerCropZoomScale;         // An NSString (from 1.0 to maximum zoom scale, 2.0f)
 extern NSString *const DZNPhotoPickerControllerPhotoMetadata;         // An NSDictionary containing metadata from a captured photo
+extern NSString *const DZNPhotoPickerControllerSearchTerm;            // An NSString containing the search term that allowed the user to find this photo.
 
 extern NSString *const DZNPhotoPickerDidFinishPickingNotification;    // The notification key used when picking a photo finished.
 extern NSString *const DZNPhotoPickerDidFailPickingNotification;      // The notification key used when picking a photo failed.
