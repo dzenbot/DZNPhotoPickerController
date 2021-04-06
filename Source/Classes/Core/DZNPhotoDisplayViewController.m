@@ -97,9 +97,22 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     
     _selectedService = DZNFirstPhotoServiceFromPhotoServices(self.navigationController.supportedServices);
     NSAssert((_selectedService > 0), @"DZNPhotoPickerController requieres at least 1 supported photo service provider");
-    
-    self.extendedLayoutIncludesOpaqueBars = YES;
-    self.edgesForExtendedLayout = UIRectEdgeAll;
+
+    NSAssert(!self.navigationController.initialSelectedService || self.navigationController.initialSelectedService & self.navigationController.supportedServices, @"Provided 'initialSelectedService' doesn't support in 'supportedServices'");
+    if(self.navigationController.initialSelectedService & self.navigationController.supportedServices){
+        NSArray * initialSelectedService = NSArrayFromServices(self.navigationController.initialSelectedService);
+        NSAssert(initialSelectedService.count==1,@"Only one service flag can be assigned to initialSelectedService.");
+        _segmentedControlTitles = [NSSet setWithArray:[initialSelectedService arrayByAddingObjectsFromArray:_segmentedControlTitles]].allObjects;
+        _selectedService = self.navigationController.initialSelectedService;
+    }
+
+    if(_segmentedControlTitles.count>1){
+        self.extendedLayoutIncludesOpaqueBars = YES;
+        self.edgesForExtendedLayout = UIRectEdgeAll;
+    }else{
+        self.extendedLayoutIncludesOpaqueBars = NO;
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
     self.automaticallyAdjustsScrollViewInsets = YES;
     self.definesPresentationContext = YES;
     
@@ -418,8 +431,10 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
  */
 - (void)selectedMetadata:(DZNPhotoMetadata *)metadata
 {
+    [metadata postMetadataUpdate:nil notification:DZNPhotoPickerDidSelectNotification];
+
     if (!self.navigationController.enablePhotoDownload) {
-        [metadata postMetadataUpdate:nil];
+        [metadata postMetadataUpdate:nil notification:DZNPhotoPickerDidFinishPickingNotification];
     }
     else if (self.navigationController.allowsEditing) {
         
@@ -432,7 +447,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         [self.navigationController pushViewController:controller animated:YES];
 
         [controller setAcceptBlock:^(DZNPhotoEditorViewController *editor, NSDictionary *userInfo){
-            [metadata postMetadataUpdate:userInfo];
+            [metadata postMetadataUpdate:userInfo notification:DZNPhotoPickerDidFinishPickingNotification];
             [self.navigationController popViewControllerAnimated:YES];
         }];
         
@@ -472,7 +487,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
                                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
                                                                 if (image) {
                                                                     NSDictionary *userInfo = @{UIImagePickerControllerOriginalImage: image};
-                                                                    [metadata postMetadataUpdate:userInfo];
+                                                                    [metadata postMetadataUpdate:userInfo notification:DZNPhotoPickerDidFinishPickingNotification];
                                                                 }
                                                                 else {
                                                                     [self setLoadingError:error];

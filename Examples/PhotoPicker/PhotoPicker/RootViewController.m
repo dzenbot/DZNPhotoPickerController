@@ -132,13 +132,24 @@
     picker.supportedServices =  DZNPhotoPickerControllerService500px | DZNPhotoPickerControllerServiceFlickr | DZNPhotoPickerControllerServiceGiphy;
     picker.allowsEditing = NO;
     picker.cropMode = DZNPhotoEditorViewControllerCropModeCircular;
+//    picker.cropMode = DZNPhotoEditorViewControllerCropModeNone;
     picker.initialSearchTerm = @"Chile";
     picker.enablePhotoDownload = YES;
     picker.allowAutoCompletedSearch = YES;
     picker.infiniteScrollingEnabled = YES;
     picker.title = @"Search Photos";
-    
+
+    [picker setSelectionBlock:^(DZNPhotoPickerController *picker, NSDictionary *info) {
+        NSLog(@"selected: %@",info);
+
+        if(picker.cropMode == DZNPhotoEditorViewControllerCropModeNone){
+            //DZNPhotoPickerController did early dismiss but processing still does proceeding
+            [picker popToViewController:self animated:YES];
+        }
+    }];
+
     [picker setFinalizationBlock:^(DZNPhotoPickerController *picker, NSDictionary *info){
+        NSLog(@"finished: %@",info);
         [self updateImageWithPayload:info];
         [self dismissController:picker];
     }];

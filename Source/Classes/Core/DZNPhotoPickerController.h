@@ -21,6 +21,7 @@
  */
 @interface DZNPhotoPickerController : UINavigationController
 
+typedef void (^DZNPhotoPickerControllerSelectionBlock)(DZNPhotoPickerController *picker, NSDictionary *info);
 typedef void (^DZNPhotoPickerControllerFinalizationBlock)(DZNPhotoPickerController *picker, NSDictionary *info);
 typedef void (^DZNPhotoPickerControllerFailureBlock)(DZNPhotoPickerController *picker, NSError *error);
 typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerController *picker);
@@ -29,6 +30,8 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @property (nonatomic, assign) id <UINavigationControllerDelegate, DZNPhotoPickerControllerDelegate> delegate;
 /** The photo services to be supported by the controller. Default are 500px & Flickr. */
 @property (nonatomic) DZNPhotoPickerControllerServices supportedServices;
+/** A photo service that will initially be selected at first when controller presented. */
+@property (nonatomic) DZNPhotoPickerControllerServices initialSelectedService;
 /** YES if the user is allowed to edit a selected image. Default is NO. */
 @property (nonatomic) BOOL allowsEditing;
 /** An optional string term for auto-starting the photo search, as soon as the picker is presented. */
@@ -41,7 +44,9 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @property (nonatomic) DZNPhotoPickerControllerCCLicenses supportedLicenses;
 /** YES if the picker should download the full size photo after selecting its thumbnail, when allowsEditing is NO. Default is YES. */
 @property (nonatomic) BOOL enablePhotoDownload;
-/** A block to be executed whenever the user pickes a new photo. Use this block to replace delegate method photoPickerController:didFinishPickingPhotoWithInfo: */
+/** A block to be executed whenever the user selects a new photo in collection view(album view). Use this block to replace delegate method photoPickerController:didSelectPhotoWithInfo: */
+@property (nonatomic, strong) DZNPhotoPickerControllerSelectionBlock selectionBlock;
+/** A block to be executed whenever the user pickes a new photo, and internal processing was finished. Use this block to replace delegate method photoPickerController:didFinishPickingPhotoWithInfo: */
 @property (nonatomic, strong) DZNPhotoPickerControllerFinalizationBlock finalizationBlock;
 /** A block to be executed whenever an error occurs while picking a photo. Use this block to replace delegate method photoPickerController:didFailedPickingPhotoWithError: */
 @property (nonatomic, strong) DZNPhotoPickerControllerFailureBlock failureBlock;
@@ -89,7 +94,15 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @required
 
 /**
- Tells the delegate that the user picked a new photo.
+ Tells the delegate that the user selected a new photo in album view.
+
+ @param picker The controller object managing the photo search picker interface.
+ @param userInfo A dictionary containing the original image. The dictionary also contains some information of selected photo. For exiting keys @see DZNPhotoPickerControllerConstants.h.
+ */
+- (void)photoPickerController:(DZNPhotoPickerController *)picker didSelectPhotoWithInfo:(NSDictionary *)userInfo;
+
+/**
+ Tells the delegate that the user picked a new photo and finalized its processing internally.
  
  @param picker The controller object managing the photo search picker interface.
  @param userInfo A dictionary containing the original image and the edited image. The dictionary also contains any relevant editing information (crop size, crop mode). For exiting keys @see DZNPhotoPickerControllerConstants.h.
