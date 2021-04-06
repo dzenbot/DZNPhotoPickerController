@@ -19,8 +19,9 @@
  
  @discussion Due to Terms of Use of some photo services, the images can only be cached in memory, but not the device's hard drive.
  */
-@interface DZNPhotoPickerController : UINavigationController
+@interface DZNPhotoPickerController : UIViewController
 
+typedef void (^DZNPhotoPickerControllerActivityBlock)(DZNPhotoPickerController *picker, BOOL show);
 typedef void (^DZNPhotoPickerControllerFinalizationBlock)(DZNPhotoPickerController *picker, NSDictionary *info);
 typedef void (^DZNPhotoPickerControllerFailureBlock)(DZNPhotoPickerController *picker, NSError *error);
 typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerController *picker);
@@ -41,6 +42,9 @@ typedef void (^DZNPhotoPickerControllerCancellationBlock)(DZNPhotoPickerControll
 @property (nonatomic) DZNPhotoPickerControllerCCLicenses supportedLicenses;
 /** YES if the picker should download the full size photo after selecting its thumbnail, when allowsEditing is NO. Default is YES. */
 @property (nonatomic) BOOL enablePhotoDownload;
+
+@property (nonatomic, strong) DZNPhotoPickerControllerActivityBlock activityBlock;
+
 /** A block to be executed whenever the user pickes a new photo. Use this block to replace delegate method photoPickerController:didFinishPickingPhotoWithInfo: */
 @property (nonatomic, strong) DZNPhotoPickerControllerFinalizationBlock finalizationBlock;
 /** A block to be executed whenever an error occurs while picking a photo. Use this block to replace delegate method photoPickerController:didFailedPickingPhotoWithError: */

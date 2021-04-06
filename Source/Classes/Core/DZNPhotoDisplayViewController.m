@@ -92,10 +92,10 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 {
     [super loadView];
     
-    _segmentedControlTitles = NSArrayFromServices(self.navigationController.supportedServices);
+    _segmentedControlTitles = NSArrayFromServices(self.pickerController.supportedServices);
     NSAssert((_segmentedControlTitles.count <= 4), @"DZNPhotoPickerController doesn't support more than 4 photo service providers");
     
-    _selectedService = DZNFirstPhotoServiceFromPhotoServices(self.navigationController.supportedServices);
+    _selectedService = DZNFirstPhotoServiceFromPhotoServices(self.pickerController.supportedServices);
     NSAssert((_selectedService > 0), @"DZNPhotoPickerController requieres at least 1 supported photo service provider");
     
     self.extendedLayoutIncludesOpaqueBars = YES;
@@ -128,6 +128,17 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     }
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    if (([self.searchController.searchBar.text length] == 0) && (self.metadataList.count == 0)) {
+        // Calling becomeFirstResponder directly doesn't open the keybord for some reason
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.searchController.searchBar becomeFirstResponder];
+        });
+    }
+}
 
 #pragma mark - Getter methods
 
@@ -159,10 +170,10 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
     return [[DZNPhotoServiceFactory defaultFactory] clientForService:self.selectedService];
 }
 
-/* Returns the navigation controller casted to DZNPhotoPickerController. */
-- (DZNPhotoPickerController *)navigationController
+///* Returns the navigation controller casted to DZNPhotoPickerController. */
+- (DZNPhotoPickerController *)pickerController
 {
-    return (DZNPhotoPickerController *)[super navigationController];
+    return (DZNPhotoPickerController *) self.parentViewController;
 }
 
 /*  Returns the custom search display controller. */
@@ -176,12 +187,13 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         _searchController.searchResultsUpdater = self;
         _searchController.delegate = self;
         _searchController.dimsBackgroundDuringPresentation = YES;
-        _searchController.hidesNavigationBarDuringPresentation = YES;
+        _searchController.hidesNavigationBarDuringPresentation = NO;
 
         UISearchBar *searchBar = _searchController.searchBar;
+        [searchBar sizeToFit];
         searchBar.placeholder = NSLocalizedString(@"Search", nil);
-        searchBar.text = self.navigationController.initialSearchTerm;
-        searchBar.scopeButtonTitles = self.segmentedControlTitles;
+        searchBar.text = self.pickerController.initialSearchTerm;
+        searchBar.scopeButtonTitles = [self segmentedControlTitles];
         searchBar.searchBarStyle = UISearchBarStyleProminent;
         searchBar.barStyle = UIBarStyleDefault;
         searchBar.selectedScopeButtonIndex = 0;
@@ -418,16 +430,16 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
  */
 - (void)selectedMetadata:(DZNPhotoMetadata *)metadata
 {
-    if (!self.navigationController.enablePhotoDownload) {
+    if (!self.pickerController.enablePhotoDownload) {
         [metadata postMetadataUpdate:nil];
     }
-    else if (self.navigationController.allowsEditing) {
+    else if (self.pickerController.allowsEditing) {
         
         UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:metadata.sourceURL.absoluteString];
         
         DZNPhotoEditorViewController *controller = [[DZNPhotoEditorViewController alloc] initWithImage:image];
-        controller.cropMode = self.navigationController.cropMode;
-        controller.cropSize = self.navigationController.cropSize;
+        controller.cropMode = self.pickerController.cropMode;
+        controller.cropSize = self.pickerController.cropSize;
         
         [self.navigationController pushViewController:controller animated:YES];
 
@@ -464,28 +476,29 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         }
     }
     else {
-        [self setActivityIndicatorsVisible:YES];
-        
+        self.pickerController.activityBlock(self.pickerController, YES);
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:metadata.sourceURL
                                                               options:SDWebImageCacheMemoryOnly|SDWebImageRetryFailed
                                                              progress:NULL
-                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
-                                                                if (image) {
-                                                                    NSDictionary *userInfo = @{UIImagePickerControllerOriginalImage: image};
-                                                                    [metadata postMetadataUpdate:userInfo];
-                                                                }
-                                                                else {
-                                                                    [self setLoadingError:error];
-                                                                }
-                                                                
-                                                                [self setActivityIndicatorsVisible:NO];
+                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                                    if (image) {
+                                                                        NSDictionary *userInfo = @{UIImagePickerControllerOriginalImage: image};
+                                                                        [metadata postMetadataUpdate:userInfo];
+                                                                    }
+                                                                    else {
+                                                                        [self setLoadingError:error];
+                                                                    }
+                                                                    
+                                                                    self.pickerController.activityBlock(self.pickerController, NO);
+                                                                });
                                                             }];
     }
 }
 
 - (BOOL)canSearchTags
 {
-    if (!self.navigationController.allowAutoCompletedSearch) {
+    if (!self.pickerController.allowAutoCompletedSearch) {
         return NO;
     }
     
@@ -643,7 +656,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         UIView *subview = nil;
         
         if ([self canDisplayFooterView]) {
-            if (self.isLoading || self.navigationController.infiniteScrollingEnabled) {
+            if (self.isLoading || self.pickerController.infiniteScrollingEnabled) {
                 subview = self.activityIndicator;
             }
             else {
@@ -685,7 +698,7 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
 {
     if ([elementKind isEqualToString:UICollectionElementKindSectionFooter]) {
-        if (self.navigationController.infiniteScrollingEnabled && [self canDisplayFooterView] && !self.isLoading) {
+        if (self.pickerController.infiniteScrollingEnabled && [self canDisplayFooterView] && !self.isLoading) {
             
             // It is important to schedule this call on the next run loop so it doesn't
             // interfere with the current scroll's run loop.
@@ -900,7 +913,10 @@ static NSUInteger kDZNPhotoDisplayMinimumColumnCount = 4.0;
         text = localizedDescription;
     }
     else if (!self.loading) {
-        text = NSLocalizedString(@"Make sure that all words are\nspelled correctly.", nil);
+        if (self.pickerController.initialSearchTerm)
+            text = NSLocalizedString(@"Make sure that all words are\nspelled correctly.", nil);
+        else
+            text = nil;
     }
     
     if (text) {

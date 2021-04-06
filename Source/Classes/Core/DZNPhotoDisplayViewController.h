@@ -17,7 +17,7 @@
 @interface DZNPhotoDisplayViewController : UICollectionViewController <UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 /** The nearest ancestor in the view controller hierarchy that is a photo picker controller. */
-@property (nonatomic, readonly) DZNPhotoPickerController *navigationController;
+@property (nonatomic, readonly) DZNPhotoPickerController *pickerController;
 /** The view controller's search controller. */
 @property (nonatomic, readonly) UISearchController *searchController;
 /** The count number of rows of thumbs to be diplayed. */
